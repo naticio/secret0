@@ -6,14 +6,20 @@
 //
 
 import SwiftUI
+import Firebase
 
 @main
 struct Secret0App: App {
+    
+    init() {
+        FirebaseApp.configure()
+    }
+    
     let persistenceController = PersistenceController.shared
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            LoginView()
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
         }
     }
