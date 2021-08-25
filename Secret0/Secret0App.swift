@@ -10,17 +10,18 @@ import Firebase
 
 @main
 struct Secret0App: App {
+    @AppStorage("isOnboarding") var isOnboarding = true
+   
     
     init() {
         FirebaseApp.configure()
     }
     
-    let persistenceController = PersistenceController.shared
-
     var body: some Scene {
         WindowGroup {
-            LoginView()
-                .environment(\.managedObjectContext, persistenceController.container.viewContext)
+           LaunchView()
+            .environmentObject(ContentModel())
+        //declare environment object to cascade my viewModel throughout the app sub views
         }
     }
 }

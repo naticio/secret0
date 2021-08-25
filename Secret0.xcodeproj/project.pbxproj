@@ -20,6 +20,15 @@
 		B2D2009B26D5EF8000EDF6BD /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2D2009A26D5EF7F00EDF6BD /* UserService.swift */; };
 		B2D200A026D5F04700EDF6BD /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2D2009F26D5F04700EDF6BD /* UserService.swift */; };
 		B2D200A526D5F15E00EDF6BD /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2D200A426D5F15E00EDF6BD /* Models.swift */; };
+		B2D200A926D69FE600EDF6BD /* ContentModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2D200A826D69FE600EDF6BD /* ContentModel.swift */; };
+		B2D200AC26D6A0DB00EDF6BD /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2D200AB26D6A0DB00EDF6BD /* HomeView.swift */; };
+		B2D200AE26D6A17900EDF6BD /* OnboardingContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2D200AD26D6A17900EDF6BD /* OnboardingContainerView.swift */; };
+		B2D200B126D6A24500EDF6BD /* OnboardingContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2D200B026D6A24500EDF6BD /* OnboardingContentView.swift */; };
+		B2D200B326D6B23700EDF6BD /* LaunchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2D200B226D6B23700EDF6BD /* LaunchView.swift */; };
+		B2D200B526D6C8CA00EDF6BD /* Landing.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2D200B426D6C8CA00EDF6BD /* Landing.swift */; };
+		B2D200B726D6CFD700EDF6BD /* WelcomeVideo.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2D200B626D6CFD700EDF6BD /* WelcomeVideo.swift */; };
+		B2D200BA26D6D2C600EDF6BD /* welcome.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = B2D200B926D6D25300EDF6BD /* welcome.mp4 */; };
+		B2D200BC26D6EA8700EDF6BD /* LoginSubView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2D200BB26D6EA8700EDF6BD /* LoginSubView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,6 +49,15 @@
 		B2D2009A26D5EF7F00EDF6BD /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
 		B2D2009F26D5F04700EDF6BD /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
 		B2D200A426D5F15E00EDF6BD /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
+		B2D200A826D69FE600EDF6BD /* ContentModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentModel.swift; sourceTree = "<group>"; };
+		B2D200AB26D6A0DB00EDF6BD /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		B2D200AD26D6A17900EDF6BD /* OnboardingContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingContainerView.swift; sourceTree = "<group>"; };
+		B2D200B026D6A24500EDF6BD /* OnboardingContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingContentView.swift; sourceTree = "<group>"; };
+		B2D200B226D6B23700EDF6BD /* LaunchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchView.swift; sourceTree = "<group>"; };
+		B2D200B426D6C8CA00EDF6BD /* Landing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Landing.swift; sourceTree = "<group>"; };
+		B2D200B626D6CFD700EDF6BD /* WelcomeVideo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeVideo.swift; sourceTree = "<group>"; };
+		B2D200B926D6D25300EDF6BD /* welcome.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = welcome.mp4; sourceTree = "<group>"; };
+		B2D200BB26D6EA8700EDF6BD /* LoginSubView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginSubView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -84,10 +102,16 @@
 			isa = PBXGroup;
 			children = (
 				B2D2007E26D5E97600EDF6BD /* Secret0App.swift */,
-				B2D2009726D5EEB400EDF6BD /* LoginView.swift */,
+				B2D200B226D6B23700EDF6BD /* LaunchView.swift */,
+				B2D200B826D6D0CF00EDF6BD /* Landing */,
+				B2D200AB26D6A0DB00EDF6BD /* HomeView.swift */,
+				B2D200AF26D6A22900EDF6BD /* Onboarding */,
 				B2D2008026D5E97600EDF6BD /* ContentView.swift */,
+				B2D200AA26D6A08D00EDF6BD /* Account */,
+				B2D200A626D69FC100EDF6BD /* ViewModel */,
 				B2D200A126D5F06400EDF6BD /* Models */,
 				B2D2008226D5E97700EDF6BD /* Assets.xcassets */,
+				B2D200B926D6D25300EDF6BD /* welcome.mp4 */,
 				B2D2008726D5E97700EDF6BD /* Persistence.swift */,
 				B2D2009626D5EE7900EDF6BD /* Helpers */,
 				B2D2008C26D5E97700EDF6BD /* Info.plist */,
@@ -122,6 +146,41 @@
 				B2D200A426D5F15E00EDF6BD /* Models.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		B2D200A626D69FC100EDF6BD /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				B2D200A826D69FE600EDF6BD /* ContentModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		B2D200AA26D6A08D00EDF6BD /* Account */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Account;
+			sourceTree = "<group>";
+		};
+		B2D200AF26D6A22900EDF6BD /* Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				B2D200AD26D6A17900EDF6BD /* OnboardingContainerView.swift */,
+				B2D200B026D6A24500EDF6BD /* OnboardingContentView.swift */,
+			);
+			path = Onboarding;
+			sourceTree = "<group>";
+		};
+		B2D200B826D6D0CF00EDF6BD /* Landing */ = {
+			isa = PBXGroup;
+			children = (
+				B2D200B426D6C8CA00EDF6BD /* Landing.swift */,
+				B2D2009726D5EEB400EDF6BD /* LoginView.swift */,
+				B2D200BB26D6EA8700EDF6BD /* LoginSubView.swift */,
+				B2D200B626D6CFD700EDF6BD /* WelcomeVideo.swift */,
+			);
+			path = Landing;
 			sourceTree = "<group>";
 		};
 		C5B4963D4C623E5763A76102 /* Pods */ = {
@@ -194,6 +253,7 @@
 			files = (
 				B2D2008626D5E97700EDF6BD /* Preview Assets.xcassets in Resources */,
 				B2D2009326D5EA0100EDF6BD /* GoogleService-Info.plist in Resources */,
+				B2D200BA26D6D2C600EDF6BD /* welcome.mp4 in Resources */,
 				B2D2008326D5E97700EDF6BD /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -250,10 +310,18 @@
 				B2D2009B26D5EF8000EDF6BD /* UserService.swift in Sources */,
 				B2D2009526D5EE2D00EDF6BD /* Constants.swift in Sources */,
 				B2D2009826D5EEB400EDF6BD /* LoginView.swift in Sources */,
+				B2D200B326D6B23700EDF6BD /* LaunchView.swift in Sources */,
 				B2D2008826D5E97700EDF6BD /* Persistence.swift in Sources */,
+				B2D200B126D6A24500EDF6BD /* OnboardingContentView.swift in Sources */,
+				B2D200B526D6C8CA00EDF6BD /* Landing.swift in Sources */,
 				B2D200A026D5F04700EDF6BD /* UserService.swift in Sources */,
+				B2D200AE26D6A17900EDF6BD /* OnboardingContainerView.swift in Sources */,
+				B2D200AC26D6A0DB00EDF6BD /* HomeView.swift in Sources */,
+				B2D200BC26D6EA8700EDF6BD /* LoginSubView.swift in Sources */,
 				B2D2008126D5E97600EDF6BD /* ContentView.swift in Sources */,
 				B2D200A526D5F15E00EDF6BD /* Models.swift in Sources */,
+				B2D200A926D69FE600EDF6BD /* ContentModel.swift in Sources */,
+				B2D200B726D6CFD700EDF6BD /* WelcomeVideo.swift in Sources */,
 				B2D2008B26D5E97700EDF6BD /* Secret0.xcdatamodeld in Sources */,
 				B2D2007F26D5E97600EDF6BD /* Secret0App.swift in Sources */,
 			);

@@ -10,21 +10,13 @@ import FirebaseAuth
 import Firebase
 
 struct LoginView: View {
-    //@EnvironmentObject var model: ContentModel //so we have access to the content model to know if user is loggedin (loggedin property)
+    @EnvironmentObject var model: ContentModel //so we have access to the content model to know if user is loggedin (loggedin property)
     @State var loginMode = Constants.LoginMode.login //we default the value to the constant login..check constant file enum
     @State var email: String = ""
     @State var password: String = ""
     @State var name: String = ""
     @State var errorMsg: String? //? means nil
     
-    //computed property//to change the text of the button down here
-    var buttonText: String {
-        if loginMode == Constants.LoginMode.login {
-            return "Login"
-        } else {
-            return "Sign Up"
-        }
-    }
     
     var body: some View {
         VStack(spacing: 10) {
@@ -32,28 +24,21 @@ struct LoginView: View {
             Spacer()
             
             //logo
-            Image(systemName: "person.fill.questionmark").resizable().scaledToFit().frame(maxWidth: 150)
+            Image(systemName: "bolt.heart.fill").resizable().scaledToFit().frame(maxWidth: 50)
+                .padding(.top, 20)
+                .foregroundColor(.red)
             
             //title
             Text("Secret0")
+                .font(.title)
+                .bold()
             
             Spacer()
             
-            //picker
-            Picker(selection: $loginMode, label: Text("Hey")) {
-                Text("Login")
-                    .tag(Constants.LoginMode.login) //if clicked Login then the tag is assigned to the picker with Constant.loginMode.login
-                Text("Sign Up")
-                    .tag(Constants.LoginMode.createAccount)//if clicked signup then the tag is assigned to the picker with Constant.loginMode.signup
-            }.pickerStyle(SegmentedPickerStyle()) //so the picker stule looks nice
             
             Group { //to avoid having more than 10 elements in the view
                 //forms
                 TextField("Email", text: $email) //so it looks cute
-                if loginMode == Constants.LoginMode.createAccount {
-                    TextField("Name", text: $name)
-                }
-             
                 SecureField("Password", text: $password)
                 
                 if errorMsg != nil {
@@ -64,7 +49,7 @@ struct LoginView: View {
             
             //button
             Button {
-                if loginMode == Constants.LoginMode.login {
+               // if loginMode == Constants.LoginMode.login {
                     //log the user in
                     Auth.auth().signIn(withEmail: email, password: password) { result, error in
                         //check for errors
@@ -79,9 +64,11 @@ struct LoginView: View {
                         //model.getUserData()
                         
                         //change the view to login view
-                        //model.checkLogin() //because this will flip the Model published property "loggedIn" to true
+                        model.checkLogin() //because this will flip the Model published property "loggedIn" to true
+                        
+                        
                     }
-                } else {
+                /*} else {
                     //create new account if the mode IS NOT LOGIN, meaning is sign up
                     Auth.auth().createUser(withEmail: email, password: password) { result, error in
                         //check for errors
@@ -105,15 +92,15 @@ struct LoginView: View {
                         
                         
                         //change the view to logged in view
-                        //model.checkLogin()
+                        model.checkLogin()
                         
                        
                     }
-                }
+                }*/
             } label: {
                 ZStack {
                     Rectangle().foregroundColor(.blue).frame(height: 40).cornerRadius(10)
-                    Text(buttonText).foregroundColor(.white)
+                    Text("Sign in").foregroundColor(.white)
                 }
             }
             Spacer()
