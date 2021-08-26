@@ -9,73 +9,87 @@ import SwiftUI
 
 struct Landing: View {
     @EnvironmentObject var model: ContentModel
-    @AppStorage("isOnboarding") var isOnboarding = true
+    @AppStorage("isOnboarding") var isOnboarding = false
     
     @State var signIn = false
     
     var body: some View {
         
-        ZStack {
-        
+        NavigationView {
+            ZStack {
             
-            WelcomeVideo()
-            
-                .edgesIgnoringSafeArea(.all)
-            
-            VStack {
                 
-                //logo
-                Image(systemName: "bolt.heart.fill").resizable().scaledToFit().frame(maxWidth: 50)
-                    .padding(.top, 20)
-                    .foregroundColor(.red)
+//                WelcomeVideo()
+//
+//                    .edgesIgnoringSafeArea(.all)
                 
-                //title
-                Text("Secret0")
-                    .font(.title)
-                    .bold()
-                
-                Spacer()
-                
-                Text("By signing up for Secret0, you agree to our Terms of Service. Lean how we process your data in our Privacy Policy and Cookies Policy")
-                    .font(.footnote)
-                    .multilineTextAlignment(.center)
-                    .foregroundColor(.white)
-                    .padding(.top,20)
-                    .padding(.bottom,20)
-                
-                if signIn == false {
-                    //button create account
-                    Button {
-                        //show onboarding screens
-                        isOnboarding = true //to flip loggedin in to true, the launch view will handle the logic???
-                    } label: {
-                        Text("Create Account")
-                    }
+                VStack {
                     
-                    //button to sign in
-                    Button {
-                        //show login view
-                        signIn = true //to flip loggedin in to true, the launch view will hanlde the logic
-                    } label: {
-                        Text("Sign In")
-                    }
-                    .padding(.bottom, 100)
+                    //logo
+                    Image(systemName: "bolt.heart.fill").resizable().scaledToFit().frame(maxWidth: 50)
+                        .padding(.top, 60)
+                        .foregroundColor(.red)
+                    
+                    //title
+                    Text("Secret0")
+                        .font(.title)
+                        .bold()
                     
                     Spacer()
-                } else {
-                    LoginSubView()
+                    Spacer()
+                    
+                    Text("By signing up for Secret0, you agree to our Terms of Service. Lean how we process your data in our Privacy Policy and Cookies Policy")
+                        .font(.footnote)
+                        .multilineTextAlignment(.center)
+                        .foregroundColor(.white)
+                        .padding(.all,20)
+                    
+                    //if self.signIn == false {
+                        //button create account
+//                        Button {
+//                            //show login view
+//                            isOnboarding = true //to flip loggedin in to true, the launch view will hanlde the logic
+//                        } label: {
+//                            Text("Create an Account")
+//                        }
+//                        .padding(.bottom, 20)
+                        
+                        //SIGN UP
+                        NavigationLink(
+                            destination: OnboardingContainerView(),
+                            label: {
+                                Text("Create an Account")
+                            })
+                            .padding(.bottom,10)
+                        
+                        //SIGN IN
+                        Button(action: {
+                            //show login view
+                            self.signIn = true //to flip loggedin in to true, the launch view will hanlde the logic
+                        }, label: {
+                            Text("Sign In")
+                        })
+                        .sheet(isPresented: $signIn, content: {
+                            LoginSubView()
+                        })
+                    
+                       
+                    
+                   // }
+                    
                 }
                 
+                
+                
             }
-            
-            
-            
+        
+            .background(WelcomeVideo())
+            .edgesIgnoringSafeArea(.all)
+        
         }
-    
-        .background(WelcomeVideo())
+        .navigationBarHidden(true)
         
-        
-        Spacer()
+      
         
         
         

@@ -17,6 +17,7 @@ struct OnboardingContainerView: View {
         }
         .tabViewStyle(PageTabViewStyle())
         .edgesIgnoringSafeArea(.all)
+        .navigationBarHidden(true)
     }
 }
 

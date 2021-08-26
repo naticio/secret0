@@ -18,6 +18,7 @@ struct LoginSubView: View {
     @State var errorMsg: String? //? means nil
     
     var body: some View {
+        Spacer()
         TextField("Email", text: $email) //so it looks cute
         SecureField("Password", text: $password)
         
