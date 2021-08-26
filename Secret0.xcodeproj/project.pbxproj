@@ -104,7 +104,6 @@
 				B2D2007E26D5E97600EDF6BD /* Secret0App.swift */,
 				B2D200B226D6B23700EDF6BD /* LaunchView.swift */,
 				B2D200B826D6D0CF00EDF6BD /* Landing */,
-				B2D200AB26D6A0DB00EDF6BD /* HomeView.swift */,
 				B2D200AF26D6A22900EDF6BD /* Onboarding */,
 				B2D2008026D5E97600EDF6BD /* ContentView.swift */,
 				B2D200AA26D6A08D00EDF6BD /* Account */,
@@ -168,6 +167,7 @@
 			children = (
 				B2D200AD26D6A17900EDF6BD /* OnboardingContainerView.swift */,
 				B2D200B026D6A24500EDF6BD /* OnboardingContentView.swift */,
+				B2D200BD26D72E0900EDF6BD /* Home */,
 			);
 			path = Onboarding;
 			sourceTree = "<group>";
@@ -181,6 +181,14 @@
 				B2D200B626D6CFD700EDF6BD /* WelcomeVideo.swift */,
 			);
 			path = Landing;
+			sourceTree = "<group>";
+		};
+		B2D200BD26D72E0900EDF6BD /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				B2D200AB26D6A0DB00EDF6BD /* HomeView.swift */,
+			);
+			path = Home;
 			sourceTree = "<group>";
 		};
 		C5B4963D4C623E5763A76102 /* Pods */ = {

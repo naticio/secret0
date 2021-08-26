@@ -14,6 +14,8 @@ class ContentModel: ObservableObject{
     @Published var loggedIn = false //assume user is not loggfed in,published to notify al views that use this property
         //but still this doesn;t mean the user is logedout...we need to check that as well
     
+    @Published var onboardingIndex = 1
+    
     let db = Firestore.firestore()
     
     init() {

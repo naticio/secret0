@@ -7,6 +7,7 @@
 
 import SwiftUI
 //he declares them in the subview but reflected in thge upper main when called?
+
 let screens = [
     onboardingScreen(title: "How do you want to be called?", disclaimer: "You can use a fiction name if you want to", image: "person"), //for image use system name string
     onboardingScreen(title: "What's your date of birth?", disclaimer: "This can't be changed later", image: "rosette"),
@@ -28,17 +29,22 @@ let screens = [
 
 struct OnboardingContentView: View {
     
+    @EnvironmentObject var model: ContentModel
+    
     @AppStorage("isOnboarding") var isOnboarding: Bool?
     var screen: onboardingScreen
     
+    
+    
     var body: some View {
         ZStack {
-            LinearGradient(gradient: Gradient(colors: [Color(#colorLiteral(red: 0.7041863799, green: 1, blue: 0.7746049762, alpha: 1)), Color(#colorLiteral(red: 0.4745098054, green: 0.8392156959, blue: 0.9764705896, alpha: 1))]), startPoint: .topLeading, endPoint: .bottomTrailing)
+            LinearGradient(gradient: Gradient(colors: [Color(#colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)), Color(#colorLiteral(red: 0.7450980544, green: 0.1568627506, blue: 0.07450980693, alpha: 1))]), startPoint: .topLeading, endPoint: .bottomTrailing)
             VStack {
                 Spacer()
                 Image(systemName: screen.image)
                     .resizable()
                     .scaledToFit()
+                    .frame(width: 100, height: 100, alignment: .center)
                 Spacer()
                 
                 VStack(spacing: 20) {
@@ -51,14 +57,37 @@ struct OnboardingContentView: View {
                 
                 Spacer()
                 
-                Button(action: { isOnboarding = false }, label: {
-                    Text("Start")
-                        .padding()
-                        .background(
-                            Capsule().strokeBorder(Color.white, lineWidth: 1.5)
-                                .frame(width: 100)
-                        )
+                
+                Button(action: {
+                    if model.onboardingIndex < screens.count {
+                        model.onboardingIndex += 1
+                        
+                        if model.onboardingIndex == screens.count {
+                            isOnboarding = false
+                            model.onboardingIndex = 0
+                            
+                        }
+                    }
+                }, label: {
+                    if model.onboardingIndex == screens.count {
+                        Text("Done")
+                    } else {
+                        Text("Next")
+                    }
+                    
                 })
+                .padding()
+                .background(Capsule().strokeBorder(Color.white, lineWidth: 1.5))
+                .frame(width: 100)
+                
+//                Button(action: { isOnboarding = false }, label: {
+//                    Text("Next")
+//                        .padding()
+//                        .background(
+//                            Capsule().strokeBorder(Color.white, lineWidth: 1.5)
+//                                .frame(width: 100)
+//                        )
+//                })
                 
                 Spacer()
             }

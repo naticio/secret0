@@ -72,7 +72,8 @@ struct Landing: View {
                         .sheet(isPresented: $signIn, content: {
                             LoginSubView()
                         })
-                    
+                        
+                        Spacer()
                        
                     
                    // }
