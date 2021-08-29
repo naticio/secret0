@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+
 //he declares them in the subview but reflected in thge upper main when called?
 
 let screens = [
@@ -38,7 +39,7 @@ struct OnboardingContentView: View {
     
     var body: some View {
         ZStack {
-            LinearGradient(gradient: Gradient(colors: [Color(#colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)), Color(#colorLiteral(red: 0.7450980544, green: 0.1568627506, blue: 0.07450980693, alpha: 1))]), startPoint: .topLeading, endPoint: .bottomTrailing)
+            //LinearGradient(gradient: Gradient(colors: [Color(#colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)), Color(#colorLiteral(red: 0.7450980544, green: 0.1568627506, blue: 0.07450980693, alpha: 1))]), startPoint: .topLeading, endPoint: .bottomTrailing)
             VStack {
                 Spacer()
                 Image(systemName: screen.image)
@@ -57,7 +58,9 @@ struct OnboardingContentView: View {
                 
                 Spacer()
                 
+            
                 
+                //oNBOARIDNG NEXT BUTTON
                 Button(action: {
                     if model.onboardingIndex < screens.count {
                         model.onboardingIndex += 1
@@ -65,6 +68,7 @@ struct OnboardingContentView: View {
                         if model.onboardingIndex == screens.count {
                             isOnboarding = false
                             model.onboardingIndex = 0
+                            model.checkLogin()
                             
                         }
                     }

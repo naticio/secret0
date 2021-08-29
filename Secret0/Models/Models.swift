@@ -10,7 +10,7 @@ import SwiftUI
 
 class User {
     var name: String = ""
-    var lastModule: Int?
+    var age: Int?
     var lastLesson: Int?
     var lastQuestion: Int?
 }

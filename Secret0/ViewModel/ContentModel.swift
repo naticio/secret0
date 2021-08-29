@@ -14,7 +14,12 @@ class ContentModel: ObservableObject{
     @Published var loggedIn = false //assume user is not loggfed in,published to notify al views that use this property
         //but still this doesn;t mean the user is logedout...we need to check that as well
     
-    @Published var onboardingIndex = 1
+    @Published var onboardingIndex = 0
+    
+    @Published var usernameSignUp = ""
+    @Published var emailSignUp = ""
+    @Published var passwordSignUp = ""
+    
     
     let db = Firestore.firestore()
     
@@ -31,5 +36,25 @@ class ContentModel: ObservableObject{
 //            getUserData() //to fetch metadata related to user
 //        }
     }
+    
+    func signInUser(email:String, password: String) {
+        Auth.auth().signIn(withEmail: email, password: password) { result, error in
+            //check for errors
+            guard error == nil else {
+                let errorMsg = error!.localizedDescription
+                return
+            }
+            //clear error mesage for future sign ins
+            //errorMsg = nil
+            
+            //todo: fetch the user metadata
+            //model.getUserData()
+            
+            //change the view to login view
+            
+            self.checkLogin() //because this will flip the Model published property "loggedIn" to true
+    }
+    
+}
 }
 

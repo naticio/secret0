@@ -6,12 +6,18 @@
 //
 
 import SwiftUI
+import FirebaseAuth
+import Firebase
 
 struct Landing: View {
     @EnvironmentObject var model: ContentModel
     @AppStorage("isOnboarding") var isOnboarding = false
     
-    @State var signIn = false
+    @State var email: String = ""
+    @State var password: String = ""
+    @State var errorMsg: String? //? means nil
+    
+    @State private var showSignInSheet = false
     
     var body: some View {
         
@@ -56,21 +62,24 @@ struct Landing: View {
                         
                         //SIGN UP
                         NavigationLink(
-                            destination: OnboardingContainerView(),
+                            destination: NameOnboardingView().navigationBarHidden(true),
                             label: {
                                 Text("Create an Account")
                             })
                             .padding(.bottom,10)
+                
                         
                         //SIGN IN
                         Button(action: {
                             //show login view
-                            self.signIn = true //to flip loggedin in to true, the launch view will hanlde the logic
+                            self.showSignInSheet.toggle() //to flip loggedin in to true, the launch view will hanlde the logic
+                            
                         }, label: {
                             Text("Sign In")
                         })
-                        .sheet(isPresented: $signIn, content: {
-                            LoginSubView()
+
+                        .sheet(isPresented: $showSignInSheet, content: {
+                            LoginSubView(showSheet: $showSignInSheet)
                         })
                         
                         Spacer()
@@ -95,6 +104,55 @@ struct Landing: View {
         
         
         
+    }
+}
+
+//MARK: - loginsubview sheet
+struct LoginSubView: View {
+    
+    @EnvironmentObject var model: ContentModel
+    
+    @State var email: String = ""
+    @State var password: String = ""
+    @State var errorMsg: String? //? means nil
+    
+    @Binding var showSheet: Bool
+    
+    var body: some View {
+        Spacer()
+        TextField("Email", text: $email) //so it looks cute
+        SecureField("Password", text: $password)
+        
+        if errorMsg != nil {
+            Text(errorMsg!)
+        }
+        
+        Button {
+            //log the user in
+            self.showSheet.toggle()
+            Auth.auth().signIn(withEmail: email, password: password) { result, error in
+                //check for errors
+                guard error == nil else {
+                    errorMsg = error!.localizedDescription
+                    return
+                }
+                //clear error mesage for future sign ins
+                self.errorMsg = nil
+                
+                //todo: fetch the user metadata
+                //model.getUserData()
+                
+                //change the view to login view
+                
+                model.checkLogin() //because this will flip the Model published property "loggedIn" to true
+                
+            } } label: {
+                ZStack {
+                    Rectangle().foregroundColor(.blue).frame(height: 40).cornerRadius(10)
+                    Text("Sign In").foregroundColor(.white)
+                }
+            }
+        Spacer()
     }
 }
 

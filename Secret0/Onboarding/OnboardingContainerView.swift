@@ -26,13 +26,13 @@ struct OnboardingContainerView: View {
 //        .edgesIgnoringSafeArea(.all)
 //        .navigationBarHidden(true)
         
-        if model.onboardingIndex == 0 && isOnboarding == false {
+        if model.loggedIn && isOnboarding == false {
             HomeView()
         } else {
+            
             OnboardingContentView(screen: screens[model.onboardingIndex])
                 .navigationBarHidden(true)
         }
-      
         
     }
 }
