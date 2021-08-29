@@ -11,123 +11,144 @@ import SwiftUI
 
 struct NameOnboardingView: View {
     
+    
     @EnvironmentObject var model: ContentModel
     
     @AppStorage("isOnboarding") var isOnboarding: Bool?
     //var screen: onboardingScreen
     
     @State var username: String = ""
+    @State var email: String = ""
+    @State var password: String = ""
+    
+    @State var goWhenTrue : Bool = false
+    @State var warningMsg: String = ""
     
     var body: some View {
-        ZStack {
-            //LinearGradient(gradient: Gradient(colors: [Color(#colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)), Color(#colorLiteral(red: 0.7450980544, green: 0.1568627506, blue: 0.07450980693, alpha: 1))]), startPoint: .topLeading, endPoint: .bottomTrailing)
-            VStack {
-                Spacer()
-                let index = model.onboardingIndex
-                Image(systemName: Constants.screens[index].image)
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 100, height: 100, alignment: .center)
-                Spacer()
-                
-                VStack(alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/) {
-                    Text(Constants.screens[index].title)
-                        .font(.title)
-                        .bold()
+        NavigationView{
+            ZStack {
+       
+                VStack {
                     
-                    TextField("username", text: $username).font(.title)
-                        .multilineTextAlignment(.center)
-                        .padding()
+                    let index = model.onboardingIndex
                     
+                    Image(systemName: Constants.screens[index].image)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 50, height: 50, alignment: .center)
                     
-                    Text(Constants.screens[index].disclaimer)
-                        .font(.caption)
-                }
-                .padding()
-                
-                Spacer()
-                
-            
-                
-                //oNBOARIDNG NEXT BUTTON
-                
-                Button(action: {
-                    //save username (to create user once we have password and email
-                    
-                    model.usernameSignUp = username
-                    
-                    //update indexes
-                    if model.onboardingIndex < Constants.screens.count {
-                        model.onboardingIndex += 1
+                    VStack(alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/) {
+                        Text(Constants.screens[index].title)
+                            .font(.title)
+                            .bold()
                         
-                        if model.onboardingIndex == Constants.screens.count {
-                            isOnboarding = false
-                            model.onboardingIndex = 0
-                            model.checkLogin()
+                        TextField("username", text: $username).font(.title)
+                            .multilineTextAlignment(.center)
+                            .padding()
+                        
+                        
+                        Text(Constants.screens[index].disclaimer)
+                            .font(.caption)
+                    }
+                    .padding()
+                    
+                    //warning message if the text is not formatted correctly
+                    Text(warningMsg)
+                    
+                    NavigationLink(destination: EmailOnboardingView(), isActive: $goWhenTrue) {
+                        EmptyView()
+                    }
+                    
+                    Button {
+                        if textFormatOK() {
+                            model.usernameSignUp = username
+                            goWhenTrue = true
+                              
+                              if model.onboardingIndex < Constants.screens.count {
+                                  model.onboardingIndex += 1
+                                  
+                                  if model.onboardingIndex == Constants.screens.count {
+                                      isOnboarding = false
+                                      model.onboardingIndex = 0
+                                      model.checkLogin()
+                                      
+                                  }
+                              }
+                        } else {
+                            //show a warning message for the etxt to be longer than 1 chr
+                            if username.count == 0 {
+                                warningMsg = "Username must not be empty"
+                            }
+                            if username.count > 15 {
+                                warningMsg = "Username is too long, must be less than 15 chrs"
+                            }
                             
                         }
+                     
                         
-                        EmailOnboardingView()
+                        
+                    } label: {
+                        if model.onboardingIndex == Constants.screens.count {
+                            Text("Done")
+                        } else {
+                            Text("Next")
+                        }
                     }
-                }, label: {
-                    if model.onboardingIndex == Constants.screens.count {
-                        Text("Done")
-                    } else {
-                        Text("Next")
+                    .padding()
+                    .background(Capsule().strokeBorder(Color.white, lineWidth: 1.5))
+                    .frame(width: 100)
+
+                    Spacer()
+
                     }
-                    
-                })
-                .padding()
-                .background(Capsule().strokeBorder(Color.white, lineWidth: 1.5))
-                .frame(width: 100)
-                
-//                Button(action: { isOnboarding = false }, label: {
-//                    Text("Next")
-//                        .padding()
-//                        .background(
-//                            Capsule().strokeBorder(Color.white, lineWidth: 1.5)
-//                                .frame(width: 100)
-//                        )
-//                })
-                
-                Spacer()
+                }
             }
+            
+            .navigationBarHidden(true)
+            .edgesIgnoringSafeArea(.all)
         }
-        .navigationBarHidden(true)
-        .edgesIgnoringSafeArea(.all)
+    
+    //MARK: - check if the Onboarding input field is ok
+    func textFormatOK() -> Bool {
+        if username.count >= 1 { //more than 1 chr in the username
+            return true
+        } else {
+            return false
+        }
+       
+    }
+        
+        //    func signUpUser(email: String, password: String, name: String) {
+        //        // Create a new account
+        //        Auth.auth().createUser(withEmail: email, password: password) { result, error in
+        //
+        //            // Check for errors
+        //            guard error == nil else {
+        //                let errorMessage = error!.localizedDescription
+        //                return
+        //            }
+        //            // Clear error message
+        ////                errorMessage = nil
+        //
+        //            // Save the first name
+        //            let firebaseuser = Auth.auth().currentUser
+        //            let db = Firestore.firestore()
+        //            let ref = db.collection("users").document(firebaseuser!.uid)
+        //
+        //            ref.setData(["name": name], merge: true)
+        //
+        //            // Update the user meta data
+        //            let user = UserService.shared.user
+        //            user.name = name
+        //
+        //            // Change the view to logged in view
+        //            model.checkLogin()
+        //        }
+        //    }
     }
     
-//    func signUpUser(email: String, password: String, name: String) {
-//        // Create a new account
-//        Auth.auth().createUser(withEmail: email, password: password) { result, error in
-//
-//            // Check for errors
-//            guard error == nil else {
-//                let errorMessage = error!.localizedDescription
-//                return
-//            }
-//            // Clear error message
-////                errorMessage = nil
-//
-//            // Save the first name
-//            let firebaseuser = Auth.auth().currentUser
-//            let db = Firestore.firestore()
-//            let ref = db.collection("users").document(firebaseuser!.uid)
-//
-//            ref.setData(["name": name], merge: true)
-//
-//            // Update the user meta data
-//            let user = UserService.shared.user
-//            user.name = name
-//
-//            // Change the view to logged in view
-//            model.checkLogin()
-//        }
-//    }
-}
-
-struct Name_Previews: PreviewProvider {
-    static var previews: some View {
-        NameOnboardingView()
+    struct Name_Previews: PreviewProvider {
+        static var previews: some View {
+            NameOnboardingView()
+        }
     }
-}

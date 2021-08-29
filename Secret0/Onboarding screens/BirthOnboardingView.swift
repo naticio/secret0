@@ -14,17 +14,18 @@ struct BirthOnboardingView: View {
     //var screen: onboardingScreen
     
     @State var birthDate = Date()
+    @State var goWhenTrue : Bool = false
     
     var body: some View {
         ZStack {
             //LinearGradient(gradient: Gradient(colors: [Color(#colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)), Color(#colorLiteral(red: 0.7450980544, green: 0.1568627506, blue: 0.07450980693, alpha: 1))]), startPoint: .topLeading, endPoint: .bottomTrailing)
             VStack {
-                Spacer()
+                
                 let index = model.onboardingIndex
                 Image(systemName: Constants.screens[index].image)
                     .resizable()
                     .scaledToFit()
-                    .frame(width: 100, height: 100, alignment: .center)
+                    .frame(width: 50, height: 50, alignment: .center)
                 Spacer()
                 
                 VStack(alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/) {
@@ -32,10 +33,9 @@ struct BirthOnboardingView: View {
                         .font(.title)
                         .bold()
                     
-                    //SecureField("birthDate", text: $password).font(.title)
-//                        .multilineTextAlignment(.center)
-//                        .padding()
-                    
+                    DatePicker("Date", selection: $birthDate, displayedComponents: [.date])
+                    .datePickerStyle(WheelDatePickerStyle())
+                
                     
                     Text(Constants.screens[index].disclaimer)
                         .font(.caption)
@@ -44,27 +44,30 @@ struct BirthOnboardingView: View {
                 
                 Spacer()
                 
-            
+                NavigationLink(destination: NotifOnboarding(), isActive: $goWhenTrue) {
+                    EmptyView()
+                }
                 
                 //oNBOARIDNG NEXT BUTTON
                 Button(action: {
                     //save username (to create user once we have password and email
                     
-                    //model.passwordSignUp = password
-                    
-                    //update indexes
-                    if model.onboardingIndex < Constants.screens.count {
-                        model.onboardingIndex += 1
+                    if textFormatOK() {
+                        goWhenTrue = true
                         
-                        if model.onboardingIndex == Constants.screens.count {
-                            isOnboarding = false
-                            model.onboardingIndex = 0
-                            model.checkLogin()
+                        //update indexes
+                        if model.onboardingIndex < Constants.screens.count {
+                            model.onboardingIndex += 1
                             
+                            if model.onboardingIndex == Constants.screens.count {
+                                isOnboarding = false
+                                model.onboardingIndex = 0
+                                model.checkLogin()
+                                
+                            }
                         }
-                        
-                        //to thenext screen
                     }
+                    
                 }, label: {
                     if model.onboardingIndex == Constants.screens.count {
                         Text("Done")
@@ -91,6 +94,18 @@ struct BirthOnboardingView: View {
         }
         .navigationBarHidden(true)
         .edgesIgnoringSafeArea(.all)
+    }
+    
+    func textFormatOK() -> Bool {
+        
+        let age = Calendar.current.dateComponents([.year, .month, .day], from: birthDate, to: Date())
+        
+            
+        if age.year! > 17 {
+            return true
+        } else {
+            return false
+        }
     }
 }
 

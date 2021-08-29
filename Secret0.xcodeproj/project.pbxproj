@@ -11,8 +11,8 @@
 		B2827C4326D9A2BE00A86AF4 /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2827C4226D9A2BE00A86AF4 /* UserService.swift */; };
 		B2827C4626DAE1D200A86AF4 /* NameOnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2827C4526DAE1D200A86AF4 /* NameOnboardingView.swift */; };
 		B2C7ACEE26DB05C400D8F4B4 /* EmailOnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C7ACED26DB05C400D8F4B4 /* EmailOnboardingView.swift */; };
-		B2C7ACF026DB06B800D8F4B4 /* PwdOnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C7ACEF26DB06B800D8F4B4 /* PwdOnboardingView.swift */; };
 		B2C7ACF326DB08AA00D8F4B4 /* BirthOnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C7ACF226DB08A900D8F4B4 /* BirthOnboardingView.swift */; };
+		B2C7ACF526DC2A9A00D8F4B4 /* NotifOnboarding.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C7ACF426DC2A9A00D8F4B4 /* NotifOnboarding.swift */; };
 		B2D2007F26D5E97600EDF6BD /* Secret0App.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2D2007E26D5E97600EDF6BD /* Secret0App.swift */; };
 		B2D2008126D5E97600EDF6BD /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2D2008026D5E97600EDF6BD /* ContentView.swift */; };
 		B2D2008326D5E97700EDF6BD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B2D2008226D5E97700EDF6BD /* Assets.xcassets */; };
@@ -40,8 +40,8 @@
 		B2827C4226D9A2BE00A86AF4 /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
 		B2827C4526DAE1D200A86AF4 /* NameOnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NameOnboardingView.swift; sourceTree = "<group>"; };
 		B2C7ACED26DB05C400D8F4B4 /* EmailOnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailOnboardingView.swift; sourceTree = "<group>"; };
-		B2C7ACEF26DB06B800D8F4B4 /* PwdOnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PwdOnboardingView.swift; sourceTree = "<group>"; };
 		B2C7ACF226DB08A900D8F4B4 /* BirthOnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BirthOnboardingView.swift; sourceTree = "<group>"; };
+		B2C7ACF426DC2A9A00D8F4B4 /* NotifOnboarding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotifOnboarding.swift; sourceTree = "<group>"; };
 		B2D2007B26D5E97600EDF6BD /* Secret0.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Secret0.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B2D2007E26D5E97600EDF6BD /* Secret0App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Secret0App.swift; sourceTree = "<group>"; };
 		B2D2008026D5E97600EDF6BD /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -89,8 +89,8 @@
 			children = (
 				B2827C4526DAE1D200A86AF4 /* NameOnboardingView.swift */,
 				B2C7ACED26DB05C400D8F4B4 /* EmailOnboardingView.swift */,
-				B2C7ACEF26DB06B800D8F4B4 /* PwdOnboardingView.swift */,
 				B2C7ACF226DB08A900D8F4B4 /* BirthOnboardingView.swift */,
+				B2C7ACF426DC2A9A00D8F4B4 /* NotifOnboarding.swift */,
 			);
 			path = "Onboarding screens";
 			sourceTree = "<group>";
@@ -345,6 +345,7 @@
 				B2D200B126D6A24500EDF6BD /* OnboardingContentView.swift in Sources */,
 				B2D200B526D6C8CA00EDF6BD /* Landing.swift in Sources */,
 				B2827C4626DAE1D200A86AF4 /* NameOnboardingView.swift in Sources */,
+				B2C7ACF526DC2A9A00D8F4B4 /* NotifOnboarding.swift in Sources */,
 				B2D200AE26D6A17900EDF6BD /* OnboardingContainerView.swift in Sources */,
 				B2D200AC26D6A0DB00EDF6BD /* HomeView.swift in Sources */,
 				B2D2008126D5E97600EDF6BD /* ContentView.swift in Sources */,
@@ -353,7 +354,6 @@
 				B2C7ACEE26DB05C400D8F4B4 /* EmailOnboardingView.swift in Sources */,
 				B2827C4326D9A2BE00A86AF4 /* UserService.swift in Sources */,
 				B2D200B726D6CFD700EDF6BD /* WelcomeVideo.swift in Sources */,
-				B2C7ACF026DB06B800D8F4B4 /* PwdOnboardingView.swift in Sources */,
 				B2D2008B26D5E97700EDF6BD /* Secret0.xcdatamodeld in Sources */,
 				B2D2007F26D5E97600EDF6BD /* Secret0App.swift in Sources */,
 			);
