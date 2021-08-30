@@ -8,6 +8,7 @@
 import Foundation
 import Firebase
 import FirebaseAuth
+import CoreLocation
 
 class ContentModel: ObservableObject{
     

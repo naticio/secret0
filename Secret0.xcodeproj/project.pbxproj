@@ -13,6 +13,10 @@
 		B2C7ACEE26DB05C400D8F4B4 /* EmailOnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C7ACED26DB05C400D8F4B4 /* EmailOnboardingView.swift */; };
 		B2C7ACF326DB08AA00D8F4B4 /* BirthOnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C7ACF226DB08A900D8F4B4 /* BirthOnboardingView.swift */; };
 		B2C7ACF526DC2A9A00D8F4B4 /* NotifOnboarding.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C7ACF426DC2A9A00D8F4B4 /* NotifOnboarding.swift */; };
+		B2C7ACF726DC979700D8F4B4 /* LocationOnboarding.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C7ACF626DC979700D8F4B4 /* LocationOnboarding.swift */; };
+		B2C7ACFB26DC9B2E00D8F4B4 /* LocationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C7ACFA26DC9B2E00D8F4B4 /* LocationViewModel.swift */; };
+		B2C7ACFD26DC9E7100D8F4B4 /* genderOnboarding.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C7ACFC26DC9E7100D8F4B4 /* genderOnboarding.swift */; };
+		B2C7ACFF26DC9F8F00D8F4B4 /* LocationDeniedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C7ACFE26DC9F8F00D8F4B4 /* LocationDeniedView.swift */; };
 		B2D2007F26D5E97600EDF6BD /* Secret0App.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2D2007E26D5E97600EDF6BD /* Secret0App.swift */; };
 		B2D2008126D5E97600EDF6BD /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2D2008026D5E97600EDF6BD /* ContentView.swift */; };
 		B2D2008326D5E97700EDF6BD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B2D2008226D5E97700EDF6BD /* Assets.xcassets */; };
@@ -42,6 +46,10 @@
 		B2C7ACED26DB05C400D8F4B4 /* EmailOnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailOnboardingView.swift; sourceTree = "<group>"; };
 		B2C7ACF226DB08A900D8F4B4 /* BirthOnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BirthOnboardingView.swift; sourceTree = "<group>"; };
 		B2C7ACF426DC2A9A00D8F4B4 /* NotifOnboarding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotifOnboarding.swift; sourceTree = "<group>"; };
+		B2C7ACF626DC979700D8F4B4 /* LocationOnboarding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationOnboarding.swift; sourceTree = "<group>"; };
+		B2C7ACFA26DC9B2E00D8F4B4 /* LocationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationViewModel.swift; sourceTree = "<group>"; };
+		B2C7ACFC26DC9E7100D8F4B4 /* genderOnboarding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = genderOnboarding.swift; sourceTree = "<group>"; };
+		B2C7ACFE26DC9F8F00D8F4B4 /* LocationDeniedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationDeniedView.swift; sourceTree = "<group>"; };
 		B2D2007B26D5E97600EDF6BD /* Secret0.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Secret0.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B2D2007E26D5E97600EDF6BD /* Secret0App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Secret0App.swift; sourceTree = "<group>"; };
 		B2D2008026D5E97600EDF6BD /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -91,6 +99,9 @@
 				B2C7ACED26DB05C400D8F4B4 /* EmailOnboardingView.swift */,
 				B2C7ACF226DB08A900D8F4B4 /* BirthOnboardingView.swift */,
 				B2C7ACF426DC2A9A00D8F4B4 /* NotifOnboarding.swift */,
+				B2C7ACF626DC979700D8F4B4 /* LocationOnboarding.swift */,
+				B2C7ACFE26DC9F8F00D8F4B4 /* LocationDeniedView.swift */,
+				B2C7ACFC26DC9E7100D8F4B4 /* genderOnboarding.swift */,
 			);
 			path = "Onboarding screens";
 			sourceTree = "<group>";
@@ -175,6 +186,7 @@
 			isa = PBXGroup;
 			children = (
 				B2D200A826D69FE600EDF6BD /* ContentModel.swift */,
+				B2C7ACFA26DC9B2E00D8F4B4 /* LocationViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -346,13 +358,17 @@
 				B2D200B526D6C8CA00EDF6BD /* Landing.swift in Sources */,
 				B2827C4626DAE1D200A86AF4 /* NameOnboardingView.swift in Sources */,
 				B2C7ACF526DC2A9A00D8F4B4 /* NotifOnboarding.swift in Sources */,
+				B2C7ACFD26DC9E7100D8F4B4 /* genderOnboarding.swift in Sources */,
 				B2D200AE26D6A17900EDF6BD /* OnboardingContainerView.swift in Sources */,
 				B2D200AC26D6A0DB00EDF6BD /* HomeView.swift in Sources */,
 				B2D2008126D5E97600EDF6BD /* ContentView.swift in Sources */,
 				B2D200A526D5F15E00EDF6BD /* Models.swift in Sources */,
 				B2D200A926D69FE600EDF6BD /* ContentModel.swift in Sources */,
 				B2C7ACEE26DB05C400D8F4B4 /* EmailOnboardingView.swift in Sources */,
+				B2C7ACFB26DC9B2E00D8F4B4 /* LocationViewModel.swift in Sources */,
+				B2C7ACF726DC979700D8F4B4 /* LocationOnboarding.swift in Sources */,
 				B2827C4326D9A2BE00A86AF4 /* UserService.swift in Sources */,
+				B2C7ACFF26DC9F8F00D8F4B4 /* LocationDeniedView.swift in Sources */,
 				B2D200B726D6CFD700EDF6BD /* WelcomeVideo.swift in Sources */,
 				B2D2008B26D5E97700EDF6BD /* Secret0.xcdatamodeld in Sources */,
 				B2D2007F26D5E97600EDF6BD /* Secret0App.swift in Sources */,

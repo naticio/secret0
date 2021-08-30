@@ -19,7 +19,7 @@ struct Constants {
         onboardingScreen(title: "Type and email & choose a password?", disclaimer: "This email will be used for password recovery", image: "envelope"), //for image use system name string
         onboardingScreen(title: "What's your date of birth?", disclaimer: "This can't be changed later", image: "rosette"),
         onboardingScreen(title: "Never miss a message from someone great", disclaimer: "", image: "zzz"),
-        onboardingScreen(title: "Adding basic info leads to better matches", disclaimer: "Only neighborhood name is shown", image: "location"),
+        onboardingScreen(title: "Where do you live?", disclaimer: "Only neighborhood name is shown", image: "location"),
         onboardingScreen(title: "What's your gender?", disclaimer: "", image: "person"),
         onboardingScreen(title: "What's your sexuality?", disclaimer: "", image: "sparkles"),
         onboardingScreen(title: "Who do you want to date?", disclaimer: "", image: "heart"),

@@ -52,7 +52,7 @@ struct BirthOnboardingView: View {
                 Button(action: {
                     //save username (to create user once we have password and email
                     
-                    if textFormatOK() {
+                    if userOver18() {
                         goWhenTrue = true
                         
                         //update indexes
@@ -96,7 +96,7 @@ struct BirthOnboardingView: View {
         .edgesIgnoringSafeArea(.all)
     }
     
-    func textFormatOK() -> Bool {
+    func userOver18() -> Bool {
         
         let age = Calendar.current.dateComponents([.year, .month, .day], from: birthDate, to: Date())
         
