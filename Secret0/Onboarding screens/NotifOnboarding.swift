@@ -59,16 +59,18 @@ struct NotifOnboarding: View {
                         goWhenTrue = true
                         
                         //update indexes
-                        if model.onboardingIndex < Constants.screens.count {
-                            model.onboardingIndex += 1
+                    //update indexes
+                    if model.onboardingIndex < Constants.screens.count {
+                        model.onboardingIndex += 1
+                        
+                        if model.onboardingIndex == Constants.screens.count {
+                            isOnboarding = false
+                            model.onboardingIndex = 0
+                            model.checkLogin()
+                            //model.updateIndexes()
                             
-                            if model.onboardingIndex == Constants.screens.count {
-                                isOnboarding = false
-                                model.onboardingIndex = 0
-                                model.checkLogin()
-                                
-                            }
                         }
+                    }
                     
                 }, label: {
                     if model.onboardingIndex == Constants.screens.count {

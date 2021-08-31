@@ -10910,6 +10910,7 @@
 		B2976754624B4471316FAE7998C84820 /* rsa_pss.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = rsa_pss.c; path = src/crypto/x509/rsa_pss.c; sourceTree = "<group>"; };
 		B2C146A922D543C6F21E201A621DF064 /* server_callback.cc */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.cpp; name = server_callback.cc; path = src/cpp/server/server_callback.cc; sourceTree = "<group>"; };
 		B2C7ACF126DB089E00D8F4B4 /* BirthOnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = BirthOnboardingView.swift; path = "../Secret0/Onboarding screens/BirthOnboardingView.swift"; sourceTree = "<group>"; };
+		B2C7AD0626DEE4AE00D8F4B4 /* HeightPreferencesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = HeightPreferencesView.swift; path = "../Secret0/Onboarding screens/HeightPreferencesView.swift"; sourceTree = "<group>"; };
 		B2E0AAAB6D29B6B38A99DB6794B20B46 /* atm.cc */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.cpp; name = atm.cc; path = src/core/lib/gpr/atm.cc; sourceTree = "<group>"; };
 		B2ED242978C9A5AB4F2BC3945A748A9B /* iterator.cc */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.cpp; name = iterator.cc; path = table/iterator.cc; sourceTree = "<group>"; };
 		B2F31375B6F5794155F40EBB7CB75080 /* eventmanager_libuv.cc */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.cpp; name = eventmanager_libuv.cc; path = src/core/lib/iomgr/poller/eventmanager_libuv.cc; sourceTree = "<group>"; };
@@ -15507,6 +15508,7 @@
 		CF1408CF629C7361332E53B88F7BD30C = {
 			isa = PBXGroup;
 			children = (
+				B2C7AD0626DEE4AE00D8F4B4 /* HeightPreferencesView.swift */,
 				B2C7ACF126DB089E00D8F4B4 /* BirthOnboardingView.swift */,
 				9D940727FF8FB9C785EB98E56350EF41 /* Podfile */,
 				D4F75014C9F5292C6073D25FF23753F7 /* Frameworks */,

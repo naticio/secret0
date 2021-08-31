@@ -1,27 +1,47 @@
 //
-//  BirthOnboardingView.swift
+//  HeightPreferencesView.swift
 //  Pods
 //
-//  Created by Nat-Serrano on 8/28/21.
+//  Created by Nat-Serrano on 8/31/21.
 //
 
 import SwiftUI
 
-struct BirthOnboardingView: View {
+struct HeightPreferencesView: View {
+    
     @EnvironmentObject var model: ContentModel
     
     @AppStorage("isOnboarding") var isOnboarding: Bool?
-    //var screen: onboardingScreen
-    
-    @State var birthDate = Date()
     @State var goWhenTrue : Bool = false
+    @State var selectedeHeight: String = "5'7 ("
+    @State var heightOptions = [
+        "4'9 (144 cm)",
+        "5'0 (152 cm)",
+        "5'1 (155 cm)",
+        "5'2 (158 cm)",
+        "5'3 (160 cm)",
+        "5'4 (163 cm)",
+        "5'5 (165 cm)",
+        "5'6 (168 cm)",
+        "5'7 (170 cm)",
+        "5'8 (173 cm)",
+        "5'9 (175 cm)",
+        "5'10 (178 cm)",
+        "5'11 (180 cm)",
+        "6'0 (183 cm)",
+        "6'1 (185 cm)",
+        "6'2 (188 cm)",
+        "6'3 (190 cm)",
+        "6'4 (193 cm)",
+        "6'5 (195 cm)"
+    ]
     
     var body: some View {
         ZStack {
-            //LinearGradient(gradient: Gradient(colors: [Color(#colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)), Color(#colorLiteral(red: 0.7450980544, green: 0.1568627506, blue: 0.07450980693, alpha: 1))]), startPoint: .topLeading, endPoint: .bottomTrailing)
             VStack {
                 
                 let index = model.onboardingIndex
+                
                 Image(systemName: Constants.screens[index].image)
                     .resizable()
                     .scaledToFit()
@@ -32,10 +52,6 @@ struct BirthOnboardingView: View {
                     Text(Constants.screens[index].title)
                         .font(.title)
                         .bold()
-                    
-
-                    DatePicker("",selection: $birthDate, displayedComponents: [.date])
-                    .datePickerStyle(WheelDatePickerStyle())
                 
                     
                     Text(Constants.screens[index].disclaimer)
@@ -43,20 +59,30 @@ struct BirthOnboardingView: View {
                 }
                 .padding()
                 
+
+                            Picker("", selection: $selectedeHeight) {
+                                ForEach(0..<heightOptions.count) { index in
+                                    Text(self.heightOptions[index]).tag(index)
+                                }
+                            }
+                            .pickerStyle(WheelPickerStyle())
+                
                 Spacer()
                 
-                NavigationLink(destination: NotifOnboarding(), isActive: $goWhenTrue) {
+                NavigationLink(destination: BreakIceOnboardingView(), isActive: $goWhenTrue) {
                     EmptyView()
                 }
                 
-                //oNBOARIDNG NEXT BUTTON
-                Button(action: {
-                    //save username (to create user once we have password and email
+                //BUTTON NEXT
+                Button {
+                    if selectedeHeight.contains("144") {
+                        model.heightModel = 144
+                    }
                     
-                    if userOver18() {
+                    
+                        //model.heightModel = selectedeHeight
                         goWhenTrue = true
                         
-                        //update indexes
                         if model.onboardingIndex < Constants.screens.count {
                             model.onboardingIndex += 1
                             
@@ -67,16 +93,15 @@ struct BirthOnboardingView: View {
                                 
                             }
                         }
-                    }
                     
-                }, label: {
+                    
+                } label: {
                     if model.onboardingIndex == Constants.screens.count {
                         Text("Done")
                     } else {
                         Text("Next")
                     }
-                    
-                })
+                }
                 .padding()
                 .background(Capsule().strokeBorder(Color.white, lineWidth: 1.5))
                 .frame(width: 100)
@@ -96,22 +121,10 @@ struct BirthOnboardingView: View {
         .navigationBarHidden(true)
         .edgesIgnoringSafeArea(.all)
     }
-    
-    func userOver18() -> Bool {
-        
-        let age = Calendar.current.dateComponents([.year, .month, .day], from: birthDate, to: Date())
-        
-            
-        if age.year! > 17 {
-            return true
-        } else {
-            return false
-        }
-    }
 }
 
-struct BirthOnboardingView_Previews: PreviewProvider {
+struct HeightPreferencesView_Previews: PreviewProvider {
     static var previews: some View {
-        BirthOnboardingView()
+        HeightPreferencesView()
     }
 }

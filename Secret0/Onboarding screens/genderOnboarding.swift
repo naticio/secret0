@@ -87,6 +87,18 @@ struct genderOnboarding: View {
                         if maleButtonPressed == true {model.genderModel = "Male"}
                         if femaleButtonPressed == true {model.genderModel = "Female"}
                         goWhenTrue = true
+                        
+                        //update indexes
+                        if model.onboardingIndex < Constants.screens.count {
+                            model.onboardingIndex += 1
+                            
+                            if model.onboardingIndex == Constants.screens.count {
+                                isOnboarding = false
+                                model.onboardingIndex = 0
+                                model.checkLogin()
+                                
+                            }
+                        }
                     }
                     
                     

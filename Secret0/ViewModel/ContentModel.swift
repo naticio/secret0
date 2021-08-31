@@ -15,6 +15,8 @@ class ContentModel: ObservableObject{
         //but still this doesn;t mean the user is logedout...we need to check that as well
     
     @Published var onboardingIndex = 0
+    @Published var isOnboarding = false
+    
     
     @Published var usernameSignUp = ""
     @Published var emailSignUp = ""
@@ -65,6 +67,22 @@ class ContentModel: ObservableObject{
             
             self.checkLogin() //because this will flip the Model published property "loggedIn" to true
     }
+        
+        //UPDATE ONBOARDING INDEXES
+        func updateIndexes(){
+            //update indexes
+            if self.onboardingIndex < Constants.screens.count {
+                self.onboardingIndex += 1
+                
+                if self.onboardingIndex == Constants.screens.count {
+                    isOnboarding = false
+                    self.onboardingIndex = 0
+                    self.checkLogin()
+                    
+                }
+            }
+        }
+       
         
         //MARK: - data methods
         //save data into firebase etc to track the user usage

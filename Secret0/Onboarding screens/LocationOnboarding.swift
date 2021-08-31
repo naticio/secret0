@@ -69,12 +69,6 @@ struct LocationOnboarding: View {
                                 localizationModel.authorizationState == .authorizedWhenInUse {
                         // If approved, show home view
                         goWhenTrue = true
-                    }
-                    else {
-                        // If denied show denied view
-                        self.deniedLocation.toggle()
-                    }
-                        
                         
                         //update indexes
                         if model.onboardingIndex < Constants.screens.count {
@@ -87,6 +81,12 @@ struct LocationOnboarding: View {
                                 
                             }
                         }
+                    }
+                    else {
+                        // If denied show denied view
+                        self.deniedLocation.toggle()
+                    }
+                    
                     
                 }, label: {
                     if model.onboardingIndex == Constants.screens.count {

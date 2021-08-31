@@ -38,23 +38,13 @@ struct SexOnboardingView: View {
                 }
                 .padding()
                 
-                           
+
                             Picker("", selection: $selectedPref) {
                                 ForEach(0..<preferences.count) { index in
                                     Text(self.preferences[index]).tag(index)
                                 }
                             }
                             .pickerStyle(WheelPickerStyle())
-                            .padding()
-                
-//                Picker(selection: $sexPref) {
-//                    Text("Straight").tag(AvocadoStyle.sliced)
-//                    Text("Gay").tag(AvocadoStyle.mashed)
-//                }.pickerStyle(RadioGroupPickerStyle())
-                
-//                RadioButtonGroups { selectedPref in
-//                                print("Selected Gender is: \(selectedPref)")
-//                            }
                 
                 Spacer()
                 
@@ -64,30 +54,19 @@ struct SexOnboardingView: View {
                 
                 //BUTTON NEXT
                 Button {
-
-                        model.datingPrefModel = selectedPref
+                        model.sexualityModel = selectedPref
                         goWhenTrue = true
-                          
-                          if model.onboardingIndex < Constants.screens.count {
-                              model.onboardingIndex += 1
-                              
-                              if model.onboardingIndex == Constants.screens.count {
-                                  isOnboarding = false
-                                  model.onboardingIndex = 0
-                                  model.checkLogin()
-                                  
-                              }
-                    } else {
-                        //show a warning message for the etxt to be longer than 1 chr
-//                        if username.count == 0 {
-//                            warningMsg = "Username must not be empty"
-//                        }
-//                        if username.count > 15 {
-//                            warningMsg = "Username is too long, must be less than 15 chrs"
-//                        }
                         
-                    }
-                 
+                        if model.onboardingIndex < Constants.screens.count {
+                            model.onboardingIndex += 1
+                            
+                            if model.onboardingIndex == Constants.screens.count {
+                                isOnboarding = false
+                                model.onboardingIndex = 0
+                                model.checkLogin()
+                                
+                            }
+                        }
                     
                     
                 } label: {

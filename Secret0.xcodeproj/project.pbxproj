@@ -20,6 +20,8 @@
 		B2C7AD0126DD667600D8F4B4 /* SexOnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C7AD0026DD667600D8F4B4 /* SexOnboardingView.swift */; };
 		B2C7AD0326DEA30500D8F4B4 /* RadioButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C7AD0226DEA30500D8F4B4 /* RadioButtonView.swift */; };
 		B2C7AD0526DEA41500D8F4B4 /* DatePreferencesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C7AD0426DEA41500D8F4B4 /* DatePreferencesView.swift */; };
+		B2C7AD0826DEE4B400D8F4B4 /* HeightPreferencesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C7AD0726DEE4B400D8F4B4 /* HeightPreferencesView.swift */; };
+		B2C7AD0A26DEE91900D8F4B4 /* BreakIceOnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C7AD0926DEE91900D8F4B4 /* BreakIceOnboardingView.swift */; };
 		B2D2007F26D5E97600EDF6BD /* Secret0App.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2D2007E26D5E97600EDF6BD /* Secret0App.swift */; };
 		B2D2008126D5E97600EDF6BD /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2D2008026D5E97600EDF6BD /* ContentView.swift */; };
 		B2D2008326D5E97700EDF6BD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B2D2008226D5E97700EDF6BD /* Assets.xcassets */; };
@@ -56,6 +58,8 @@
 		B2C7AD0026DD667600D8F4B4 /* SexOnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SexOnboardingView.swift; sourceTree = "<group>"; };
 		B2C7AD0226DEA30500D8F4B4 /* RadioButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadioButtonView.swift; sourceTree = "<group>"; };
 		B2C7AD0426DEA41500D8F4B4 /* DatePreferencesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatePreferencesView.swift; sourceTree = "<group>"; };
+		B2C7AD0726DEE4B400D8F4B4 /* HeightPreferencesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeightPreferencesView.swift; sourceTree = "<group>"; };
+		B2C7AD0926DEE91900D8F4B4 /* BreakIceOnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BreakIceOnboardingView.swift; sourceTree = "<group>"; };
 		B2D2007B26D5E97600EDF6BD /* Secret0.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Secret0.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B2D2007E26D5E97600EDF6BD /* Secret0App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Secret0App.swift; sourceTree = "<group>"; };
 		B2D2008026D5E97600EDF6BD /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -110,6 +114,8 @@
 				B2C7ACFC26DC9E7100D8F4B4 /* genderOnboarding.swift */,
 				B2C7AD0026DD667600D8F4B4 /* SexOnboardingView.swift */,
 				B2C7AD0426DEA41500D8F4B4 /* DatePreferencesView.swift */,
+				B2C7AD0726DEE4B400D8F4B4 /* HeightPreferencesView.swift */,
+				B2C7AD0926DEE91900D8F4B4 /* BreakIceOnboardingView.swift */,
 				B2C7AD0226DEA30500D8F4B4 /* RadioButtonView.swift */,
 			);
 			path = "Onboarding screens";
@@ -360,6 +366,7 @@
 			files = (
 				B2D2009B26D5EF8000EDF6BD /* UserService.swift in Sources */,
 				B2C7ACF326DB08AA00D8F4B4 /* BirthOnboardingView.swift in Sources */,
+				B2C7AD0826DEE4B400D8F4B4 /* HeightPreferencesView.swift in Sources */,
 				B2D2009526D5EE2D00EDF6BD /* Constants.swift in Sources */,
 				B2D200B326D6B23700EDF6BD /* LaunchView.swift in Sources */,
 				B2D2008826D5E97700EDF6BD /* Persistence.swift in Sources */,
@@ -372,6 +379,7 @@
 				B2C7AD0526DEA41500D8F4B4 /* DatePreferencesView.swift in Sources */,
 				B2D200AC26D6A0DB00EDF6BD /* HomeView.swift in Sources */,
 				B2D2008126D5E97600EDF6BD /* ContentView.swift in Sources */,
+				B2C7AD0A26DEE91900D8F4B4 /* BreakIceOnboardingView.swift in Sources */,
 				B2D200A526D5F15E00EDF6BD /* Models.swift in Sources */,
 				B2D200A926D69FE600EDF6BD /* ContentModel.swift in Sources */,
 				B2C7ACEE26DB05C400D8F4B4 /* EmailOnboardingView.swift in Sources */,
