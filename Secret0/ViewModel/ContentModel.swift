@@ -23,7 +23,7 @@ class ContentModel: ObservableObject{
     @Published var locationModel: String = ""
     @Published var genderModel: String = ""
     @Published var sexualityModel: String = ""
-    @Published var datingPrefModel: [String] = [String]()
+    @Published var datingPrefModel: String = ""
     @Published var heightModel: Int = 0
     @Published var Q1day2liveModel: String = ""
     @Published var QlotteryWinModel: String = ""

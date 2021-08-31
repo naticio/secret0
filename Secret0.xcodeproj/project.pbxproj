@@ -18,6 +18,8 @@
 		B2C7ACFD26DC9E7100D8F4B4 /* genderOnboarding.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C7ACFC26DC9E7100D8F4B4 /* genderOnboarding.swift */; };
 		B2C7ACFF26DC9F8F00D8F4B4 /* LocationDeniedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C7ACFE26DC9F8F00D8F4B4 /* LocationDeniedView.swift */; };
 		B2C7AD0126DD667600D8F4B4 /* SexOnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C7AD0026DD667600D8F4B4 /* SexOnboardingView.swift */; };
+		B2C7AD0326DEA30500D8F4B4 /* RadioButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C7AD0226DEA30500D8F4B4 /* RadioButtonView.swift */; };
+		B2C7AD0526DEA41500D8F4B4 /* DatePreferencesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C7AD0426DEA41500D8F4B4 /* DatePreferencesView.swift */; };
 		B2D2007F26D5E97600EDF6BD /* Secret0App.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2D2007E26D5E97600EDF6BD /* Secret0App.swift */; };
 		B2D2008126D5E97600EDF6BD /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2D2008026D5E97600EDF6BD /* ContentView.swift */; };
 		B2D2008326D5E97700EDF6BD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B2D2008226D5E97700EDF6BD /* Assets.xcassets */; };
@@ -52,6 +54,8 @@
 		B2C7ACFC26DC9E7100D8F4B4 /* genderOnboarding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = genderOnboarding.swift; sourceTree = "<group>"; };
 		B2C7ACFE26DC9F8F00D8F4B4 /* LocationDeniedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationDeniedView.swift; sourceTree = "<group>"; };
 		B2C7AD0026DD667600D8F4B4 /* SexOnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SexOnboardingView.swift; sourceTree = "<group>"; };
+		B2C7AD0226DEA30500D8F4B4 /* RadioButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadioButtonView.swift; sourceTree = "<group>"; };
+		B2C7AD0426DEA41500D8F4B4 /* DatePreferencesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatePreferencesView.swift; sourceTree = "<group>"; };
 		B2D2007B26D5E97600EDF6BD /* Secret0.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Secret0.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B2D2007E26D5E97600EDF6BD /* Secret0App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Secret0App.swift; sourceTree = "<group>"; };
 		B2D2008026D5E97600EDF6BD /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -105,6 +109,8 @@
 				B2C7ACFE26DC9F8F00D8F4B4 /* LocationDeniedView.swift */,
 				B2C7ACFC26DC9E7100D8F4B4 /* genderOnboarding.swift */,
 				B2C7AD0026DD667600D8F4B4 /* SexOnboardingView.swift */,
+				B2C7AD0426DEA41500D8F4B4 /* DatePreferencesView.swift */,
+				B2C7AD0226DEA30500D8F4B4 /* RadioButtonView.swift */,
 			);
 			path = "Onboarding screens";
 			sourceTree = "<group>";
@@ -144,10 +150,10 @@
 				B2827C4A26DAEE2000A86AF4 /* CoreData */,
 				B2D200B826D6D0CF00EDF6BD /* Landing */,
 				B2827C4426DAE1A500A86AF4 /* Onboarding screens */,
+				B2D200A626D69FC100EDF6BD /* ViewModel */,
 				B2D200AF26D6A22900EDF6BD /* Onboarding */,
 				B2D2008026D5E97600EDF6BD /* ContentView.swift */,
 				B2D200AA26D6A08D00EDF6BD /* Account */,
-				B2D200A626D69FC100EDF6BD /* ViewModel */,
 				B2D200A126D5F06400EDF6BD /* Models */,
 				B2D2008226D5E97700EDF6BD /* Assets.xcassets */,
 				B2D200B926D6D25300EDF6BD /* welcome.mp4 */,
@@ -363,6 +369,7 @@
 				B2C7ACF526DC2A9A00D8F4B4 /* NotifOnboarding.swift in Sources */,
 				B2C7ACFD26DC9E7100D8F4B4 /* genderOnboarding.swift in Sources */,
 				B2D200AE26D6A17900EDF6BD /* OnboardingContainerView.swift in Sources */,
+				B2C7AD0526DEA41500D8F4B4 /* DatePreferencesView.swift in Sources */,
 				B2D200AC26D6A0DB00EDF6BD /* HomeView.swift in Sources */,
 				B2D2008126D5E97600EDF6BD /* ContentView.swift in Sources */,
 				B2D200A526D5F15E00EDF6BD /* Models.swift in Sources */,
@@ -371,6 +378,7 @@
 				B2C7AD0126DD667600D8F4B4 /* SexOnboardingView.swift in Sources */,
 				B2C7ACFB26DC9B2E00D8F4B4 /* LocationViewModel.swift in Sources */,
 				B2C7ACF726DC979700D8F4B4 /* LocationOnboarding.swift in Sources */,
+				B2C7AD0326DEA30500D8F4B4 /* RadioButtonView.swift in Sources */,
 				B2827C4326D9A2BE00A86AF4 /* UserService.swift in Sources */,
 				B2C7ACFF26DC9F8F00D8F4B4 /* LocationDeniedView.swift in Sources */,
 				B2D200B726D6CFD700EDF6BD /* WelcomeVideo.swift in Sources */,

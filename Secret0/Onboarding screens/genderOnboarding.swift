@@ -18,7 +18,6 @@ struct genderOnboarding: View {
     
     var body: some View {
         ZStack {
-            //LinearGradient(gradient: Gradient(colors: [Color(#colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)), Color(#colorLiteral(red: 0.7450980544, green: 0.1568627506, blue: 0.07450980693, alpha: 1))]), startPoint: .topLeading, endPoint: .bottomTrailing)
             VStack {
                 
                 let index = model.onboardingIndex
@@ -33,8 +32,7 @@ struct genderOnboarding: View {
                     Text(Constants.screens[index].title)
                         .font(.title)
                         .bold()
-                    
-                    //MAP USER. how to do this???
+                
                     
                     Text(Constants.screens[index].disclaimer)
                         .font(.caption)

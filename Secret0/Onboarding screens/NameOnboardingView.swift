@@ -59,6 +59,7 @@ struct NameOnboardingView: View {
                         EmptyView()
                     }
                     
+                    //BUTTON NEXT
                     Button {
                         if textFormatOK() {
                             model.usernameSignUp = username
