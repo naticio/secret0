@@ -24,7 +24,6 @@ struct Constants {
         onboardingScreen(title: "What's your sexuality?", disclaimer: "", image: "sparkles"),
         onboardingScreen(title: "Who do you want to date?", disclaimer: "", image: "heart"),
         onboardingScreen(title: "How tall are you?", disclaimer: "", image: "ruler"),
-        onboardingScreen(title: "What's your gender", disclaimer: "", image: "person"),
         onboardingScreen(title: "Help others break the ice", disclaimer: "", image: "flame"),
         onboardingScreen(title: "If you had one day left to live, what would you do?", disclaimer: "", image: "flame"),
         onboardingScreen(title: "What would you do if you won $100,000,000?", disclaimer: "", image: "flame"),

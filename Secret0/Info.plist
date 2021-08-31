@@ -46,5 +46,9 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Grant permission so we can give you great matches close to you</string>
+	<key>NSLocationUsageDescription</key>
+	<string>Grant permission so we can give you great matches close to you</string>
 </dict>
 </plist>

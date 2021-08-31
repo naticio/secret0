@@ -21,6 +21,7 @@ struct Secret0App: App {
         WindowGroup {
            LaunchView()
             .environmentObject(ContentModel())
+            .environmentObject(LocationModel())
         //declare environment object to cascade my viewModel throughout the app sub views
         }
     }

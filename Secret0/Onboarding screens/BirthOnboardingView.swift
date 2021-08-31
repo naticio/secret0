@@ -33,7 +33,7 @@ struct BirthOnboardingView: View {
                         .font(.title)
                         .bold()
                     
-                    DatePicker("Date", selection: $birthDate, displayedComponents: [.date])
+                    DatePicker("",selection: $birthDate, displayedComponents: [.date])
                     .datePickerStyle(WheelDatePickerStyle())
                 
                     

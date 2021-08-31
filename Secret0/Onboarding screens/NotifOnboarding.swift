@@ -9,6 +9,7 @@ import SwiftUI
 
 struct NotifOnboarding: View {
     @EnvironmentObject var model: ContentModel
+    @EnvironmentObject var locModel: LocationModel
     
     
     @AppStorage("isOnboarding") var isOnboarding: Bool?
@@ -40,7 +41,13 @@ struct NotifOnboarding: View {
                 
                 Spacer()
                 
-                NavigationLink(destination: LocationOnboarding(), isActive: $goWhenTrue) {
+                NavigationLink(
+                    destination: LocationOnboarding()
+                        .environmentObject(LocationModel())
+                        .onAppear {
+                            locModel.requestGeolocationPermission()
+                        }
+                    , isActive: $goWhenTrue) {
                     EmptyView()
                 }
                 

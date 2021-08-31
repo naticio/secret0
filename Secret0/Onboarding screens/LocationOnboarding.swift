@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import CoreLocation
 
 struct LocationOnboarding: View {
     
@@ -16,15 +17,17 @@ struct LocationOnboarding: View {
     @AppStorage("isOnboarding") var isOnboarding: Bool?
     @State var goWhenTrue : Bool = false
     
-    @State private var showSignInSheet = false
+    @State private var deniedLocation = false
+    
+//    init() {
+//        localizationModel.requestGeolocationPermission()
+//    }
     
     var body: some View {
-        
         
         ZStack {
             //LinearGradient(gradient: Gradient(colors: [Color(#colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)), Color(#colorLiteral(red: 0.7450980544, green: 0.1568627506, blue: 0.07450980693, alpha: 1))]), startPoint: .topLeading, endPoint: .bottomTrailing)
             VStack {
-                
                 
                 let index = model.onboardingIndex
                 
@@ -69,7 +72,7 @@ struct LocationOnboarding: View {
                     }
                     else {
                         // If denied show denied view
-                        self.showSignInSheet.toggle()
+                        self.deniedLocation.toggle()
                     }
                         
                         
@@ -93,7 +96,8 @@ struct LocationOnboarding: View {
                     }
                     
                 })
-                .sheet(isPresented: $showSignInSheet, content: {
+                .disabled(localizationModel.authorizationState == .notDetermined)
+                .sheet(isPresented: $deniedLocation, content: {
                     LocationDeniedView()
                 })
                 .padding()
@@ -117,8 +121,10 @@ struct LocationOnboarding: View {
     }
 }
 
+
 struct LocationOnboarding_Previews: PreviewProvider {
     static var previews: some View {
         LocationOnboarding()
+        //.environmentObject(localizationModel)
     }
 }
