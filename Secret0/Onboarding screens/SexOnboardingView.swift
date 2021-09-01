@@ -76,6 +76,7 @@ struct SexOnboardingView: View {
                         Text("Next")
                     }
                 }
+                .disabled(index == nil)
                 .padding()
                 .background(Capsule().strokeBorder(Color.white, lineWidth: 1.5))
                 .frame(width: 100)

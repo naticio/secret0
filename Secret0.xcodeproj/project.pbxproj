@@ -22,6 +22,9 @@
 		B2C7AD0526DEA41500D8F4B4 /* DatePreferencesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C7AD0426DEA41500D8F4B4 /* DatePreferencesView.swift */; };
 		B2C7AD0826DEE4B400D8F4B4 /* HeightPreferencesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C7AD0726DEE4B400D8F4B4 /* HeightPreferencesView.swift */; };
 		B2C7AD0A26DEE91900D8F4B4 /* BreakIceOnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C7AD0926DEE91900D8F4B4 /* BreakIceOnboardingView.swift */; };
+		B2C7AD0C26DF2BC900D8F4B4 /* girls party small.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B2C7AD0B26DF2BC900D8F4B4 /* girls party small.jpg */; };
+		B2C7AD0E26DF2C8600D8F4B4 /* Q1Day2LiveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C7AD0D26DF2C8600D8F4B4 /* Q1Day2LiveView.swift */; };
+		B2C7AD1126DF2E1400D8F4B4 /* Qwinning1USDM.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C7AD1026DF2E1400D8F4B4 /* Qwinning1USDM.swift */; };
 		B2D2007F26D5E97600EDF6BD /* Secret0App.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2D2007E26D5E97600EDF6BD /* Secret0App.swift */; };
 		B2D2008126D5E97600EDF6BD /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2D2008026D5E97600EDF6BD /* ContentView.swift */; };
 		B2D2008326D5E97700EDF6BD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B2D2008226D5E97700EDF6BD /* Assets.xcassets */; };
@@ -60,6 +63,9 @@
 		B2C7AD0426DEA41500D8F4B4 /* DatePreferencesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatePreferencesView.swift; sourceTree = "<group>"; };
 		B2C7AD0726DEE4B400D8F4B4 /* HeightPreferencesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeightPreferencesView.swift; sourceTree = "<group>"; };
 		B2C7AD0926DEE91900D8F4B4 /* BreakIceOnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BreakIceOnboardingView.swift; sourceTree = "<group>"; };
+		B2C7AD0B26DF2BC900D8F4B4 /* girls party small.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "girls party small.jpg"; sourceTree = "<group>"; };
+		B2C7AD0D26DF2C8600D8F4B4 /* Q1Day2LiveView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Q1Day2LiveView.swift; sourceTree = "<group>"; };
+		B2C7AD1026DF2E1400D8F4B4 /* Qwinning1USDM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Qwinning1USDM.swift; sourceTree = "<group>"; };
 		B2D2007B26D5E97600EDF6BD /* Secret0.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Secret0.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B2D2007E26D5E97600EDF6BD /* Secret0App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Secret0App.swift; sourceTree = "<group>"; };
 		B2D2008026D5E97600EDF6BD /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -116,6 +122,8 @@
 				B2C7AD0426DEA41500D8F4B4 /* DatePreferencesView.swift */,
 				B2C7AD0726DEE4B400D8F4B4 /* HeightPreferencesView.swift */,
 				B2C7AD0926DEE91900D8F4B4 /* BreakIceOnboardingView.swift */,
+				B2C7AD0D26DF2C8600D8F4B4 /* Q1Day2LiveView.swift */,
+				B2C7AD1026DF2E1400D8F4B4 /* Qwinning1USDM.swift */,
 				B2C7AD0226DEA30500D8F4B4 /* RadioButtonView.swift */,
 			);
 			path = "Onboarding screens";
@@ -162,6 +170,7 @@
 				B2D200AA26D6A08D00EDF6BD /* Account */,
 				B2D200A126D5F06400EDF6BD /* Models */,
 				B2D2008226D5E97700EDF6BD /* Assets.xcassets */,
+				B2C7AD0B26DF2BC900D8F4B4 /* girls party small.jpg */,
 				B2D200B926D6D25300EDF6BD /* welcome.mp4 */,
 				B2D2009626D5EE7900EDF6BD /* Helpers */,
 				B2D2008C26D5E97700EDF6BD /* Info.plist */,
@@ -312,6 +321,7 @@
 				B2D2009326D5EA0100EDF6BD /* GoogleService-Info.plist in Resources */,
 				B2D200BA26D6D2C600EDF6BD /* welcome.mp4 in Resources */,
 				B2D2008326D5E97700EDF6BD /* Assets.xcassets in Resources */,
+				B2C7AD0C26DF2BC900D8F4B4 /* girls party small.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -371,6 +381,7 @@
 				B2D200B326D6B23700EDF6BD /* LaunchView.swift in Sources */,
 				B2D2008826D5E97700EDF6BD /* Persistence.swift in Sources */,
 				B2D200B126D6A24500EDF6BD /* OnboardingContentView.swift in Sources */,
+				B2C7AD0E26DF2C8600D8F4B4 /* Q1Day2LiveView.swift in Sources */,
 				B2D200B526D6C8CA00EDF6BD /* Landing.swift in Sources */,
 				B2827C4626DAE1D200A86AF4 /* NameOnboardingView.swift in Sources */,
 				B2C7ACF526DC2A9A00D8F4B4 /* NotifOnboarding.swift in Sources */,
@@ -392,6 +403,7 @@
 				B2D200B726D6CFD700EDF6BD /* WelcomeVideo.swift in Sources */,
 				B2D2008B26D5E97700EDF6BD /* Secret0.xcdatamodeld in Sources */,
 				B2D2007F26D5E97600EDF6BD /* Secret0App.swift in Sources */,
+				B2C7AD1126DF2E1400D8F4B4 /* Qwinning1USDM.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -1,5 +1,5 @@
 //
-//  BreakIceOnboardingView.swift
+//  Q1Day2LiveView.swift
 //  Secret0
 //
 //  Created by Nat-Serrano on 8/31/21.
@@ -7,13 +7,14 @@
 
 import SwiftUI
 
-struct BreakIceOnboardingView: View {
+struct Q1Day2LiveView: View {
+    
     @EnvironmentObject var model: ContentModel
     @AppStorage("isOnboarding") var isOnboarding: Bool?
     @State var goWhenTrue : Bool = false
+    @State private var response : String = ""
     
     var body: some View {
-        
         ZStack {
             VStack {
                 
@@ -30,23 +31,18 @@ struct BreakIceOnboardingView: View {
                         .font(.title)
                         .bold()
                 
-                    
+
                     Text(Constants.screens[index].disclaimer)
                         .font(.caption)
                 }
                 .padding()
                 
-                Image("party girls dance small")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 100, height: 100, alignment: .center)
+                TextEditor(text: $response).font(.title)
+                    .multilineTextAlignment(.center)
+                    .padding()
                 
                 
-                Spacer()
-                
-                NavigationLink(destination: Q1Day2LiveView()
-                                .onAppear(perform: UIApplication.shared.addTapGestureRecognizer)
-                               , isActive: $goWhenTrue) {
+                NavigationLink(destination: Qwinning1USDM(), isActive: $goWhenTrue) {
                     EmptyView()
                 }
                 
@@ -94,8 +90,25 @@ struct BreakIceOnboardingView: View {
     }
 }
 
-struct BreakIceOnboardingView_Previews: PreviewProvider {
+extension UIApplication {
+    func addTapGestureRecognizer() {
+        guard let window = windows.first else { return }
+        let tapGesture = UITapGestureRecognizer(target: window, action: #selector(UIView.endEditing))
+        tapGesture.requiresExclusiveTouchType = false
+        tapGesture.cancelsTouchesInView = false
+        tapGesture.delegate = self
+        window.addGestureRecognizer(tapGesture)
+    }
+}
+
+extension UIApplication: UIGestureRecognizerDelegate {
+    public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        return true // set to `false` if you don't want to detect tap during other gestures
+    }
+}
+
+struct Q1Day2LiveView_Previews: PreviewProvider {
     static var previews: some View {
-        BreakIceOnboardingView()
+        Q1Day2LiveView()
     }
 }

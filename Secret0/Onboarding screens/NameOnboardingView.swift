@@ -42,10 +42,9 @@ struct NameOnboardingView: View {
                             .font(.title)
                             .bold()
                         
-                        TextField("username", text: $username).font(.title)
+                        TextField("Username", text: $username).font(.title)
                             .multilineTextAlignment(.center)
                             .padding()
-                        
                         
                         Text(Constants.screens[index].disclaimer)
                             .font(.caption)

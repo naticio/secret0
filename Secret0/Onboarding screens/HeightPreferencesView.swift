@@ -12,6 +12,7 @@ struct HeightPreferencesView: View {
     @EnvironmentObject var model: ContentModel
     
     @AppStorage("isOnboarding") var isOnboarding: Bool?
+    //@State private var index: Int = 0
     @State var goWhenTrue : Bool = false
     @State var selectedeHeight: String = "5'7 ("
     @State var heightOptions = [
@@ -35,6 +36,7 @@ struct HeightPreferencesView: View {
         "6'4 (193 cm)",
         "6'5 (195 cm)"
     ]
+    
     
     var body: some View {
         ZStack {
@@ -75,9 +77,25 @@ struct HeightPreferencesView: View {
                 
                 //BUTTON NEXT
                 Button {
-                    if selectedeHeight.contains("144") {
-                        model.heightModel = 144
-                    }
+                    if selectedeHeight.contains("144") { model.heightModel = 144}
+                    if selectedeHeight.contains("152") { model.heightModel = 152}
+                    if selectedeHeight.contains("155") { model.heightModel = 155}
+                    if selectedeHeight.contains("158") { model.heightModel = 158}
+                    if selectedeHeight.contains("160") { model.heightModel = 160}
+                    if selectedeHeight.contains("163") { model.heightModel = 163}
+                    if selectedeHeight.contains("165") { model.heightModel = 165}
+                    if selectedeHeight.contains("168") { model.heightModel = 168}
+                    if selectedeHeight.contains("170") { model.heightModel = 170}
+                    if selectedeHeight.contains("173") { model.heightModel = 173}
+                    if selectedeHeight.contains("175") { model.heightModel = 175}
+                    if selectedeHeight.contains("178") { model.heightModel = 178}
+                    if selectedeHeight.contains("180") { model.heightModel = 180}
+                    if selectedeHeight.contains("183") { model.heightModel = 183}
+                    if selectedeHeight.contains("185") { model.heightModel = 185}
+                    if selectedeHeight.contains("188") { model.heightModel = 188}
+                    if selectedeHeight.contains("190") { model.heightModel = 190}
+                    if selectedeHeight.contains("193") { model.heightModel = 193}
+                    if selectedeHeight.contains("195") { model.heightModel = 195}
                     
                     
                         //model.heightModel = selectedeHeight
