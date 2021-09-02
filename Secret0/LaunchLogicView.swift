@@ -26,9 +26,9 @@ struct LaunchLogicView: View {
         } else {
             if isOnboarding == true {
                 
-                BirthOnboardingView()
+                BirthOnboardingView(index: 2)
                     .onAppear() {
-                        model.onboardingIndex = 2
+                        //model.onboardingIndex = 2
                         model.checkLogin()
                         
                     }

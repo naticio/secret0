@@ -17,11 +17,13 @@ struct genderOnboarding: View {
     @State private var maleButtonPressed:Bool = false
     @State private var femaleButtonPressed:Bool = false
     
+    @State var index: Int
+    
     var body: some View {
         ZStack {
             VStack {
                 
-                let index = model.onboardingIndex
+                //let index = model.onboardingIndex
                 
                 Image(systemName: Constants.screens[index].image)
                     .resizable()
@@ -78,59 +80,40 @@ struct genderOnboarding: View {
                 
                 Spacer()
                 
-                NavigationLink(destination: SexOnboardingView(), isActive: $goWhenTrue) {
-                    EmptyView()
-                }
-                
-                //oNBOARIDNG NEXT BUTTON
-                Button(action: {
-                    if maleButtonPressed == true || femaleButtonPressed == true {
-                        if maleButtonPressed == true {model.genderModel = "Male"}
-                        if femaleButtonPressed == true {model.genderModel = "Female"}
-                        
-                        isOnboarding = true
-                        //onboardingScreen = "Sexuality"
-                        goWhenTrue = true
-                        
-                        //update indexes
-                        if model.onboardingIndex < Constants.screens.count {
-                            model.onboardingIndex += 1
+                NavigationLink(destination: SexOnboardingView(index: index + 1), isActive: $goWhenTrue) {
+                    //ONBOARIDNG NEXT BUTTON
+                    Button(action: {
+                        if maleButtonPressed == true || femaleButtonPressed == true {
+                            if maleButtonPressed == true {model.genderModel = "Male"}
+                            if femaleButtonPressed == true {model.genderModel = "Female"}
+                            
+                            isOnboarding = true
+                            //onboardingScreen = "Sexuality"
+                            goWhenTrue = true
+                            
+
                         }
-                    }
-                    
-                    
-                }, label: {
-                    if model.onboardingIndex == Constants.screens.count {
-                        Text("Done")
-                    } else {
-                        Text("Next")
-                    }
-                    
-                })
-            
-                .padding()
-                .background(Capsule().strokeBorder(Color.white, lineWidth: 1.5))
-                .frame(width: 100)
+                    }, label: {
+                            Text("Next")
+                        
+                    })
                 
-//                Button(action: { isOnboarding = false }, label: {
-//                    Text("Next")
-//                        .padding()
-//                        .background(
-//                            Capsule().strokeBorder(Color.white, lineWidth: 1.5)
-//                                .frame(width: 100)
-//                        )
-//                })
-                
-                Spacer()
+                    .padding()
+                    .background(Capsule().strokeBorder(Color.white, lineWidth: 1.5))
+                    .frame(width: 100)
+
+                    
+                    Spacer()
+                }
             }
-        }
-        .navigationBarHidden(true)
-        .edgesIgnoringSafeArea(.all)
+            .navigationBarHidden(true)
+            .edgesIgnoringSafeArea(.all)
+                }
     }
 }
 
-struct genderOnboarding_Previews: PreviewProvider {
-    static var previews: some View {
-        genderOnboarding()
-    }
-}
+//struct genderOnboarding_Previews: PreviewProvider {
+//    static var previews: some View {
+//        genderOnboarding()
+//    }
+//}

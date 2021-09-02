@@ -20,17 +20,19 @@ struct LocationOnboarding: View {
     
     @State private var deniedLocation = false
     
-//    init() {
-//        localizationModel.requestGeolocationPermission()
-//    }
+    @State var index : Int
+    
+    //    init() {
+    //        localizationModel.requestGeolocationPermission()
+    //    }
     
     var body: some View {
         
         ZStack {
-            //LinearGradient(gradient: Gradient(colors: [Color(#colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)), Color(#colorLiteral(red: 0.7450980544, green: 0.1568627506, blue: 0.07450980693, alpha: 1))]), startPoint: .topLeading, endPoint: .bottomTrailing)
+            
             VStack {
                 
-                let index = model.onboardingIndex
+                //let index = model.onboardingIndex
                 
                 Image(systemName: Constants.screens[index].image)
                     .resizable()
@@ -54,62 +56,47 @@ struct LocationOnboarding: View {
                 
                 Spacer()
                 
-                NavigationLink(destination: genderOnboarding(), isActive: $goWhenTrue) {
-                    EmptyView()
-                }
-                
-                //oNBOARIDNG NEXT BUTTON
-                Button(action: {
-                    //save username (to create user once we have password and email
-                    
-                    if localizationModel.authorizationState == .notDetermined {
-                        // If undetermined, show onboarding
-                        goWhenTrue = false
-                    }
-                    else if localizationModel.authorizationState == .authorizedAlways ||
-                                localizationModel.authorizationState == .authorizedWhenInUse {
+                NavigationLink(destination: genderOnboarding(index: index + 1), isActive: $goWhenTrue) {
+                    //ONBOARIDNG NEXT BUTTON
+                    Button(action: {
+                        //save username (to create user once we have password and email
                         
-                        isOnboarding = true
-                        //onboardingScreen = "Gender"
-                        // If approved, show home view
-                        goWhenTrue = true
-                        
-                        //update indexes
-                        if model.onboardingIndex < Constants.screens.count {
-                            model.onboardingIndex += 1
-                            
+                        if localizationModel.authorizationState == .notDetermined {
+                            // If undetermined, show onboarding
+                            goWhenTrue = false
                         }
-                    }
-                    else {
-                        // If denied show denied view
-                        self.deniedLocation.toggle()
-                    }
-                    
-                    
-                }, label: {
-                    if model.onboardingIndex == Constants.screens.count {
-                        Text("Done")
-                    } else {
+                        else if localizationModel.authorizationState == .authorizedAlways ||
+                                    localizationModel.authorizationState == .authorizedWhenInUse {
+                            
+                            isOnboarding = true
+                            //onboardingScreen = "Gender"
+                            // If approved, show home view
+                            goWhenTrue = true
+                            
+                            //update indexes
+                            //                        if model.onboardingIndex < Constants.screens.count {
+                            //                            model.onboardingIndex += 1
+                            //
+                            //                        }
+                        }
+                        else {
+                            // If denied show denied view
+                            self.deniedLocation.toggle()
+                        }
+                        
+                        
+                    }, label: {
                         Text("Next")
-                    }
-                    
-                })
-                .disabled(localizationModel.authorizationState == .notDetermined)
-                .sheet(isPresented: $deniedLocation, content: {
-                    LocationDeniedView()
-                })
-                .padding()
-                .background(Capsule().strokeBorder(Color.white, lineWidth: 1.5))
-                .frame(width: 100)
-                
-//                Button(action: { isOnboarding = false }, label: {
-//                    Text("Next")
-//                        .padding()
-//                        .background(
-//                            Capsule().strokeBorder(Color.white, lineWidth: 1.5)
-//                                .frame(width: 100)
-//                        )
-//                })
+                        
+                    })
+                    .disabled(localizationModel.authorizationState == .notDetermined)
+                    .sheet(isPresented: $deniedLocation, content: {
+                        LocationDeniedView()
+                    })
+                    .padding()
+                    .background(Capsule().strokeBorder(Color.white, lineWidth: 1.5))
+                    .frame(width: 100)
+                }
                 
                 Spacer()
             }
@@ -120,9 +107,9 @@ struct LocationOnboarding: View {
 }
 
 
-struct LocationOnboarding_Previews: PreviewProvider {
-    static var previews: some View {
-        LocationOnboarding()
-        //.environmentObject(localizationModel)
-    }
-}
+//struct LocationOnboarding_Previews: PreviewProvider {
+//    static var previews: some View {
+//        LocationOnboarding()
+//        //.environmentObject(localizationModel)
+//    }
+//}

@@ -20,11 +20,13 @@ struct DatePreferencesView: View {
     @State var womenPressed : Bool = false
     @State var everyOnePressed : Bool = false
     
+    @State var index: Int
+    
     var body: some View {
         ZStack {
             VStack {
                 
-                let index = model.onboardingIndex
+                //let index = model.onboardingIndex
                 
                 Image(systemName: Constants.screens[index].image)
                     .resizable()
@@ -36,7 +38,7 @@ struct DatePreferencesView: View {
                     Text(Constants.screens[index].title)
                         .font(.title)
                         .bold()
-                
+                    
                     
                     Text(Constants.screens[index].disclaimer)
                         .font(.caption)
@@ -90,40 +92,31 @@ struct DatePreferencesView: View {
                 
                 Spacer()
                 
-                NavigationLink(destination: HeightPreferencesView(), isActive: $goWhenTrue) {
-                    EmptyView()
-                }
-                
-                //BUTTON NEXT
-                Button {
-                    if menPressed == true || womenPressed == true || everyOnePressed == true {
-                        if menPressed == true { model.datingPrefModel = "Men" }
-                        if womenPressed == true { model.datingPrefModel = "Women" }
-                        if everyOnePressed == true { model.datingPrefModel = "Everyone" }
-                           
+                NavigationLink(destination: HeightPreferencesView(index: index + 1), isActive: $goWhenTrue) {
+                    //BUTTON NEXT
+                    Button {
+                        if menPressed == true || womenPressed == true || everyOnePressed == true {
+                            if menPressed == true { model.datingPrefModel = "Men" }
+                            if womenPressed == true { model.datingPrefModel = "Women" }
+                            if everyOnePressed == true { model.datingPrefModel = "Everyone" }
+                            
                             isOnboarding = true
-                        //onboardingScreen = "Height"
+                            //onboardingScreen = "Height"
                             goWhenTrue = true
                             
-                            //update indexes
-                            if model.onboardingIndex < Constants.screens.count {
-                                model.onboardingIndex += 1
-                                
-                            }
-                    }
-                    
-                } label: {
-                    if model.onboardingIndex == Constants.screens.count {
-                        Text("Done")
-                    } else {
+                        }
+                        
+                    } label: {
                         Text("Next")
                     }
+                    .disabled(menPressed == false && womenPressed == false && everyOnePressed == false)
+                    .padding()
+                    .background(Capsule().strokeBorder(Color.white, lineWidth: 1.5))
+                    .frame(width: 100)
                 }
-                .disabled(menPressed == false && womenPressed == false && everyOnePressed == false)
-                .padding()
-                .background(Capsule().strokeBorder(Color.white, lineWidth: 1.5))
-                .frame(width: 100)
-            
+                
+                
+                
                 
                 Spacer()
             }
@@ -133,8 +126,8 @@ struct DatePreferencesView: View {
     }
 }
 
-struct DatePreferencesView_Previews: PreviewProvider {
-    static var previews: some View {
-        DatePreferencesView()
-    }
-}
+//struct DatePreferencesView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        DatePreferencesView()
+//    }
+//}

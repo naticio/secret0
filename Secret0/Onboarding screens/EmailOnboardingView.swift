@@ -23,12 +23,14 @@ struct EmailOnboardingView: View {
     @State var goWhenTrue : Bool = false
     @State var errorMsg: String?
     
+    @State var index: Int
+    
     var body: some View {
         ZStack {
-            //LinearGradient(gradient: Gradient(colors: [Color(#colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)), Color(#colorLiteral(red: 0.7450980544, green: 0.1568627506, blue: 0.07450980693, alpha: 1))]), startPoint: .topLeading, endPoint: .bottomTrailing)
+
             VStack {
                 Spacer()
-                let index = model.onboardingIndex
+                //let index = model.onboardingIndex
                 Image(systemName: Constants.screens[index].image)
                     .resizable()
                     .scaledToFit()
@@ -57,68 +59,53 @@ struct EmailOnboardingView: View {
                     Text(errorMsg!)
                 }
                 
-                NavigationLink(destination: BirthOnboardingView(), isActive: $goWhenTrue) {
-                    EmptyView()
+                NavigationLink(destination: BirthOnboardingView(index: index+1), isActive: $goWhenTrue) {
+                    Button {
+                        //call firebase create user
+                        Auth.auth().createUser(withEmail: email, password: password) { result, error in
+                            //check for errors
+                            guard error == nil else {
+                                errorMsg = error!.localizedDescription
+                                return //EXIT TODO EL CODIGO ALV
+                            }
+                            //clear error mesage for future sign ins
+                            self.errorMsg = nil
+                            
+                            //save the first name in firebase
+                            let db = Firestore.firestore()
+                            let firebaseUser = Auth.auth().currentUser
+                            let ref = db.collection("users").document(firebaseUser!.uid)
+                            let name =  model.usernameSignUp
+                            
+                            ref.setData(["name" : name], merge: true) //merge = true because it updates or adds a user name, does not OVERWRITTE if the username exists
+                            
+                            //update the user metadata
+                            let user = UserService.shared.user ///????????
+                            user.name = name
+                            
+                            //flip the switch to navigation view to go to BIRTHDATE VIEW
+                            isOnboarding = true
+                            //onboardingScreen = "Birthdate"
+                            goWhenTrue = true
+                            //save into model the email and password
+                            //model.emailSignUp = email
+                            //model.passwordSignUp = password
+                        
+                           
+//                              if model.onboardingIndex < Constants.screens.count-1 {
+//                                  model.onboardingIndex += 1
+//
+//                              }
+                        }
+                        
+                    } label: {
+                            Text("Next")
+                    }
+                    .padding()
+                    .background(Capsule().strokeBorder(Color.white, lineWidth: 1.5))
+                    .frame(width: 100)
                 }
             
-                Button {
-                    //call firebase create user
-                    Auth.auth().createUser(withEmail: email, password: password) { result, error in
-                        //check for errors
-                        guard error == nil else {
-                            errorMsg = error!.localizedDescription
-                            return //EXIT TODO EL CODIGO ALV
-                        }
-                        //clear error mesage for future sign ins
-                        self.errorMsg = nil
-                        
-                        //save the first name in firebase
-                        let db = Firestore.firestore()
-                        let firebaseUser = Auth.auth().currentUser
-                        let ref = db.collection("users").document(firebaseUser!.uid)
-                        let name =  model.usernameSignUp
-                        
-                        ref.setData(["name" : name], merge: true) //merge = true because it updates or adds a user name, does not OVERWRITTE if the username exists
-                        
-                        //update the user metadata
-                        let user = UserService.shared.user ///????????
-                        user.name = name
-                        
-                        //flip the switch to navigation view to go to BIRTHDATE VIEW
-                        isOnboarding = true
-                        //onboardingScreen = "Birthdate"
-                        goWhenTrue = true
-                        //save into model the email and password
-                        //model.emailSignUp = email
-                        //model.passwordSignUp = password
-                    
-                       
-                          if model.onboardingIndex < Constants.screens.count-1 {
-                              model.onboardingIndex += 1
-                              
-                          }
-                    }
-                    
-                    
-                } label: {
-                    if model.onboardingIndex == Constants.screens.count {
-                        Text("Done")
-                    } else {
-                        Text("Next")
-                    }
-                }
-                .padding()
-                .background(Capsule().strokeBorder(Color.white, lineWidth: 1.5))
-                .frame(width: 100)
-                
-//                Button(action: { isOnboarding = false }, label: {
-//                    Text("Next")
-//                        .padding()
-//                        .background(
-//                            Capsule().strokeBorder(Color.white, lineWidth: 1.5)
-//                                .frame(width: 100)
-//                        )
-//                })
                 
                 Spacer()
                 Spacer()
@@ -162,9 +149,9 @@ struct EmailOnboardingView: View {
 //        }
         
 }
-
-struct EmailOnboardingView_Previews: PreviewProvider {
-    static var previews: some View {
-        EmailOnboardingView()
-    }
-}
+//
+//struct EmailOnboardingView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        EmailOnboardingView()
+//    }
+//}

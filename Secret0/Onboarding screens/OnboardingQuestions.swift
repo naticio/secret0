@@ -14,11 +14,14 @@ struct OnboardingQuestions: View {
     @State var goWhenTrue : Bool = false
     @State private var response : String = ""
     
+    @State var index: Int
+    
+    
     var body: some View {
         ZStack {
             VStack {
                 
-                let index = model.onboardingIndex
+                //let index = model.onboardingIndex
                 
                 Image(systemName: Constants.screens[index].image)
                     .resizable()
@@ -42,54 +45,54 @@ struct OnboardingQuestions: View {
                     .padding()
                 
                 
-                NavigationLink(destination: OnboardingQuestions(), isActive: $goWhenTrue) {
-                    EmptyView()
+                NavigationLink(destination: OnboardingQuestions(index: index + 1), isActive: $goWhenTrue) {
+                    //BUTTON NEXT
+                    Button {
+                       
+                        if index < Constants.screens.count-1 {
+                            //index += 1
+                            //isOnboarding = true
+                            
+                            
+                            if Constants.screens[index].title.contains("one day left") {
+                                model.Q1day2liveModel = response
+                            }
+                            if Constants.screens[index].title.contains("100,000,000") {
+                                model.QlotteryWinModel = response
+                            }
+                            if Constants.screens[index].title.contains("money didn't matter") {
+                                model.QmoneynotanIssueModel = response
+                            }
+                            if Constants.screens[index].title.contains("bucket list") {
+                                model.bucketListModel = response
+                            }
+                            if Constants.screens[index].title.contains("Jokes") {
+                                model.jokesModel = response
+                            }
+                            response = ""
+                            goWhenTrue = true
+                            
+                        } else if index == Constants.screens.count-1 {
+                            isOnboarding = false
+                            
+                            model.checkLogin()
+                            
+                        }
+                        
+                        
+                    } label: {
+                        if index == Constants.screens.count-1 {
+                            Text("Done")
+                        } else {
+                            Text("Next")
+                        }
+                    }
+                    .padding()
+                    .background(Capsule().strokeBorder(Color.white, lineWidth: 1.5))
+                    .frame(width: 100)
                 }
                 
-                //BUTTON NEXT
-                Button {
-                   
-                    if model.onboardingIndex < Constants.screens.count-1 {
-                        model.onboardingIndex += 1
-                        //isOnboarding = true
-                        response = ""
-                        
-                        if Constants.screens[index].title.contains("one day left") {
-                            model.Q1day2liveModel = response
-                        }
-                        if Constants.screens[index].title.contains("100,000,000") {
-                            model.QlotteryWinModel = response
-                        }
-                        if Constants.screens[index].title.contains("money didn't matter") {
-                            model.QmoneynotanIssueModel = response
-                        }
-                        if Constants.screens[index].title.contains("bucket list") {
-                            model.bucketListModel = response
-                        }
-                        if Constants.screens[index].title.contains("Jokes") {
-                            model.jokesModel = response
-                        }
-                        
-                        goWhenTrue = true
-                        
-                    } else if model.onboardingIndex == Constants.screens.count-1 {
-                        isOnboarding = false
-                        //model.onboardingIndex = 0
-                        model.checkLogin()
-                        
-                    }
-                    
-                    
-                } label: {
-                    if model.onboardingIndex == Constants.screens.count {
-                        Text("Done")
-                    } else {
-                        Text("Next")
-                    }
-                }
-                .padding()
-                .background(Capsule().strokeBorder(Color.white, lineWidth: 1.5))
-                .frame(width: 100)
+
                 
                 Spacer()
             }
@@ -116,8 +119,8 @@ extension UIApplication: UIGestureRecognizerDelegate {
     }
 }
 
-struct Q1Day2LiveView_Previews: PreviewProvider {
-    static var previews: some View {
-        OnboardingQuestions()
-    }
-}
+//struct Q1Day2LiveView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        OnboardingQuestions()
+//    }
+//}

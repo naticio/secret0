@@ -10,6 +10,7 @@ import SwiftUI
 struct NotifOnboarding: View {
     @EnvironmentObject var model: ContentModel
     @EnvironmentObject var locModel: LocationModel
+    @State var index : Int
     
     
     @AppStorage("isOnboarding") var isOnboarding: Bool?
@@ -18,10 +19,10 @@ struct NotifOnboarding: View {
     
     var body: some View {
         ZStack {
-            //LinearGradient(gradient: Gradient(colors: [Color(#colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)), Color(#colorLiteral(red: 0.7450980544, green: 0.1568627506, blue: 0.07450980693, alpha: 1))]), startPoint: .topLeading, endPoint: .bottomTrailing)
+            
             VStack {
                 
-                let index = model.onboardingIndex
+                //let index = model.onboardingIndex
                 Image(systemName: Constants.screens[index].image)
                     .resizable()
                     .scaledToFit()
@@ -42,50 +43,38 @@ struct NotifOnboarding: View {
                 Spacer()
                 
                 NavigationLink(
-                    destination: LocationOnboarding()
+                    destination: LocationOnboarding(index: index+1)
                         .environmentObject(LocationModel())
                         .onAppear {
                             locModel.requestGeolocationPermission()
                         }
                     , isActive: $goWhenTrue) {
-                    EmptyView()
-                }
-                
-                //oNBOARIDNG NEXT BUTTON
-                Button(action: {
-                    //save into model
-                    
-                    isOnboarding = true
-                    //onboardingScreen = "Location"
+                    //ONBOARIDNG NEXT BUTTON
+                    Button(action: {
+                        //save into model
+                        
+                        isOnboarding = true
+                        //onboardingScreen = "Location"
                         goWhenTrue = true
                         
                         //update indexes
-                    //update indexes
-                    if model.onboardingIndex < Constants.screens.count {
-                        model.onboardingIndex += 1
+                        //update indexes
+                        //                        if model.onboardingIndex < Constants.screens.count {
+                        //                            model.onboardingIndex += 1
+                        //
+                        //                        }
                         
-                    }
-                    
-                }, label: {
-                    if model.onboardingIndex == Constants.screens.count {
-                        Text("Done")
-                    } else {
+                    }, label: {
                         Text("Next")
-                    }
-                    
-                })
-                .padding()
-                .background(Capsule().strokeBorder(Color.white, lineWidth: 1.5))
-                .frame(width: 100)
+                        
+                    })
+                    .padding()
+                    .background(Capsule().strokeBorder(Color.white, lineWidth: 1.5))
+                    .frame(width: 100)
+                }
                 
-//                Button(action: { isOnboarding = false }, label: {
-//                    Text("Next")
-//                        .padding()
-//                        .background(
-//                            Capsule().strokeBorder(Color.white, lineWidth: 1.5)
-//                                .frame(width: 100)
-//                        )
-//                })
+                
+                
                 
                 Spacer()
             }
@@ -98,6 +87,6 @@ struct NotifOnboarding: View {
 
 struct NotifOnboarding_Previews: PreviewProvider {
     static var previews: some View {
-        NotifOnboarding()
+        NotifOnboarding(index: 2)
     }
 }

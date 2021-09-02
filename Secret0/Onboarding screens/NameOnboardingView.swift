@@ -31,7 +31,7 @@ struct NameOnboardingView: View {
        
                 VStack {
                     
-                    let index = model.onboardingIndex
+                    let index = 0
                     
                     Image(systemName: Constants.screens[index].image)
                         .resizable()
@@ -55,44 +55,37 @@ struct NameOnboardingView: View {
                     //warning message if the text is not formatted correctly
                     Text(warningMsg)
                     
-                    NavigationLink(destination: EmailOnboardingView(), isActive: $goWhenTrue) {
-                        EmptyView()
-                    }
-                    
-                    //BUTTON NEXT
-                    Button {
-                        if textFormatOK() {
-                            //save user name in model
-                            model.usernameSignUp = username
-                           
-                            goWhenTrue = true
-                              
-                              if model.onboardingIndex < Constants.screens.count {
-                                  model.onboardingIndex += 1
-                              }
-                        } else {
-                            //show a warning message for the etxt to be longer than 1 chr
-                            if username.count == 0 {
-                                warningMsg = "Username must not be empty"
+                    NavigationLink(destination: EmailOnboardingView(index: index + 1), isActive: $goWhenTrue) {
+                        //BUTTON NEXT
+                        Button {
+                            if textFormatOK() {
+                                //save user name in model
+                                model.usernameSignUp = username
+                               
+                                goWhenTrue = true
+                                  
+                            } else {
+                                //show a warning message for the etxt to be longer than 1 chr
+                                if username.count == 0 {
+                                    warningMsg = "Username must not be empty"
+                                }
+                                if username.count > 15 {
+                                    warningMsg = "Username is too long, must be less than 15 chrs"
+                                }
+                                
                             }
-                            if username.count > 15 {
-                                warningMsg = "Username is too long, must be less than 15 chrs"
-                            }
+                         
                             
-                        }
-                     
-                        
-                        
-                    } label: {
-                        if model.onboardingIndex == Constants.screens.count {
-                            Text("Done")
-                        } else {
+                            
+                        } label: {
                             Text("Next")
                         }
+                        .padding()
+                        .background(Capsule().strokeBorder(Color.white, lineWidth: 1.5))
+                        .frame(width: 100)
                     }
-                    .padding()
-                    .background(Capsule().strokeBorder(Color.white, lineWidth: 1.5))
-                    .frame(width: 100)
+                    
+
 
                     Spacer()
 
@@ -143,8 +136,8 @@ struct NameOnboardingView: View {
         //    }
     }
     
-    struct Name_Previews: PreviewProvider {
-        static var previews: some View {
-            NameOnboardingView()
-        }
-    }
+//    struct Name_Previews: PreviewProvider {
+//        static var previews: some View {
+//            NameOnboardingView()
+//        }
+//    }

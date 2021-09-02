@@ -38,12 +38,14 @@ struct HeightPreferencesView: View {
         "6'5 (195 cm)"
     ]
     
+    @State var index: Int
+    
     
     var body: some View {
         ZStack {
             VStack {
                 
-                let index = model.onboardingIndex
+                //let index = model.onboardingIndex
                 
                 Image(systemName: Constants.screens[index].image)
                     .resizable()
@@ -55,79 +57,65 @@ struct HeightPreferencesView: View {
                     Text(Constants.screens[index].title)
                         .font(.title)
                         .bold()
-                
+                    
                     
                     Text(Constants.screens[index].disclaimer)
                         .font(.caption)
                 }
                 .padding()
                 
-
-                            Picker("", selection: $selectedeHeight) {
-                                ForEach(0..<heightOptions.count) { index in
-                                    Text(self.heightOptions[index]).tag(index)
-                                }
-                            }
-                            .pickerStyle(WheelPickerStyle())
+                
+                Picker("", selection: $selectedeHeight) {
+                    ForEach(0..<heightOptions.count) { index in
+                        Text(self.heightOptions[index]).tag(index)
+                    }
+                }
+                .pickerStyle(WheelPickerStyle())
                 
                 Spacer()
                 
-                NavigationLink(destination: BreakIceOnboardingView(), isActive: $goWhenTrue) {
-                    EmptyView()
-                }
-                
-                //BUTTON NEXT
-                Button {
-                    if selectedeHeight.contains("144") { model.heightModel = 144}
-                    if selectedeHeight.contains("152") { model.heightModel = 152}
-                    if selectedeHeight.contains("155") { model.heightModel = 155}
-                    if selectedeHeight.contains("158") { model.heightModel = 158}
-                    if selectedeHeight.contains("160") { model.heightModel = 160}
-                    if selectedeHeight.contains("163") { model.heightModel = 163}
-                    if selectedeHeight.contains("165") { model.heightModel = 165}
-                    if selectedeHeight.contains("168") { model.heightModel = 168}
-                    if selectedeHeight.contains("170") { model.heightModel = 170}
-                    if selectedeHeight.contains("173") { model.heightModel = 173}
-                    if selectedeHeight.contains("175") { model.heightModel = 175}
-                    if selectedeHeight.contains("178") { model.heightModel = 178}
-                    if selectedeHeight.contains("180") { model.heightModel = 180}
-                    if selectedeHeight.contains("183") { model.heightModel = 183}
-                    if selectedeHeight.contains("185") { model.heightModel = 185}
-                    if selectedeHeight.contains("188") { model.heightModel = 188}
-                    if selectedeHeight.contains("190") { model.heightModel = 190}
-                    if selectedeHeight.contains("193") { model.heightModel = 193}
-                    if selectedeHeight.contains("195") { model.heightModel = 195}
-                    
+                NavigationLink(destination: BreakIceOnboardingView(index: index + 1), isActive: $goWhenTrue) {
+                    //BUTTON NEXT
+                    Button {
+                        if selectedeHeight.contains("144") { model.heightModel = 144}
+                        if selectedeHeight.contains("152") { model.heightModel = 152}
+                        if selectedeHeight.contains("155") { model.heightModel = 155}
+                        if selectedeHeight.contains("158") { model.heightModel = 158}
+                        if selectedeHeight.contains("160") { model.heightModel = 160}
+                        if selectedeHeight.contains("163") { model.heightModel = 163}
+                        if selectedeHeight.contains("165") { model.heightModel = 165}
+                        if selectedeHeight.contains("168") { model.heightModel = 168}
+                        if selectedeHeight.contains("170") { model.heightModel = 170}
+                        if selectedeHeight.contains("173") { model.heightModel = 173}
+                        if selectedeHeight.contains("175") { model.heightModel = 175}
+                        if selectedeHeight.contains("178") { model.heightModel = 178}
+                        if selectedeHeight.contains("180") { model.heightModel = 180}
+                        if selectedeHeight.contains("183") { model.heightModel = 183}
+                        if selectedeHeight.contains("185") { model.heightModel = 185}
+                        if selectedeHeight.contains("188") { model.heightModel = 188}
+                        if selectedeHeight.contains("190") { model.heightModel = 190}
+                        if selectedeHeight.contains("193") { model.heightModel = 193}
+                        if selectedeHeight.contains("195") { model.heightModel = 195}
+                        
                         isOnboarding = true
                         //onboardingScreen = "Break Ice"
                         //model.heightModel = selectedeHeight
                         goWhenTrue = true
                         
-                        if model.onboardingIndex < Constants.screens.count {
-                            model.onboardingIndex += 1
-                            
-                        }
-                    
-                    
-                } label: {
-                    if model.onboardingIndex == Constants.screens.count {
-                        Text("Done")
-                    } else {
+                        
+                    } label: {
+                        
                         Text("Next")
+                        
                     }
+                    .padding()
+                    .background(Capsule().strokeBorder(Color.white, lineWidth: 1.5))
+                    .frame(width: 100)
                 }
-                .padding()
-                .background(Capsule().strokeBorder(Color.white, lineWidth: 1.5))
-                .frame(width: 100)
                 
-//                Button(action: { isOnboarding = false }, label: {
-//                    Text("Next")
-//                        .padding()
-//                        .background(
-//                            Capsule().strokeBorder(Color.white, lineWidth: 1.5)
-//                                .frame(width: 100)
-//                        )
-//                })
+                
+                
+                
                 
                 Spacer()
             }
@@ -137,8 +125,8 @@ struct HeightPreferencesView: View {
     }
 }
 
-struct HeightPreferencesView_Previews: PreviewProvider {
-    static var previews: some View {
-        HeightPreferencesView()
-    }
-}
+//struct HeightPreferencesView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        HeightPreferencesView()
+//    }
+//}

@@ -16,11 +16,13 @@ struct SexOnboardingView: View {
     @State var selectedPref: String = "Straight"
     @State var preferences = ["Straight", "Gay", "Lesbian", "Bisexual"]
     
+    @State var index: Int
+    
     var body: some View {
         ZStack {
             VStack {
                 
-                let index = model.onboardingIndex
+                //let index = model.onboardingIndex
                 
                 Image(systemName: Constants.screens[index].image)
                     .resizable()
@@ -49,45 +51,27 @@ struct SexOnboardingView: View {
                 
                 Spacer()
                 
-                NavigationLink(destination: DatePreferencesView(), isActive: $goWhenTrue) {
-                    EmptyView()
-                }
-                
-                //BUTTON NEXT
-                Button {
-                    //save into model the sexuality
-                        model.sexualityModel = selectedPref
-                        
-                        isOnboarding = true
-                        //onboardingScreen = "Dating"
-                        goWhenTrue = true
-                        
-                        if model.onboardingIndex < Constants.screens.count {
-                            model.onboardingIndex += 1
+                NavigationLink(destination: DatePreferencesView(index: index + 1), isActive: $goWhenTrue) {
+                    //BUTTON NEXT
+                    Button {
+                        //save into model the sexuality
+                            model.sexualityModel = selectedPref
                             
-                        }
-                    
-                    
-                } label: {
-                    if model.onboardingIndex == Constants.screens.count {
-                        Text("Done")
-                    } else {
-                        Text("Next")
+                            isOnboarding = true
+                            //onboardingScreen = "Dating"
+                            goWhenTrue = true
+                        
+                        
+                    } label: {
+
+                            Text("Next")
                     }
+                    //.disabled(index == nil)
+                    .padding()
+                    .background(Capsule().strokeBorder(Color.white, lineWidth: 1.5))
+                    .frame(width: 100)
                 }
-                .disabled(index == nil)
-                .padding()
-                .background(Capsule().strokeBorder(Color.white, lineWidth: 1.5))
-                .frame(width: 100)
                 
-//                Button(action: { isOnboarding = false }, label: {
-//                    Text("Next")
-//                        .padding()
-//                        .background(
-//                            Capsule().strokeBorder(Color.white, lineWidth: 1.5)
-//                                .frame(width: 100)
-//                        )
-//                })
                 
                 Spacer()
             }
@@ -99,8 +83,8 @@ struct SexOnboardingView: View {
 
 
 
-struct SexOnboardingView_Previews: PreviewProvider {
-    static var previews: some View {
-        SexOnboardingView()
-    }
-}
+//struct SexOnboardingView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        SexOnboardingView()
+//    }
+//}

@@ -13,12 +13,15 @@ struct BreakIceOnboardingView: View {
     //@AppStorage("onboardingScreen") var onboardingScreen: String?
     @State var goWhenTrue : Bool = false
     
+    @State var index: Int
+    
+    
     var body: some View {
         
         ZStack {
             VStack {
                 
-                let index = model.onboardingIndex
+                //let index = model.onboardingIndex
                 
                 Image(systemName: Constants.screens[index].image)
                     .resizable()
@@ -30,7 +33,7 @@ struct BreakIceOnboardingView: View {
                     Text(Constants.screens[index].title)
                         .font(.title)
                         .bold()
-                
+                    
                     
                     Text(Constants.screens[index].disclaimer)
                         .font(.caption)
@@ -45,43 +48,26 @@ struct BreakIceOnboardingView: View {
                 
                 Spacer()
                 
-                NavigationLink(destination: OnboardingQuestions()
+                NavigationLink(destination: OnboardingQuestions(index: index + 1)
                                 .onAppear(perform: UIApplication.shared.addTapGestureRecognizer)
                                , isActive: $goWhenTrue) {
-                    EmptyView()
-                }
-                
-                //BUTTON NEXT
-                Button {
-                    isOnboarding = true
-                    //onboardingScreen = "Questions"
+                    //BUTTON NEXT
+                    Button {
+                        isOnboarding = true
+                        //onboardingScreen = "Questions"
                         goWhenTrue = true
                         
-                        if model.onboardingIndex < Constants.screens.count {
-                            model.onboardingIndex += 1
-                            
-                        }
-                    
-                    
-                } label: {
-                    if model.onboardingIndex == Constants.screens.count {
-                        Text("Done")
-                    } else {
+                        
+                    } label: {
+                        
                         Text("Next")
                     }
+                    .padding()
+                    .background(Capsule().strokeBorder(Color.white, lineWidth: 1.5))
+                    .frame(width: 100)
                 }
-                .padding()
-                .background(Capsule().strokeBorder(Color.white, lineWidth: 1.5))
-                .frame(width: 100)
                 
-//                Button(action: { isOnboarding = false }, label: {
-//                    Text("Next")
-//                        .padding()
-//                        .background(
-//                            Capsule().strokeBorder(Color.white, lineWidth: 1.5)
-//                                .frame(width: 100)
-//                        )
-//                })
+                
                 
                 Spacer()
             }
@@ -90,9 +76,9 @@ struct BreakIceOnboardingView: View {
         .edgesIgnoringSafeArea(.all)
     }
 }
-
-struct BreakIceOnboardingView_Previews: PreviewProvider {
-    static var previews: some View {
-        BreakIceOnboardingView()
-    }
-}
+//
+//struct BreakIceOnboardingView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        BreakIceOnboardingView()
+//    }
+//}
