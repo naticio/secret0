@@ -14,6 +14,7 @@ struct EmailOnboardingView: View {
     @EnvironmentObject var model: ContentModel
     
     @AppStorage("isOnboarding") var isOnboarding: Bool?
+    //@AppStorage("onboardingScreen") var onboardingScreen: String?
     //var screen: onboardingScreen
     
     @State var email: String = ""
@@ -84,20 +85,17 @@ struct EmailOnboardingView: View {
                         user.name = name
                         
                         //flip the switch to navigation view to go to BIRTHDATE VIEW
+                        isOnboarding = true
+                        //onboardingScreen = "Birthdate"
                         goWhenTrue = true
-                        model.emailSignUp = email
-                        model.passwordSignUp = password
+                        //save into model the email and password
+                        //model.emailSignUp = email
+                        //model.passwordSignUp = password
                     
                        
-                          if model.onboardingIndex < Constants.screens.count {
+                          if model.onboardingIndex < Constants.screens.count-1 {
                               model.onboardingIndex += 1
                               
-                              if model.onboardingIndex == Constants.screens.count {
-                                  isOnboarding = false
-                                  model.onboardingIndex = 0
-                                  model.checkLogin()
-                                  
-                              }
                           }
                     }
                     

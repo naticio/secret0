@@ -11,6 +11,7 @@ struct SexOnboardingView: View {
     @EnvironmentObject var model: ContentModel
     
     @AppStorage("isOnboarding") var isOnboarding: Bool?
+    //@AppStorage("onboardingScreen") var onboardingScreen: String?
     @State var goWhenTrue : Bool = false
     @State var selectedPref: String = "Straight"
     @State var preferences = ["Straight", "Gay", "Lesbian", "Bisexual"]
@@ -54,18 +55,16 @@ struct SexOnboardingView: View {
                 
                 //BUTTON NEXT
                 Button {
+                    //save into model the sexuality
                         model.sexualityModel = selectedPref
+                        
+                        isOnboarding = true
+                        //onboardingScreen = "Dating"
                         goWhenTrue = true
                         
                         if model.onboardingIndex < Constants.screens.count {
                             model.onboardingIndex += 1
                             
-                            if model.onboardingIndex == Constants.screens.count {
-                                isOnboarding = false
-                                model.onboardingIndex = 0
-                                model.checkLogin()
-                                
-                            }
                         }
                     
                     

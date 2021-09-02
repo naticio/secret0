@@ -15,6 +15,7 @@ struct LocationOnboarding: View {
     
     @State var location: String = ""
     @AppStorage("isOnboarding") var isOnboarding: Bool?
+    //@AppStorage("onboardingScreen") var onboardingScreen: String?
     @State var goWhenTrue : Bool = false
     
     @State private var deniedLocation = false
@@ -67,6 +68,9 @@ struct LocationOnboarding: View {
                     }
                     else if localizationModel.authorizationState == .authorizedAlways ||
                                 localizationModel.authorizationState == .authorizedWhenInUse {
+                        
+                        isOnboarding = true
+                        //onboardingScreen = "Gender"
                         // If approved, show home view
                         goWhenTrue = true
                         
@@ -74,12 +78,6 @@ struct LocationOnboarding: View {
                         if model.onboardingIndex < Constants.screens.count {
                             model.onboardingIndex += 1
                             
-                            if model.onboardingIndex == Constants.screens.count {
-                                isOnboarding = false
-                                model.onboardingIndex = 0
-                                model.checkLogin()
-                                
-                            }
                         }
                     }
                     else {

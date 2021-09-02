@@ -10,6 +10,7 @@ import SwiftUI
 struct BreakIceOnboardingView: View {
     @EnvironmentObject var model: ContentModel
     @AppStorage("isOnboarding") var isOnboarding: Bool?
+    //@AppStorage("onboardingScreen") var onboardingScreen: String?
     @State var goWhenTrue : Bool = false
     
     var body: some View {
@@ -44,7 +45,7 @@ struct BreakIceOnboardingView: View {
                 
                 Spacer()
                 
-                NavigationLink(destination: Q1Day2LiveView()
+                NavigationLink(destination: OnboardingQuestions()
                                 .onAppear(perform: UIApplication.shared.addTapGestureRecognizer)
                                , isActive: $goWhenTrue) {
                     EmptyView()
@@ -52,17 +53,13 @@ struct BreakIceOnboardingView: View {
                 
                 //BUTTON NEXT
                 Button {
+                    isOnboarding = true
+                    //onboardingScreen = "Questions"
                         goWhenTrue = true
                         
                         if model.onboardingIndex < Constants.screens.count {
                             model.onboardingIndex += 1
                             
-                            if model.onboardingIndex == Constants.screens.count {
-                                isOnboarding = false
-                                model.onboardingIndex = 0
-                                model.checkLogin()
-                                
-                            }
                         }
                     
                     

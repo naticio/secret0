@@ -23,8 +23,7 @@
 		B2C7AD0826DEE4B400D8F4B4 /* HeightPreferencesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C7AD0726DEE4B400D8F4B4 /* HeightPreferencesView.swift */; };
 		B2C7AD0A26DEE91900D8F4B4 /* BreakIceOnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C7AD0926DEE91900D8F4B4 /* BreakIceOnboardingView.swift */; };
 		B2C7AD0C26DF2BC900D8F4B4 /* girls party small.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B2C7AD0B26DF2BC900D8F4B4 /* girls party small.jpg */; };
-		B2C7AD0E26DF2C8600D8F4B4 /* Q1Day2LiveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C7AD0D26DF2C8600D8F4B4 /* Q1Day2LiveView.swift */; };
-		B2C7AD1126DF2E1400D8F4B4 /* Qwinning1USDM.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C7AD1026DF2E1400D8F4B4 /* Qwinning1USDM.swift */; };
+		B2C7AD0E26DF2C8600D8F4B4 /* OnboardingQuestions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C7AD0D26DF2C8600D8F4B4 /* OnboardingQuestions.swift */; };
 		B2D2007F26D5E97600EDF6BD /* Secret0App.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2D2007E26D5E97600EDF6BD /* Secret0App.swift */; };
 		B2D2008126D5E97600EDF6BD /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2D2008026D5E97600EDF6BD /* ContentView.swift */; };
 		B2D2008326D5E97700EDF6BD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B2D2008226D5E97700EDF6BD /* Assets.xcassets */; };
@@ -39,8 +38,8 @@
 		B2D200AC26D6A0DB00EDF6BD /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2D200AB26D6A0DB00EDF6BD /* HomeView.swift */; };
 		B2D200AE26D6A17900EDF6BD /* OnboardingContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2D200AD26D6A17900EDF6BD /* OnboardingContainerView.swift */; };
 		B2D200B126D6A24500EDF6BD /* OnboardingContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2D200B026D6A24500EDF6BD /* OnboardingContentView.swift */; };
-		B2D200B326D6B23700EDF6BD /* LaunchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2D200B226D6B23700EDF6BD /* LaunchView.swift */; };
-		B2D200B526D6C8CA00EDF6BD /* Landing.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2D200B426D6C8CA00EDF6BD /* Landing.swift */; };
+		B2D200B326D6B23700EDF6BD /* LaunchLogicView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2D200B226D6B23700EDF6BD /* LaunchLogicView.swift */; };
+		B2D200B526D6C8CA00EDF6BD /* WelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2D200B426D6C8CA00EDF6BD /* WelcomeView.swift */; };
 		B2D200B726D6CFD700EDF6BD /* WelcomeVideo.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2D200B626D6CFD700EDF6BD /* WelcomeVideo.swift */; };
 		B2D200BA26D6D2C600EDF6BD /* welcome.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = B2D200B926D6D25300EDF6BD /* welcome.mp4 */; };
 /* End PBXBuildFile section */
@@ -64,8 +63,7 @@
 		B2C7AD0726DEE4B400D8F4B4 /* HeightPreferencesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeightPreferencesView.swift; sourceTree = "<group>"; };
 		B2C7AD0926DEE91900D8F4B4 /* BreakIceOnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BreakIceOnboardingView.swift; sourceTree = "<group>"; };
 		B2C7AD0B26DF2BC900D8F4B4 /* girls party small.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "girls party small.jpg"; sourceTree = "<group>"; };
-		B2C7AD0D26DF2C8600D8F4B4 /* Q1Day2LiveView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Q1Day2LiveView.swift; sourceTree = "<group>"; };
-		B2C7AD1026DF2E1400D8F4B4 /* Qwinning1USDM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Qwinning1USDM.swift; sourceTree = "<group>"; };
+		B2C7AD0D26DF2C8600D8F4B4 /* OnboardingQuestions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingQuestions.swift; sourceTree = "<group>"; };
 		B2D2007B26D5E97600EDF6BD /* Secret0.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Secret0.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B2D2007E26D5E97600EDF6BD /* Secret0App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Secret0App.swift; sourceTree = "<group>"; };
 		B2D2008026D5E97600EDF6BD /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -82,8 +80,8 @@
 		B2D200AB26D6A0DB00EDF6BD /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		B2D200AD26D6A17900EDF6BD /* OnboardingContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingContainerView.swift; sourceTree = "<group>"; };
 		B2D200B026D6A24500EDF6BD /* OnboardingContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingContentView.swift; sourceTree = "<group>"; };
-		B2D200B226D6B23700EDF6BD /* LaunchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchView.swift; sourceTree = "<group>"; };
-		B2D200B426D6C8CA00EDF6BD /* Landing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Landing.swift; sourceTree = "<group>"; };
+		B2D200B226D6B23700EDF6BD /* LaunchLogicView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchLogicView.swift; sourceTree = "<group>"; };
+		B2D200B426D6C8CA00EDF6BD /* WelcomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeView.swift; sourceTree = "<group>"; };
 		B2D200B626D6CFD700EDF6BD /* WelcomeVideo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeVideo.swift; sourceTree = "<group>"; };
 		B2D200B926D6D25300EDF6BD /* welcome.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = welcome.mp4; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -122,8 +120,7 @@
 				B2C7AD0426DEA41500D8F4B4 /* DatePreferencesView.swift */,
 				B2C7AD0726DEE4B400D8F4B4 /* HeightPreferencesView.swift */,
 				B2C7AD0926DEE91900D8F4B4 /* BreakIceOnboardingView.swift */,
-				B2C7AD0D26DF2C8600D8F4B4 /* Q1Day2LiveView.swift */,
-				B2C7AD1026DF2E1400D8F4B4 /* Qwinning1USDM.swift */,
+				B2C7AD0D26DF2C8600D8F4B4 /* OnboardingQuestions.swift */,
 				B2C7AD0226DEA30500D8F4B4 /* RadioButtonView.swift */,
 			);
 			path = "Onboarding screens";
@@ -160,7 +157,7 @@
 			isa = PBXGroup;
 			children = (
 				B2D2007E26D5E97600EDF6BD /* Secret0App.swift */,
-				B2D200B226D6B23700EDF6BD /* LaunchView.swift */,
+				B2D200B226D6B23700EDF6BD /* LaunchLogicView.swift */,
 				B2827C4A26DAEE2000A86AF4 /* CoreData */,
 				B2D200B826D6D0CF00EDF6BD /* Landing */,
 				B2827C4426DAE1A500A86AF4 /* Onboarding screens */,
@@ -235,7 +232,7 @@
 		B2D200B826D6D0CF00EDF6BD /* Landing */ = {
 			isa = PBXGroup;
 			children = (
-				B2D200B426D6C8CA00EDF6BD /* Landing.swift */,
+				B2D200B426D6C8CA00EDF6BD /* WelcomeView.swift */,
 				B2D200B626D6CFD700EDF6BD /* WelcomeVideo.swift */,
 			);
 			path = Landing;
@@ -378,11 +375,11 @@
 				B2C7ACF326DB08AA00D8F4B4 /* BirthOnboardingView.swift in Sources */,
 				B2C7AD0826DEE4B400D8F4B4 /* HeightPreferencesView.swift in Sources */,
 				B2D2009526D5EE2D00EDF6BD /* Constants.swift in Sources */,
-				B2D200B326D6B23700EDF6BD /* LaunchView.swift in Sources */,
+				B2D200B326D6B23700EDF6BD /* LaunchLogicView.swift in Sources */,
 				B2D2008826D5E97700EDF6BD /* Persistence.swift in Sources */,
 				B2D200B126D6A24500EDF6BD /* OnboardingContentView.swift in Sources */,
-				B2C7AD0E26DF2C8600D8F4B4 /* Q1Day2LiveView.swift in Sources */,
-				B2D200B526D6C8CA00EDF6BD /* Landing.swift in Sources */,
+				B2C7AD0E26DF2C8600D8F4B4 /* OnboardingQuestions.swift in Sources */,
+				B2D200B526D6C8CA00EDF6BD /* WelcomeView.swift in Sources */,
 				B2827C4626DAE1D200A86AF4 /* NameOnboardingView.swift in Sources */,
 				B2C7ACF526DC2A9A00D8F4B4 /* NotifOnboarding.swift in Sources */,
 				B2C7ACFD26DC9E7100D8F4B4 /* genderOnboarding.swift in Sources */,
@@ -403,7 +400,6 @@
 				B2D200B726D6CFD700EDF6BD /* WelcomeVideo.swift in Sources */,
 				B2D2008B26D5E97700EDF6BD /* Secret0.xcdatamodeld in Sources */,
 				B2D2007F26D5E97600EDF6BD /* Secret0App.swift in Sources */,
-				B2C7AD1126DF2E1400D8F4B4 /* Qwinning1USDM.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

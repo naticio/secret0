@@ -13,6 +13,7 @@ struct NotifOnboarding: View {
     
     
     @AppStorage("isOnboarding") var isOnboarding: Bool?
+    //@AppStorage("onboardingScreen") var onboardingScreen: String?
     @State var goWhenTrue : Bool = false
     
     var body: some View {
@@ -32,7 +33,6 @@ struct NotifOnboarding: View {
                         .font(.title)
                         .bold()
                     
-                    //MAP USER. how to do this???
                     
                     Text(Constants.screens[index].disclaimer)
                         .font(.caption)
@@ -53,9 +53,10 @@ struct NotifOnboarding: View {
                 
                 //oNBOARIDNG NEXT BUTTON
                 Button(action: {
-                    //save username (to create user once we have password and email
+                    //save into model
                     
-                
+                    isOnboarding = true
+                    //onboardingScreen = "Location"
                         goWhenTrue = true
                         
                         //update indexes
@@ -63,13 +64,6 @@ struct NotifOnboarding: View {
                     if model.onboardingIndex < Constants.screens.count {
                         model.onboardingIndex += 1
                         
-                        if model.onboardingIndex == Constants.screens.count {
-                            isOnboarding = false
-                            model.onboardingIndex = 0
-                            model.checkLogin()
-                            //model.updateIndexes()
-                            
-                        }
                     }
                     
                 }, label: {

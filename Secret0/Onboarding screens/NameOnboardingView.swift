@@ -15,6 +15,7 @@ struct NameOnboardingView: View {
     @EnvironmentObject var model: ContentModel
     
     @AppStorage("isOnboarding") var isOnboarding: Bool?
+    
     //var screen: onboardingScreen
     
     @State var username: String = ""
@@ -61,18 +62,13 @@ struct NameOnboardingView: View {
                     //BUTTON NEXT
                     Button {
                         if textFormatOK() {
+                            //save user name in model
                             model.usernameSignUp = username
+                           
                             goWhenTrue = true
                               
                               if model.onboardingIndex < Constants.screens.count {
                                   model.onboardingIndex += 1
-                                  
-                                  if model.onboardingIndex == Constants.screens.count {
-                                      isOnboarding = false
-                                      model.onboardingIndex = 0
-                                      model.checkLogin()
-                                      
-                                  }
                               }
                         } else {
                             //show a warning message for the etxt to be longer than 1 chr

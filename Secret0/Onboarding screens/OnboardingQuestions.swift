@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct Q1Day2LiveView: View {
+struct OnboardingQuestions: View {
     
     @EnvironmentObject var model: ContentModel
     @AppStorage("isOnboarding") var isOnboarding: Bool?
@@ -30,8 +30,8 @@ struct Q1Day2LiveView: View {
                     Text(Constants.screens[index].title)
                         .font(.title)
                         .bold()
-                
-
+                    
+                    
                     Text(Constants.screens[index].disclaimer)
                         .font(.caption)
                 }
@@ -42,24 +42,42 @@ struct Q1Day2LiveView: View {
                     .padding()
                 
                 
-                NavigationLink(destination: Qwinning1USDM(), isActive: $goWhenTrue) {
+                NavigationLink(destination: OnboardingQuestions(), isActive: $goWhenTrue) {
                     EmptyView()
                 }
                 
                 //BUTTON NEXT
                 Button {
+                   
+                    if model.onboardingIndex < Constants.screens.count-1 {
+                        model.onboardingIndex += 1
+                        //isOnboarding = true
+                        response = ""
+                        
+                        if Constants.screens[index].title.contains("one day left") {
+                            model.Q1day2liveModel = response
+                        }
+                        if Constants.screens[index].title.contains("100,000,000") {
+                            model.QlotteryWinModel = response
+                        }
+                        if Constants.screens[index].title.contains("money didn't matter") {
+                            model.QmoneynotanIssueModel = response
+                        }
+                        if Constants.screens[index].title.contains("bucket list") {
+                            model.bucketListModel = response
+                        }
+                        if Constants.screens[index].title.contains("Jokes") {
+                            model.jokesModel = response
+                        }
+                        
                         goWhenTrue = true
                         
-                        if model.onboardingIndex < Constants.screens.count {
-                            model.onboardingIndex += 1
-                            
-                            if model.onboardingIndex == Constants.screens.count {
-                                isOnboarding = false
-                                model.onboardingIndex = 0
-                                model.checkLogin()
-                                
-                            }
-                        }
+                    } else if model.onboardingIndex == Constants.screens.count-1 {
+                        isOnboarding = false
+                        //model.onboardingIndex = 0
+                        model.checkLogin()
+                        
+                    }
                     
                     
                 } label: {
@@ -72,15 +90,6 @@ struct Q1Day2LiveView: View {
                 .padding()
                 .background(Capsule().strokeBorder(Color.white, lineWidth: 1.5))
                 .frame(width: 100)
-                
-//                Button(action: { isOnboarding = false }, label: {
-//                    Text("Next")
-//                        .padding()
-//                        .background(
-//                            Capsule().strokeBorder(Color.white, lineWidth: 1.5)
-//                                .frame(width: 100)
-//                        )
-//                })
                 
                 Spacer()
             }
@@ -109,6 +118,6 @@ extension UIApplication: UIGestureRecognizerDelegate {
 
 struct Q1Day2LiveView_Previews: PreviewProvider {
     static var previews: some View {
-        Q1Day2LiveView()
+        OnboardingQuestions()
     }
 }

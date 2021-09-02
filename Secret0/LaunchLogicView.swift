@@ -7,9 +7,10 @@
 
 import SwiftUI
 
-struct LaunchView: View {
+struct LaunchLogicView: View {
     
-    @AppStorage("isOnboarding") var isOnboarding = true
+    @AppStorage("isOnboarding") var isOnboarding: Bool?
+    //@AppStorage("onboardingScreen") var onboardingScreen: String?
     
     @EnvironmentObject var model: ContentModel //because we depend on content model to know if user is loggedin (loggedin property)
     let persistenceController = PersistenceController.shared
@@ -17,17 +18,25 @@ struct LaunchView: View {
     var body: some View {
         
         if model.loggedIn  == false {
-            Landing()
+            WelcomeView()
                 .onAppear {
                     //check if user is logged out
                     model.checkLogin()
                 }
         } else {
-            if isOnboarding == false {
-                HomeView()
+            if isOnboarding == true {
+                
+                BirthOnboardingView()
+                    .onAppear() {
+                        model.onboardingIndex = 2
+                        model.checkLogin()
+                        
+                    }
                     .environment(\.managedObjectContext, persistenceController.container.viewContext)
             } else {
-                OnboardingContainerView() //show onboarding
+
+                HomeView()
+                    .onAppear() { model.checkLogin()}
                     .environment(\.managedObjectContext, persistenceController.container.viewContext)
             }
             
@@ -37,6 +46,6 @@ struct LaunchView: View {
 
 struct LaunchView_Previews: PreviewProvider {
     static var previews: some View {
-        LaunchView()
+        LaunchLogicView()
     }
 }

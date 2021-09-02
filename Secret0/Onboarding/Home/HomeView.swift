@@ -11,6 +11,9 @@ import FirebaseAuth
 struct HomeView: View {
     
     @EnvironmentObject var model: ContentModel
+    @AppStorage("isOnboarding") var isOnboarding: Bool?
+    @AppStorage("onboardingScreen") var onboardingScreen: String?
+    
     var body: some View {
         ZStack {
             Color.red
@@ -22,6 +25,7 @@ struct HomeView: View {
                     //sign out the user
                     try! Auth.auth().signOut() //we're using try because we're not interested to catch an error when signin out
                     
+                    isOnboarding = false
                     //change to log out view
                     model.checkLogin()
                     

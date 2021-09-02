@@ -11,6 +11,7 @@ struct BirthOnboardingView: View {
     @EnvironmentObject var model: ContentModel
     
     @AppStorage("isOnboarding") var isOnboarding: Bool?
+   // @AppStorage("onboardingScreen") var onboardingScreen: String?
     //var screen: onboardingScreen
     
     @State var birthDate = Date()
@@ -18,7 +19,7 @@ struct BirthOnboardingView: View {
     
     var body: some View {
         ZStack {
-            //LinearGradient(gradient: Gradient(colors: [Color(#colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)), Color(#colorLiteral(red: 0.7450980544, green: 0.1568627506, blue: 0.07450980693, alpha: 1))]), startPoint: .topLeading, endPoint: .bottomTrailing)
+           
             VStack {
                 
                 let index = model.onboardingIndex
@@ -54,18 +55,17 @@ struct BirthOnboardingView: View {
                     //save username (to create user once we have password and email
                     
                     if userOver18() {
+                        //save birthdate into model
+                        model.age = birthDate
+                        isOnboarding = true
+                        //onboardingScreen = "Notifications"
+                        
                         goWhenTrue = true
                         
                         //update indexes
                         if model.onboardingIndex < Constants.screens.count {
                             model.onboardingIndex += 1
-                            
-                            if model.onboardingIndex == Constants.screens.count {
-                                isOnboarding = false
-                                model.onboardingIndex = 0
-                                model.checkLogin()
-                                
-                            }
+                           
                         }
                     }
                     

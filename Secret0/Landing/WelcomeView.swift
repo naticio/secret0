@@ -9,7 +9,7 @@ import SwiftUI
 import FirebaseAuth
 import Firebase
 
-struct Landing: View {
+struct WelcomeView: View {
     @EnvironmentObject var model: ContentModel
     @AppStorage("isOnboarding") var isOnboarding = false
     
@@ -23,12 +23,8 @@ struct Landing: View {
         
         NavigationView {
             ZStack {
-            
-                
 //                WelcomeVideo()
-//
-//                    .edgesIgnoringSafeArea(.all)
-                
+//                .edgesIgnoringSafeArea(.all)
                 VStack {
                     
                     //logo
@@ -158,6 +154,6 @@ struct LoginSubView: View {
 
 struct Landing_Previews: PreviewProvider {
     static var previews: some View {
-        Landing()
+        WelcomeView()
     }
 }

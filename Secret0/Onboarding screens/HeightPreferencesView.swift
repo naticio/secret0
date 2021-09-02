@@ -12,6 +12,7 @@ struct HeightPreferencesView: View {
     @EnvironmentObject var model: ContentModel
     
     @AppStorage("isOnboarding") var isOnboarding: Bool?
+    //@AppStorage("onboardingScreen") var onboardingScreen: String?
     //@State private var index: Int = 0
     @State var goWhenTrue : Bool = false
     @State var selectedeHeight: String = "5'7 ("
@@ -97,19 +98,14 @@ struct HeightPreferencesView: View {
                     if selectedeHeight.contains("193") { model.heightModel = 193}
                     if selectedeHeight.contains("195") { model.heightModel = 195}
                     
-                    
+                        isOnboarding = true
+                        //onboardingScreen = "Break Ice"
                         //model.heightModel = selectedeHeight
                         goWhenTrue = true
                         
                         if model.onboardingIndex < Constants.screens.count {
                             model.onboardingIndex += 1
                             
-                            if model.onboardingIndex == Constants.screens.count {
-                                isOnboarding = false
-                                model.onboardingIndex = 0
-                                model.checkLogin()
-                                
-                            }
                         }
                     
                     

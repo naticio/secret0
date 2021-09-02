@@ -21,7 +21,7 @@ class ContentModel: ObservableObject{
     @Published var usernameSignUp = ""
     @Published var emailSignUp = ""
     @Published var passwordSignUp = ""
-    @Published var age: Int = 0
+    @Published var age: Date = Date()
     @Published var locationModel: String = ""
     @Published var genderModel: String = ""
     @Published var sexualityModel: String = ""
@@ -41,13 +41,43 @@ class ContentModel: ObservableObject{
     }
     
     //MARK: - authentication methods
-    func checkLogin() { //to check if user is logged in or not every time the app opens
-        loggedIn = Auth.auth().currentUser == nil ? false : true //if current user is nil then loggedin = false
+    func checkLogin() {
+        //to check if user is logged in or not every time the app opens
+        loggedIn = Auth.auth().currentUser != nil ? true : false
+        //if current user is nil then loggedin = false
         
-//        //CHECK IF USERR metadaata has been FETCHED. if the uer was already logged in from a previous session, we need to get their data in a separate call
-//        if UserService.shared.user.name == "" { //why not nil? because it's a string the name field in firebase
-//            getUserData() //to fetch metadata related to user
-//        }
+        //CHECK IF USERR metadata has been FETCHED. if the user was already logged in from a previous session, we need to get their data in a separate call
+        if UserService.shared.user.name == "" { //why not nil? because it's a string the name field in firebase
+            getUserData() //to fetch metadata related to user
+        }
+    }
+    
+    //retrieve user data for the first time
+    func getUserData() {
+        
+        // Check that there's a logged in user
+        guard Auth.auth().currentUser != nil else {
+            return
+        }
+        
+        // Get the meta data for that user
+        let db = Firestore.firestore()
+        let ref = db.collection("users").document(Auth.auth().currentUser!.uid)
+        ref.getDocument { snapshot, error in
+            
+            // Check there's no errors
+            guard error == nil, snapshot != nil else {
+                return
+            }
+            
+            // Parse the data out and set the user meta data
+            let data = snapshot!.data()
+            let user = UserService.shared.user
+            user.name = data?["name"] as? String ?? ""
+//            user.lastModule = data?["lastModule"] as? Int
+//            user.lastLesson = data?["lastLesson"] as? Int
+//            user.lastQuestion = data?["lastQuestion"] as? Int
+        }
     }
     
     func signInUser(email:String, password: String) {

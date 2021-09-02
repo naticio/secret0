@@ -12,6 +12,7 @@ struct genderOnboarding: View {
     @EnvironmentObject var model: ContentModel
     
     @AppStorage("isOnboarding") var isOnboarding: Bool?
+    //@AppStorage("onboardingScreen") var onboardingScreen: String?
     @State var goWhenTrue : Bool = false
     @State private var maleButtonPressed:Bool = false
     @State private var femaleButtonPressed:Bool = false
@@ -86,18 +87,14 @@ struct genderOnboarding: View {
                     if maleButtonPressed == true || femaleButtonPressed == true {
                         if maleButtonPressed == true {model.genderModel = "Male"}
                         if femaleButtonPressed == true {model.genderModel = "Female"}
+                        
+                        isOnboarding = true
+                        //onboardingScreen = "Sexuality"
                         goWhenTrue = true
                         
                         //update indexes
                         if model.onboardingIndex < Constants.screens.count {
                             model.onboardingIndex += 1
-                            
-                            if model.onboardingIndex == Constants.screens.count {
-                                isOnboarding = false
-                                model.onboardingIndex = 0
-                                model.checkLogin()
-                                
-                            }
                         }
                     }
                     

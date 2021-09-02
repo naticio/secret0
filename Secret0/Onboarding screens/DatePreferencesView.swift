@@ -12,6 +12,7 @@ struct DatePreferencesView: View {
     @EnvironmentObject var model: ContentModel
     
     @AppStorage("isOnboarding") var isOnboarding: Bool?
+    //@AppStorage("onboardingScreen") var onboardingScreen: String?
     //var screen: onboardingScreen
     
     @State var goWhenTrue : Bool = false
@@ -100,18 +101,14 @@ struct DatePreferencesView: View {
                         if womenPressed == true { model.datingPrefModel = "Women" }
                         if everyOnePressed == true { model.datingPrefModel = "Everyone" }
                            
+                            isOnboarding = true
+                        //onboardingScreen = "Height"
                             goWhenTrue = true
                             
                             //update indexes
                             if model.onboardingIndex < Constants.screens.count {
                                 model.onboardingIndex += 1
                                 
-                                if model.onboardingIndex == Constants.screens.count {
-                                    isOnboarding = false
-                                    model.onboardingIndex = 0
-                                    model.checkLogin()
-                                    
-                                }
                             }
                     }
                     
