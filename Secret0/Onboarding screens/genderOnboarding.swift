@@ -35,7 +35,7 @@ struct genderOnboarding: View {
                     Text(Constants.screens[index].title)
                         .font(.title)
                         .bold()
-                
+                    
                     
                     Text(Constants.screens[index].disclaimer)
                         .font(.caption)
@@ -76,11 +76,13 @@ struct genderOnboarding: View {
                     .cornerRadius(10.0)
                 }
                 
-
+                
                 
                 Spacer()
                 
-                NavigationLink(destination: SexOnboardingView(index: index + 1), isActive: $goWhenTrue) {
+                NavigationLink(destination: SexOnboardingView(index: index + 1)
+                                .environmentObject(ContentModel())
+                               , isActive: $goWhenTrue) {
                     //ONBOARIDNG NEXT BUTTON
                     Button(action: {
                         if maleButtonPressed == true || femaleButtonPressed == true {
@@ -91,24 +93,22 @@ struct genderOnboarding: View {
                             //onboardingScreen = "Sexuality"
                             goWhenTrue = true
                             
-
+                            
                         }
                     }, label: {
-                            Text("Next")
-                        
+                        Text("Next")
                     })
-                
+                    
                     .padding()
                     .background(Capsule().strokeBorder(Color.white, lineWidth: 1.5))
                     .frame(width: 100)
-
                     
-                    Spacer()
                 }
+                Spacer()
             }
             .navigationBarHidden(true)
             .edgesIgnoringSafeArea(.all)
-                }
+        }
     }
 }
 

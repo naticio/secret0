@@ -45,7 +45,8 @@ struct OnboardingQuestions: View {
                     .padding()
                 
                 
-                NavigationLink(destination: OnboardingQuestions(index: index + 1), isActive: $goWhenTrue) {
+                NavigationLink(destination: OnboardingQuestions(index: index + 1)
+                                .environmentObject(ContentModel()), isActive: $goWhenTrue) {
                     //BUTTON NEXT
                     Button {
                        

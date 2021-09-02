@@ -51,7 +51,9 @@ struct SexOnboardingView: View {
                 
                 Spacer()
                 
-                NavigationLink(destination: DatePreferencesView(index: index + 1), isActive: $goWhenTrue) {
+                NavigationLink(destination: DatePreferencesView(index: index + 1)
+                                .environmentObject(ContentModel())
+                               , isActive: $goWhenTrue) {
                     //BUTTON NEXT
                     Button {
                         //save into model the sexuality
@@ -80,6 +82,7 @@ struct SexOnboardingView: View {
         .edgesIgnoringSafeArea(.all)
     }
 }
+
 
 
 

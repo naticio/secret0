@@ -56,7 +56,8 @@ struct LocationOnboarding: View {
                 
                 Spacer()
                 
-                NavigationLink(destination: genderOnboarding(index: index + 1), isActive: $goWhenTrue) {
+                NavigationLink(destination: genderOnboarding(index: index + 1)
+                                .environmentObject(ContentModel()), isActive: $goWhenTrue) {
                     //ONBOARIDNG NEXT BUTTON
                     Button(action: {
                         //save username (to create user once we have password and email
@@ -72,12 +73,7 @@ struct LocationOnboarding: View {
                             //onboardingScreen = "Gender"
                             // If approved, show home view
                             goWhenTrue = true
-                            
-                            //update indexes
-                            //                        if model.onboardingIndex < Constants.screens.count {
-                            //                            model.onboardingIndex += 1
-                            //
-                            //                        }
+
                         }
                         else {
                             // If denied show denied view

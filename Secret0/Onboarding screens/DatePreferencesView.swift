@@ -92,7 +92,8 @@ struct DatePreferencesView: View {
                 
                 Spacer()
                 
-                NavigationLink(destination: HeightPreferencesView(index: index + 1), isActive: $goWhenTrue) {
+                NavigationLink(destination: HeightPreferencesView(index: index + 1)
+                                .environmentObject(ContentModel()), isActive: $goWhenTrue) {
                     //BUTTON NEXT
                     Button {
                         if menPressed == true || womenPressed == true || everyOnePressed == true {

@@ -45,6 +45,7 @@ struct NotifOnboarding: View {
                 NavigationLink(
                     destination: LocationOnboarding(index: index+1)
                         .environmentObject(LocationModel())
+                        .environmentObject(ContentModel())
                         .onAppear {
                             locModel.requestGeolocationPermission()
                         }

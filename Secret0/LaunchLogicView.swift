@@ -24,19 +24,16 @@ struct LaunchLogicView: View {
                     model.checkLogin()
                 }
         } else {
-            if isOnboarding == true {
-                
+            if model.loggedIn == true && isOnboarding == false {
+                HomeView()
+                    .onAppear() { model.checkLogin()}
+                    .environment(\.managedObjectContext, persistenceController.container.viewContext)
+            } else {
                 BirthOnboardingView(index: 2)
                     .onAppear() {
                         //model.onboardingIndex = 2
                         model.checkLogin()
-                        
                     }
-                    .environment(\.managedObjectContext, persistenceController.container.viewContext)
-            } else {
-
-                HomeView()
-                    .onAppear() { model.checkLogin()}
                     .environment(\.managedObjectContext, persistenceController.container.viewContext)
             }
             

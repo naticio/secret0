@@ -74,7 +74,7 @@ struct HeightPreferencesView: View {
                 
                 Spacer()
                 
-                NavigationLink(destination: BreakIceOnboardingView(index: index + 1), isActive: $goWhenTrue) {
+                NavigationLink(destination: BreakIceOnboardingView(index: index + 1).environmentObject(ContentModel()), isActive: $goWhenTrue) {
                     //BUTTON NEXT
                     Button {
                         if selectedeHeight.contains("144") { model.heightModel = 144}

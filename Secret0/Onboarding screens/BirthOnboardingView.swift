@@ -51,7 +51,8 @@ struct BirthOnboardingView: View {
                     
                     Spacer()
                     
-                    NavigationLink(destination: NotifOnboarding(index: index+1), tag: 1, selection: $selection) {
+                    NavigationLink(destination: NotifOnboarding(index: index+1)
+                                    .environmentObject(ContentModel()), tag: 1, selection: $selection) {
                         Button(action: {
                             self.selection = 1
                             
