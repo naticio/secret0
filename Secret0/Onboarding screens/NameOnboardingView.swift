@@ -24,6 +24,7 @@ struct NameOnboardingView: View {
     
     @State var goWhenTrue : Bool = false
     @State var warningMsg: String = ""
+    @State var index: Int = 0
     
     var body: some View {
         NavigationView{
@@ -31,7 +32,7 @@ struct NameOnboardingView: View {
        
                 VStack {
                     
-                    let index = 0
+                    //let index = 0
                     
                     Image(systemName: Constants.screens[index].image)
                         .resizable()

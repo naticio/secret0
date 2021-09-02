@@ -49,7 +49,7 @@ struct OnboardingQuestions: View {
                                 .environmentObject(ContentModel()), isActive: $goWhenTrue) {
                     //BUTTON NEXT
                     Button {
-                       
+                        
                         if index < Constants.screens.count-1 {
                             //index += 1
                             //isOnboarding = true
@@ -71,11 +71,14 @@ struct OnboardingQuestions: View {
                                 model.jokesModel = response
                             }
                             response = ""
+                            
                             goWhenTrue = true
                             
                         } else if index == Constants.screens.count-1 {
                             isOnboarding = false
-                            
+                            //save all data from model to the db
+                            model.saveData(writeToDatabase: true)
+                            //check if the user is logged in, which is true then flips to home view
                             model.checkLogin()
                             
                         }
@@ -92,9 +95,6 @@ struct OnboardingQuestions: View {
                     .background(Capsule().strokeBorder(Color.white, lineWidth: 1.5))
                     .frame(width: 100)
                 }
-                
-
-                
                 Spacer()
             }
         }

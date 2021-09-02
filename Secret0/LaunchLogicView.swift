@@ -17,8 +17,8 @@ struct LaunchLogicView: View {
     
     var body: some View {
         
-        if model.loggedIn  == false {
-            WelcomeView()
+        if model.loggedIn  == false && isOnboarding == false {
+            LoginSignUpView()
                 .onAppear {
                     //check if user is logged out
                     model.checkLogin()
@@ -34,7 +34,11 @@ struct LaunchLogicView: View {
                         //model.onboardingIndex = 2
                         model.checkLogin()
                     }
-                    .environment(\.managedObjectContext, persistenceController.container.viewContext)
+                    //save data when app is closed by user
+                    .onReceive(NotificationCenter.default.publisher(for: UIApplication.willResignActiveNotification)) { _ in //willresign is whne you hidde the app or is out of focus
+                        //save data is true
+                        model.saveData(writeToDatabase: true)
+                    }
             }
             
         }

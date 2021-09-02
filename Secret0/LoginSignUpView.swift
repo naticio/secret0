@@ -9,7 +9,7 @@ import SwiftUI
 import FirebaseAuth
 import Firebase
 
-struct WelcomeView: View {
+struct LoginSignUpView: View {
     @EnvironmentObject var model: ContentModel
     @AppStorage("isOnboarding") var isOnboarding = false
     
@@ -58,7 +58,9 @@ struct WelcomeView: View {
                         
                         //SIGN UP
                         NavigationLink(
-                            destination: NameOnboardingView().navigationBarHidden(true),
+                            destination: NameOnboardingView()
+                                .environmentObject(ContentModel())
+                                .navigationBarHidden(true),
                             label: {
                                 Text("Create an Account")
                             })
@@ -154,6 +156,6 @@ struct LoginSubView: View {
 
 struct Landing_Previews: PreviewProvider {
     static var previews: some View {
-        WelcomeView()
+        LoginSignUpView()
     }
 }

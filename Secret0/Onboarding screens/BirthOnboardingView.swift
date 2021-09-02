@@ -58,7 +58,7 @@ struct BirthOnboardingView: View {
                             
                             if userOver18() {
                                 //save birthdate into model
-                                model.age = birthDate
+                                model.birthdate = birthDate
                                 isOnboarding = true
                                 //onboardingScreen = "Notifications"
                                 

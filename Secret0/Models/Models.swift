@@ -10,12 +10,11 @@ import SwiftUI
 
 class User {
     var name: String = ""
-    var age: Int = 0
-    var birthDate: Date = Date()
+    var birthdate: Date = Date()
     var location: String = ""
     var gender: String = ""
     var sexuality: String = ""
-    var datingPreferences: [String] = [String]()
+    var datingPreferences: String = ""
     var height: Int = 0
     var Q1day2live: String = ""
     var QlotteryWin: String = ""
