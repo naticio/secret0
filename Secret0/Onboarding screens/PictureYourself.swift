@@ -54,7 +54,8 @@ struct PictureYourself: View {
                 }
             })
             .sheet(isPresented: $showImagePicker, content: {
-                        Text("ImagePicker")
+                    //call the helper image picker to select photos (PHPicker)
+                    ImagePicker(imageController: imageController, showImagePicker: $showImagePicker)
             })
             
         }

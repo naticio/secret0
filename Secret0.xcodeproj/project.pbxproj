@@ -43,6 +43,7 @@
 		B2E7C59326E3B97900CB73BB /* PictureYourself.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2E7C59226E3B97900CB73BB /* PictureYourself.swift */; };
 		B2E7C59526E3C7A100CB73BB /* Vera.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B2E7C59426E3C7A100CB73BB /* Vera.jpg */; };
 		B2E7C5B226E3C98800CB73BB /* ImageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2E7C5B126E3C98800CB73BB /* ImageController.swift */; };
+		B2E7C5B426E4211000CB73BB /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2E7C5B326E4211000CB73BB /* ImagePicker.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -86,6 +87,7 @@
 		B2E7C59226E3B97900CB73BB /* PictureYourself.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PictureYourself.swift; sourceTree = "<group>"; };
 		B2E7C59426E3C7A100CB73BB /* Vera.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Vera.jpg; sourceTree = "<group>"; };
 		B2E7C5B126E3C98800CB73BB /* ImageController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ImageController.swift; path = Secret0/ViewModel/ImageController.swift; sourceTree = SOURCE_ROOT; };
+		B2E7C5B326E4211000CB73BB /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ImagePicker.swift; path = Secret0/Helpers/ImagePicker.swift; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -192,6 +194,7 @@
 		B2D2009626D5EE7900EDF6BD /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				B2E7C5B326E4211000CB73BB /* ImagePicker.swift */,
 				B2D2009426D5EE2D00EDF6BD /* Constants.swift */,
 				B2D2009A26D5EF7F00EDF6BD /* UserService.swift */,
 				B2827C4226D9A2BE00A86AF4 /* UserService.swift */,
@@ -386,6 +389,7 @@
 				B2827C4326D9A2BE00A86AF4 /* UserService.swift in Sources */,
 				B2C7ACFF26DC9F8F00D8F4B4 /* LocationDeniedView.swift in Sources */,
 				B2D200B726D6CFD700EDF6BD /* WelcomeVideo.swift in Sources */,
+				B2E7C5B426E4211000CB73BB /* ImagePicker.swift in Sources */,
 				B2D2008B26D5E97700EDF6BD /* Secret0.xcdatamodeld in Sources */,
 				B2D2007F26D5E97600EDF6BD /* Secret0App.swift in Sources */,
 			);

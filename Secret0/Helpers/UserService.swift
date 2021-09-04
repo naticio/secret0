@@ -2,20 +2,17 @@
 //  UserService.swift
 //  Secret0
 //
-//  Created by Nat-Serrano on 8/24/21.
+//  Created by Nat-Serrano on 8/27/21.
 //
 
 import Foundation
 
-//SINGLETON
-
 class UserService {
     
-    var user = User() //a single copy of the user class
+    var user = User()
     
-    static var shared = UserService() //create SINGLE INSTANCE
+    static var shared = UserService()
     
-    //if we try to create an instance of this lass we canoonnt create it...
     private init() {
         
     }
