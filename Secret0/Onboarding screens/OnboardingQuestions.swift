@@ -10,8 +10,10 @@ import SwiftUI
 struct OnboardingQuestions: View {
     
     @EnvironmentObject var model: ContentModel
+    @StateObject var imageController = ImageController()
     @AppStorage("isOnboarding") var isOnboarding: Bool?
     @State var goWhenTrue : Bool = false
+    @State var goWhenTrue2 : Bool = false
     @State private var response : String = ""
     
     @State var index: Int
@@ -44,16 +46,11 @@ struct OnboardingQuestions: View {
                     .multilineTextAlignment(.center)
                     .padding()
                 
-                
-                NavigationLink(destination: OnboardingQuestions(index: index + 1)
-                                .environmentObject(ContentModel()), isActive: $goWhenTrue) {
-                    //BUTTON NEXT
-                    Button {
-                        
-                        if index < Constants.screens.count-1 {
-                            //index += 1
-                            //isOnboarding = true
-                            
+                if index < Constants.screens.count-1 {
+                    NavigationLink(destination: OnboardingQuestions(index: index + 1)
+                                    .environmentObject(model), isActive: $goWhenTrue) {
+                        //BUTTON NEXT
+                        Button {
                             
                             if Constants.screens[index].title.contains("one day left") {
                                 model.Q1day2liveModel = response
@@ -74,27 +71,37 @@ struct OnboardingQuestions: View {
                             
                             goWhenTrue = true
                             
-                        } else if index == Constants.screens.count-1 {
-                            isOnboarding = false
-                            //save all data from model to the db
-                            model.saveData(writeToDatabase: true)
-                            //check if the user is logged in, which is true then flips to home view
-                            model.checkLogin()
                             
-                        }
-                        
-                        
-                    } label: {
-                        if index == Constants.screens.count-1 {
-                            Text("Done")
-                        } else {
+                        } label: {
                             Text("Next")
                         }
+                        .padding()
+                        .background(Capsule().strokeBorder(Color.white, lineWidth: 1.5))
+                        .frame(width: 100)
+                        
                     }
-                    .padding()
-                    .background(Capsule().strokeBorder(Color.white, lineWidth: 1.5))
-                    .frame(width: 100)
+                } else if index == Constants.screens.count-1 {
+                    NavigationLink(destination: PictureYourself()
+                                    .environmentObject(imageController), isActive: $goWhenTrue2) {
+                        //BUTTON NEXT
+                        Button {
+                            response = ""
+                            
+                            goWhenTrue2 = true
+                            
+                            isOnboarding = true
+                            //save all data from model to the db
+                            model.saveData(writeToDatabase: true)
+                            
+                        } label: {
+                                Text("Next")
+                        }
+                        .padding()
+                        .background(Capsule().strokeBorder(Color.white, lineWidth: 1.5))
+                        .frame(width: 100)
+                    }
                 }
+                
                 Spacer()
             }
         }

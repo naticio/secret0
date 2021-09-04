@@ -40,6 +40,9 @@
 		B2D200B726D6CFD700EDF6BD /* WelcomeVideo.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2D200B626D6CFD700EDF6BD /* WelcomeVideo.swift */; };
 		B2D200BA26D6D2C600EDF6BD /* welcome.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = B2D200B926D6D25300EDF6BD /* welcome.mp4 */; };
 		B2D9C9A026E147B400965841 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2D9C99F26E147B400965841 /* HomeView.swift */; };
+		B2E7C59326E3B97900CB73BB /* PictureYourself.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2E7C59226E3B97900CB73BB /* PictureYourself.swift */; };
+		B2E7C59526E3C7A100CB73BB /* Vera.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B2E7C59426E3C7A100CB73BB /* Vera.jpg */; };
+		B2E7C5B226E3C98800CB73BB /* ImageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2E7C5B126E3C98800CB73BB /* ImageController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -80,6 +83,9 @@
 		B2D200B626D6CFD700EDF6BD /* WelcomeVideo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeVideo.swift; sourceTree = "<group>"; };
 		B2D200B926D6D25300EDF6BD /* welcome.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = welcome.mp4; sourceTree = "<group>"; };
 		B2D9C99F26E147B400965841 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		B2E7C59226E3B97900CB73BB /* PictureYourself.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PictureYourself.swift; sourceTree = "<group>"; };
+		B2E7C59426E3C7A100CB73BB /* Vera.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Vera.jpg; sourceTree = "<group>"; };
+		B2E7C5B126E3C98800CB73BB /* ImageController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ImageController.swift; path = Secret0/ViewModel/ImageController.swift; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -117,6 +123,7 @@
 				B2C7AD0726DEE4B400D8F4B4 /* HeightPreferencesView.swift */,
 				B2C7AD0926DEE91900D8F4B4 /* BreakIceOnboardingView.swift */,
 				B2C7AD0D26DF2C8600D8F4B4 /* OnboardingQuestions.swift */,
+				B2E7C59226E3B97900CB73BB /* PictureYourself.swift */,
 				B2C7AD0226DEA30500D8F4B4 /* RadioButtonView.swift */,
 			);
 			path = "Onboarding screens";
@@ -195,6 +202,7 @@
 		B2D200A126D5F06400EDF6BD /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				B2E7C59426E3C7A100CB73BB /* Vera.jpg */,
 				B2D200A426D5F15E00EDF6BD /* Models.swift */,
 			);
 			path = Models;
@@ -204,6 +212,7 @@
 			isa = PBXGroup;
 			children = (
 				B2D200A826D69FE600EDF6BD /* ContentModel.swift */,
+				B2E7C5B126E3C98800CB73BB /* ImageController.swift */,
 				B2C7ACFA26DC9B2E00D8F4B4 /* LocationViewModel.swift */,
 			);
 			path = ViewModel;
@@ -297,6 +306,7 @@
 				B2D200BA26D6D2C600EDF6BD /* welcome.mp4 in Resources */,
 				B2D2008326D5E97700EDF6BD /* Assets.xcassets in Resources */,
 				B2C7AD0C26DF2BC900D8F4B4 /* girls party small.jpg in Resources */,
+				B2E7C59526E3C7A100CB73BB /* Vera.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -354,8 +364,10 @@
 				B2C7ACF326DB08AA00D8F4B4 /* BirthOnboardingView.swift in Sources */,
 				B2C7AD0826DEE4B400D8F4B4 /* HeightPreferencesView.swift in Sources */,
 				B2D2009526D5EE2D00EDF6BD /* Constants.swift in Sources */,
+				B2E7C59326E3B97900CB73BB /* PictureYourself.swift in Sources */,
 				B2D200B326D6B23700EDF6BD /* LaunchLogicView.swift in Sources */,
 				B2D2008826D5E97700EDF6BD /* Persistence.swift in Sources */,
+				B2E7C5B226E3C98800CB73BB /* ImageController.swift in Sources */,
 				B2C7AD0E26DF2C8600D8F4B4 /* OnboardingQuestions.swift in Sources */,
 				B2D200B526D6C8CA00EDF6BD /* LoginSignUpView.swift in Sources */,
 				B2827C4626DAE1D200A86AF4 /* NameOnboardingView.swift in Sources */,
