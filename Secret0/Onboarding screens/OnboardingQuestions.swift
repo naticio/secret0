@@ -81,7 +81,7 @@ struct OnboardingQuestions: View {
                         
                     }
                 } else if index == Constants.screens.count-1 {
-                    NavigationLink(destination: PictureYourself()
+                    NavigationLink(destination: PictureUploaderView()
                                     .environmentObject(imageController), isActive: $goWhenTrue2) {
                         //BUTTON NEXT
                         Button {

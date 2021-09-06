@@ -44,6 +44,9 @@
 		B2E7C59526E3C7A100CB73BB /* Vera.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B2E7C59426E3C7A100CB73BB /* Vera.jpg */; };
 		B2E7C5B226E3C98800CB73BB /* ImageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2E7C5B126E3C98800CB73BB /* ImageController.swift */; };
 		B2E7C5B426E4211000CB73BB /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2E7C5B326E4211000CB73BB /* ImagePicker.swift */; };
+		B2E7C5B626E5877800CB73BB /* PictureUploaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2E7C5B526E5877800CB73BB /* PictureUploaderView.swift */; };
+		B2E7C5B826E5B60000CB73BB /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2E7C5B726E5B60000CB73BB /* Helper.swift */; };
+		B2E7C5BA26E5BB5500CB73BB /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2E7C5B926E5BB5500CB73BB /* Extensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -88,6 +91,9 @@
 		B2E7C59426E3C7A100CB73BB /* Vera.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Vera.jpg; sourceTree = "<group>"; };
 		B2E7C5B126E3C98800CB73BB /* ImageController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ImageController.swift; path = Secret0/ViewModel/ImageController.swift; sourceTree = SOURCE_ROOT; };
 		B2E7C5B326E4211000CB73BB /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ImagePicker.swift; path = Secret0/Helpers/ImagePicker.swift; sourceTree = SOURCE_ROOT; };
+		B2E7C5B526E5877800CB73BB /* PictureUploaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PictureUploaderView.swift; sourceTree = "<group>"; };
+		B2E7C5B726E5B60000CB73BB /* Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Helper.swift; path = "Secret0/Onboarding screens/Helper.swift"; sourceTree = SOURCE_ROOT; };
+		B2E7C5B926E5BB5500CB73BB /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Extensions.swift; path = "Secret0/Onboarding screens/Extensions.swift"; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -125,6 +131,7 @@
 				B2C7AD0726DEE4B400D8F4B4 /* HeightPreferencesView.swift */,
 				B2C7AD0926DEE91900D8F4B4 /* BreakIceOnboardingView.swift */,
 				B2C7AD0D26DF2C8600D8F4B4 /* OnboardingQuestions.swift */,
+				B2E7C5B526E5877800CB73BB /* PictureUploaderView.swift */,
 				B2E7C59226E3B97900CB73BB /* PictureYourself.swift */,
 				B2C7AD0226DEA30500D8F4B4 /* RadioButtonView.swift */,
 			);
@@ -194,6 +201,8 @@
 		B2D2009626D5EE7900EDF6BD /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				B2E7C5B926E5BB5500CB73BB /* Extensions.swift */,
+				B2E7C5B726E5B60000CB73BB /* Helper.swift */,
 				B2E7C5B326E4211000CB73BB /* ImagePicker.swift */,
 				B2D2009426D5EE2D00EDF6BD /* Constants.swift */,
 				B2D2009A26D5EF7F00EDF6BD /* UserService.swift */,
@@ -369,6 +378,7 @@
 				B2D2009526D5EE2D00EDF6BD /* Constants.swift in Sources */,
 				B2E7C59326E3B97900CB73BB /* PictureYourself.swift in Sources */,
 				B2D200B326D6B23700EDF6BD /* LaunchLogicView.swift in Sources */,
+				B2E7C5B826E5B60000CB73BB /* Helper.swift in Sources */,
 				B2D2008826D5E97700EDF6BD /* Persistence.swift in Sources */,
 				B2E7C5B226E3C98800CB73BB /* ImageController.swift in Sources */,
 				B2C7AD0E26DF2C8600D8F4B4 /* OnboardingQuestions.swift in Sources */,
@@ -392,6 +402,8 @@
 				B2E7C5B426E4211000CB73BB /* ImagePicker.swift in Sources */,
 				B2D2008B26D5E97700EDF6BD /* Secret0.xcdatamodeld in Sources */,
 				B2D2007F26D5E97600EDF6BD /* Secret0App.swift in Sources */,
+				B2E7C5BA26E5BB5500CB73BB /* Extensions.swift in Sources */,
+				B2E7C5B626E5877800CB73BB /* PictureUploaderView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

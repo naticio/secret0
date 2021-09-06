@@ -10,7 +10,19 @@ import SwiftUI
 struct PictureYourself: View {
     
     @EnvironmentObject var imageController: ImageController
-    @State var showImagePicker = false
+    @State var showImagePicker = true
+    
+    @Binding var uploadPic: Bool
+    @Binding var picNumber: Int
+    
+    //array for the filters
+    let availableFilters: [FilterType] = [.Original, .Sepia, .Mono, .Vibrance]
+    
+    //binding to the previous view?
+    init(uploadPic: Binding<Bool>, picNumber: Binding<Int>) {
+        self._uploadPic = uploadPic
+        self._picNumber = picNumber
+    }
     
     var body: some View {
         NavigationView {
@@ -18,7 +30,7 @@ struct PictureYourself: View {
                 VStack {
                     //Image preview
                     //make sure is not nil
-                    if let imageToDisplay = imageController.displayedImage {
+                    if let imageToDisplay = imageController.displayedImage, let originalImage = imageController.unprocessedImage {
                         Image(uiImage: imageToDisplay)
                             .resizable()
                             .aspectRatio(contentMode: .fill)
@@ -29,10 +41,56 @@ struct PictureYourself: View {
                         ScrollView(.horizontal, showsIndicators: false) {
                             HStack {
                                 //horizontal mini images of the preview image with filters
-                                ThumbnailView(width: geometry.size.width*(21/100), height: geometry.size.height*(15/100), filterName: "Original", imageToDisplay: imageToDisplay)
+                                //button for the image to change filter
+                                //for each to create a button thumbnail fro each filter type
+                                ForEach(availableFilters, id: \.self) { filter in
+                                    Button(action: {
+                                        //compressed is an extension available in extensions files in helpers to compress image
+                                        imageController.displayedImage = imageController.generateFilteredImage(inputImage: originalImage.compressed(), filter: filter)
+                                    }, label: {
+                                        ThumbnailView(width: geometry.size.width*(21/100), height: geometry.size.height*(15/100), filterName: "\(filter)", imageToDisplay: originalImage)
+                                    })
+                                }
+                                
                             }
                         }
                         .frame(width: geometry.size.width, height: geometry.size.height*(1/4))
+                        
+                        
+                        //BUTTON done editing pic
+                        Button {
+                            
+                            
+                            if picNumber == 1 {
+                                imageController.image1 = imageController.displayedImage
+                            }
+                            if picNumber == 2 {
+                                imageController.image2 = imageController.displayedImage
+                            }
+                            if picNumber == 3 {
+                                imageController.image3 = imageController.displayedImage
+                            }
+                            if picNumber == 4 {
+                                imageController.image4 = imageController.displayedImage
+                            }
+                            if picNumber == 5 {
+                                imageController.image5 = imageController.displayedImage
+                            }
+                            if picNumber == 6 {
+                                imageController.image6 = imageController.displayedImage
+                            }
+                            
+                            uploadPic = false
+                            
+                            
+                        } label: {
+                            Text("Done Editing")
+                        }
+                        //.disabled(index == nil)
+                        .padding()
+                        .background(Capsule().strokeBorder(Color.white, lineWidth: 1.5))
+                        .frame(width: 100)
+                        
                     } else {
                         //no image yet in imageController.displayedIMage so we ask user to upload
                         Spacer()
@@ -54,8 +112,8 @@ struct PictureYourself: View {
                 }
             })
             .sheet(isPresented: $showImagePicker, content: {
-                    //call the helper image picker to select photos (PHPicker)
-                    ImagePicker(imageController: imageController, showImagePicker: $showImagePicker)
+                //call the helper image picker to select photos (PHPicker)
+                ImagePicker(imageController: imageController, showImagePicker: $showImagePicker)
             })
             
         }
@@ -115,10 +173,10 @@ struct SaveButton: View {
     }
 }
 
-
-struct PictureYourself_Previews: PreviewProvider {
-    static var previews: some View {
-        //so we can display the preview
-        PictureYourself().environmentObject(ImageController())
-    }
-}
+//
+//struct PictureYourself_Previews: PreviewProvider {
+//    static var previews: some View {
+//        //so we can display the preview
+//        PictureYourself(uploadPic: uploadPic, picNumber: picNumber).environmentObject(ImageController())
+//    }
+//}
