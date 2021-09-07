@@ -25,7 +25,7 @@ class ImageController: ObservableObject {
     @Published var image4: UIImage?
     @Published var image5: UIImage?
     @Published var image6: UIImage?
-    
+
     func generateFilteredImage(inputImage: UIImage?, filter: FilterType) -> UIImage? {
         let context = CIContext(options: nil)
         

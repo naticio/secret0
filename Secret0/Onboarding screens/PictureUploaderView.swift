@@ -16,6 +16,7 @@ struct PictureUploaderView: View {
     
     @State var uploadPic: Bool = false
     @State var picNumber: Int = 0
+    //@State var selectedImages: [UIImage] = []
     
     var body: some View {
         NavigationView{
@@ -161,12 +162,56 @@ struct PictureUploaderView: View {
                 
                 //UPLOAD IMAGE TO FIREBASE
                 Button(action: {
+                    
+                    //                    if imageController.image1 != nil {
+                    //                        selectedImages.append(imageController.image1 ?? UIImage())
+                    //                    }
+                    //                    if imageController.image2 != nil {
+                    //                        selectedImages.append(imageController.image2 ?? UIImage())
+                    //                    }
+                    //                    if imageController.image3 != nil {
+                    //                        selectedImages.append(imageController.image3 ?? UIImage())
+                    //                    }
+                    //                    if imageController.image4 != nil {
+                    //                        selectedImages.append(imageController.image4 ?? UIImage())
+                    //                    }
+                    //                    if imageController.image5 != nil {
+                    //                        selectedImages.append(imageController.image5 ?? UIImage())
+                    //                    }
+                    //                    if imageController.image6 != nil {
+                    //                        selectedImages.append(imageController.image6 ?? UIImage())
+                    //                    }
+                    //
+                    //                    //if the array is not empty then make the call
+                    //                    if selectedImages.count > 0 {
+                    //                        uploadImage(selectedImg: selectedImages)
+                    
+                    
+                    
                     if imageController.image1 != nil {
-                    uploadImage(image: imageController.image1!)
+                        uploadImage(image: imageController.image1!, picNumber: 1)
                     }
+                    if imageController.image2 != nil {
+                        uploadImage(image: imageController.image2!, picNumber: 2)
+                    }
+                    if imageController.image3 != nil {
+                        uploadImage(image: imageController.image3!, picNumber: 3)
+                    }
+                    if imageController.image4 != nil {
+                        uploadImage(image: imageController.image4!, picNumber: 4)
+                    }
+                    if imageController.image5 != nil {
+                        uploadImage(image: imageController.image5!, picNumber: 5)
+                    }
+                    if imageController.image6 != nil {
+                        uploadImage(image: imageController.image6!, picNumber: 6)
+                    }
+                    
+                    
                 }, label: {
-                    Text("Upload image1 to Firebase")
+                    Text("Upload images to Firebase")
                 })
+                .padding()
             }
             
             Spacer()
@@ -182,12 +227,12 @@ struct PictureUploaderView: View {
 }
 
 //UPLOAD IMAGE INTO FIREBASE STORAGE
-func uploadImage(image:UIImage){
+func uploadImage(image:UIImage, picNumber: Int){
+    
     if let imageData = image.jpegData(compressionQuality: 0.1){
-        let storage = Storage.storage()
         
         let userDocument = Auth.auth().currentUser! //get document id for current user
-        //db.collection("users").document(loggedInUser.uid)
+        let storage = Storage.storage()
         
         let uploadMetaData = StorageMetadata()
         uploadMetaData.contentType = "image/jpeg"
@@ -216,20 +261,16 @@ func uploadImage(image:UIImage){
                 storageRef.downloadURL { url, error in
                     if error == nil {
                         //save into firestore db the url of the images just uploaded
-                        FirestoreRef.setData(["photo1": url!.absoluteString], merge: true)
+                        FirestoreRef.setData(["photo\(picNumber)": url!.absoluteString], merge: true)
                     }
                     
                 }
-            
-                
-
-                
-                //what about the image itself? or URL?
             }
         }
     } else {
         print("coldn't unwrap/case image to data")
     }
+    
 }
 
 struct PictureUploaderView_Previews: PreviewProvider {
