@@ -64,6 +64,7 @@ struct PictureUploaderView: View {
                         }
                         
                     })
+                    .disabled(imageController.image1 == nil)
                     
                     //image3
                     Button(action: {
@@ -85,6 +86,7 @@ struct PictureUploaderView: View {
                         }
                         
                     })
+                    .disabled(imageController.image2 == nil)
                     
                 }
                 
@@ -110,6 +112,7 @@ struct PictureUploaderView: View {
                         }
                         
                     })
+                    .disabled(imageController.image3 == nil)
                     
                     //image5
                     Button(action: {
@@ -131,6 +134,7 @@ struct PictureUploaderView: View {
                         }
                         
                     })
+                    .disabled(imageController.image4 == nil)
                     
                     //image6
                     Button(action: {
@@ -151,10 +155,11 @@ struct PictureUploaderView: View {
                         }
                         
                     })
+                    .disabled(imageController.image5 == nil)
                     
                 }
                 
-                //UPLOAD IMAGE TO FIREBAse
+                //UPLOAD IMAGE TO FIREBASE
                 Button(action: {
                     if imageController.image1 != nil {
                     uploadImage(image: imageController.image1!)
@@ -178,7 +183,7 @@ struct PictureUploaderView: View {
 
 //UPLOAD IMAGE INTO FIREBASE STORAGE
 func uploadImage(image:UIImage){
-    if let imageData = image.jpegData(compressionQuality: 0.5){
+    if let imageData = image.jpegData(compressionQuality: 0.1){
         let storage = Storage.storage()
         
         let userDocument = Auth.auth().currentUser! //get document id for current user
@@ -200,17 +205,24 @@ func uploadImage(image:UIImage){
             } else {
                 print("image uploaded successfully")
                 
-                //save image DOCUMENT to our user document --> a collection inside a document
+                //save image url into users collection as a field
                 let db = Firestore.firestore()
                 
                 //ref = path in the users collection, doc is the user id document, create a sub collection photos with the document id
-                let ref = db.collection("users").document(userDocument.uid).collection("photos").document(documentID)
+                //let ref = db.collection("users").document(userDocument.uid).collection("photos").document(documentID)
+                let FirestoreRef = db.collection("users").document(userDocument.uid)
                 
-                //ref.setData([String : Any], merge: <#T##Bool#>)
-                ref.setData([
-                    "id": documentID,
-                    "photoURL": ""
-                ], merge: true)
+                //download URL of the pic just posted
+                storageRef.downloadURL { url, error in
+                    if error == nil {
+                        //save into firestore db the url of the images just uploaded
+                        FirestoreRef.setData(["photo1": url!.absoluteString], merge: true)
+                    }
+                    
+                }
+            
+                
+
                 
                 //what about the image itself? or URL?
             }
