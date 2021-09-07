@@ -6,6 +6,8 @@
 //
 
 import SwiftUI
+import FirebaseStorage
+import FirebaseFirestore
 
 class ImageController: ObservableObject {
     
@@ -73,4 +75,6 @@ class ImageController: ObservableObject {
         //in case something goes to shit or error then return the same input image
         return inputImage
     }
+    
+   
 }

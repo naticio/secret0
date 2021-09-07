@@ -6,6 +6,8 @@
 //
 
 import SwiftUI
+import FirebaseAuth
+import Firebase
 
 struct SexOnboardingView: View {
     @EnvironmentObject var model: ContentModel
@@ -34,20 +36,20 @@ struct SexOnboardingView: View {
                     Text(Constants.screens[index].title)
                         .font(.title)
                         .bold()
-                
+                    
                     
                     Text(Constants.screens[index].disclaimer)
                         .font(.caption)
                 }
                 .padding()
                 
-
-                            Picker("", selection: $selectedPref) {
-                                ForEach(0..<preferences.count) { index in
-                                    Text(self.preferences[index]).tag(index)
-                                }
-                            }
-                            .pickerStyle(WheelPickerStyle())
+                
+                Picker("", selection: $selectedPref) {
+                    ForEach(0..<preferences.count) { index in
+                        Text(self.preferences[index]).tag(index)
+                    }
+                }
+                .pickerStyle(WheelPickerStyle())
                 
                 Spacer()
                 
@@ -56,17 +58,16 @@ struct SexOnboardingView: View {
                                , isActive: $goWhenTrue) {
                     //BUTTON NEXT
                     Button {
-                        //save into model the sexuality
-                            model.sexualityModel = selectedPref
-                            
-                            isOnboarding = true
-                            //onboardingScreen = "Dating"
-                            goWhenTrue = true
+                        saveDataHere()
+                        
+                        isOnboarding = true
+                        //onboardingScreen = "Dating"
+                        goWhenTrue = true
                         
                         
                     } label: {
-
-                            Text("Next")
+                        
+                        Text("Next")
                     }
                     //.disabled(index == nil)
                     .padding()
@@ -80,6 +81,21 @@ struct SexOnboardingView: View {
         }
         .navigationBarHidden(true)
         .edgesIgnoringSafeArea(.all)
+    }
+    
+    
+    //save data to firebase
+    func saveDataHere() {
+        
+        //make sure user is not nil
+        if let loggedInUser = Auth.auth().currentUser {
+            let user = UserService.shared.user //user =  the current user using the app right now
+            user.sexuality = selectedPref //save to firebase user the values saved in the content model
+            
+            let db = Firestore.firestore()
+            let ref = db.collection("users").document(loggedInUser.uid)
+            ref.setData(["sexuality" : user.sexuality], merge: true)
+        }
     }
 }
 

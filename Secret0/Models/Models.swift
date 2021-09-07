@@ -7,11 +7,12 @@
 
 import Foundation
 import SwiftUI
+import CoreLocation
 
 class User {
     var name: String = ""
     var birthdate: Date = Date()
-    var location: String = ""
+    var location: CLLocation?
     var gender: String = ""
     var sexuality: String = ""
     var datingPreferences: String = ""

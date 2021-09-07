@@ -7,6 +7,8 @@
 
 import Foundation
 import UIKit
+import CoreLocation
+import Contacts
 
 
 //compress images TO HELP with performance in the thumbnail previews! makes image smaller
@@ -34,5 +36,17 @@ extension UIImage {
         }
         
         return compressedImage
+    }
+}
+
+
+//to format CLPLACEMARK for a better address
+extension CLPlacemark {
+    var formattedAddress: String? {
+        guard let postalAddress = postalAddress else {
+            return nil
+        }
+        let formatter = CNPostalAddressFormatter()
+        return formatter.string(from: postalAddress)
     }
 }

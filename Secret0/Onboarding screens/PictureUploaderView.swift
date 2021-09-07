@@ -6,6 +6,9 @@
 //
 
 import SwiftUI
+import FirebaseStorage
+import FirebaseAuth
+import Firebase
 
 struct PictureUploaderView: View {
     //we're observing image controller
@@ -13,8 +16,6 @@ struct PictureUploaderView: View {
     
     @State var uploadPic: Bool = false
     @State var picNumber: Int = 0
-    
- 
     
     var body: some View {
         NavigationView{
@@ -28,21 +29,21 @@ struct PictureUploaderView: View {
                         
                     }, label: {
                         
-                            if imageController.image1 != nil {
-                                Image(uiImage: imageController.image1!.compressed() ?? UIImage())
+                        if imageController.image1 != nil {
+                            Image(uiImage: imageController.image1!.compressed() ?? UIImage())
+                                .frame(width:100, height: 100)
+                        } else {
+                            ZStack {
+                                Rectangle()
+                                    .fill(Color.white)
                                     .frame(width:100, height: 100)
-                            } else {
-                                ZStack {
-                                    Rectangle()
-                                        .fill(Color.white)
-                                        .frame(width:100, height: 100)
-                                        .border(Color.black)
-                                    Image(systemName: "plus")
-                                }
+                                    .border(Color.black)
+                                Image(systemName: "plus")
                             }
+                        }
                         
                     })
-
+                    
                     //image2
                     Button(action: {
                         picNumber = 2
@@ -63,7 +64,7 @@ struct PictureUploaderView: View {
                         }
                         
                     })
-
+                    
                     //image3
                     Button(action: {
                         picNumber = 3
@@ -84,7 +85,7 @@ struct PictureUploaderView: View {
                         }
                         
                     })
-
+                    
                 }
                 
                 //2nd row
@@ -109,7 +110,7 @@ struct PictureUploaderView: View {
                         }
                         
                     })
-
+                    
                     //image5
                     Button(action: {
                         picNumber = 5
@@ -130,7 +131,7 @@ struct PictureUploaderView: View {
                         }
                         
                     })
-
+                    
                     //image6
                     Button(action: {
                         picNumber = 6
@@ -150,10 +151,19 @@ struct PictureUploaderView: View {
                         }
                         
                     })
-
+                    
                 }
+                
+                //UPLOAD IMAGE TO FIREBAse
+                Button(action: {
+                    if imageController.image1 != nil {
+                    uploadImage(image: imageController.image1!)
+                    }
+                }, label: {
+                    Text("Upload image1 to Firebase")
+                })
             }
-
+            
             Spacer()
         }
         .navigationBarHidden(true)
@@ -161,8 +171,52 @@ struct PictureUploaderView: View {
             PictureYourself(uploadPic: $uploadPic, picNumber: $picNumber)
         })
         .navigationTitle("Upload some photos")
+        
+        
+    }
+}
 
-       
+//UPLOAD IMAGE INTO FIREBASE STORAGE
+func uploadImage(image:UIImage){
+    if let imageData = image.jpegData(compressionQuality: 0.5){
+        let storage = Storage.storage()
+        
+        let userDocument = Auth.auth().currentUser! //get document id for current user
+        //db.collection("users").document(loggedInUser.uid)
+        
+        let uploadMetaData = StorageMetadata()
+        uploadMetaData.contentType = "image/jpeg"
+        
+        //create unique filename for the picture, so it can have an id inside the bucket/folder
+        let documentID = UUID().uuidString //Assign unique identifier
+        
+        //SAVE IMAGE TO STORAGE
+        ///reference to storage root, bucket is userDocument id, then files are photo uploaded with a unique id
+        let storageRef = storage.reference().child(userDocument.uid).child(documentID)
+        let uploadTask = storageRef.putData(imageData, metadata: uploadMetaData){
+            (_, err) in
+            if let err = err {
+                print("an error has occurred - \(err.localizedDescription)")
+            } else {
+                print("image uploaded successfully")
+                
+                //save image DOCUMENT to our user document --> a collection inside a document
+                let db = Firestore.firestore()
+                
+                //ref = path in the users collection, doc is the user id document, create a sub collection photos with the document id
+                let ref = db.collection("users").document(userDocument.uid).collection("photos").document(documentID)
+                
+                //ref.setData([String : Any], merge: <#T##Bool#>)
+                ref.setData([
+                    "id": documentID,
+                    "photoURL": ""
+                ], merge: true)
+                
+                //what about the image itself? or URL?
+            }
+        }
+    } else {
+        print("coldn't unwrap/case image to data")
     }
 }
 

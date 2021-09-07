@@ -7,12 +7,13 @@
 
 import SwiftUI
 import FirebaseAuth
+import Firebase
 
 struct BirthOnboardingView: View {
     @EnvironmentObject var model: ContentModel
     
     @AppStorage("isOnboarding") var isOnboarding: Bool?
-   // @AppStorage("onboardingScreen") var onboardingScreen: String?
+    // @AppStorage("onboardingScreen") var onboardingScreen: String?
     //var screen: onboardingScreen
     
     @State var birthDate = Date()
@@ -24,7 +25,7 @@ struct BirthOnboardingView: View {
     var body: some View {
         NavigationView {
             ZStack {
-               
+                
                 VStack {
                     
                     //let index = model.onboardingIndex
@@ -39,10 +40,10 @@ struct BirthOnboardingView: View {
                             .font(.title)
                             .bold()
                         
-
+                        
                         DatePicker("",selection: $birthDate, displayedComponents: [.date])
-                        .datePickerStyle(WheelDatePickerStyle())
-                    
+                            .datePickerStyle(WheelDatePickerStyle())
+                        
                         
                         Text(Constants.screens[index].disclaimer)
                             .font(.caption)
@@ -58,18 +59,17 @@ struct BirthOnboardingView: View {
                             
                             if userOver18() {
                                 //save birthdate into model
-                                model.birthdate = birthDate
-                                isOnboarding = true
-                                //onboardingScreen = "Notifications"
+                                //model.birthdate = birthDate
+                                saveDataHere()
                                 
-                                //update indexes
-//                                if model.onboardingIndex < Constants.screens.count-1 {
-//                                    model.onboardingIndex += 1
-//
-//                                }
+                                isOnboarding = true
+                                
+                                //save birthdate into core data
+                                
+                                
                             }
                         }) {
-                                Text("Next")
+                            Text("Next")
                         }
                         .accentColor(Color.red)
                         .padding()
@@ -90,37 +90,7 @@ struct BirthOnboardingView: View {
                         Text("Sign Out")
                     }
                     
-    //                Button(action: {
-    //                    //save username (to create user once we have password and email
-    //                    goWhenTrue = true
-    //
-    //                    if userOver18() {
-    //                        //save birthdate into model
-    //                        model.age = birthDate
-    //                        isOnboarding = true
-    //                        //onboardingScreen = "Notifications"
-    //
-    //
-    //
-    //                        //update indexes
-    //                        if model.onboardingIndex < Constants.screens.count-1 {
-    //                            model.onboardingIndex += 1
-    //
-    //                        }
-    //                    }
-    //
-    //                }, label: {
-    //                    if model.onboardingIndex == Constants.screens.count {
-    //                        Text("Done")
-    //                    } else {
-    //                        Text("Next")
-    //                    }
-    //
-    //                })
-    //                .padding()
-    //                .background(Capsule().strokeBorder(Color.white, lineWidth: 1.5))
-    //                .frame(width: 100)
-                   
+                    
                     Spacer()
                 }
             }
@@ -134,14 +104,32 @@ struct BirthOnboardingView: View {
         
         let age = Calendar.current.dateComponents([.year, .month, .day], from: birthDate, to: Date())
         
-            
+        
         if age.year! > 17 {
             return true
         } else {
             return false
         }
     }
+    
+    
+    //save data to firebase
+    func saveDataHere() {
+        
+        //make sure user is not nil
+        if let loggedInUser = Auth.auth().currentUser {
+            let user = UserService.shared.user //user =  the current user using the app right now
+            user.birthdate = birthDate //save to firebase user the values saved in the content model
+            
+            //save to the db
+            let db = Firestore.firestore()
+            let ref = db.collection("users").document(loggedInUser.uid)
+            ref.setData(["birthdate" : user.birthdate], merge: true)
+        }
+    }
 }
+
+
 
 //struct BirthOnboardingView_Previews: PreviewProvider {
 //    static var previews: some View {

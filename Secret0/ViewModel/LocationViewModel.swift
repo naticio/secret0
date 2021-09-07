@@ -17,6 +17,8 @@ class LocationModel: NSObject, CLLocationManagerDelegate, ObservableObject {
     
     @Published var placemark: CLPlacemark?
     
+    @Published var userLocation: CLLocation?
+    
 //    @Published var restaurants = [Business]() //to host the data pulled from the api call
 //    @Published var sights = [Business]()//to host the data pulled from the api call
 //
@@ -60,7 +62,7 @@ class LocationModel: NSObject, CLLocationManagerDelegate, ObservableObject {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         
         // Gives us the location of the user
-        let userLocation = locations.first
+        userLocation = locations.first
         
         if userLocation != nil {
             

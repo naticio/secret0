@@ -6,6 +6,8 @@
 //
 
 import SwiftUI
+import FirebaseAuth
+import Firebase
 
 struct genderOnboarding: View {
     
@@ -16,6 +18,7 @@ struct genderOnboarding: View {
     @State var goWhenTrue : Bool = false
     @State private var maleButtonPressed:Bool = false
     @State private var femaleButtonPressed:Bool = false
+    @State var selectedGender: String = ""
     
     @State var index: Int
     
@@ -86,8 +89,11 @@ struct genderOnboarding: View {
                     //ONBOARIDNG NEXT BUTTON
                     Button(action: {
                         if maleButtonPressed == true || femaleButtonPressed == true {
-                            if maleButtonPressed == true {model.genderModel = "Male"}
-                            if femaleButtonPressed == true {model.genderModel = "Female"}
+                            if maleButtonPressed == true {selectedGender = "Male"}
+                            if femaleButtonPressed == true {selectedGender = "Female"}
+                            
+                            
+                            saveDataHere()
                             
                             isOnboarding = true
                             //onboardingScreen = "Sexuality"
@@ -108,6 +114,20 @@ struct genderOnboarding: View {
             }
             .navigationBarHidden(true)
             .edgesIgnoringSafeArea(.all)
+        }
+    }
+    
+    //save data to firebase
+    func saveDataHere() {
+    
+        //make sure user is not nil
+        if let loggedInUser = Auth.auth().currentUser {
+            let user = UserService.shared.user //user =  the current user using the app right now
+            user.gender = selectedGender //save to firebase user the values saved in the content model
+            
+            let db = Firestore.firestore()
+            let ref = db.collection("users").document(loggedInUser.uid)
+            ref.setData(["gender" : user.gender], merge: true)
         }
     }
 }

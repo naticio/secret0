@@ -7,13 +7,15 @@
 
 import SwiftUI
 import CoreLocation
+import FirebaseAuth
+import Firebase
 
 struct LocationOnboarding: View {
     
     @EnvironmentObject var model: ContentModel
     @EnvironmentObject var localizationModel: LocationModel //jala las func de localizacion
     
-    @State var location: String = ""
+    //@State var location: String = ""
     @AppStorage("isOnboarding") var isOnboarding: Bool?
     //@AppStorage("onboardingScreen") var onboardingScreen: String?
     @State var goWhenTrue : Bool = false
@@ -69,11 +71,12 @@ struct LocationOnboarding: View {
                         else if localizationModel.authorizationState == .authorizedAlways ||
                                     localizationModel.authorizationState == .authorizedWhenInUse {
                             
+                            saveDataHere()
+                            
                             isOnboarding = true
-                            //onboardingScreen = "Gender"
-                            // If approved, show home view
                             goWhenTrue = true
-
+                            
+                            
                         }
                         else {
                             // If denied show denied view
@@ -99,6 +102,23 @@ struct LocationOnboarding: View {
         }
         .navigationBarHidden(true)
         .edgesIgnoringSafeArea(.all)
+    }
+    
+    //save data to firebase
+    func saveDataHere() {
+        
+        //make sure user is not nil
+        if let loggedInUser = Auth.auth().currentUser {
+            let user = UserService.shared.user //user =  the current user using the app right now
+            user.location = localizationModel.userLocation //save to firebase user the values saved in the content model
+            
+            let db = Firestore.firestore()
+            let ref = db.collection("users").document(loggedInUser.uid)
+            ref.setData([
+                "latitude" : String(user.location!.coordinate.latitude),
+                "longitude" : String(user.location!.coordinate.longitude)
+            ], merge: true)
+        }
     }
 }
 

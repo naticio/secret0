@@ -37,7 +37,7 @@ struct LaunchLogicView: View {
                     //save data when app is closed by user
                     .onReceive(NotificationCenter.default.publisher(for: UIApplication.willResignActiveNotification)) { _ in //willresign is whne you hidde the app or is out of focus
                         //save data is true
-                        model.saveData(writeToDatabase: true)
+                        //model.saveUserData(writeToDatabase: true)
                     }
             }
             

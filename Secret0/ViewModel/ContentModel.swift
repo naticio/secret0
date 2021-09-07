@@ -8,6 +8,7 @@
 import Foundation
 import FirebaseFirestore
 import FirebaseAuth
+import FirebaseStorage
 
 class ContentModel: ObservableObject{
     
@@ -117,44 +118,47 @@ class ContentModel: ObservableObject{
     
     //MARK: - data methods - save data into firebase etc to track the user usage
     //parameter so we don't save to the db every single fucking time...it would be a waste of process! by default false
-    func saveData(writeToDatabase: Bool = false) {
+    func saveUserData(writeToDatabase: Bool = false) {
         
         //make sure user is not nil
         if let loggedInUser = Auth.auth().currentUser { //if auth.auth.currentuser is not nil then it wll lbe assigned to constant loggedInuser and execute code
             //save data locally
             let user = UserService.shared.user //user =  the current user using the app right now
-            user.birthdate = self.birthdate //save to firebase user the values saved in the content model
-            user.location = self.locationModel
-            user.gender = self.genderModel
-            user.sexuality = self.sexualityModel
-            user.datingPreferences = self.datingPrefModel
-            user.height = self.heightModel
-            user.Q1day2live = self.Q1day2liveModel
-            user.QlotteryWin = self.QlotteryWinModel
-            user.QmoneynotanIssue = self.QmoneynotanIssueModel
-            user.bucketList = self.bucketListModel
-            user.jokes = self.jokesModel
+//            user.birthdate = self.birthdate //save to firebase user the values saved in the content model
+//            user.location = self.locationModel
+//            user.gender = self.genderModel
+//            user.sexuality = self.sexualityModel
+//            user.datingPreferences = self.datingPrefModel
+//            user.height = self.heightModel
+//            user.Q1day2live = self.Q1day2liveModel
+//            user.QlotteryWin = self.QlotteryWinModel
+//            user.QmoneynotanIssue = self.QmoneynotanIssueModel
+//            user.bucketList = self.bucketListModel
+//            user.jokes = self.jokesModel
 
             //save to the database
-            if writeToDatabase { //equal to true
-                let db = Firestore.firestore()
-                let ref = db.collection("users").document(loggedInUser.uid)
-                ref.setData(["birthdate" : user.birthdate,
-                             "location" : user.location,
-                             "gender" : user.gender,
-                             "sexuality" : user.sexuality,
-                             "datingPreferences" : user.datingPreferences,
-                             "height" : user.height,
-                             "Q1day2live" : user.location,
-                             "QlotteryWin" : user.Q1day2live,
-                             "QmoneynotanIssue" : user.QmoneynotanIssue,
-                             "bucketList" : user.bucketList,
-                             "jokes" : user.jokes],
-                            merge: true) //merge into doc, not override
-            }
+//            if writeToDatabase { //equal to true
+//                let db = Firestore.firestore()
+//                let ref = db.collection("users").document(loggedInUser.uid)
+//                ref.setData(["birthdate" : user.birthdate,
+//                             "location" : user.location,
+//                             "gender" : user.gender,
+//                             "sexuality" : user.sexuality,
+//                             "datingPreferences" : user.datingPreferences,
+//                             "height" : user.height,
+//                             "Q1day2live" : user.Q1day2live,
+//                             "QlotteryWin" : user.QlotteryWin,
+//                             "QmoneynotanIssue" : user.QmoneynotanIssue,
+//                             "bucketList" : user.bucketList,
+//                             "jokes" : user.jokes],
+//                            merge: true) //merge into doc, not override
+//            }
 
 
         }
     }
+    
+
+    
 }
 

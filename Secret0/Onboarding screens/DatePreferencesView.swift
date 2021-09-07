@@ -6,6 +6,8 @@
 //
 
 import SwiftUI
+import FirebaseAuth
+import Firebase
 
 struct DatePreferencesView: View {
     
@@ -19,6 +21,7 @@ struct DatePreferencesView: View {
     @State var menPressed : Bool = false
     @State var womenPressed : Bool = false
     @State var everyOnePressed : Bool = false
+    @State var datingPref: String = ""
     
     @State var index: Int
     
@@ -97,9 +100,11 @@ struct DatePreferencesView: View {
                     //BUTTON NEXT
                     Button {
                         if menPressed == true || womenPressed == true || everyOnePressed == true {
-                            if menPressed == true { model.datingPrefModel = "Men" }
-                            if womenPressed == true { model.datingPrefModel = "Women" }
-                            if everyOnePressed == true { model.datingPrefModel = "Everyone" }
+                            if menPressed == true { datingPref = "Men" }
+                            if womenPressed == true { datingPref = "Women" }
+                            if everyOnePressed == true { datingPref = "Everyone" }
+                            
+                            saveDataHere()
                             
                             isOnboarding = true
                             //onboardingScreen = "Height"
@@ -124,6 +129,20 @@ struct DatePreferencesView: View {
         }
         .navigationBarHidden(true)
         .edgesIgnoringSafeArea(.all)
+    }
+    
+    //save data to firebase
+    func saveDataHere() {
+    
+        //make sure user is not nil
+        if let loggedInUser = Auth.auth().currentUser {
+            let user = UserService.shared.user //user =  the current user using the app right now
+            user.datingPreferences = datingPref //save to firebase user the values saved in the content model
+            
+            let db = Firestore.firestore()
+            let ref = db.collection("users").document(loggedInUser.uid)
+            ref.setData(["datingPreferences" : user.datingPreferences], merge: true)
+        }
     }
 }
 

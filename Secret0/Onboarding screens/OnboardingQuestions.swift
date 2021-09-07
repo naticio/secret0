@@ -6,6 +6,8 @@
 //
 
 import SwiftUI
+import FirebaseAuth
+import Firebase
 
 struct OnboardingQuestions: View {
     
@@ -52,25 +54,11 @@ struct OnboardingQuestions: View {
                         //BUTTON NEXT
                         Button {
                             
-                            if Constants.screens[index].title.contains("one day left") {
-                                model.Q1day2liveModel = response
-                            }
-                            if Constants.screens[index].title.contains("100,000,000") {
-                                model.QlotteryWinModel = response
-                            }
-                            if Constants.screens[index].title.contains("money didn't matter") {
-                                model.QmoneynotanIssueModel = response
-                            }
-                            if Constants.screens[index].title.contains("bucket list") {
-                                model.bucketListModel = response
-                            }
-                            if Constants.screens[index].title.contains("Jokes") {
-                                model.jokesModel = response
-                            }
-                            response = ""
+                            saveDataHere()
                             
                             goWhenTrue = true
                             
+                            response = ""
                             
                         } label: {
                             Text("Next")
@@ -85,13 +73,15 @@ struct OnboardingQuestions: View {
                                     .environmentObject(imageController), isActive: $goWhenTrue2) {
                         //BUTTON NEXT
                         Button {
+                            saveDataHere()
+                            
                             response = ""
                             
                             goWhenTrue2 = true
                             
                             isOnboarding = true
                             //save all data from model to the db
-                            model.saveData(writeToDatabase: true)
+                           
                             
                         } label: {
                                 Text("Next")
@@ -107,6 +97,51 @@ struct OnboardingQuestions: View {
         }
         .navigationBarHidden(true)
         .edgesIgnoringSafeArea(.all)
+    }
+    
+    //save data to firebase
+    func saveDataHere() {
+    
+        //make sure user is not nil
+        if let loggedInUser = Auth.auth().currentUser {
+            let user = UserService.shared.user //user =  the current user using the app right now
+            
+            if Constants.screens[index].title.contains("one day left") {
+                user.Q1day2live = response
+                
+                let db = Firestore.firestore()
+                let ref = db.collection("users").document(loggedInUser.uid)
+                ref.setData(["Q1day2live" : user.Q1day2live], merge: true)
+            }
+            if Constants.screens[index].title.contains("100,000,000") {
+                user.QlotteryWin = response
+                
+                let db = Firestore.firestore()
+                let ref = db.collection("users").document(loggedInUser.uid)
+                ref.setData(["QlotteryWin" : user.QlotteryWin], merge: true)
+            }
+            if Constants.screens[index].title.contains("money didn't matter") {
+                user.QmoneynotanIssue = response
+                
+                let db = Firestore.firestore()
+                let ref = db.collection("users").document(loggedInUser.uid)
+                ref.setData(["QmoneynotanIssue" : user.QmoneynotanIssue], merge: true)
+            }
+            if Constants.screens[index].title.contains("bucket list") {
+                user.bucketList = response
+                
+                let db = Firestore.firestore()
+                let ref = db.collection("users").document(loggedInUser.uid)
+                ref.setData(["bucketList" : user.bucketList], merge: true)
+            }
+            if Constants.screens[index].title.contains("Jokes") {
+                user.jokes = response
+                
+                let db = Firestore.firestore()
+                let ref = db.collection("users").document(loggedInUser.uid)
+                ref.setData(["jokes" : user.jokes], merge: true)
+            }
+        }
     }
 }
 

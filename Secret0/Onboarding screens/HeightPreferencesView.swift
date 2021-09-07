@@ -6,6 +6,8 @@
 //
 
 import SwiftUI
+import FirebaseAuth
+import Firebase
 
 struct HeightPreferencesView: View {
     
@@ -15,7 +17,7 @@ struct HeightPreferencesView: View {
     //@AppStorage("onboardingScreen") var onboardingScreen: String?
     //@State private var index: Int = 0
     @State var goWhenTrue : Bool = false
-    @State var selectedeHeight: String = "5'7 ("
+    @State var selectedeHeight: String = "5'7 (170 cm)"
     @State var heightOptions = [
         "4'9 (144 cm)",
         "5'0 (152 cm)",
@@ -39,6 +41,7 @@ struct HeightPreferencesView: View {
     ]
     
     @State var index: Int
+    @State var selectedHeightNumber: Int = 170
     
     
     var body: some View {
@@ -77,25 +80,28 @@ struct HeightPreferencesView: View {
                 NavigationLink(destination: BreakIceOnboardingView(index: index + 1).environmentObject(ContentModel()), isActive: $goWhenTrue) {
                     //BUTTON NEXT
                     Button {
-                        if selectedeHeight.contains("144") { model.heightModel = 144}
-                        if selectedeHeight.contains("152") { model.heightModel = 152}
-                        if selectedeHeight.contains("155") { model.heightModel = 155}
-                        if selectedeHeight.contains("158") { model.heightModel = 158}
-                        if selectedeHeight.contains("160") { model.heightModel = 160}
-                        if selectedeHeight.contains("163") { model.heightModel = 163}
-                        if selectedeHeight.contains("165") { model.heightModel = 165}
-                        if selectedeHeight.contains("168") { model.heightModel = 168}
-                        if selectedeHeight.contains("170") { model.heightModel = 170}
-                        if selectedeHeight.contains("173") { model.heightModel = 173}
-                        if selectedeHeight.contains("175") { model.heightModel = 175}
-                        if selectedeHeight.contains("178") { model.heightModel = 178}
-                        if selectedeHeight.contains("180") { model.heightModel = 180}
-                        if selectedeHeight.contains("183") { model.heightModel = 183}
-                        if selectedeHeight.contains("185") { model.heightModel = 185}
-                        if selectedeHeight.contains("188") { model.heightModel = 188}
-                        if selectedeHeight.contains("190") { model.heightModel = 190}
-                        if selectedeHeight.contains("193") { model.heightModel = 193}
-                        if selectedeHeight.contains("195") { model.heightModel = 195}
+                        if selectedeHeight.contains("144") { selectedHeightNumber = 144}
+                        if selectedeHeight.contains("152") { selectedHeightNumber = 152}
+                        if selectedeHeight.contains("155") { selectedHeightNumber = 155}
+                        if selectedeHeight.contains("158") { selectedHeightNumber = 158}
+                        if selectedeHeight.contains("160") { selectedHeightNumber = 160}
+                        if selectedeHeight.contains("163") { selectedHeightNumber = 163}
+                        if selectedeHeight.contains("165") { selectedHeightNumber = 165}
+                        if selectedeHeight.contains("168") { selectedHeightNumber = 168}
+                        if selectedeHeight.contains("170") { selectedHeightNumber = 170}
+                        if selectedeHeight.contains("173") { selectedHeightNumber = 173}
+                        if selectedeHeight.contains("175") { selectedHeightNumber = 175}
+                        if selectedeHeight.contains("178") { selectedHeightNumber = 178}
+                        if selectedeHeight.contains("180") { selectedHeightNumber = 180}
+                        if selectedeHeight.contains("183") { selectedHeightNumber = 183}
+                        if selectedeHeight.contains("185") { selectedHeightNumber = 185}
+                        if selectedeHeight.contains("188") { selectedHeightNumber = 188}
+                        if selectedeHeight.contains("190") { selectedHeightNumber = 190}
+                        if selectedeHeight.contains("193") { selectedHeightNumber = 193}
+                        if selectedeHeight.contains("195") { selectedHeightNumber = 195}
+                        
+                        
+                        saveDataHere()
                         
                         isOnboarding = true
                         //onboardingScreen = "Break Ice"
@@ -122,6 +128,20 @@ struct HeightPreferencesView: View {
         }
         .navigationBarHidden(true)
         .edgesIgnoringSafeArea(.all)
+    }
+    
+    //save data to firebase
+    func saveDataHere() {
+    
+        //make sure user is not nil
+        if let loggedInUser = Auth.auth().currentUser {
+            let user = UserService.shared.user //user =  the current user using the app right now
+            user.height = selectedHeightNumber //save to firebase user the values saved in the content model
+            
+            let db = Firestore.firestore()
+            let ref = db.collection("users").document(loggedInUser.uid)
+            ref.setData(["height" : user.height], merge: true)
+        }
     }
 }
 
