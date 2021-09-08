@@ -20,10 +20,13 @@
 		B2C7AD0126DD667600D8F4B4 /* SexOnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C7AD0026DD667600D8F4B4 /* SexOnboardingView.swift */; };
 		B2C7AD0326DEA30500D8F4B4 /* RadioButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C7AD0226DEA30500D8F4B4 /* RadioButtonView.swift */; };
 		B2C7AD0526DEA41500D8F4B4 /* DatePreferencesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C7AD0426DEA41500D8F4B4 /* DatePreferencesView.swift */; };
-		B2C7AD0826DEE4B400D8F4B4 /* HeightPreferencesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C7AD0726DEE4B400D8F4B4 /* HeightPreferencesView.swift */; };
+		B2C7AD0826DEE4B400D8F4B4 /* HeightOnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C7AD0726DEE4B400D8F4B4 /* HeightOnboardingView.swift */; };
 		B2C7AD0A26DEE91900D8F4B4 /* BreakIceOnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C7AD0926DEE91900D8F4B4 /* BreakIceOnboardingView.swift */; };
 		B2C7AD0C26DF2BC900D8F4B4 /* girls party small.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B2C7AD0B26DF2BC900D8F4B4 /* girls party small.jpg */; };
 		B2C7AD0E26DF2C8600D8F4B4 /* OnboardingQuestions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C7AD0D26DF2C8600D8F4B4 /* OnboardingQuestions.swift */; };
+		B2C9AD1826E913CD00657BBD /* MatchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C9AD1726E913CD00657BBD /* MatchView.swift */; };
+		B2C9AD1A26E913E500657BBD /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C9AD1926E913E500657BBD /* ProfileView.swift */; };
+		B2C9AD1C26E913F800657BBD /* ChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C9AD1B26E913F800657BBD /* ChatView.swift */; };
 		B2D2007F26D5E97600EDF6BD /* Secret0App.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2D2007E26D5E97600EDF6BD /* Secret0App.swift */; };
 		B2D2008126D5E97600EDF6BD /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2D2008026D5E97600EDF6BD /* ContentView.swift */; };
 		B2D2008326D5E97700EDF6BD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B2D2008226D5E97700EDF6BD /* Assets.xcassets */; };
@@ -65,10 +68,13 @@
 		B2C7AD0026DD667600D8F4B4 /* SexOnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SexOnboardingView.swift; sourceTree = "<group>"; };
 		B2C7AD0226DEA30500D8F4B4 /* RadioButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadioButtonView.swift; sourceTree = "<group>"; };
 		B2C7AD0426DEA41500D8F4B4 /* DatePreferencesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatePreferencesView.swift; sourceTree = "<group>"; };
-		B2C7AD0726DEE4B400D8F4B4 /* HeightPreferencesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeightPreferencesView.swift; sourceTree = "<group>"; };
+		B2C7AD0726DEE4B400D8F4B4 /* HeightOnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeightOnboardingView.swift; sourceTree = "<group>"; };
 		B2C7AD0926DEE91900D8F4B4 /* BreakIceOnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BreakIceOnboardingView.swift; sourceTree = "<group>"; };
 		B2C7AD0B26DF2BC900D8F4B4 /* girls party small.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "girls party small.jpg"; sourceTree = "<group>"; };
 		B2C7AD0D26DF2C8600D8F4B4 /* OnboardingQuestions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingQuestions.swift; sourceTree = "<group>"; };
+		B2C9AD1726E913CD00657BBD /* MatchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchView.swift; sourceTree = "<group>"; };
+		B2C9AD1926E913E500657BBD /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
+		B2C9AD1B26E913F800657BBD /* ChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatView.swift; sourceTree = "<group>"; };
 		B2D2007B26D5E97600EDF6BD /* Secret0.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Secret0.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B2D2007E26D5E97600EDF6BD /* Secret0App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Secret0App.swift; sourceTree = "<group>"; };
 		B2D2008026D5E97600EDF6BD /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -128,7 +134,7 @@
 				B2C7ACFC26DC9E7100D8F4B4 /* genderOnboarding.swift */,
 				B2C7AD0026DD667600D8F4B4 /* SexOnboardingView.swift */,
 				B2C7AD0426DEA41500D8F4B4 /* DatePreferencesView.swift */,
-				B2C7AD0726DEE4B400D8F4B4 /* HeightPreferencesView.swift */,
+				B2C7AD0726DEE4B400D8F4B4 /* HeightOnboardingView.swift */,
 				B2C7AD0926DEE91900D8F4B4 /* BreakIceOnboardingView.swift */,
 				B2C7AD0D26DF2C8600D8F4B4 /* OnboardingQuestions.swift */,
 				B2E7C5B526E5877800CB73BB /* PictureUploaderView.swift */,
@@ -145,6 +151,17 @@
 				B2D2008726D5E97700EDF6BD /* Persistence.swift */,
 			);
 			path = CoreData;
+			sourceTree = "<group>";
+		};
+		B2C9AD1D26E914BD00657BBD /* HomeView */ = {
+			isa = PBXGroup;
+			children = (
+				B2D9C99F26E147B400965841 /* HomeView.swift */,
+				B2C9AD1726E913CD00657BBD /* MatchView.swift */,
+				B2C9AD1B26E913F800657BBD /* ChatView.swift */,
+				B2C9AD1926E913E500657BBD /* ProfileView.swift */,
+			);
+			path = HomeView;
 			sourceTree = "<group>";
 		};
 		B2D2007226D5E97600EDF6BD = {
@@ -171,11 +188,11 @@
 				B2D2007E26D5E97600EDF6BD /* Secret0App.swift */,
 				B2D200B226D6B23700EDF6BD /* LaunchLogicView.swift */,
 				B2D200B426D6C8CA00EDF6BD /* LoginSignUpView.swift */,
-				B2D9C99F26E147B400965841 /* HomeView.swift */,
 				B2D200B826D6D0CF00EDF6BD /* Landing */,
-				B2827C4A26DAEE2000A86AF4 /* CoreData */,
+				B2C9AD1D26E914BD00657BBD /* HomeView */,
 				B2827C4426DAE1A500A86AF4 /* Onboarding screens */,
 				B2D200A626D69FC100EDF6BD /* ViewModel */,
+				B2827C4A26DAEE2000A86AF4 /* CoreData */,
 				B2D2008026D5E97600EDF6BD /* ContentView.swift */,
 				B2D200AA26D6A08D00EDF6BD /* Account */,
 				B2D200A126D5F06400EDF6BD /* Models */,
@@ -374,14 +391,17 @@
 				B2D9C9A026E147B400965841 /* HomeView.swift in Sources */,
 				B2D2009B26D5EF8000EDF6BD /* UserService.swift in Sources */,
 				B2C7ACF326DB08AA00D8F4B4 /* BirthOnboardingView.swift in Sources */,
-				B2C7AD0826DEE4B400D8F4B4 /* HeightPreferencesView.swift in Sources */,
+				B2C7AD0826DEE4B400D8F4B4 /* HeightOnboardingView.swift in Sources */,
+				B2C9AD1C26E913F800657BBD /* ChatView.swift in Sources */,
 				B2D2009526D5EE2D00EDF6BD /* Constants.swift in Sources */,
 				B2E7C59326E3B97900CB73BB /* PictureYourself.swift in Sources */,
 				B2D200B326D6B23700EDF6BD /* LaunchLogicView.swift in Sources */,
 				B2E7C5B826E5B60000CB73BB /* Helper.swift in Sources */,
 				B2D2008826D5E97700EDF6BD /* Persistence.swift in Sources */,
 				B2E7C5B226E3C98800CB73BB /* ImageController.swift in Sources */,
+				B2C9AD1826E913CD00657BBD /* MatchView.swift in Sources */,
 				B2C7AD0E26DF2C8600D8F4B4 /* OnboardingQuestions.swift in Sources */,
+				B2C9AD1A26E913E500657BBD /* ProfileView.swift in Sources */,
 				B2D200B526D6C8CA00EDF6BD /* LoginSignUpView.swift in Sources */,
 				B2827C4626DAE1D200A86AF4 /* NameOnboardingView.swift in Sources */,
 				B2C7ACF526DC2A9A00D8F4B4 /* NotifOnboarding.swift in Sources */,

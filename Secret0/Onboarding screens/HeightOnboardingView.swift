@@ -9,7 +9,7 @@ import SwiftUI
 import FirebaseAuth
 import Firebase
 
-struct HeightPreferencesView: View {
+struct HeightOnboardingView: View {
     
     @EnvironmentObject var model: ContentModel
     

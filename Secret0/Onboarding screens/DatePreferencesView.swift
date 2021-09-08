@@ -95,7 +95,7 @@ struct DatePreferencesView: View {
                 
                 Spacer()
                 
-                NavigationLink(destination: HeightPreferencesView(index: index + 1)
+                NavigationLink(destination: HeightOnboardingView(index: index + 1)
                                 .environmentObject(ContentModel()), isActive: $goWhenTrue) {
                     //BUTTON NEXT
                     Button {

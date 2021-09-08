@@ -17,6 +17,7 @@ struct PictureUploaderView: View {
     @State var uploadPic: Bool = false
     @State var picNumber: Int = 0
     //@State var selectedImages: [UIImage] = []
+    @State var goWhenTrue: Bool = false
     
     var body: some View {
         NavigationView{
@@ -161,58 +162,39 @@ struct PictureUploaderView: View {
                 }
                 
                 //UPLOAD IMAGE TO FIREBASE
-                Button(action: {
-                    
-                    //                    if imageController.image1 != nil {
-                    //                        selectedImages.append(imageController.image1 ?? UIImage())
-                    //                    }
-                    //                    if imageController.image2 != nil {
-                    //                        selectedImages.append(imageController.image2 ?? UIImage())
-                    //                    }
-                    //                    if imageController.image3 != nil {
-                    //                        selectedImages.append(imageController.image3 ?? UIImage())
-                    //                    }
-                    //                    if imageController.image4 != nil {
-                    //                        selectedImages.append(imageController.image4 ?? UIImage())
-                    //                    }
-                    //                    if imageController.image5 != nil {
-                    //                        selectedImages.append(imageController.image5 ?? UIImage())
-                    //                    }
-                    //                    if imageController.image6 != nil {
-                    //                        selectedImages.append(imageController.image6 ?? UIImage())
-                    //                    }
-                    //
-                    //                    //if the array is not empty then make the call
-                    //                    if selectedImages.count > 0 {
-                    //                        uploadImage(selectedImg: selectedImages)
-                    
-                    
-                    
-                    if imageController.image1 != nil {
-                        uploadImage(image: imageController.image1!, picNumber: 1)
-                    }
-                    if imageController.image2 != nil {
-                        uploadImage(image: imageController.image2!, picNumber: 2)
-                    }
-                    if imageController.image3 != nil {
-                        uploadImage(image: imageController.image3!, picNumber: 3)
-                    }
-                    if imageController.image4 != nil {
-                        uploadImage(image: imageController.image4!, picNumber: 4)
-                    }
-                    if imageController.image5 != nil {
-                        uploadImage(image: imageController.image5!, picNumber: 5)
-                    }
-                    if imageController.image6 != nil {
-                        uploadImage(image: imageController.image6!, picNumber: 6)
-                    }
-                    
-                    
-                }, label: {
-                    Text("Upload images to Firebase")
-                })
-                .padding()
-            }
+                NavigationLink(
+                    destination: HomeView(),
+                    isActive: $goWhenTrue,
+                    label: {
+                        Button(action: {
+                            
+                            if imageController.image1 != nil {
+                                uploadImage(image: imageController.image1!, picNumber: 1)
+                            }
+                            if imageController.image2 != nil {
+                                uploadImage(image: imageController.image2!, picNumber: 2)
+                            }
+                            if imageController.image3 != nil {
+                                uploadImage(image: imageController.image3!, picNumber: 3)
+                            }
+                            if imageController.image4 != nil {
+                                uploadImage(image: imageController.image4!, picNumber: 4)
+                            }
+                            if imageController.image5 != nil {
+                                uploadImage(image: imageController.image5!, picNumber: 5)
+                            }
+                            if imageController.image6 != nil {
+                                uploadImage(image: imageController.image6!, picNumber: 6)
+                            }
+                            
+                            goWhenTrue = true
+                            
+                        }, label: {
+                            Text("NEXT")
+                        })
+                    })
+                    .padding()
+            } //vstack closure
             
             Spacer()
         }

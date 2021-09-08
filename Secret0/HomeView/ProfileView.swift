@@ -1,21 +1,19 @@
 //
-//  HomeView.swift
+//  ProfileView.swift
 //  Secret0
 //
-//  Created by Nat-Serrano on 9/2/21.
+//  Created by Nat-Serrano on 9/8/21.
 //
 
 import SwiftUI
 import FirebaseAuth
 
-struct HomeView: View {
+struct ProfileView: View {
     
     @EnvironmentObject var model: ContentModel
     @AppStorage("isOnboarding") var isOnboarding: Bool?
     
     var body: some View {
-        Text("Home View perrillas")
-        
         Button {
             //sign out the user
             try! Auth.auth().signOut() //we're using try because we're not interested to catch an error when signin out
@@ -30,8 +28,8 @@ struct HomeView: View {
     }
 }
 
-struct HomeView_Previews: PreviewProvider {
+struct ProfileView_Previews: PreviewProvider {
     static var previews: some View {
-        HomeView()
+        ProfileView()
     }
 }
