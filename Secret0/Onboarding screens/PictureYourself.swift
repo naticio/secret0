@@ -90,6 +90,7 @@ struct PictureYourself: View {
                         .padding()
                         .background(Capsule().strokeBorder(Color.white, lineWidth: 1.5))
                         .frame(width: 100)
+                        Spacer()
                         
                     } else {
                         //no image yet in imageController.displayedIMage so we ask user to upload

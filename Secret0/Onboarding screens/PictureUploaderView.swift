@@ -13,6 +13,7 @@ import Firebase
 struct PictureUploaderView: View {
     //we're observing image controller
     @EnvironmentObject var imageController: ImageController
+    @EnvironmentObject var model: ContentModel
     
     @State var uploadPic: Bool = false
     @State var picNumber: Int = 0
@@ -163,7 +164,11 @@ struct PictureUploaderView: View {
                 
                 //UPLOAD IMAGE TO FIREBASE
                 NavigationLink(
-                    destination: HomeView(),
+                    destination: HomeView()
+                        .onAppear(perform: {
+                            //mandalo con informacion papaw!
+                            model.getMatches()
+                        }),
                     isActive: $goWhenTrue,
                     label: {
                         Button(action: {

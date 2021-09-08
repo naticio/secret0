@@ -10,12 +10,15 @@ import SwiftUI
 
 struct HomeView: View {
     
-
+    @EnvironmentObject var model: ContentModel
     
     var body: some View {
 
         TabView {
-            MatchView()
+            MatchView(index: 0)
+                .onAppear(perform: {
+                    //will it be executed only once?
+                })
                 .tabItem {
                     VStack {
                         Image(systemName: "heart")
@@ -39,9 +42,9 @@ struct HomeView: View {
                     }
                 }
         }
-        .onAppear {
-            //get daatabase data
-        }
+//        .onAppear {
+//            model.getMatches()
+//        }
         .onReceive(NotificationCenter.default.publisher(for: UIApplication.willResignActiveNotification)) { _ in
             
             // Save progress to the database when the app is moving from active to background
