@@ -23,6 +23,8 @@ class ContentModel: ObservableObject{
     @Published var onboardingIndex = 0
     @Published var isOnboarding = false
     
+    //matches images
+    @Published var images: [UIImage] = [UIImage()]
     
     @Published var usernameSignUp = ""
     @Published var emailSignUp = ""
@@ -90,6 +92,15 @@ class ContentModel: ObservableObject{
             user.datingPreferences = data?["datingPreferences"] as? String ?? ""
             user.sexuality = data?["sexuality"] as? String ?? ""
             
+            //did I use photo as prefix when saving in firebase?
+            user.imageUrl1 = data?["photo1"] as? String ?? ""
+            user.imageUrl2 = data?["photo2"] as? String ?? ""
+            user.imageUrl3 = data?["photo3"] as? String ?? ""
+            user.imageUrl4 = data?["photo4"] as? String ?? ""
+            user.imageUrl5 = data?["photo5"] as? String ?? ""
+            user.imageUrl6 = data?["photo6"] as? String ?? ""
+            
+            
             user.Q1day2live = data?["Q1day2live"] as? String ?? ""
             user.QlotteryWin = data?["QlotteryWin"] as? String ?? ""
             user.QmoneynotanIssue = data?["QmoneynotanIssue"] as? String ?? ""
@@ -130,6 +141,13 @@ class ContentModel: ObservableObject{
                             m.height = doc["height"] as? Int ?? 0
                             m.latitude = doc["latitude"] as? Double ?? 0.0
                             m.longitude = doc["longitude"] as? Double ?? 0.0
+                            
+                            m.imageUrl1 = doc["photo1"] as? String ?? ""
+                            m.imageUrl2 = doc["photo2"] as? String ?? ""
+                            m.imageUrl3 = doc["photo3"] as? String ?? ""
+                            m.imageUrl4 = doc["photo4"] as? String ?? ""
+                            m.imageUrl5 = doc["photo5"] as? String ?? ""
+                            m.imageUrl6 = doc["photo6"] as? String ?? ""
                             
                             m.Q1day2live = doc["Q1day2live"] as? String ?? ""
                             m.QlotteryWin = doc["QlotteryWin"] as? String ?? ""
@@ -173,6 +191,13 @@ class ContentModel: ObservableObject{
                             m.latitude = doc["latitude"] as? Double ?? 0.0
                             m.longitude = doc["longitude"] as? Double ?? 0.0
                             
+                            m.imageUrl1 = doc["photo1"] as? String ?? ""
+                            m.imageUrl2 = doc["photo2"] as? String ?? ""
+                            m.imageUrl3 = doc["photo3"] as? String ?? ""
+                            m.imageUrl4 = doc["photo4"] as? String ?? ""
+                            m.imageUrl5 = doc["photo5"] as? String ?? ""
+                            m.imageUrl6 = doc["photo6"] as? String ?? ""
+                            
                             m.Q1day2live = doc["Q1day2live"] as? String ?? ""
                             m.QlotteryWin = doc["QlotteryWin"] as? String ?? ""
                             m.QmoneynotanIssue = doc["QmoneynotanIssue"] as? String ?? ""
@@ -215,6 +240,13 @@ class ContentModel: ObservableObject{
                             m.height = doc["height"] as? Int ?? 0
                             m.latitude = doc["latitude"] as? Double ?? 0.0
                             m.longitude = doc["longitude"] as? Double ?? 0.0
+                            
+                            m.imageUrl1 = doc["photo1"] as? String ?? ""
+                            m.imageUrl2 = doc["photo2"] as? String ?? ""
+                            m.imageUrl3 = doc["photo3"] as? String ?? ""
+                            m.imageUrl4 = doc["photo4"] as? String ?? ""
+                            m.imageUrl5 = doc["photo5"] as? String ?? ""
+                            m.imageUrl6 = doc["photo6"] as? String ?? ""
                             
                             m.Q1day2live = doc["Q1day2live"] as? String ?? ""
                             m.QlotteryWin = doc["QlotteryWin"] as? String ?? ""
@@ -277,6 +309,19 @@ class ContentModel: ObservableObject{
             
             
         }
+    }
+    
+    //get 6 images for match
+    func loadImage(for urlString: String) {
+        guard let url = URL(string: urlString) else { return }
+        
+        let task = URLSession.shared.dataTask(with: url) { data, response, error in
+            guard let data = data else { return }
+            DispatchQueue.main.async {
+                self.images.append(UIImage(data: data) ?? UIImage())
+            }
+        }
+        task.resume()
     }
     
     

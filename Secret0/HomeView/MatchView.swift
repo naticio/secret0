@@ -23,6 +23,7 @@ struct MatchView: View {
             if model.matches.count == 0 {
                 Text("No available matches. matches.count == 0")
             } else {
+                //view with matches
                 VStack {
                     //top bar
                     HStack {
@@ -43,11 +44,39 @@ struct MatchView: View {
                         //first block
                         VStack {
                             Group {
-                                Image(systemName: "person").frame(width: 300, height: 300, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+                                
+                                //IOS15 AsyncImage(url: URL(string: "https://your_image_url_address"))
+                                if model.matches[index].imageUrl1 == "" {
+                                    Image(systemName: "person")
+                                        .frame(width: 300, height: 300, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+                                        .scaledToFill()
+                                } else {
+                                    
+                                    RemoteImage(url: model.matches[index].imageUrl1!)
+                                                .aspectRatio(contentMode: .fit)
+                                                .frame(width: 200)
+//                                    Image(uiImage: model.images[0])
+//                                        .scaledToFill()
+                                }
+                                
+//                                Image(uiImage: uiImage ?? UIImage())
+//                                    .resizable()
+//                                    .scaledToFill()
+//                                    .frame(width: 300, height: 300, alignment: .center)
+//                                    .clipped()
+                                
+                                //Image(systemName: "person").frame(width: 300, height: 300, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+                                
                                 Text(model.matches[index].Q1day2live ?? "")
-                            }.padding()
+                            }
+//                            .onAppear() {
+//                                model.images = [UIImage()] //make it an empty array first
+//                                model.loadImage(for: model.matches[index].imageUrl1 ?? "")
+//                            }
+                            .padding()
                             
                             Group {
+                                //CustomImageView(urlString: model.matches[index].imageUrl2 ?? "")
                                 Image(systemName: "person").frame(width: 300, height: 300, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
                                 Text(model.matches[index].QlotteryWin ?? "")
                             }.padding()
@@ -78,11 +107,13 @@ struct MatchView: View {
                             }
                             
                             Group {
+                                //CustomImageView(urlString: model.matches[index].imageUrl3 ?? "")
                                 Image(systemName: "person").frame(width: 300, height: 300, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
                                 Text(model.matches[index].bucketList)
                             }.padding()
                             
                             Group {
+//                                CustomImageView(urlString: model.matches[index].imageUrl4 ?? "")
                                 Image(systemName: "person").frame(width: 300, height: 300, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
                                 Text(model.matches[index].jokes)
                             }.padding()

@@ -28,6 +28,8 @@
 		B2C9AD1C26E913F800657BBD /* ChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C9AD1B26E913F800657BBD /* ChatView.swift */; };
 		B2C9AD1F26E95ECA00657BBD /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C9AD1E26E95ECA00657BBD /* LoadingView.swift */; };
 		B2C9AD2126EABABF00657BBD /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C9AD2026EABABF00657BBD /* UserService.swift */; };
+		B2C9AD2526EBED2000657BBD /* CustomImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C9AD2426EBED2000657BBD /* CustomImageView.swift */; };
+		B2C9AD2A26EC018900657BBD /* RemoteImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C9AD2926EC018900657BBD /* RemoteImage.swift */; };
 		B2D2007F26D5E97600EDF6BD /* Secret0App.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2D2007E26D5E97600EDF6BD /* Secret0App.swift */; };
 		B2D2008126D5E97600EDF6BD /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2D2008026D5E97600EDF6BD /* ContentView.swift */; };
 		B2D2008326D5E97700EDF6BD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B2D2008226D5E97700EDF6BD /* Assets.xcassets */; };
@@ -76,6 +78,8 @@
 		B2C9AD1B26E913F800657BBD /* ChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatView.swift; sourceTree = "<group>"; };
 		B2C9AD1E26E95ECA00657BBD /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 		B2C9AD2026EABABF00657BBD /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UserService.swift; path = Secret0/Helpers/UserService.swift; sourceTree = SOURCE_ROOT; };
+		B2C9AD2426EBED2000657BBD /* CustomImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomImageView.swift; sourceTree = "<group>"; };
+		B2C9AD2926EC018900657BBD /* RemoteImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteImage.swift; sourceTree = "<group>"; };
 		B2D2007B26D5E97600EDF6BD /* Secret0.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Secret0.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B2D2007E26D5E97600EDF6BD /* Secret0App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Secret0App.swift; sourceTree = "<group>"; };
 		B2D2008026D5E97600EDF6BD /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -158,6 +162,7 @@
 			children = (
 				B2D9C99F26E147B400965841 /* HomeView.swift */,
 				B2C9AD1726E913CD00657BBD /* MatchView.swift */,
+				B2C9AD2426EBED2000657BBD /* CustomImageView.swift */,
 				B2C9AD1E26E95ECA00657BBD /* LoadingView.swift */,
 				B2C9AD1B26E913F800657BBD /* ChatView.swift */,
 				B2C9AD1926E913E500657BBD /* ProfileView.swift */,
@@ -221,6 +226,7 @@
 			children = (
 				B2E7C5B926E5BB5500CB73BB /* Extensions.swift */,
 				B2E7C5B726E5B60000CB73BB /* Helper.swift */,
+				B2C9AD2926EC018900657BBD /* RemoteImage.swift */,
 				B2E7C5B326E4211000CB73BB /* ImagePicker.swift */,
 				B2D2009426D5EE2D00EDF6BD /* Constants.swift */,
 			);
@@ -393,6 +399,7 @@
 				B2C7AD0826DEE4B400D8F4B4 /* HeightOnboardingView.swift in Sources */,
 				B2C9AD1C26E913F800657BBD /* ChatView.swift in Sources */,
 				B2C9AD1F26E95ECA00657BBD /* LoadingView.swift in Sources */,
+				B2C9AD2A26EC018900657BBD /* RemoteImage.swift in Sources */,
 				B2D2009526D5EE2D00EDF6BD /* Constants.swift in Sources */,
 				B2E7C59326E3B97900CB73BB /* PictureYourself.swift in Sources */,
 				B2D200B326D6B23700EDF6BD /* LaunchLogicView.swift in Sources */,
@@ -407,6 +414,7 @@
 				B2C7ACF526DC2A9A00D8F4B4 /* NotifOnboarding.swift in Sources */,
 				B2C7ACFD26DC9E7100D8F4B4 /* genderOnboarding.swift in Sources */,
 				B2C7AD0526DEA41500D8F4B4 /* DatePreferencesView.swift in Sources */,
+				B2C9AD2526EBED2000657BBD /* CustomImageView.swift in Sources */,
 				B2D2008126D5E97600EDF6BD /* ContentView.swift in Sources */,
 				B2C9AD2126EABABF00657BBD /* UserService.swift in Sources */,
 				B2C7AD0A26DEE91900D8F4B4 /* BreakIceOnboardingView.swift in Sources */,
