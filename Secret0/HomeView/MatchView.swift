@@ -31,10 +31,13 @@ struct MatchView: View {
                             .frame(alignment: .leading)
                             .font(.title)
                         
+                        Text("gender: \(model.matches[index].gender)")
+                        Text("wants: \(model.matches[index].datingPreferences)")
+                        
                         Button(action: {
                             //action to block or report user
                         }, label: {
-                            Image(systemName: "ellipsis")
+                            Image(systemName: "ellx ipsis")
                         })
                     }
                     
@@ -49,14 +52,12 @@ struct MatchView: View {
                                 if model.matches[index].imageUrl1 == "" {
                                     Image(systemName: "person")
                                         .frame(width: 300, height: 300, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
-                                        .scaledToFill()
+                                        .aspectRatio(contentMode: .fit)
                                 } else {
                                     
                                     RemoteImage(url: model.matches[index].imageUrl1!)
                                                 .aspectRatio(contentMode: .fit)
                                                 .frame(width: 200)
-//                                    Image(uiImage: model.images[0])
-//                                        .scaledToFill()
                                 }
                                 
 //                                Image(uiImage: uiImage ?? UIImage())
@@ -66,7 +67,7 @@ struct MatchView: View {
 //                                    .clipped()
                                 
                                 //Image(systemName: "person").frame(width: 300, height: 300, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
-                                
+                                Text("What would you do if you only have 1 day left to live?")
                                 Text(model.matches[index].Q1day2live ?? "")
                             }
 //                            .onAppear() {
@@ -77,7 +78,16 @@ struct MatchView: View {
                             
                             Group {
                                 //CustomImageView(urlString: model.matches[index].imageUrl2 ?? "")
-                                Image(systemName: "person").frame(width: 300, height: 300, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+                                if model.matches[index].imageUrl2 == "" {
+                                    Image(systemName: "person")
+                                        .frame(width: 300, height: 300, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+                                        .aspectRatio(contentMode: .fit)
+                                } else {
+                                    
+                                    RemoteImage(url: model.matches[index].imageUrl2!)
+                                                .aspectRatio(contentMode: .fit)
+                                                .frame(width: 200)
+                                }
                                 Text(model.matches[index].QlotteryWin ?? "")
                             }.padding()
                             
@@ -108,13 +118,31 @@ struct MatchView: View {
                             
                             Group {
                                 //CustomImageView(urlString: model.matches[index].imageUrl3 ?? "")
-                                Image(systemName: "person").frame(width: 300, height: 300, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+                                if model.matches[index].imageUrl3 == "" {
+                                    Image(systemName: "person")
+                                        .frame(width: 300, height: 300, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+                                        .aspectRatio(contentMode: .fit)
+                                } else {
+                                    
+                                    RemoteImage(url: model.matches[index].imageUrl3!)
+                                                .aspectRatio(contentMode: .fit)
+                                                .frame(width: 200)
+                                }
                                 Text(model.matches[index].bucketList)
                             }.padding()
                             
                             Group {
 //                                CustomImageView(urlString: model.matches[index].imageUrl4 ?? "")
-                                Image(systemName: "person").frame(width: 300, height: 300, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+                                if model.matches[index].imageUrl4 == "" {
+                                    Image(systemName: "person")
+                                        .frame(width: 300, height: 300, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+                                        .aspectRatio(contentMode: .fit)
+                                } else {
+                                    
+                                    RemoteImage(url: model.matches[index].imageUrl4!)
+                                                .aspectRatio(contentMode: .fit)
+                                                .frame(width: 200)
+                                }
                                 Text(model.matches[index].jokes)
                             }.padding()
                             

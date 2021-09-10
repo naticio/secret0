@@ -118,9 +118,9 @@ class ContentModel: ObservableObject{
         let usersCollection = db.collection("users")
         
         //if user wants to date FEMALE
-        let user = UserService.shared.user
+        let currentUser = UserService.shared.user
         
-        if user.datingPreferences == "Women" {
+        if currentUser.datingPreferences == "Women" {
             let query = usersCollection.whereField("gender", in: ["Women"])
             //let query2 = usersCollection.whereField("datingPreferences", in: [user.gender, "Everyone"])
             
@@ -131,7 +131,7 @@ class ContentModel: ObservableObject{
                     
                     for doc in snapshot!.documents {
                         
-                        if doc["datingPreferences"] as! String == user.gender || doc["datingPreferences"] as! String == "Everyone" {
+                        if doc["datingPreferences"] as! String == currentUser.gender || doc["datingPreferences"] as! String == "Everyone" {
                             var m = Matches()
                             //q.id = doc["id"] as? String ?? ""
                             m.name = doc["name"] as? String ?? ""
@@ -170,7 +170,7 @@ class ContentModel: ObservableObject{
         }
         
         //if user wants to date MALE
-        if user.datingPreferences == "Men" {
+        if currentUser.datingPreferences == "Men" {
             let query = usersCollection.whereField("gender", in: ["Men"])
             
             query.getDocuments { snapshot, error in
@@ -180,7 +180,7 @@ class ContentModel: ObservableObject{
                     
                     for doc in snapshot!.documents {
                         
-                        if doc["datingPreferences"] as! String == user.gender || doc["datingPreferences"] as! String == "Everyone" {
+                        if doc["datingPreferences"] as! String == currentUser.gender || doc["datingPreferences"] as! String == "Everyone" {
                             var m = Matches()
                             //q.id = doc["id"] as? String ?? ""
                             m.name = doc["name"] as? String ?? ""
@@ -219,7 +219,7 @@ class ContentModel: ObservableObject{
         }
         
         //if user wants to date EVERYONE
-        if user.datingPreferences == "Everyone" {
+        if currentUser.datingPreferences == "Everyone" {
             let query = usersCollection.whereField("gender", in: ["Men", "Women"])
             //.whereField("datingPreferences", in: [user.datingPreferences, user.gender])
             
@@ -230,7 +230,7 @@ class ContentModel: ObservableObject{
                     
                     for doc in snapshot!.documents {
                         
-                        if doc["datingPreferences"] as! String == user.gender || doc["datingPreferences"] as! String == "Everyone" {
+                        if doc["datingPreferences"] as! String == currentUser.gender || doc["datingPreferences"] as! String == "Everyone" {
                             var m = Matches()
                             //q.id = doc["id"] as? String ?? ""
                             m.name = doc["name"] as? String ?? ""
