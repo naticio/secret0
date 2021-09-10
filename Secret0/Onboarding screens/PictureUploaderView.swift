@@ -192,6 +192,7 @@ struct PictureUploaderView: View {
                                 uploadImage(image: imageController.image6!, picNumber: 6)
                             }
                             
+                            //model.checkLogin()
                             goWhenTrue = true
                             
                         }, label: {

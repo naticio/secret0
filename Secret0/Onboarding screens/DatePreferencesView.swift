@@ -141,7 +141,7 @@ struct DatePreferencesView: View {
             
             let db = Firestore.firestore()
             let ref = db.collection("users").document(loggedInUser.uid)
-            ref.setData(["datingPreferences" : user.datingPreferences], merge: true)
+            ref.setData(["datingPreferences" : datingPref], merge: true)
         }
     }
 }

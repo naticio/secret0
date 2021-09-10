@@ -17,32 +17,82 @@ struct LaunchLogicView: View {
     
     var body: some View {
         
-        if model.loggedIn  == false && isOnboarding == false {
-            LoginSignUpView()
-                .onAppear {
-                    //check if user is logged out
+        if model.loggedIn == false {
+            LoginSignupView()
+                .onAppear() {
                     model.checkLogin()
                 }
-        } else {
-            if model.loggedIn == true && isOnboarding == false {
-                HomeView()
-                    .onAppear() { model.checkLogin()}
-                    .environment(\.managedObjectContext, persistenceController.container.viewContext)
-            } else {
+        }
+        else {
+            if isOnboarding == true {
                 BirthOnboardingView(index: 2)
                     .onAppear() {
-                        //model.onboardingIndex = 2
                         model.checkLogin()
                     }
-                    //save data when app is closed by user
-                    .onReceive(NotificationCenter.default.publisher(for: UIApplication.willResignActiveNotification)) { _ in //willresign is whne you hidde the app or is out of focus
-                        //save data is true
-                        //model.saveUserData(writeToDatabase: true)
-                    }
             }
-            
+            else if model.userDataCompletion == true {
+                //TabView
+                TabView {
+                    MatchView(index: 0)
+                        .tabItem {
+                            VStack {
+                                Image(systemName: "heart")
+                                Text("Match")
+                            }
+                        }
+                    
+                    ChatView()
+                        .tabItem {
+                            VStack {
+                                Image(systemName: "bubble.left.and.bubble.right.fill")
+                                Text("Chat")
+                            }
+                        }
+                    
+                    ProfileView()
+                        .tabItem {
+                            VStack {
+                                Image(systemName: "person")
+                                Text("Profile")
+                            }
+                        }
+                }
+                .onAppear {
+                    model.getMatches()
+                }
+            }
         }
+        
+        //        if model.loggedIn  == false && isOnboarding == false {
+        //            WelcomeScreenView() // video with sign in - sign up options
+        //                .onAppear {
+        //                    //check if user is logged out
+        //                    model.checkLogin()
+        //                }
+        //        } else {
+        //            if model.loggedIn == true && isOnboarding == false {
+        //                HomeView() //user logged in, tab view with matches
+        //                    .onAppear() {
+        //                        model.getUserData()
+        //                        model.getMatches()
+        //                    }
+        //                    .environment(\.managedObjectContext, persistenceController.container.viewContext)
+        //            } else {
+        //                BirthOnboardingView(index: 2)
+        //                    .onAppear() {
+        //                        //model.onboardingIndex = 2
+        //                        model.checkLogin()
+        //                    }
+        //                    //save data when app is closed by user
+        //                    .onReceive(NotificationCenter.default.publisher(for: UIApplication.willResignActiveNotification)) { _ in //willresign is whne you hidde the app or is out of focus
+        //                        //save data is true
+        //                        //model.saveUserData(writeToDatabase: true)
+        //                    }
+        //            }
+        //
+        //        }
     }
+    
 }
 
 struct LaunchView_Previews: PreviewProvider {

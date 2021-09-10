@@ -56,7 +56,7 @@ struct genderOnboarding: View {
                         }
                         
                     } label: {
-                        Text("Male")
+                        Text("Men")
                     }
                     .padding()
                     .background(maleButtonPressed ? Color.red : Color.white)
@@ -71,7 +71,7 @@ struct genderOnboarding: View {
                             self.maleButtonPressed = false
                         }
                     } label: {
-                        Text("Female")
+                        Text("Women")
                     }
                     .padding()
                     .background(femaleButtonPressed ? Color.red : Color.white)
@@ -89,8 +89,8 @@ struct genderOnboarding: View {
                     //ONBOARIDNG NEXT BUTTON
                     Button(action: {
                         if maleButtonPressed == true || femaleButtonPressed == true {
-                            if maleButtonPressed == true {selectedGender = "Male"}
-                            if femaleButtonPressed == true {selectedGender = "Female"}
+                            if maleButtonPressed == true {selectedGender = "Men"}
+                            if femaleButtonPressed == true {selectedGender = "Women"}
                             
                             
                             saveDataHere()

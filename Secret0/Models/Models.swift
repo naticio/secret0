@@ -25,7 +25,23 @@ class User {
     var bucketList: String = ""
     var jokes: String = ""
     
-    
+}
+
+class Matches {
+    var name: String = ""
+    var birthdate: Date = Date()
+    var location: CLLocation?
+    var latitude: Double?
+    var longitude: Double?
+    var gender: String = ""
+    var sexuality: String = ""
+    var datingPreferences: String = ""
+    var height: Int = 0
+    var Q1day2live: String = ""
+    var QlotteryWin: String = ""
+    var QmoneynotanIssue: String = ""
+    var bucketList: String = ""
+    var jokes: String = ""
     
 }
 

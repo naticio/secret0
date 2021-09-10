@@ -13,11 +13,12 @@ import Firebase
 
 class ContentModel: ObservableObject{
     
-    @Published var users = [User]()
-    @Published var usersLoaded : Bool = false
+    @Published var matches = [Matches]()
+    @Published var usersLoaded : Bool?
     
+    @Published var userDataCompletion = false
     @Published var loggedIn = false //assume user is not loggfed in,published to notify al views that use this property
-        //but still this doesn;t mean the user is logedout...we need to check that as well
+    //but still this doesn;t mean the user is logedout...we need to check that as well
     
     @Published var onboardingIndex = 0
     @Published var isOnboarding = false
@@ -52,7 +53,7 @@ class ContentModel: ObservableObject{
         //if current user is nil then loggedin = false
         
         //CHECK IF USERR metadata has been FETCHED. if the user was already logged in from a previous session, we need to get their data in a separate call
-        if UserService.shared.user.name == "" { //why not nil? because it's a string the name field in firebase
+        if UserService.shared.user.name == "" { 
             getUserData() //to fetch metadata related to user
         }
     }
@@ -68,6 +69,7 @@ class ContentModel: ObservableObject{
         // Get the meta data for that user
         let db = Firestore.firestore()
         let ref = db.collection("users").document(Auth.auth().currentUser!.uid)
+        
         ref.getDocument { snapshot, error in
             
             // Check there's no errors
@@ -78,69 +80,162 @@ class ContentModel: ObservableObject{
             // Parse the data out and set the user meta data
             let data = snapshot!.data()
             let user = UserService.shared.user
+            
             user.name = data?["name"] as? String ?? ""
-//            user.lastModule = data?["lastModule"] as? Int
-//            user.lastLesson = data?["lastLesson"] as? Int
-//            user.lastQuestion = data?["lastQuestion"] as? Int
+            user.birthdate = data?["birthdate"] as? Date ?? Date()
+            user.gender = data?["gender"] as? String ?? ""
+            user.height = data?["height"] as? Int ?? 0
+            user.latitude = data?["latitude"] as? Double ?? 0.0
+            user.longitude = data?["longitude"] as? Double ?? 0.0
+            user.datingPreferences = data?["datingPreferences"] as? String ?? ""
+            user.sexuality = data?["sexuality"] as? String ?? ""
+            
+            user.Q1day2live = data?["Q1day2live"] as? String ?? ""
+            user.QlotteryWin = data?["QlotteryWin"] as? String ?? ""
+            user.QmoneynotanIssue = data?["QmoneynotanIssue"] as? String ?? ""
+            user.bucketList = data?["bucketList"] as? String ?? ""
+            user.jokes = data?["jokes"] as? String ?? ""
+            
+            self.userDataCompletion = true
         }
     }
-    
-    func signInUser(email:String, password: String) {
-        Auth.auth().signIn(withEmail: email, password: password) { result, error in
-            //check for errors
-            guard error == nil else {
-                let errorMsg = error!.localizedDescription
-                return
-            }
-            //clear error mesage for future sign ins
-            //errorMsg = nil
-            
-            //todo: fetch the user metadata
-            //model.getUserData()
-            
-            //change the view to login view
-            
-            self.checkLogin() //because this will flip the Model published property "loggedIn" to true
-    }
-       
-}
     
     func getMatches() {
-
+        
+        
         // Get the documents from the collection
-        Firestore.firestore().collection("users").getDocuments { snapshot, error in
-            if error == nil {
-                
-                var usuarios = [User]() //empty array of user instances
-                
-                for doc in snapshot!.documents {
+        let usersCollection = db.collection("users")
+        
+        //if user wants to date FEMALE
+        let user = UserService.shared.user
+        
+        if user.datingPreferences == "Women" {
+            let query = usersCollection.whereField("gender", in: ["Women"])
+            //let query2 = usersCollection.whereField("datingPreferences", in: [user.gender, "Everyone"])
+            
+            query.getDocuments { snapshot, error in
+                if error == nil {
                     
-                    var u = User()
-                    //q.id = doc["id"] as? String ?? ""
-                    u.name = doc["name"] as? String ?? ""
-                    u.birthdate = doc["birthdate"] as? Date ?? Date()
-                    u.gender = doc["gender"] as? String ?? ""
-                    u.height = doc["height"] as? Int ?? 0
-                    u.latitude = doc["latitude"] as? Double ?? 0.0
-                    u.longitude = doc["longitude"] as? Double ?? 0.0
+                    var matches = [Matches]() //empty array of user/matches instances
                     
-                    u.Q1day2live = doc["Q1day2live"] as? String ?? ""
-                    u.QlotteryWin = doc["QlotteryWin"] as? String ?? ""
-                    u.QmoneynotanIssue = doc["QmoneynotanIssue"] as? String ?? ""
-                    u.bucketList = doc["bucketList"] as? String ?? ""
-                    u.jokes = doc["jokes"] as? String ?? ""
+                    for doc in snapshot!.documents {
+                        
+                        if doc["datingPreferences"] as! String == user.gender || doc["datingPreferences"] as! String == "Everyone" {
+                            var m = Matches()
+                            //q.id = doc["id"] as? String ?? ""
+                            m.name = doc["name"] as? String ?? ""
+                            m.birthdate = doc["birthdate"] as? Date ?? Date()
+                            m.gender = doc["gender"] as? String ?? ""
+                            m.datingPreferences = doc["datingPreferences"] as? String ?? ""
+                            m.height = doc["height"] as? Int ?? 0
+                            m.latitude = doc["latitude"] as? Double ?? 0.0
+                            m.longitude = doc["longitude"] as? Double ?? 0.0
+                            
+                            m.Q1day2live = doc["Q1day2live"] as? String ?? ""
+                            m.QlotteryWin = doc["QlotteryWin"] as? String ?? ""
+                            m.QmoneynotanIssue = doc["QmoneynotanIssue"] as? String ?? ""
+                            m.bucketList = doc["bucketList"] as? String ?? ""
+                            m.jokes = doc["jokes"] as? String ?? ""
+                            
+                            matches.append(m)
+                        }
+                        
+                    }
                     
-                    usuarios.append(u)
+                    DispatchQueue.main.async {
+                        self.matches = matches
+                        self.usersLoaded = true
+                    }
                 }
-                
-                DispatchQueue.main.async {
-                    self.users = usuarios
-                    self.usersLoaded = true
+            }
+            
+        }
+        
+        //if user wants to date MALE
+        if user.datingPreferences == "Men" {
+            let query = usersCollection.whereField("gender", in: ["Men"])
+            
+            query.getDocuments { snapshot, error in
+                if error == nil {
+                    
+                    var matches = [Matches]() //empty array of user/matches instances
+                    
+                    for doc in snapshot!.documents {
+                        
+                        if doc["datingPreferences"] as! String == user.gender || doc["datingPreferences"] as! String == "Everyone" {
+                            var m = Matches()
+                            //q.id = doc["id"] as? String ?? ""
+                            m.name = doc["name"] as? String ?? ""
+                            m.birthdate = doc["birthdate"] as? Date ?? Date()
+                            m.gender = doc["gender"] as? String ?? ""
+                            m.datingPreferences = doc["datingPreferences"] as? String ?? ""
+                            m.height = doc["height"] as? Int ?? 0
+                            m.latitude = doc["latitude"] as? Double ?? 0.0
+                            m.longitude = doc["longitude"] as? Double ?? 0.0
+                            
+                            m.Q1day2live = doc["Q1day2live"] as? String ?? ""
+                            m.QlotteryWin = doc["QlotteryWin"] as? String ?? ""
+                            m.QmoneynotanIssue = doc["QmoneynotanIssue"] as? String ?? ""
+                            m.bucketList = doc["bucketList"] as? String ?? ""
+                            m.jokes = doc["jokes"] as? String ?? ""
+                            
+                            matches.append(m)
+                        }
+                        
+                    }
+                    
+                    DispatchQueue.main.async {
+                        self.matches = matches
+                        self.usersLoaded = true
+                    }
+                }
+            }
+            
+        }
+        
+        //if user wants to date EVERYONE
+        if user.datingPreferences == "Everyone" {
+            let query = usersCollection.whereField("gender", in: ["Men", "Women"])
+            //.whereField("datingPreferences", in: [user.datingPreferences, user.gender])
+            
+            query.getDocuments { snapshot, error in
+                if error == nil {
+                    
+                    var matches = [Matches]() //empty array of user/matches instances
+                    
+                    for doc in snapshot!.documents {
+                        
+                        if doc["datingPreferences"] as! String == user.gender || doc["datingPreferences"] as! String == "Everyone" {
+                            var m = Matches()
+                            //q.id = doc["id"] as? String ?? ""
+                            m.name = doc["name"] as? String ?? ""
+                            m.birthdate = doc["birthdate"] as? Date ?? Date()
+                            m.gender = doc["gender"] as? String ?? ""
+                            m.datingPreferences = doc["datingPreferences"] as? String ?? ""
+                            m.height = doc["height"] as? Int ?? 0
+                            m.latitude = doc["latitude"] as? Double ?? 0.0
+                            m.longitude = doc["longitude"] as? Double ?? 0.0
+                            
+                            m.Q1day2live = doc["Q1day2live"] as? String ?? ""
+                            m.QlotteryWin = doc["QlotteryWin"] as? String ?? ""
+                            m.QmoneynotanIssue = doc["QmoneynotanIssue"] as? String ?? ""
+                            m.bucketList = doc["bucketList"] as? String ?? ""
+                            m.jokes = doc["jokes"] as? String ?? ""
+                            
+                            matches.append(m)
+                            
+                            DispatchQueue.main.async {
+                                self.matches = matches
+                                self.usersLoaded = true
+                            }
+                        }
+                    }
+                    
                 }
             }
         }
+        
     }
-    
     
     //MARK: - data methods - save data into firebase etc to track the user usage
     //parameter so we don't save to the db every single fucking time...it would be a waste of process! by default false
@@ -150,41 +245,41 @@ class ContentModel: ObservableObject{
         if let loggedInUser = Auth.auth().currentUser { //if auth.auth.currentuser is not nil then it wll lbe assigned to constant loggedInuser and execute code
             //save data locally
             let user = UserService.shared.user //user =  the current user using the app right now
-//            user.birthdate = self.birthdate //save to firebase user the values saved in the content model
-//            user.location = self.locationModel
-//            user.gender = self.genderModel
-//            user.sexuality = self.sexualityModel
-//            user.datingPreferences = self.datingPrefModel
-//            user.height = self.heightModel
-//            user.Q1day2live = self.Q1day2liveModel
-//            user.QlotteryWin = self.QlotteryWinModel
-//            user.QmoneynotanIssue = self.QmoneynotanIssueModel
-//            user.bucketList = self.bucketListModel
-//            user.jokes = self.jokesModel
-
+            //            user.birthdate = self.birthdate //save to firebase user the values saved in the content model
+            //            user.location = self.locationModel
+            //            user.gender = self.genderModel
+            //            user.sexuality = self.sexualityModel
+            //            user.datingPreferences = self.datingPrefModel
+            //            user.height = self.heightModel
+            //            user.Q1day2live = self.Q1day2liveModel
+            //            user.QlotteryWin = self.QlotteryWinModel
+            //            user.QmoneynotanIssue = self.QmoneynotanIssueModel
+            //            user.bucketList = self.bucketListModel
+            //            user.jokes = self.jokesModel
+            
             //save to the database
-//            if writeToDatabase { //equal to true
-//                let db = Firestore.firestore()
-//                let ref = db.collection("users").document(loggedInUser.uid)
-//                ref.setData(["birthdate" : user.birthdate,
-//                             "location" : user.location,
-//                             "gender" : user.gender,
-//                             "sexuality" : user.sexuality,
-//                             "datingPreferences" : user.datingPreferences,
-//                             "height" : user.height,
-//                             "Q1day2live" : user.Q1day2live,
-//                             "QlotteryWin" : user.QlotteryWin,
-//                             "QmoneynotanIssue" : user.QmoneynotanIssue,
-//                             "bucketList" : user.bucketList,
-//                             "jokes" : user.jokes],
-//                            merge: true) //merge into doc, not override
-//            }
-
-
+            //            if writeToDatabase { //equal to true
+            //                let db = Firestore.firestore()
+            //                let ref = db.collection("users").document(loggedInUser.uid)
+            //                ref.setData(["birthdate" : user.birthdate,
+            //                             "location" : user.location,
+            //                             "gender" : user.gender,
+            //                             "sexuality" : user.sexuality,
+            //                             "datingPreferences" : user.datingPreferences,
+            //                             "height" : user.height,
+            //                             "Q1day2live" : user.Q1day2live,
+            //                             "QlotteryWin" : user.QlotteryWin,
+            //                             "QmoneynotanIssue" : user.QmoneynotanIssue,
+            //                             "bucketList" : user.bucketList,
+            //                             "jokes" : user.jokes],
+            //                            merge: true) //merge into doc, not override
+            //            }
+            
+            
         }
     }
     
-
+    
     
 }
 

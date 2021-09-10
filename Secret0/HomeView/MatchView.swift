@@ -16,13 +16,13 @@ struct MatchView: View {
     
     var body: some View {
         
-        if model.usersLoaded == false && model.users.count == 0 {
-           LoadingView()
+        if model.usersLoaded == nil {
+            LoadingView()
         } else {
             VStack {
                 //top bar
                 HStack {
-                    Text(model.users[index].name)
+                    Text(model.matches[index].name)
                         .frame(alignment: .leading)
                         .font(.title)
                     
@@ -40,12 +40,12 @@ struct MatchView: View {
                     VStack {
                         Group {
                             Image(systemName: "person").frame(width: 300, height: 300, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
-                            Text(model.users[index].Q1day2live)
+                            Text(model.matches[index].Q1day2live ?? "")
                         }.padding()
                         
                         Group {
                             Image(systemName: "person").frame(width: 300, height: 300, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
-                            Text(model.users[index].QlotteryWin)
+                            Text(model.matches[index].QlotteryWin ?? "")
                         }.padding()
                         
                         
@@ -59,7 +59,7 @@ struct MatchView: View {
                                     
                                     Group {
                                         Image(systemName: "ruler")
-                                        Text(String(model.users[index].height))
+                                        Text(String(model.matches[index].height) ?? "")
                                     }.padding(.trailing)
                                     
                                     Group {
@@ -68,47 +68,51 @@ struct MatchView: View {
                                     }.padding(.trailing)
                                 }
                                 
-                                Text(model.users[index].QmoneynotanIssue)
+                                Text(model.matches[index].QmoneynotanIssue)
                                 
                             }
                         }
                         
                         Group {
                             Image(systemName: "person").frame(width: 300, height: 300, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
-                            Text(model.users[index].bucketList)
+                            Text(model.matches[index].bucketList)
                         }.padding()
                         
                         Group {
                             Image(systemName: "person").frame(width: 300, height: 300, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
-                            Text(model.users[index].jokes)
+                            Text(model.matches[index].jokes)
                         }.padding()
                         
+                        Button {
+                            self.index += 1
+                        } label: {
+                            Text("Next")
+                        }.padding(.bottom)
+
                         //DISLIKE OR NEXT
-                        NavigationLink(destination: MatchView(index: index + 1)
-                                        .environmentObject(ContentModel())
-                                       , isActive: $goWhenTrue) {
-                            
-                            Button {
-                                goWhenTrue = true
-                            } label: {
-                                Text("Next")
-                            }
-                            //.disabled(index == nil)
-                            .padding()
-                            .background(Capsule().strokeBorder(Color.white, lineWidth: 1.5))
-                            .frame(width: 100)
-                        }
+//                        NavigationLink(destination: MatchView(index: index + 1), isActive: $goWhenTrue) {
+//
+//                            Button {
+//                                goWhenTrue = true
+//                            } label: {
+//                                Text("Next")
+//                            }
+//                            .padding()
+//                            .background(Capsule().strokeBorder(Color.white, lineWidth: 1.5))
+//                            .frame(width: 100)
+//                        }
                     }
                     
                     
                     
                 }//scroll view
             }
-        }
+
         
         
         
     }
+}
 }
 
 struct MatchView_Previews: PreviewProvider {

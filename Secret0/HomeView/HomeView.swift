@@ -16,9 +16,9 @@ struct HomeView: View {
 
         TabView {
             MatchView(index: 0)
-                .onAppear(perform: {
-                    //will it be executed only once?
-                })
+                .onAppear() {
+                    model.getMatches()
+                }
                 .tabItem {
                     VStack {
                         Image(systemName: "heart")

@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		3A39C2162A180FC19B0A02A8 /* Pods_Secret0.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A14857A00B1AF57B0886564 /* Pods_Secret0.framework */; };
-		B2827C4326D9A2BE00A86AF4 /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2827C4226D9A2BE00A86AF4 /* UserService.swift */; };
 		B2827C4626DAE1D200A86AF4 /* NameOnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2827C4526DAE1D200A86AF4 /* NameOnboardingView.swift */; };
 		B2C7ACEE26DB05C400D8F4B4 /* EmailOnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C7ACED26DB05C400D8F4B4 /* EmailOnboardingView.swift */; };
 		B2C7ACF326DB08AA00D8F4B4 /* BirthOnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C7ACF226DB08A900D8F4B4 /* BirthOnboardingView.swift */; };
@@ -28,6 +27,7 @@
 		B2C9AD1A26E913E500657BBD /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C9AD1926E913E500657BBD /* ProfileView.swift */; };
 		B2C9AD1C26E913F800657BBD /* ChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C9AD1B26E913F800657BBD /* ChatView.swift */; };
 		B2C9AD1F26E95ECA00657BBD /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C9AD1E26E95ECA00657BBD /* LoadingView.swift */; };
+		B2C9AD2126EABABF00657BBD /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C9AD2026EABABF00657BBD /* UserService.swift */; };
 		B2D2007F26D5E97600EDF6BD /* Secret0App.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2D2007E26D5E97600EDF6BD /* Secret0App.swift */; };
 		B2D2008126D5E97600EDF6BD /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2D2008026D5E97600EDF6BD /* ContentView.swift */; };
 		B2D2008326D5E97700EDF6BD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B2D2008226D5E97700EDF6BD /* Assets.xcassets */; };
@@ -36,11 +36,10 @@
 		B2D2008B26D5E97700EDF6BD /* Secret0.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B2D2008926D5E97700EDF6BD /* Secret0.xcdatamodeld */; };
 		B2D2009326D5EA0100EDF6BD /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B2D2009226D5EA0100EDF6BD /* GoogleService-Info.plist */; };
 		B2D2009526D5EE2D00EDF6BD /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2D2009426D5EE2D00EDF6BD /* Constants.swift */; };
-		B2D2009B26D5EF8000EDF6BD /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2D2009A26D5EF7F00EDF6BD /* UserService.swift */; };
 		B2D200A526D5F15E00EDF6BD /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2D200A426D5F15E00EDF6BD /* Models.swift */; };
 		B2D200A926D69FE600EDF6BD /* ContentModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2D200A826D69FE600EDF6BD /* ContentModel.swift */; };
 		B2D200B326D6B23700EDF6BD /* LaunchLogicView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2D200B226D6B23700EDF6BD /* LaunchLogicView.swift */; };
-		B2D200B526D6C8CA00EDF6BD /* LoginSignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2D200B426D6C8CA00EDF6BD /* LoginSignUpView.swift */; };
+		B2D200B526D6C8CA00EDF6BD /* LoginSignupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2D200B426D6C8CA00EDF6BD /* LoginSignupView.swift */; };
 		B2D200B726D6CFD700EDF6BD /* WelcomeVideo.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2D200B626D6CFD700EDF6BD /* WelcomeVideo.swift */; };
 		B2D200BA26D6D2C600EDF6BD /* welcome.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = B2D200B926D6D25300EDF6BD /* welcome.mp4 */; };
 		B2D9C9A026E147B400965841 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2D9C99F26E147B400965841 /* HomeView.swift */; };
@@ -57,7 +56,6 @@
 		6EB7D463FD91ACDC9B3A9074 /* Pods-Secret0.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Secret0.release.xcconfig"; path = "Target Support Files/Pods-Secret0/Pods-Secret0.release.xcconfig"; sourceTree = "<group>"; };
 		7A14857A00B1AF57B0886564 /* Pods_Secret0.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Secret0.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7CF2A57273FCC5287FBD5105 /* Pods-Secret0.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Secret0.debug.xcconfig"; path = "Target Support Files/Pods-Secret0/Pods-Secret0.debug.xcconfig"; sourceTree = "<group>"; };
-		B2827C4226D9A2BE00A86AF4 /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
 		B2827C4526DAE1D200A86AF4 /* NameOnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NameOnboardingView.swift; sourceTree = "<group>"; };
 		B2C7ACED26DB05C400D8F4B4 /* EmailOnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailOnboardingView.swift; sourceTree = "<group>"; };
 		B2C7ACF226DB08A900D8F4B4 /* BirthOnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BirthOnboardingView.swift; sourceTree = "<group>"; };
@@ -77,6 +75,7 @@
 		B2C9AD1926E913E500657BBD /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		B2C9AD1B26E913F800657BBD /* ChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatView.swift; sourceTree = "<group>"; };
 		B2C9AD1E26E95ECA00657BBD /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
+		B2C9AD2026EABABF00657BBD /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UserService.swift; path = Secret0/Helpers/UserService.swift; sourceTree = SOURCE_ROOT; };
 		B2D2007B26D5E97600EDF6BD /* Secret0.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Secret0.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B2D2007E26D5E97600EDF6BD /* Secret0App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Secret0App.swift; sourceTree = "<group>"; };
 		B2D2008026D5E97600EDF6BD /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -87,11 +86,10 @@
 		B2D2008C26D5E97700EDF6BD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B2D2009226D5EA0100EDF6BD /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		B2D2009426D5EE2D00EDF6BD /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
-		B2D2009A26D5EF7F00EDF6BD /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
 		B2D200A426D5F15E00EDF6BD /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
 		B2D200A826D69FE600EDF6BD /* ContentModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentModel.swift; sourceTree = "<group>"; };
 		B2D200B226D6B23700EDF6BD /* LaunchLogicView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchLogicView.swift; sourceTree = "<group>"; };
-		B2D200B426D6C8CA00EDF6BD /* LoginSignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginSignUpView.swift; sourceTree = "<group>"; };
+		B2D200B426D6C8CA00EDF6BD /* LoginSignupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginSignupView.swift; sourceTree = "<group>"; };
 		B2D200B626D6CFD700EDF6BD /* WelcomeVideo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeVideo.swift; sourceTree = "<group>"; };
 		B2D200B926D6D25300EDF6BD /* welcome.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = welcome.mp4; sourceTree = "<group>"; };
 		B2D9C99F26E147B400965841 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
@@ -190,7 +188,7 @@
 			children = (
 				B2D2007E26D5E97600EDF6BD /* Secret0App.swift */,
 				B2D200B226D6B23700EDF6BD /* LaunchLogicView.swift */,
-				B2D200B426D6C8CA00EDF6BD /* LoginSignUpView.swift */,
+				B2D200B426D6C8CA00EDF6BD /* LoginSignupView.swift */,
 				B2D200B826D6D0CF00EDF6BD /* Landing */,
 				B2C9AD1D26E914BD00657BBD /* HomeView */,
 				B2827C4426DAE1A500A86AF4 /* Onboarding screens */,
@@ -225,8 +223,6 @@
 				B2E7C5B726E5B60000CB73BB /* Helper.swift */,
 				B2E7C5B326E4211000CB73BB /* ImagePicker.swift */,
 				B2D2009426D5EE2D00EDF6BD /* Constants.swift */,
-				B2D2009A26D5EF7F00EDF6BD /* UserService.swift */,
-				B2827C4226D9A2BE00A86AF4 /* UserService.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -244,6 +240,7 @@
 			isa = PBXGroup;
 			children = (
 				B2D200A826D69FE600EDF6BD /* ContentModel.swift */,
+				B2C9AD2026EABABF00657BBD /* UserService.swift */,
 				B2E7C5B126E3C98800CB73BB /* ImageController.swift */,
 				B2C7ACFA26DC9B2E00D8F4B4 /* LocationViewModel.swift */,
 			);
@@ -392,7 +389,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				B2D9C9A026E147B400965841 /* HomeView.swift in Sources */,
-				B2D2009B26D5EF8000EDF6BD /* UserService.swift in Sources */,
 				B2C7ACF326DB08AA00D8F4B4 /* BirthOnboardingView.swift in Sources */,
 				B2C7AD0826DEE4B400D8F4B4 /* HeightOnboardingView.swift in Sources */,
 				B2C9AD1C26E913F800657BBD /* ChatView.swift in Sources */,
@@ -406,12 +402,13 @@
 				B2C9AD1826E913CD00657BBD /* MatchView.swift in Sources */,
 				B2C7AD0E26DF2C8600D8F4B4 /* OnboardingQuestions.swift in Sources */,
 				B2C9AD1A26E913E500657BBD /* ProfileView.swift in Sources */,
-				B2D200B526D6C8CA00EDF6BD /* LoginSignUpView.swift in Sources */,
+				B2D200B526D6C8CA00EDF6BD /* LoginSignupView.swift in Sources */,
 				B2827C4626DAE1D200A86AF4 /* NameOnboardingView.swift in Sources */,
 				B2C7ACF526DC2A9A00D8F4B4 /* NotifOnboarding.swift in Sources */,
 				B2C7ACFD26DC9E7100D8F4B4 /* genderOnboarding.swift in Sources */,
 				B2C7AD0526DEA41500D8F4B4 /* DatePreferencesView.swift in Sources */,
 				B2D2008126D5E97600EDF6BD /* ContentView.swift in Sources */,
+				B2C9AD2126EABABF00657BBD /* UserService.swift in Sources */,
 				B2C7AD0A26DEE91900D8F4B4 /* BreakIceOnboardingView.swift in Sources */,
 				B2D200A526D5F15E00EDF6BD /* Models.swift in Sources */,
 				B2D200A926D69FE600EDF6BD /* ContentModel.swift in Sources */,
@@ -420,7 +417,6 @@
 				B2C7ACFB26DC9B2E00D8F4B4 /* LocationViewModel.swift in Sources */,
 				B2C7ACF726DC979700D8F4B4 /* LocationOnboarding.swift in Sources */,
 				B2C7AD0326DEA30500D8F4B4 /* RadioButtonView.swift in Sources */,
-				B2827C4326D9A2BE00A86AF4 /* UserService.swift in Sources */,
 				B2C7ACFF26DC9F8F00D8F4B4 /* LocationDeniedView.swift in Sources */,
 				B2D200B726D6CFD700EDF6BD /* WelcomeVideo.swift in Sources */,
 				B2E7C5B426E4211000CB73BB /* ImagePicker.swift in Sources */,

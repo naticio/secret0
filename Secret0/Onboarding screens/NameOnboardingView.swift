@@ -94,7 +94,7 @@ struct NameOnboardingView: View {
                 }
             }
             
-            .navigationBarHidden(true)
+            //.navigationBarHidden(true)
             .edgesIgnoringSafeArea(.all)
         }
     
@@ -135,6 +135,7 @@ struct NameOnboardingView: View {
         //            model.checkLogin()
         //        }
         //    }
+
     }
     
 //    struct Name_Previews: PreviewProvider {

@@ -9,7 +9,7 @@ import SwiftUI
 
 struct LoadingView: View {
     var body: some View {
-        Text("LOADING BITCH")
+        Text("LOADING")
     }
 }
 
