@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		3A39C2162A180FC19B0A02A8 /* Pods_Secret0.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A14857A00B1AF57B0886564 /* Pods_Secret0.framework */; };
+		B25D75B126F3AD70008A42D5 /* multipartAPIcall.swift in Sources */ = {isa = PBXBuildFile; fileRef = B25D75B026F3AD70008A42D5 /* multipartAPIcall.swift */; };
 		B2827C4626DAE1D200A86AF4 /* NameOnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2827C4526DAE1D200A86AF4 /* NameOnboardingView.swift */; };
 		B2C7ACEE26DB05C400D8F4B4 /* EmailOnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C7ACED26DB05C400D8F4B4 /* EmailOnboardingView.swift */; };
 		B2C7ACF326DB08AA00D8F4B4 /* BirthOnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C7ACF226DB08A900D8F4B4 /* BirthOnboardingView.swift */; };
@@ -58,6 +59,7 @@
 		6EB7D463FD91ACDC9B3A9074 /* Pods-Secret0.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Secret0.release.xcconfig"; path = "Target Support Files/Pods-Secret0/Pods-Secret0.release.xcconfig"; sourceTree = "<group>"; };
 		7A14857A00B1AF57B0886564 /* Pods_Secret0.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Secret0.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7CF2A57273FCC5287FBD5105 /* Pods-Secret0.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Secret0.debug.xcconfig"; path = "Target Support Files/Pods-Secret0/Pods-Secret0.debug.xcconfig"; sourceTree = "<group>"; };
+		B25D75B026F3AD70008A42D5 /* multipartAPIcall.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = multipartAPIcall.swift; sourceTree = "<group>"; };
 		B2827C4526DAE1D200A86AF4 /* NameOnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NameOnboardingView.swift; sourceTree = "<group>"; };
 		B2C7ACED26DB05C400D8F4B4 /* EmailOnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailOnboardingView.swift; sourceTree = "<group>"; };
 		B2C7ACF226DB08A900D8F4B4 /* BirthOnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BirthOnboardingView.swift; sourceTree = "<group>"; };
@@ -225,6 +227,7 @@
 			isa = PBXGroup;
 			children = (
 				B2E7C5B926E5BB5500CB73BB /* Extensions.swift */,
+				B25D75B026F3AD70008A42D5 /* multipartAPIcall.swift */,
 				B2E7C5B726E5B60000CB73BB /* Helper.swift */,
 				B2C9AD2926EC018900657BBD /* RemoteImage.swift */,
 				B2E7C5B326E4211000CB73BB /* ImagePicker.swift */,
@@ -402,6 +405,7 @@
 				B2C9AD2A26EC018900657BBD /* RemoteImage.swift in Sources */,
 				B2D2009526D5EE2D00EDF6BD /* Constants.swift in Sources */,
 				B2E7C59326E3B97900CB73BB /* PictureYourself.swift in Sources */,
+				B25D75B126F3AD70008A42D5 /* multipartAPIcall.swift in Sources */,
 				B2D200B326D6B23700EDF6BD /* LaunchLogicView.swift in Sources */,
 				B2E7C5B826E5B60000CB73BB /* Helper.swift in Sources */,
 				B2D2008826D5E97700EDF6BD /* Persistence.swift in Sources */,

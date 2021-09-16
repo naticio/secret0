@@ -44,6 +44,7 @@ struct RemoteImage: View {
     var body: some View {
         selectImage()
             .resizable()
+            .cornerRadius(10)
     }
 
     init(url: String, loading: Image = Image(systemName: "photo"), failure: Image = Image(systemName: "multiply.circle")) {

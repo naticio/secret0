@@ -60,7 +60,6 @@ struct PictureYourself: View {
                         //BUTTON done editing pic
                         Button {
                             
-                            
                             if picNumber == 1 {
                                 imageController.image1 = imageController.displayedImage
                             }
@@ -82,7 +81,6 @@ struct PictureYourself: View {
                             
                             uploadPic = false
                             
-                            
                         } label: {
                             Text("Done Editing")
                         }
@@ -90,7 +88,6 @@ struct PictureYourself: View {
                         .padding()
                         .background(Capsule().strokeBorder(Color.white, lineWidth: 1.5))
                         .frame(width: 100)
-                        Spacer()
                         
                     } else {
                         //no image yet in imageController.displayedIMage so we ask user to upload

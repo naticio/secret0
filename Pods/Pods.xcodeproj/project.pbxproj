@@ -11059,6 +11059,7 @@
 		B229412F2036302E6F0E9402658259A1 /* security_connector.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = security_connector.h; path = src/core/lib/security/security_connector/security_connector.h; sourceTree = "<group>"; };
 		B22C9BC1A65D72A12CBC289EA0B2C935 /* Pods-Secret0.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-Secret0.modulemap"; sourceTree = "<group>"; };
 		B24EE4DDF57BA50B1FA9625D995C16F6 /* FIRFirestoreSettings.mm */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.objcpp; name = FIRFirestoreSettings.mm; path = Firestore/Source/API/FIRFirestoreSettings.mm; sourceTree = "<group>"; };
+		B25D75AF26F3ACBF008A42D5 /* multipartAPIcall.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = multipartAPIcall.swift; path = ../Secret0/Helpers/multipartAPIcall.swift; sourceTree = "<group>"; };
 		B2830BBCA76BD9673A7E1A7D55EA5E5B /* FIRMultiFactorResolver+Internal.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "FIRMultiFactorResolver+Internal.h"; path = "FirebaseAuth/Sources/MultiFactor/FIRMultiFactorResolver+Internal.h"; sourceTree = "<group>"; };
 		B2AE38225C4EA590005AF7123745A427 /* conf.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = conf.c; path = src/crypto/conf/conf.c; sourceTree = "<group>"; };
 		B2C9AD2826EC008900657BBD /* RemoteImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = RemoteImage.swift; path = ../Secret0/Helpers/RemoteImage.swift; sourceTree = "<group>"; };
@@ -15226,6 +15227,7 @@
 		CF1408CF629C7361332E53B88F7BD30C = {
 			isa = PBXGroup;
 			children = (
+				B25D75AF26F3ACBF008A42D5 /* multipartAPIcall.swift */,
 				B2C9AD2826EC008900657BBD /* RemoteImage.swift */,
 				9D940727FF8FB9C785EB98E56350EF41 /* Podfile */,
 				D4F75014C9F5292C6073D25FF23753F7 /* Frameworks */,

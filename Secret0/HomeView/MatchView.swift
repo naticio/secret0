@@ -12,9 +12,9 @@ struct MatchView: View {
     @EnvironmentObject var model: ContentModel
     
     //to hide view
-    @State var isHidden = false
+    @State var viewShown = false
     
-    @State var transitionPresented = false
+    @State var transitionShown = false
     
     @State var index : Int
     @State var image1: String = ""
@@ -27,6 +27,7 @@ struct MatchView: View {
         
         if model.usersLoaded == nil {
             ProgressView()
+                .navigationBarHidden(true)
         } else {
             
             if model.matches.count == 0 {
@@ -62,42 +63,39 @@ struct MatchView: View {
                                     //IOS15 AsyncImage(url: URL(string: "https://your_image_url_address"))
                                     if model.matches[index].imageUrl1 == "" {
                                         Image(systemName: "person")
-                                            .frame(width: 300, height: 300, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
-                                            .aspectRatio(contentMode: .fit)
+                                            .resizable()
+                                            .frame(height: 410, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+                                            //.aspectRatio(contentMode: .fit)
+                                            .padding(10)
+                                           
                                     } else {
                                         
                                         RemoteImage(url: model.matches[index].imageUrl1!)
-                                            .aspectRatio(contentMode: .fit)
-                                            .frame(width: 200)
+                                            //.aspectRatio(contentMode: .fit)
+                                            .frame(height: 410, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+                                            .padding(10)
+
                                     }
-                                    
-                                    //                                Image(uiImage: uiImage ?? UIImage())
-                                    //                                    .resizable()
-                                    //                                    .scaledToFill()
-                                    //                                    .frame(width: 300, height: 300, alignment: .center)
-                                    //                                    .clipped()
-                                    
-                                    //Image(systemName: "person").frame(width: 300, height: 300, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+                                
                                     Text("What would you do if you only have 1 day left to live?")
                                     Text(model.matches[index].Q1day2live ?? "")
                                 }
-                                //                            .onAppear() {
-                                //                                model.images = [UIImage()] //make it an empty array first
-                                //                                model.loadImage(for: model.matches[index].imageUrl1 ?? "")
-                                //                            }
                                 .padding()
                                 
                                 Group {
                                     //CustomImageView(urlString: model.matches[index].imageUrl2 ?? "")
                                     if model.matches[index].imageUrl2 == "" {
                                         Image(systemName: "person")
-                                            .frame(width: 300, height: 300, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
-                                            .aspectRatio(contentMode: .fit)
+                                            .resizable()
+                                            .frame(height: 410, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+                                            .padding(10)
+                                            .cornerRadius(10)
                                     } else {
                                         
                                         RemoteImage(url: model.matches[index].imageUrl2!)
-                                            .aspectRatio(contentMode: .fit)
-                                            .frame(width: 200)
+                                            //.aspectRatio(contentMode: .fit)
+                                            .frame(height: 410, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+                                            .padding(10)
                                     }
                                     Text(model.matches[index].QlotteryWin ?? "")
                                 }.padding()
@@ -131,13 +129,15 @@ struct MatchView: View {
                                     //CustomImageView(urlString: model.matches[index].imageUrl3 ?? "")
                                     if model.matches[index].imageUrl3 == "" {
                                         Image(systemName: "person")
-                                            .frame(width: 300, height: 300, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
-                                            .aspectRatio(contentMode: .fit)
+                                            .resizable()
+                                            .frame(height: 410, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+                                            .padding(10)
+                                            .cornerRadius(10)
                                     } else {
                                         
                                         RemoteImage(url: model.matches[index].imageUrl3!)
-                                            .aspectRatio(contentMode: .fit)
-                                            .frame(width: 200)
+                                            .frame(height: 410, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+                                            .padding(10)
                                     }
                                     Text(model.matches[index].bucketList)
                                 }.padding()
@@ -146,13 +146,15 @@ struct MatchView: View {
                                     //                                CustomImageView(urlString: model.matches[index].imageUrl4 ?? "")
                                     if model.matches[index].imageUrl4 == "" {
                                         Image(systemName: "person")
-                                            .frame(width: 300, height: 300, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
-                                            .aspectRatio(contentMode: .fit)
+                                            .resizable()
+                                            .frame(height: 410, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+                                            .padding(10)
+                                            .cornerRadius(10)
                                     } else {
                                         
                                         RemoteImage(url: model.matches[index].imageUrl4!)
-                                            .aspectRatio(contentMode: .fit)
-                                            .frame(width: 200)
+                                            .frame(height: 410, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+                                            .padding(10)
                                     }
                                     Text(model.matches[index].jokes)
                                 }.padding()
@@ -182,8 +184,8 @@ struct MatchView: View {
                         .overlay(
                             Button(action: {
                                 //move to the next match
-                                self.transitionPresented.toggle()
-                                self.isHidden.toggle()
+                                self.transitionShown.toggle()
+                                self.viewShown.toggle()
                             
                                 
                                 //scroll to top
@@ -199,8 +201,8 @@ struct MatchView: View {
                                 }
                                 
                                 DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                                    self.transitionPresented.toggle()
-                                    self.isHidden.toggle()
+                                    self.transitionShown.toggle()
+                                    self.viewShown.toggle()
                                 }
                                 
                                 
@@ -218,7 +220,7 @@ struct MatchView: View {
                             .animation(.easeInOut)
                             
                             //to show rejection transition
-                            .fullScreenCover(isPresented: $transitionPresented, content: {
+                            .fullScreenCover(isPresented: $transitionShown, content: {
                                 FullScreenModalView.init()
                                 
                             })
@@ -230,10 +232,12 @@ struct MatchView: View {
                         )
                     }
                 } //vStack main matches view
-                .opacity(isHidden ? 0 : 1)
+                .opacity(viewShown ? 0 : 1)
+                .navigationBarHidden(true)
             }
         }
     }
+
 }
 
 struct FullScreenModalView: View {
