@@ -25,6 +25,16 @@ class ImageController: ObservableObject {
     @Published var image4: UIImage?
     @Published var image5: UIImage?
     @Published var image6: UIImage?
+    
+    //urls from firebase to use for pixlab facedetec and mogrify
+    @Published var image1url: String?
+    @Published var image2url: String?
+    @Published var image3url: String?
+    @Published var image4url: String?
+    @Published var image5url: String?
+    @Published var image6url: String?
+    
+    
 
     func generateFilteredImage(inputImage: UIImage?, filter: FilterType) -> UIImage? {
         let context = CIContext(options: nil)
