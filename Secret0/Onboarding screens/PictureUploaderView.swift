@@ -42,7 +42,7 @@ struct PictureUploaderView: View {
                             ZStack {
                                 Rectangle()
                                     .fill(Color.white)
-                                    .frame(width:100, height: 100)
+                                    .frame(width:200, height: 200)
                                     .border(Color.black)
                                 Image(systemName: "plus")
                             }
@@ -183,7 +183,7 @@ struct PictureUploaderView: View {
                 //toggle to hide identities
                 Toggle(isOn: /*@START_MENU_TOKEN@*/.constant(true)/*@END_MENU_TOKEN@*/, label: {
                     Text("Hide Identities")
-                })
+                 })
                 
                 //Pixlab testing button
                 Button(action: {
@@ -255,72 +255,6 @@ struct PictureUploaderView: View {
 }
 
 
-
-//MARK: - PIXLAB upload
-func uploadImage(image: UIImage)  {
-    let url = URL(string: "https://api.pixlab.io/facedetect")
-    let httpBody = NSMutableData()
-
-    // generate boundary string using a unique per-app string
-    let boundary = "Boundary-\(NSUUID().uuidString)"
-
-    let session = URLSession.shared
-
-    // Set the URLRequest to POST and to the specified URL
-    var urlRequest = URLRequest(url: url!)
-    urlRequest.httpMethod = "POST"
-    
-    urlRequest.allHTTPHeaderFields = ["Content-Type": "multipart/form-data; boundary=\(boundary)"]
-
-    // Set Content-Type Header to multipart/form-data, this is equivalent to submitting form data with file upload in a web browser
-    // And the boundary is also set here
-    urlRequest.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
-
-    var data = NSMutableData() //Data()
-
-    data.append("\r\n--\(boundary)\r\n".data(using: .utf8)!)
-    data.append("Content-Disposition: form-data;  name=\"inputImage.png\"; filename=\"inputImage.png\"\r\n".data(using: .utf8)!)
-    data.append("Content-Type: image/png\r\n\r\n".data(using: .utf8)!)
-    data.append(image.pngData()!)
-
-    data.append("\r\n--\(boundary)--\r\n".data(using: .utf8)!)
-
-    // Send a POST request to the URL, with the data we created earlier
-    session.uploadTask(with: urlRequest, from: data as Data, completionHandler: { responseData, response, error in
-        if error == nil {
-            let jsonData = try? JSONSerialization.jsonObject(with: responseData!, options: .allowFragments)
-            if let json = jsonData as? [String: Any] {
-                print(json)
-            }
-        }
-    }).resume()
-}
-
-//func pixlabUploadImage(image: UIImage) {
-//    let request = MultipartFormDataRequest(url: URL(string: "https://api.pixlab.io/facedetect")!)
-//    let imageURL = Bundle.main.url(forResource: image, withExtension: "jpeg")!
-//    let imageData = try! Data(contentsOf: imageURL)
-//    request.addDataField(named: "file", data: imageData, mimeType: "image/jpeg")
-//    request.addTextField(named: "key", value: "538f491a89c9026c28be8583aaf7219c")
-//
-//    URLSession.shared.dataTask(with: request) { (data, response, error) in
-//        guard error == nil else {
-//            print(String(describing: error?.localizedDescription))
-//            return
-//        }
-//
-//        if let response = response {
-//            print(response.description)
-//        }
-//
-//        if let data = data,
-//           let dataAsString = String(data: data, encoding: .utf8) {
-//            // Handle the response data here
-//            print(dataAsString)
-//        }
-//    }.resume()
-//}
-
 //MARK: - ANOTHER TRY PIXLAB -stackoverflow
 func requestNativeImageUpload(image: UIImage) {
 
@@ -328,7 +262,7 @@ func requestNativeImageUpload(image: UIImage) {
     let boundary = "Boundary-\(NSUUID().uuidString)"
     var request = URLRequest(url: url!)
 
-    let parameters = ["key" : "YOUR API KEY"]
+    let parameters = ["key" : "538f491a89c9026c28be8583aaf7219c"]
 
     guard let mediaImage = Media(withImage: image, forKey: "file") else { return }
 
@@ -339,7 +273,7 @@ func requestNativeImageUpload(image: UIImage) {
                 "Accept-Language": "en",
                 "Accept": "application/json",
                 "Content-Type": "multipart/form-data; boundary=\(boundary)",
-                "ApiKey": "YOUR API KEY"
+                "ApiKey": "538f491a89c9026c28be8583aaf7219c"
             ]
 
     let dataBody = createDataBody(withParameters: parameters, media: [mediaImage], boundary: boundary)
@@ -355,7 +289,7 @@ func requestNativeImageUpload(image: UIImage) {
             do {
                 let json = try JSONSerialization.jsonObject(with: data, options: [])
                 print(json)
-0            } catch {
+            } catch {
                 print(error)
             }
         }

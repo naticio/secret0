@@ -32,5 +32,8 @@ struct Constants {
         onboardingScreen(title: "Know Any Good Jokes?", disclaimer: "", image: "flame"),
         
     ]
+    
+    static var pixlabAPIkey = "538f491a89c9026c28be8583aaf7219c"
+    //static var apiUrl = "https://api.yelp.com/v3/businesses/search"
 
 }

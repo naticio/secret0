@@ -15,6 +15,8 @@ struct PictureYourself: View {
     @EnvironmentObject var imageController: ImageController
     @State var showImagePicker = true
     
+    @State var hideIdentity : Bool = true
+    
     @Binding var uploadPic: Bool
     @Binding var picNumber: Int
     
@@ -59,41 +61,86 @@ struct PictureYourself: View {
                         }
                         .frame(width: geometry.size.width, height: geometry.size.height*(1/4))
                         
-                        
+                        Toggle(isOn: $hideIdentity, label: {
+                            Text("Hide my identity")
+                        })
                         //BUTTON done editing pic
                         Button {
                             
-                            if picNumber == 1 {
-                                imageController.image1 = imageController.displayedImage
-                                
+                            if hideIdentity == true {
+                                if picNumber == 1 {
+                                    imageController.image1 = imageController.displayedImage
+                                    //uploadImageFirebase(image: imageController.image1!, picNumber: 1, hideFace: true)
+                                    storeImage(image: imageController.image1!)
+                                }
+                                if picNumber == 2 {
+                                    imageController.image2 = imageController.displayedImage
+                                    //uploadImageFirebase(image: imageController.image2!, picNumber: 2, hideFace: true)
+                                    
+                                    storeImage(image: imageController.image2!)
+                                    
+                                }
+                                if picNumber == 3 {
+                                    imageController.image3 = imageController.displayedImage
+                                    //uploadImageFirebase(image: imageController.image3!, picNumber: 3, hideFace: true)
+                                    
+                                    storeImage(image: imageController.image3!)
+                                    
+                                }
+                                if picNumber == 4 {
+                                    imageController.image4 = imageController.displayedImage
+                                    //uploadImageFirebase(image: imageController.image4!, picNumber: 4, hideFace: true)
+                                    
+                                    storeImage(image: imageController.image4!)
 
-                                uploadImageFirebase(image: imageController.image1!, picNumber: 1)
+                                }
+                                if picNumber == 5 {
+                                    imageController.image5 = imageController.displayedImage
+                                    //uploadImageFirebase(image: imageController.image5!, picNumber: 5, hideFace: true)
+                                    
+                                    storeImage(image: imageController.image5!)
+
+                                }
+                                if picNumber == 6 {
+                                    imageController.image6 = imageController.displayedImage
+                                    //uploadImageFirebase(image: imageController.image6!, picNumber: 6, hideFace: true)
+                                    
+                                    storeImage(image: imageController.image6!)
+                                }
+                            } else {
+                                if picNumber == 1 {
+                                    imageController.image1 = imageController.displayedImage
+                                    uploadImageFirebase(image: imageController.image1!, picNumber: 1, hideFace: false)
+                                    
+                                    //call facedetect inside upload image firebase
+                                }
+                                if picNumber == 2 {
+                                    imageController.image2 = imageController.displayedImage
+                                    uploadImageFirebase(image: imageController.image2!, picNumber: 2, hideFace: false)
+                                    
+                                }
+                                if picNumber == 3 {
+                                    imageController.image3 = imageController.displayedImage
+                                    uploadImageFirebase(image: imageController.image3!, picNumber: 3, hideFace: false)
+                                    
+                                }
+                                if picNumber == 4 {
+                                    imageController.image4 = imageController.displayedImage
+                                    uploadImageFirebase(image: imageController.image4!, picNumber: 4, hideFace: false)
+                                    //call facedetect
+                                }
+                                if picNumber == 5 {
+                                    imageController.image5 = imageController.displayedImage
+                                    uploadImageFirebase(image: imageController.image5!, picNumber: 5, hideFace: false)
+                                    //call facedetect, then insie
+                                }
+                                if picNumber == 6 {
+                                    imageController.image6 = imageController.displayedImage
+                                    uploadImageFirebase(image: imageController.image6!, picNumber: 6, hideFace: false)
+                                }
                             }
-                            if picNumber == 2 {
-                                imageController.image2 = imageController.displayedImage
-                                
-                                uploadImageFirebase(image: imageController.image2!, picNumber: 2)
-                            }
-                            if picNumber == 3 {
-                                imageController.image3 = imageController.displayedImage
-                                
-                                uploadImageFirebase(image: imageController.image3!, picNumber: 3)
-                            }
-                            if picNumber == 4 {
-                                imageController.image4 = imageController.displayedImage
-                                
-                                uploadImageFirebase(image: imageController.image4!, picNumber: 4)
-                            }
-                            if picNumber == 5 {
-                                imageController.image5 = imageController.displayedImage
-                                
-                                uploadImageFirebase(image: imageController.image5!, picNumber: 5)
-                            }
-                            if picNumber == 6 {
-                                imageController.image6 = imageController.displayedImage
-                                
-                                uploadImageFirebase(image: imageController.image6!, picNumber: 6)
-                            }
+                            
+                            
                             
                             uploadPic = false
                             
@@ -117,14 +164,14 @@ struct PictureYourself: View {
             }
             //.navigationBarTitle("Images", displayMode: .inline)
             //button for user to tap to the gallery
-//            .toolbar(content: {
-//                ToolbarItem(placement: .navigationBarLeading) {
-//                    GalleryButton(showImagePicker: $showImagePicker)
-//                }
-//                ToolbarItem(placement: .navigationBarTrailing) {
-//                    SaveButton()
-//                }
-//            })
+            //            .toolbar(content: {
+            //                ToolbarItem(placement: .navigationBarLeading) {
+            //                    GalleryButton(showImagePicker: $showImagePicker)
+            //                }
+            //                ToolbarItem(placement: .navigationBarTrailing) {
+            //                    SaveButton()
+            //                }
+            //            })
             .sheet(isPresented: $showImagePicker, content: {
                 //call the helper image picker to select photos (PHPicker)
                 ImagePicker(imageController: imageController, showImagePicker: $showImagePicker)
@@ -134,8 +181,57 @@ struct PictureYourself: View {
         
     }
     
+    //MARK: - store Image in pixlab for facedetect and mogrify
+    func storeImage(image: UIImage) {
+
+        let url = URL(string: "https://api.pixlab.io/store")
+        let boundary = "Boundary-\(NSUUID().uuidString)"
+        var request = URLRequest(url: url!)
+
+        let parameters = ["key" : Constants.pixlabAPIkey]
+
+        guard let mediaImage = Media(withImage: image, forKey: "file") else { return }
+
+        request.httpMethod = "POST"
+
+        request.allHTTPHeaderFields = [
+                    "X-User-Agent": "ios",
+                    "Accept-Language": "en",
+                    "Accept": "application/json",
+                    "Content-Type": "multipart/form-data; boundary=\(boundary)",
+                    "ApiKey": Constants.pixlabAPIkey
+                ]
+
+        let dataBody = createDataBody(withParameters: parameters, media: [mediaImage], boundary: boundary)
+        request.httpBody = dataBody
+
+        let session = URLSession.shared
+        session.dataTask(with: request) { (data, response, error) in
+            if let response = response {
+                print(response)
+            }
+
+            if let data = data {
+                do {
+                    let json = try JSONSerialization.jsonObject(with: data, options: [])
+                    print(json)
+                    
+                    let decoder = JSONDecoder()
+                    let result = try decoder.decode(storedImage.self, from: data)
+                    //var secureLink = result.sslLink
+                    
+                    facedetectGET(uploadedUrl: result.sslLink)
+                    
+                    
+                } catch {
+                    print(error)
+                }
+            }
+            }.resume()
+    }
+    
     //UPLOAD IMAGE INTO FIREBASE STORAGE
-    func uploadImageFirebase(image:UIImage, picNumber: Int){
+    func uploadImageFirebase(image:UIImage, picNumber: Int, hideFace: Bool){
         
         if let imageData = image.jpegData(compressionQuality: 0.1){
             
@@ -171,29 +267,18 @@ struct PictureYourself: View {
                             //save into firestore db the url of the images just uploaded
                             FirestoreRef.setData(["photo\(picNumber)": url!.absoluteString], merge: true)
                             
-                            if picNumber == 1 {
-                                imageController.image1url = url!.absoluteString
+                            print("SUCCESS: image uploaded to firebase")
+                            print(url!.absoluteString)
+                            //if hideIdentity toggle  = true then
+                            if hideFace == true {
+                                //face detect with url!.absoluteString
+                                //facedetectGET(uploadedUrl: url!.absoluteString)
+                                facedetectGET(uploadedUrl: "\(url!.absoluteString) + .jpeg")
+                                
+                                
+                                //mogrify with url!.absoluteString
                             }
                             
-                            if picNumber == 2 {
-                                imageController.image2url = url!.absoluteString
-                            }
-                            
-                            if picNumber == 3 {
-                                imageController.image3url = url!.absoluteString
-                            }
-                            
-                            if picNumber == 4 {
-                                imageController.image4url = url!.absoluteString
-                            }
-                            
-                            if picNumber == 5 {
-                                imageController.image5url = url!.absoluteString
-                            }
-                            
-                            if picNumber == 6 {
-                                imageController.image6url = url!.absoluteString
-                            }
                         }
                         
                     }
@@ -204,6 +289,88 @@ struct PictureYourself: View {
         }
         
     }
+    
+    //MARK: - PIXLAB facedetect
+    func facedetectGET(uploadedUrl: String) {
+        
+        
+        var urlComponents = URLComponents(string: "https://api.pixlab.io/facedetect")
+        
+        urlComponents?.queryItems = [
+            URLQueryItem(name: "img", value: uploadedUrl),
+            URLQueryItem(name: "key", value: Constants.pixlabAPIkey),
+        ]
+        let url = urlComponents?.url
+        
+        if let url = url {
+            
+            // Create URL Request
+            var request = URLRequest(url: url, cachePolicy: .reloadIgnoringLocalCacheData, timeoutInterval: 10.0)
+            request.httpMethod = "GET"
+            request.addValue("Bearer \(Constants.pixlabAPIkey)", forHTTPHeaderField: "Authorization")
+            
+            // Get URLSession
+            let session = URLSession.shared
+            
+            // Create Data Task
+            let dataTask = session.dataTask(with: request) { (data, response, error) in
+                
+                // Check that there isn't an error
+                if error == nil {
+                    
+                    do {
+                        // Parse json
+//                        let decoder = JSONDecoder()
+//                        let result = try decoder.decode(FaceDetected.self, from: data!)
+//                        var faces = result.faces //an array of faces
+//                        print("SUCCESS: image detected")
+//                        print(result)
+//
+                        let json = try JSONSerialization.jsonObject(with: data!, options: [])
+                        print("SUCCESS: image detected")
+                        print(json)
+                        
+                        DispatchQueue.main.async {
+                            
+                            //MOGRIFY CALL
+                            let mogrifyurl = URL(string: "https://api.pixlab.io/mogrify")!
+                            
+                            //let param: [Face] = result.faces
+                            let param: [String: Any] = ["img": uploadedUrl, "cord": [ [json] ]]
+                            
+                            var request = URLRequest(url: mogrifyurl)
+                            request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+                            request.addValue("Bearer \(Constants.pixlabAPIkey)", forHTTPHeaderField: "Authorization")
+                            request.httpMethod = "POST"
+                            request.httpBody = try! JSONSerialization.data(withJSONObject: param, options: [])
+
+                            URLSession.shared.dataTask(with: request) { (data, response, error) in
+                                if error != nil {
+                                    print(error!)
+                                    return
+                                }
+                                do {
+                                    let json = try JSONSerialization.jsonObject(with: data!)
+                                    print(json)
+                                } catch {
+                                    print("error")
+                                }
+                            }.resume()
+                        }
+                        
+                    }
+                    catch {
+                        print(error)
+                    }
+                }
+            }
+            
+            // Start the Data Task
+            dataTask.resume()
+        }
+        
+    }
+    
 }
 
 //preview image view
