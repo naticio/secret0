@@ -14,21 +14,27 @@ struct FaceDetected: Decodable {
     //var error : String?
 }
 
-struct Face: Decodable {
+struct Face: Codable {
     //var center = Coordinate()
-    var face_id: Int?
-    var left : Int?
-    var top : Int?
-    var width : Int?
-    var height : Int?
-
-}
-
-struct storedImage: Decodable {
+//    var bottom : Int?
+//    var face_id: Int?
+//    var height : Int?
+//    var left : Int?
+//    var right : Int?
+//    var top : Int?
+//    var width : Int?
     
-    var id = ""
-    var link = ""
-    var sslLink = ""
-    var status = 0
+    var faces: [String:Int?]
 }
+
+struct storedImgJson: Decodable {
+    
+    var id : String
+    var link : String
+    var ssl_link : String
+    var status : Int
+}
+
+
+
 

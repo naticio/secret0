@@ -92,14 +92,14 @@ struct PictureYourself: View {
                                     //uploadImageFirebase(image: imageController.image4!, picNumber: 4, hideFace: true)
                                     
                                     storeImage(image: imageController.image4!)
-
+                                    
                                 }
                                 if picNumber == 5 {
                                     imageController.image5 = imageController.displayedImage
                                     //uploadImageFirebase(image: imageController.image5!, picNumber: 5, hideFace: true)
                                     
                                     storeImage(image: imageController.image5!)
-
+                                    
                                 }
                                 if picNumber == 6 {
                                     imageController.image6 = imageController.displayedImage
@@ -183,52 +183,176 @@ struct PictureYourself: View {
     
     //MARK: - store Image in pixlab for facedetect and mogrify
     func storeImage(image: UIImage) {
-
+        
         let url = URL(string: "https://api.pixlab.io/store")
         let boundary = "Boundary-\(NSUUID().uuidString)"
         var request = URLRequest(url: url!)
-
+        
         let parameters = ["key" : Constants.pixlabAPIkey]
-
+        
         guard let mediaImage = Media(withImage: image, forKey: "file") else { return }
-
+        
         request.httpMethod = "POST"
-
+        
         request.allHTTPHeaderFields = [
-                    "X-User-Agent": "ios",
-                    "Accept-Language": "en",
-                    "Accept": "application/json",
-                    "Content-Type": "multipart/form-data; boundary=\(boundary)",
-                    "ApiKey": Constants.pixlabAPIkey
-                ]
-
+            "X-User-Agent": "ios",
+            "Accept-Language": "en",
+            "Accept": "application/json",
+            "Content-Type": "multipart/form-data; boundary=\(boundary)",
+            "ApiKey": Constants.pixlabAPIkey
+        ]
+        
         let dataBody = createDataBody(withParameters: parameters, media: [mediaImage], boundary: boundary)
         request.httpBody = dataBody
-
+        
         let session = URLSession.shared
         session.dataTask(with: request) { (data, response, error) in
             if let response = response {
                 print(response)
             }
-
+            
             if let data = data {
                 do {
                     let json = try JSONSerialization.jsonObject(with: data, options: [])
                     print(json)
                     
-                    let decoder = JSONDecoder()
-                    let result = try decoder.decode(storedImage.self, from: data)
+                    //decode a json from data to storedImgJson
+                    let result = try! JSONDecoder().decode(storedImgJson.self, from: data)
                     //var secureLink = result.sslLink
                     
-                    facedetectGET(uploadedUrl: result.sslLink)
+                    facedetectGET(uploadedUrl: result.ssl_link)
                     
                     
                 } catch {
                     print(error)
                 }
             }
-            }.resume()
+        }.resume()
     }
+    
+    //MARK: - PIXLAB facedetect
+    func facedetectGET(uploadedUrl: String) {
+        
+        
+        var urlComponents = URLComponents(string: "https://api.pixlab.io/facedetect")
+        
+        urlComponents?.queryItems = [
+            URLQueryItem(name: "img", value: uploadedUrl),
+            URLQueryItem(name: "key", value: Constants.pixlabAPIkey),
+        ]
+        let url = urlComponents?.url
+        
+        if let url = url {
+            
+            // Create URL Request
+            var request = URLRequest(url: url, cachePolicy: .reloadIgnoringLocalCacheData, timeoutInterval: 10.0)
+            request.httpMethod = "GET"
+            request.addValue("Bearer \(Constants.pixlabAPIkey)", forHTTPHeaderField: "Authorization")
+            
+            // Get URLSession
+            let session = URLSession.shared
+            
+            // Create Data Task
+            let dataTask = session.dataTask(with: request) { (data, response, error) in
+                
+                // Check that there isn't an error
+                if error == nil {
+                    
+                    do {
+                        
+                        //let jsonData = try? JSONSerialization.data(withJSONObject: data!)
+                        
+                        //Convert HTTP Response Data to a String
+                        //                        let jsonString = String(data: data!, encoding: .utf8)
+                        //                        print(jsonString)
+                        //                        let jsonString2 = jsonString?.replacingOccurrences(of: "\\", with: "")
+                        //                        print(jsonString2)
+                        //
+                        //serialize just to print json
+                        //                        let json = try! JSONSerialization.jsonObject(with: data!, options: [])
+                        //                        print(json)
+                        
+                        //make a dict
+                        //let json = try JSONSerialization.jsonObject(with: data!, options: .mutableContainers) as? [String: Any]
+                        
+                        print("SUCCESS: image detected")
+                        //print(json)
+                        
+                        //make json a string utf8 so it can be used as parameter in next call
+                        //let jsonString = String(data: json as! Data, encoding: .utf8)
+                        
+                        //let jsonData = json.data(using: .utf8)!
+                        
+                        //parse json
+                        //decode the json to an array of faces
+                        //                        let faces = try! JSONDecoder().decode([Face].self, from: data!)
+                        //                        print(faces)
+                        //let facesString = String(faces)
+                        //use dispatch main sync queue??"bottom": Int,
+                        
+                        //stackoverflow answer
+                        //                        let encoder = JSONEncoder()
+                        //                        encoder.outputFormatting = .withoutEscapingSlashes
+                        //
+                        //                        let jsonString = try encoder.encode(data)
+                        //                        print(jsonString)
+                        
+                        
+                        // Encode data
+                        //                        let jsonEncoder = JSONEncoder()
+                        //                        let jsonData = try jsonEncoder.encode(data)
+                        //                        let jsonString = String(data: jsonData, encoding: .utf8)
+                        //                        print(jsonString!)
+                        
+                        //let faces = try! JSONDecoder().decode([Face].self, from: data!)
+                        let faces = try! JSONDecoder().decode([Face].self, from: data!)
+                        print(faces)
+                        
+                        //mogrify call
+                        mogrify(uploadedUrl: uploadedUrl, cord: faces)
+                        
+                    }
+                    catch {
+                        print(error)
+                    }
+                }
+            }
+            
+            // Start the Data Task
+            dataTask.resume()
+        }
+        
+    }
+    
+    //MOGRIFY CALL
+    func mogrify(uploadedUrl: String, cord: Any) {
+        
+        let mogrifyurl = URL(string: "https://api.pixlab.io/mogrify")!
+        
+        //let param: [Face] = result.faces
+        let param: [String: Any] = ["img": uploadedUrl, "key": Constants.pixlabAPIkey, "cord": [cord]]
+        
+        var request = URLRequest(url: mogrifyurl)
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.addValue("Bearer \(Constants.pixlabAPIkey)", forHTTPHeaderField: "Authorization")
+        request.httpMethod = "POST"
+        request.httpBody = try! JSONSerialization.data(withJSONObject: param, options: [])
+        
+        URLSession.shared.dataTask(with: request) { (data, response, error) in
+            if error != nil {
+                print(error!)
+                return
+            }
+            do {
+                let json = try JSONSerialization.jsonObject(with: data!)
+                print("MOGRIFY response")
+                print(json)
+            } catch {
+                print("error")
+            }
+        }.resume()
+    }
+    
     
     //UPLOAD IMAGE INTO FIREBASE STORAGE
     func uploadImageFirebase(image:UIImage, picNumber: Int, hideFace: Bool){
@@ -290,86 +414,7 @@ struct PictureYourself: View {
         
     }
     
-    //MARK: - PIXLAB facedetect
-    func facedetectGET(uploadedUrl: String) {
-        
-        
-        var urlComponents = URLComponents(string: "https://api.pixlab.io/facedetect")
-        
-        urlComponents?.queryItems = [
-            URLQueryItem(name: "img", value: uploadedUrl),
-            URLQueryItem(name: "key", value: Constants.pixlabAPIkey),
-        ]
-        let url = urlComponents?.url
-        
-        if let url = url {
-            
-            // Create URL Request
-            var request = URLRequest(url: url, cachePolicy: .reloadIgnoringLocalCacheData, timeoutInterval: 10.0)
-            request.httpMethod = "GET"
-            request.addValue("Bearer \(Constants.pixlabAPIkey)", forHTTPHeaderField: "Authorization")
-            
-            // Get URLSession
-            let session = URLSession.shared
-            
-            // Create Data Task
-            let dataTask = session.dataTask(with: request) { (data, response, error) in
-                
-                // Check that there isn't an error
-                if error == nil {
-                    
-                    do {
-                        // Parse json
-//                        let decoder = JSONDecoder()
-//                        let result = try decoder.decode(FaceDetected.self, from: data!)
-//                        var faces = result.faces //an array of faces
-//                        print("SUCCESS: image detected")
-//                        print(result)
-//
-                        let json = try JSONSerialization.jsonObject(with: data!, options: [])
-                        print("SUCCESS: image detected")
-                        print(json)
-                        
-                        DispatchQueue.main.async {
-                            
-                            //MOGRIFY CALL
-                            let mogrifyurl = URL(string: "https://api.pixlab.io/mogrify")!
-                            
-                            //let param: [Face] = result.faces
-                            let param: [String: Any] = ["img": uploadedUrl, "cord": [ [json] ]]
-                            
-                            var request = URLRequest(url: mogrifyurl)
-                            request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-                            request.addValue("Bearer \(Constants.pixlabAPIkey)", forHTTPHeaderField: "Authorization")
-                            request.httpMethod = "POST"
-                            request.httpBody = try! JSONSerialization.data(withJSONObject: param, options: [])
-
-                            URLSession.shared.dataTask(with: request) { (data, response, error) in
-                                if error != nil {
-                                    print(error!)
-                                    return
-                                }
-                                do {
-                                    let json = try JSONSerialization.jsonObject(with: data!)
-                                    print(json)
-                                } catch {
-                                    print("error")
-                                }
-                            }.resume()
-                        }
-                        
-                    }
-                    catch {
-                        print(error)
-                    }
-                }
-            }
-            
-            // Start the Data Task
-            dataTask.resume()
-        }
-        
-    }
+    
     
 }
 
