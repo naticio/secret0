@@ -113,7 +113,6 @@ class ContentModel: ObservableObject{
     
     func getMatches() {
         
-        
         // Get the documents from the collection
         let usersCollection = db.collection("users")
         
@@ -130,33 +129,35 @@ class ContentModel: ObservableObject{
                     var matches = [Matches]() //empty array of user/matches instances
                     
                     for doc in snapshot!.documents {
-                        
-                        if doc["datingPreferences"] as! String == currentUser.gender || doc["datingPreferences"] as! String == "Everyone" {
-                            var m = Matches()
-                            //q.id = doc["id"] as? String ?? ""
-                            m.name = doc["name"] as? String ?? ""
-                            m.birthdate = doc["birthdate"] as? Date ?? Date()
-                            m.gender = doc["gender"] as? String ?? ""
-                            m.datingPreferences = doc["datingPreferences"] as? String ?? ""
-                            m.height = doc["height"] as? Int ?? 0
-                            m.latitude = doc["latitude"] as? Double ?? 0.0
-                            m.longitude = doc["longitude"] as? Double ?? 0.0
-                            
-                            m.imageUrl1 = doc["photo1"] as? String ?? ""
-                            m.imageUrl2 = doc["photo2"] as? String ?? ""
-                            m.imageUrl3 = doc["photo3"] as? String ?? ""
-                            m.imageUrl4 = doc["photo4"] as? String ?? ""
-                            m.imageUrl5 = doc["photo5"] as? String ?? ""
-                            m.imageUrl6 = doc["photo6"] as? String ?? ""
-                            
-                            m.Q1day2live = doc["Q1day2live"] as? String ?? ""
-                            m.QlotteryWin = doc["QlotteryWin"] as? String ?? ""
-                            m.QmoneynotanIssue = doc["QmoneynotanIssue"] as? String ?? ""
-                            m.bucketList = doc["bucketList"] as? String ?? ""
-                            m.jokes = doc["jokes"] as? String ?? ""
-                            
-                            matches.append(m)
+                        if doc["datingPreferences"] != nil {
+                            if doc["datingPreferences"] as! String == currentUser.gender || doc["datingPreferences"] as! String == "Everyone" {
+                                var m = Matches()
+                                //q.id = doc["id"] as? String ?? ""
+                                m.name = doc["name"] as? String ?? ""
+                                m.birthdate = doc["birthdate"] as? Date ?? Date()
+                                m.gender = doc["gender"] as? String ?? ""
+                                m.datingPreferences = doc["datingPreferences"] as? String ?? ""
+                                m.height = doc["height"] as? Int ?? 0
+                                m.latitude = doc["latitude"] as? Double ?? 0.0
+                                m.longitude = doc["longitude"] as? Double ?? 0.0
+                                
+                                m.imageUrl1 = doc["photo1"] as? String ?? ""
+                                m.imageUrl2 = doc["photo2"] as? String ?? ""
+                                m.imageUrl3 = doc["photo3"] as? String ?? ""
+                                m.imageUrl4 = doc["photo4"] as? String ?? ""
+                                m.imageUrl5 = doc["photo5"] as? String ?? ""
+                                m.imageUrl6 = doc["photo6"] as? String ?? ""
+                                
+                                m.Q1day2live = doc["Q1day2live"] as? String ?? ""
+                                m.QlotteryWin = doc["QlotteryWin"] as? String ?? ""
+                                m.QmoneynotanIssue = doc["QmoneynotanIssue"] as? String ?? ""
+                                m.bucketList = doc["bucketList"] as? String ?? ""
+                                m.jokes = doc["jokes"] as? String ?? ""
+                                
+                                matches.append(m)
+                            }
                         }
+
                         
                     }
                     
@@ -179,33 +180,36 @@ class ContentModel: ObservableObject{
                     var matches = [Matches]() //empty array of user/matches instances
                     
                     for doc in snapshot!.documents {
-                        
-                        if doc["datingPreferences"] as! String == currentUser.gender || doc["datingPreferences"] as! String == "Everyone" {
-                            var m = Matches()
-                            //q.id = doc["id"] as? String ?? ""
-                            m.name = doc["name"] as? String ?? ""
-                            m.birthdate = doc["birthdate"] as? Date ?? Date()
-                            m.gender = doc["gender"] as? String ?? ""
-                            m.datingPreferences = doc["datingPreferences"] as? String ?? ""
-                            m.height = doc["height"] as? Int ?? 0
-                            m.latitude = doc["latitude"] as? Double ?? 0.0
-                            m.longitude = doc["longitude"] as? Double ?? 0.0
+                        if doc["datingPreferences"] != nil {
+                            if doc["datingPreferences"] as! String == currentUser.gender || doc["datingPreferences"] as! String == "Everyone" {
+                                var m = Matches()
+                                //q.id = doc["id"] as? String ?? ""
+                                m.name = doc["name"] as? String ?? ""
+                                m.birthdate = doc["birthdate"] as? Date ?? Date()
+                                m.gender = doc["gender"] as? String ?? ""
+                                m.datingPreferences = doc["datingPreferences"] as? String ?? ""
+                                m.height = doc["height"] as? Int ?? 0
+                                m.latitude = doc["latitude"] as? Double ?? 0.0
+                                m.longitude = doc["longitude"] as? Double ?? 0.0
+                                
+                                m.imageUrl1 = doc["photo1"] as? String ?? ""
+                                m.imageUrl2 = doc["photo2"] as? String ?? ""
+                                m.imageUrl3 = doc["photo3"] as? String ?? ""
+                                m.imageUrl4 = doc["photo4"] as? String ?? ""
+                                m.imageUrl5 = doc["photo5"] as? String ?? ""
+                                m.imageUrl6 = doc["photo6"] as? String ?? ""
+                                
+                                m.Q1day2live = doc["Q1day2live"] as? String ?? ""
+                                m.QlotteryWin = doc["QlotteryWin"] as? String ?? ""
+                                m.QmoneynotanIssue = doc["QmoneynotanIssue"] as? String ?? ""
+                                m.bucketList = doc["bucketList"] as? String ?? ""
+                                m.jokes = doc["jokes"] as? String ?? ""
+                                
+                                matches.append(m)
                             
-                            m.imageUrl1 = doc["photo1"] as? String ?? ""
-                            m.imageUrl2 = doc["photo2"] as? String ?? ""
-                            m.imageUrl3 = doc["photo3"] as? String ?? ""
-                            m.imageUrl4 = doc["photo4"] as? String ?? ""
-                            m.imageUrl5 = doc["photo5"] as? String ?? ""
-                            m.imageUrl6 = doc["photo6"] as? String ?? ""
-                            
-                            m.Q1day2live = doc["Q1day2live"] as? String ?? ""
-                            m.QlotteryWin = doc["QlotteryWin"] as? String ?? ""
-                            m.QmoneynotanIssue = doc["QmoneynotanIssue"] as? String ?? ""
-                            m.bucketList = doc["bucketList"] as? String ?? ""
-                            m.jokes = doc["jokes"] as? String ?? ""
-                            
-                            matches.append(m)
                         }
+                        
+}
                         
                     }
                     
@@ -229,38 +233,41 @@ class ContentModel: ObservableObject{
                     var matches = [Matches]() //empty array of user/matches instances
                     
                     for doc in snapshot!.documents {
-                        
-                        if doc["datingPreferences"] as! String == currentUser.gender || doc["datingPreferences"] as! String == "Everyone" {
-                            var m = Matches()
-                            //q.id = doc["id"] as? String ?? ""
-                            m.name = doc["name"] as? String ?? ""
-                            m.birthdate = doc["birthdate"] as? Date ?? Date()
-                            m.gender = doc["gender"] as? String ?? ""
-                            m.datingPreferences = doc["datingPreferences"] as? String ?? ""
-                            m.height = doc["height"] as? Int ?? 0
-                            m.latitude = doc["latitude"] as? Double ?? 0.0
-                            m.longitude = doc["longitude"] as? Double ?? 0.0
-                            
-                            m.imageUrl1 = doc["photo1"] as? String ?? ""
-                            m.imageUrl2 = doc["photo2"] as? String ?? ""
-                            m.imageUrl3 = doc["photo3"] as? String ?? ""
-                            m.imageUrl4 = doc["photo4"] as? String ?? ""
-                            m.imageUrl5 = doc["photo5"] as? String ?? ""
-                            m.imageUrl6 = doc["photo6"] as? String ?? ""
-                            
-                            m.Q1day2live = doc["Q1day2live"] as? String ?? ""
-                            m.QlotteryWin = doc["QlotteryWin"] as? String ?? ""
-                            m.QmoneynotanIssue = doc["QmoneynotanIssue"] as? String ?? ""
-                            m.bucketList = doc["bucketList"] as? String ?? ""
-                            m.jokes = doc["jokes"] as? String ?? ""
-                            
-                            matches.append(m)
-                            
-                            DispatchQueue.main.async {
-                                self.matches = matches
-                                self.usersLoaded = true
+                        if doc["datingPreferences"] != nil {
+                            if doc["datingPreferences"] as! String == currentUser.gender || doc["datingPreferences"] as! String == "Everyone" {
+                                var m = Matches()
+                                //q.id = doc["id"] as? String ?? ""
+                                m.name = doc["name"] as? String ?? ""
+                                m.birthdate = doc["birthdate"] as? Date ?? Date()
+                                m.gender = doc["gender"] as? String ?? ""
+                                m.datingPreferences = doc["datingPreferences"] as? String ?? ""
+                                m.height = doc["height"] as? Int ?? 0
+                                m.latitude = doc["latitude"] as? Double ?? 0.0
+                                m.longitude = doc["longitude"] as? Double ?? 0.0
+                                
+                                m.imageUrl1 = doc["photo1"] as? String ?? ""
+                                m.imageUrl2 = doc["photo2"] as? String ?? ""
+                                m.imageUrl3 = doc["photo3"] as? String ?? ""
+                                m.imageUrl4 = doc["photo4"] as? String ?? ""
+                                m.imageUrl5 = doc["photo5"] as? String ?? ""
+                                m.imageUrl6 = doc["photo6"] as? String ?? ""
+                                
+                                m.Q1day2live = doc["Q1day2live"] as? String ?? ""
+                                m.QlotteryWin = doc["QlotteryWin"] as? String ?? ""
+                                m.QmoneynotanIssue = doc["QmoneynotanIssue"] as? String ?? ""
+                                m.bucketList = doc["bucketList"] as? String ?? ""
+                                m.jokes = doc["jokes"] as? String ?? ""
+                                
+                                matches.append(m)
+                                
+                                DispatchQueue.main.async {
+                                    self.matches = matches
+                                    self.usersLoaded = true
+                                }
                             }
                         }
+                        
+ 
                     }
                     
                 }
