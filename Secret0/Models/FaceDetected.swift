@@ -9,12 +9,12 @@ import Foundation
 
 struct FaceDetected: Decodable {
     
-    var faces = [Face]()
+    var faces = [Cord]()
     var count : Int?
     //var error : String?
 }
 
-struct Face: Codable {
+struct Cord: Codable {
     //var center = Coordinate()
 //    var bottom : Int?
 //    var face_id: Int?
@@ -24,7 +24,19 @@ struct Face: Codable {
 //    var top : Int?
 //    var width : Int?
     
-    var faces: [String:Int?]
+    var faces: [Face]
+    var status: Int
+}
+
+struct Face: Codable {
+
+    var bottom : Int
+    var face_id: Int
+    var height : Int
+    var left : Int
+    var right : Int
+    var top : Int
+    var width : Int
 }
 
 struct storedImgJson: Decodable {

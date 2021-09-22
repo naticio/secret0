@@ -234,6 +234,7 @@ struct PictureYourself: View {
     func facedetectGET(uploadedUrl: String) {
         
         
+        
         var urlComponents = URLComponents(string: "https://api.pixlab.io/facedetect")
         
         urlComponents?.queryItems = [
@@ -260,56 +261,19 @@ struct PictureYourself: View {
                     
                     do {
                         
-                        //let jsonData = try? JSONSerialization.data(withJSONObject: data!)
-                        
-                        //Convert HTTP Response Data to a String
-                        //                        let jsonString = String(data: data!, encoding: .utf8)
-                        //                        print(jsonString)
-                        //                        let jsonString2 = jsonString?.replacingOccurrences(of: "\\", with: "")
-                        //                        print(jsonString2)
-                        //
-                        //serialize just to print json
-                        //                        let json = try! JSONSerialization.jsonObject(with: data!, options: [])
-                        //                        print(json)
-                        
-                        //make a dict
-                        //let json = try JSONSerialization.jsonObject(with: data!, options: .mutableContainers) as? [String: Any]
-                        
-                        print("SUCCESS: image detected")
-                        //print(json)
-                        
-                        //make json a string utf8 so it can be used as parameter in next call
-                        //let jsonString = String(data: json as! Data, encoding: .utf8)
-                        
-                        //let jsonData = json.data(using: .utf8)!
-                        
-                        //parse json
-                        //decode the json to an array of faces
-                        //                        let faces = try! JSONDecoder().decode([Face].self, from: data!)
-                        //                        print(faces)
-                        //let facesString = String(faces)
-                        //use dispatch main sync queue??"bottom": Int,
-                        
-                        //stackoverflow answer
-                        //                        let encoder = JSONEncoder()
-                        //                        encoder.outputFormatting = .withoutEscapingSlashes
-                        //
-                        //                        let jsonString = try encoder.encode(data)
-                        //                        print(jsonString)
-                        
-                        
-                        // Encode data
-                        //                        let jsonEncoder = JSONEncoder()
-                        //                        let jsonData = try jsonEncoder.encode(data)
-                        //                        let jsonString = String(data: jsonData, encoding: .utf8)
-                        //                        print(jsonString!)
-                        
-                        //let faces = try! JSONDecoder().decode([Face].self, from: data!)
-                        let faces = try! JSONDecoder().decode([Face].self, from: data!)
-                        print(faces)
-                        
-                        //mogrify call
-                        mogrify(uploadedUrl: uploadedUrl, cord: faces)
+                        if data != nil {
+                            //decode the json to an array of faces
+                            let cord = try! JSONDecoder().decode(Cord.self, from: data!)
+                            print(cord.faces)
+                            
+                            let cordData = try! JSONEncoder().encode(cord.faces)
+                            let coordinates = try JSONSerialization.jsonObject(with: cordData, options: [])
+                            print(coordinates)
+                            
+                            //mogrify call
+                            mogrify(uploadedUrl: uploadedUrl, cord: coordinates)
+                        }
+
                         
                     }
                     catch {
@@ -330,7 +294,7 @@ struct PictureYourself: View {
         let mogrifyurl = URL(string: "https://api.pixlab.io/mogrify")!
         
         //let param: [Face] = result.faces
-        let param: [String: Any] = ["img": uploadedUrl, "key": Constants.pixlabAPIkey, "cord": [cord]]
+        let param: [String: Any] = ["img": uploadedUrl, "key": Constants.pixlabAPIkey, "cord": cord]
         
         var request = URLRequest(url: mogrifyurl)
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
