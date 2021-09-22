@@ -179,19 +179,17 @@ struct PictureUploaderView: View {
                     .disabled(imageController.image5 == nil)
                     
                 }
+
                 
-                //toggle to hide identities
-                Toggle(isOn: /*@START_MENU_TOKEN@*/.constant(true)/*@END_MENU_TOKEN@*/, label: {
-                    Text("Hide Identities")
-                 })
-                
+                /*
                 //Pixlab testing button
                 Button(action: {
                     //uploadImage(image: imageController.image1!)
                     requestNativeImageUpload(image: imageController.image1!)
                 }, label: {
                     Text("Pixlab call")
-                })
+                }) */
+
                 
                 //UPLOAD IMAGE TO FIREBASE
                 NavigationLink(
@@ -207,26 +205,26 @@ struct PictureUploaderView: View {
                             
                             //make face detect call but using url for image
                             
-                            //if toggle hideIdentity = false do this
-//                            if imageController.image1 != nil {
-//                                uploadImageFirebase(image: imageController.image1!, picNumber: 1)
-//                            }
-//                            if imageController.image2 != nil {
-//                                uploadImageFirebase(image: imageController.image2!, picNumber: 2)
-//                            }
-//                            if imageController.image3 != nil {
-//                                uploadImageFirebase(image: imageController.image3!, picNumber: 3)
-//                            }
-//                            if imageController.image4 != nil {
-//                                uploadImageFirebase(image: imageController.image4!, picNumber: 4)
-//                            }
-//                            if imageController.image5 != nil {
-//                                uploadImageFirebase(image: imageController.image5!, picNumber: 5)
-//                            }
-//                            if imageController.image6 != nil {
-//                                uploadImageFirebase(image: imageController.image6!, picNumber: 6)
-//                            }
-                            
+                            //I need to send all images at once as array I believe
+                            if imageController.image1 != nil {
+                                uploadImageFirebase(image: imageController.image1!, picNumber: 1)
+                            }
+                            if imageController.image2 != nil {
+                                uploadImageFirebase(image: imageController.image2!, picNumber: 2)
+                            }
+                            if imageController.image3 != nil {
+                                uploadImageFirebase(image: imageController.image3!, picNumber: 3)
+                            }
+                            if imageController.image4 != nil {
+                                uploadImageFirebase(image: imageController.image4!, picNumber: 4)
+                            }
+                            if imageController.image5 != nil {
+                                uploadImageFirebase(image: imageController.image5!, picNumber: 5)
+                            }
+                            if imageController.image6 != nil {
+                                uploadImageFirebase(image: imageController.image6!, picNumber: 6)
+                            }
+//
                             //model.checkLogin()
                             goWhenTrue = true
                             
@@ -248,7 +246,87 @@ struct PictureUploaderView: View {
         
     }
     
-    
+    //UPLOAD IMAGE INTO FIREBASE STORAGE
+    func uploadImageFirebase(image:UIImage, picNumber: Int){
+        
+        if let imageData = image.jpegData(compressionQuality: 0.1){
+            
+            let userDocument = Auth.auth().currentUser! //get document id for current user
+            let storage = Storage.storage()
+            
+            let uploadMetaData = StorageMetadata()
+            uploadMetaData.contentType = "image/jpeg"
+            
+            //create unique file name for the picture, so it can have an id inside the bucket/folder
+            let documentID = UUID().uuidString //Assign unique identifier
+            
+            //SAVE IMAGE TO STORAGE
+            ///reference to storage root, bucket is userDocument id, then files are photo uploaded with a unique id
+            let storageRef = storage.reference().child(userDocument.uid).child(documentID)
+            let uploadTask = storageRef.putData(imageData, metadata: uploadMetaData){
+                (_, err) in
+                if let err = err {
+                    print("an error has occurred - \(err.localizedDescription)")
+                } else {
+                    print("image uploaded successfully")
+                    
+                    ///SAVE IMAGE URL AS REFERENCE IN USER COLLECTION
+                    let db = Firestore.firestore()
+                    
+                    //ref = path in the users collection, doc is the user id document, create a sub collection photos with the document id
+                    //let ref = db.collection("users").document(userDocument.uid).collection("photos").document(documentID)
+                    let FirestoreRef = db.collection("users").document(userDocument.uid)
+                    
+                    //download URL of the pic just posted
+                    storageRef.downloadURL { url, error in
+                        if error == nil {
+                            //save into firestore db the url of the images just uploaded
+                            FirestoreRef.setData(["photo\(picNumber)": url!.absoluteString], merge: true)
+                            
+                            print("SUCCESS: image original uploaded to firebase")
+                            print(url!.absoluteString)
+                            //if hideIdentity toggle  = true then
+                            
+                            //SAVE MOGRIFIED IMAGE INTO FIREBASE COLLECTION as url reference
+                            switch picNumber {
+                            case 1:
+                                if imageController.image1Mogrify != nil {
+                                    FirestoreRef.setData(["photoHidden\(picNumber)": imageController.image1Mogrify], merge: true)
+                                }
+                            case 2:
+                                if imageController.image2Mogrify != nil {
+                                    FirestoreRef.setData(["photoHidden\(picNumber)": imageController.image2Mogrify], merge: true)
+                                }
+                            case 3:
+                                if imageController.image3Mogrify != nil {
+                                    FirestoreRef.setData(["photoHidden\(picNumber)": imageController.image3Mogrify], merge: true)
+                                }
+                            case 4:
+                                if imageController.image4Mogrify != nil {
+                                    FirestoreRef.setData(["photoHidden\(picNumber)": imageController.image4Mogrify], merge: true)
+                                }
+                            case 5:
+                                if imageController.image5Mogrify != nil {
+                                    FirestoreRef.setData(["photoHidden\(picNumber)": imageController.image5Mogrify], merge: true)
+                                }
+                            case 6:
+                                if imageController.image6Mogrify != nil {
+                                    FirestoreRef.setData(["photoHidden\(picNumber)": imageController.image6Mogrify], merge: true)
+                                }
+                            default:
+                                print("No hidden images this time my friend")
+                            }
+                            
+                        }
+                        
+                    }
+                }
+            }
+        } else {
+            print("coldn't unwrap/case image to data")
+        }
+        
+    }
     
 
     

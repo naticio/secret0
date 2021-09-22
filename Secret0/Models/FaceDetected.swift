@@ -39,6 +39,15 @@ struct Face: Codable {
     var width : Int
 }
 
+struct mogrifyResponse: Codable {
+    var id: String
+    var link : String
+    var ssl_link : String
+    var status : Int
+}
+
+
+
 struct storedImgJson: Decodable {
     
     var id : String

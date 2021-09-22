@@ -70,73 +70,57 @@ struct PictureYourself: View {
                             if hideIdentity == true {
                                 if picNumber == 1 {
                                     imageController.image1 = imageController.displayedImage
-                                    //uploadImageFirebase(image: imageController.image1!, picNumber: 1, hideFace: true)
-                                    storeImage(image: imageController.image1!)
+
+                                    storeImage(image: imageController.image1!, picNum: picNumber)
                                 }
                                 if picNumber == 2 {
                                     imageController.image2 = imageController.displayedImage
-                                    //uploadImageFirebase(image: imageController.image2!, picNumber: 2, hideFace: true)
-                                    
-                                    storeImage(image: imageController.image2!)
+
+                                    storeImage(image: imageController.image2!, picNum: picNumber)
                                     
                                 }
                                 if picNumber == 3 {
                                     imageController.image3 = imageController.displayedImage
-                                    //uploadImageFirebase(image: imageController.image3!, picNumber: 3, hideFace: true)
                                     
-                                    storeImage(image: imageController.image3!)
+                                    storeImage(image: imageController.image3!, picNum: picNumber)
                                     
                                 }
                                 if picNumber == 4 {
                                     imageController.image4 = imageController.displayedImage
-                                    //uploadImageFirebase(image: imageController.image4!, picNumber: 4, hideFace: true)
                                     
-                                    storeImage(image: imageController.image4!)
+                                    storeImage(image: imageController.image4!, picNum: picNumber)
                                     
                                 }
                                 if picNumber == 5 {
                                     imageController.image5 = imageController.displayedImage
-                                    //uploadImageFirebase(image: imageController.image5!, picNumber: 5, hideFace: true)
                                     
-                                    storeImage(image: imageController.image5!)
+                                    storeImage(image: imageController.image5!, picNum: picNumber)
                                     
                                 }
                                 if picNumber == 6 {
                                     imageController.image6 = imageController.displayedImage
-                                    //uploadImageFirebase(image: imageController.image6!, picNumber: 6, hideFace: true)
                                     
-                                    storeImage(image: imageController.image6!)
+                                    storeImage(image: imageController.image6!, picNum: picNumber)
                                 }
                             } else {
+                                //if false just save original image in memory to save it later firebase
                                 if picNumber == 1 {
                                     imageController.image1 = imageController.displayedImage
-                                    uploadImageFirebase(image: imageController.image1!, picNumber: 1, hideFace: false)
-                                    
-                                    //call facedetect inside upload image firebase
                                 }
                                 if picNumber == 2 {
                                     imageController.image2 = imageController.displayedImage
-                                    uploadImageFirebase(image: imageController.image2!, picNumber: 2, hideFace: false)
-                                    
                                 }
                                 if picNumber == 3 {
                                     imageController.image3 = imageController.displayedImage
-                                    uploadImageFirebase(image: imageController.image3!, picNumber: 3, hideFace: false)
-                                    
                                 }
                                 if picNumber == 4 {
                                     imageController.image4 = imageController.displayedImage
-                                    uploadImageFirebase(image: imageController.image4!, picNumber: 4, hideFace: false)
-                                    //call facedetect
                                 }
                                 if picNumber == 5 {
                                     imageController.image5 = imageController.displayedImage
-                                    uploadImageFirebase(image: imageController.image5!, picNumber: 5, hideFace: false)
-                                    //call facedetect, then insie
                                 }
                                 if picNumber == 6 {
                                     imageController.image6 = imageController.displayedImage
-                                    uploadImageFirebase(image: imageController.image6!, picNumber: 6, hideFace: false)
                                 }
                             }
                             
@@ -182,7 +166,7 @@ struct PictureYourself: View {
     }
     
     //MARK: - store Image in pixlab for facedetect and mogrify
-    func storeImage(image: UIImage) {
+    func storeImage(image: UIImage, picNum: Int) {
         
         let url = URL(string: "https://api.pixlab.io/store")
         let boundary = "Boundary-\(NSUUID().uuidString)"
@@ -220,7 +204,7 @@ struct PictureYourself: View {
                     let result = try! JSONDecoder().decode(storedImgJson.self, from: data)
                     //var secureLink = result.sslLink
                     
-                    facedetectGET(uploadedUrl: result.ssl_link)
+                    facedetectGET(uploadedUrl: result.ssl_link, picNum: picNum)
                     
                     
                 } catch {
@@ -231,10 +215,8 @@ struct PictureYourself: View {
     }
     
     //MARK: - PIXLAB facedetect
-    func facedetectGET(uploadedUrl: String) {
-        
-        
-        
+    func facedetectGET(uploadedUrl: String, picNum: Int) {
+
         var urlComponents = URLComponents(string: "https://api.pixlab.io/facedetect")
         
         urlComponents?.queryItems = [
@@ -271,7 +253,7 @@ struct PictureYourself: View {
                             print(coordinates)
                             
                             //mogrify call
-                            mogrify(uploadedUrl: uploadedUrl, cord: coordinates)
+                            mogrify(uploadedUrl: uploadedUrl, cord: coordinates, picNum: picNum)
                         }
 
                         
@@ -289,7 +271,7 @@ struct PictureYourself: View {
     }
     
     //MOGRIFY CALL
-    func mogrify(uploadedUrl: String, cord: Any) {
+    func mogrify(uploadedUrl: String, cord: Any, picNum: Int) {
         
         let mogrifyurl = URL(string: "https://api.pixlab.io/mogrify")!
         
@@ -311,6 +293,31 @@ struct PictureYourself: View {
                 let json = try JSONSerialization.jsonObject(with: data!)
                 print("MOGRIFY response")
                 print(json)
+                
+                let mogrifyRes = try! JSONDecoder().decode(mogrifyResponse.self, from: data!)
+                //var secureLink = result.sslLink
+                
+                //save image mogrified in pixlab into memory in image controller
+                
+                DispatchQueue.main.async {
+                    switch picNum {
+                    case 1:
+                        imageController.image1Mogrify = mogrifyRes.ssl_link
+                    case 2:
+                        imageController.image2Mogrify = mogrifyRes.ssl_link
+                    case 3:
+                        imageController.image3Mogrify = mogrifyRes.ssl_link
+                    case 4:
+                        imageController.image4Mogrify = mogrifyRes.ssl_link
+                    case 5:
+                        imageController.image5Mogrify = mogrifyRes.ssl_link
+                    case 6:
+                        imageController.image6Mogrify = mogrifyRes.ssl_link
+                        
+                    default:
+                        print("No picNum provided")
+                    }
+                }
             } catch {
                 print("error")
             }
@@ -318,65 +325,7 @@ struct PictureYourself: View {
     }
     
     
-    //UPLOAD IMAGE INTO FIREBASE STORAGE
-    func uploadImageFirebase(image:UIImage, picNumber: Int, hideFace: Bool){
-        
-        if let imageData = image.jpegData(compressionQuality: 0.1){
-            
-            let userDocument = Auth.auth().currentUser! //get document id for current user
-            let storage = Storage.storage()
-            
-            let uploadMetaData = StorageMetadata()
-            uploadMetaData.contentType = "image/jpeg"
-            
-            //create unique file name for the picture, so it can have an id inside the bucket/folder
-            let documentID = UUID().uuidString //Assign unique identifier
-            
-            //SAVE IMAGE TO STORAGE
-            ///reference to storage root, bucket is userDocument id, then files are photo uploaded with a unique id
-            let storageRef = storage.reference().child(userDocument.uid).child(documentID)
-            let uploadTask = storageRef.putData(imageData, metadata: uploadMetaData){
-                (_, err) in
-                if let err = err {
-                    print("an error has occurred - \(err.localizedDescription)")
-                } else {
-                    print("image uploaded successfully")
-                    
-                    //save image url into users collection as a field
-                    let db = Firestore.firestore()
-                    
-                    //ref = path in the users collection, doc is the user id document, create a sub collection photos with the document id
-                    //let ref = db.collection("users").document(userDocument.uid).collection("photos").document(documentID)
-                    let FirestoreRef = db.collection("users").document(userDocument.uid)
-                    
-                    //download URL of the pic just posted
-                    storageRef.downloadURL { url, error in
-                        if error == nil {
-                            //save into firestore db the url of the images just uploaded
-                            FirestoreRef.setData(["photo\(picNumber)": url!.absoluteString], merge: true)
-                            
-                            print("SUCCESS: image uploaded to firebase")
-                            print(url!.absoluteString)
-                            //if hideIdentity toggle  = true then
-                            if hideFace == true {
-                                //face detect with url!.absoluteString
-                                //facedetectGET(uploadedUrl: url!.absoluteString)
-                                facedetectGET(uploadedUrl: "\(url!.absoluteString) + .jpeg")
-                                
-                                
-                                //mogrify with url!.absoluteString
-                            }
-                            
-                        }
-                        
-                    }
-                }
-            }
-        } else {
-            print("coldn't unwrap/case image to data")
-        }
-        
-    }
+
     
     
     

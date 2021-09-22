@@ -34,6 +34,14 @@ class ImageController: ObservableObject {
     @Published var image5url: String?
     @Published var image6url: String?
     
+    //mogrify images
+    @Published var image1Mogrify: String?
+    @Published var image2Mogrify: String?
+    @Published var image3Mogrify: String?
+    @Published var image4Mogrify: String?
+    @Published var image5Mogrify: String?
+    @Published var image6Mogrify: String?
+    
     
 
     func generateFilteredImage(inputImage: UIImage?, filter: FilterType) -> UIImage? {
