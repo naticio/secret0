@@ -54,6 +54,9 @@
 		B2E7C5B826E5B60000CB73BB /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2E7C5B726E5B60000CB73BB /* Helper.swift */; };
 		B2E7C5BA26E5BB5500CB73BB /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2E7C5B926E5BB5500CB73BB /* Extensions.swift */; };
 		B2F95D3A26F901C10049A690 /* FaceDetected.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2F95D3926F901C10049A690 /* FaceDetected.swift */; };
+		B2F95D3D26FD1A060049A690 /* listChatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2F95D3C26FD1A060049A690 /* listChatsView.swift */; };
+		B2F95D3F26FD1AB40049A690 /* ChatMessages.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2F95D3E26FD1AB40049A690 /* ChatMessages.swift */; };
+		B2F95D4226FD1BC70049A690 /* ChatRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2F95D4126FD1BC70049A690 /* ChatRow.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -108,6 +111,9 @@
 		B2E7C5B726E5B60000CB73BB /* Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Helper.swift; path = "Secret0/Onboarding screens/Helper.swift"; sourceTree = SOURCE_ROOT; };
 		B2E7C5B926E5BB5500CB73BB /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Extensions.swift; path = "Secret0/Onboarding screens/Extensions.swift"; sourceTree = SOURCE_ROOT; };
 		B2F95D3926F901C10049A690 /* FaceDetected.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FaceDetected.swift; sourceTree = "<group>"; };
+		B2F95D3C26FD1A060049A690 /* listChatsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = listChatsView.swift; sourceTree = "<group>"; };
+		B2F95D3E26FD1AB40049A690 /* ChatMessages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ChatMessages.swift; path = Secret0/Models/ChatMessages.swift; sourceTree = SOURCE_ROOT; };
+		B2F95D4126FD1BC70049A690 /* ChatRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRow.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -168,7 +174,7 @@
 				B2C9AD1726E913CD00657BBD /* MatchView.swift */,
 				B2C9AD2426EBED2000657BBD /* CustomImageView.swift */,
 				B2C9AD1E26E95ECA00657BBD /* LoadingView.swift */,
-				B2C9AD1B26E913F800657BBD /* ChatView.swift */,
+				B2F95D3C26FD1A060049A690 /* listChatsView.swift */,
 				B2C9AD1926E913E500657BBD /* ProfileView.swift */,
 			);
 			path = HomeView;
@@ -200,6 +206,7 @@
 				B2D200B426D6C8CA00EDF6BD /* LoginSignupView.swift */,
 				B2D200B826D6D0CF00EDF6BD /* Landing */,
 				B2C9AD1D26E914BD00657BBD /* HomeView */,
+				B2F95D4026FD1B8C0049A690 /* Chat */,
 				B2827C4426DAE1A500A86AF4 /* Onboarding screens */,
 				B2D200A626D69FC100EDF6BD /* ViewModel */,
 				B2827C4A26DAEE2000A86AF4 /* CoreData */,
@@ -243,6 +250,7 @@
 			children = (
 				B2E7C59426E3C7A100CB73BB /* Vera.jpg */,
 				B2D200A426D5F15E00EDF6BD /* Models.swift */,
+				B2F95D3E26FD1AB40049A690 /* ChatMessages.swift */,
 				B2F95D3926F901C10049A690 /* FaceDetected.swift */,
 			);
 			path = Models;
@@ -272,6 +280,15 @@
 				B2D200B626D6CFD700EDF6BD /* WelcomeVideo.swift */,
 			);
 			path = Landing;
+			sourceTree = "<group>";
+		};
+		B2F95D4026FD1B8C0049A690 /* Chat */ = {
+			isa = PBXGroup;
+			children = (
+				B2C9AD1B26E913F800657BBD /* ChatView.swift */,
+				B2F95D4126FD1BC70049A690 /* ChatRow.swift */,
+			);
+			path = Chat;
 			sourceTree = "<group>";
 		};
 		C5B4963D4C623E5763A76102 /* Pods */ = {
@@ -401,10 +418,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				B2D9C9A026E147B400965841 /* HomeView.swift in Sources */,
+				B2F95D4226FD1BC70049A690 /* ChatRow.swift in Sources */,
 				B2C7ACF326DB08AA00D8F4B4 /* BirthOnboardingView.swift in Sources */,
 				B2C7AD0826DEE4B400D8F4B4 /* HeightOnboardingView.swift in Sources */,
 				B2C9AD1C26E913F800657BBD /* ChatView.swift in Sources */,
 				B2C9AD1F26E95ECA00657BBD /* LoadingView.swift in Sources */,
+				B2F95D3F26FD1AB40049A690 /* ChatMessages.swift in Sources */,
 				B2C9AD2A26EC018900657BBD /* RemoteImage.swift in Sources */,
 				B2D2009526D5EE2D00EDF6BD /* Constants.swift in Sources */,
 				B2E7C59326E3B97900CB73BB /* PictureYourself.swift in Sources */,
@@ -431,6 +450,7 @@
 				B2C7AD0126DD667600D8F4B4 /* SexOnboardingView.swift in Sources */,
 				B2C7ACFB26DC9B2E00D8F4B4 /* LocationViewModel.swift in Sources */,
 				B2C7ACF726DC979700D8F4B4 /* LocationOnboarding.swift in Sources */,
+				B2F95D3D26FD1A060049A690 /* listChatsView.swift in Sources */,
 				B2C7AD0326DEA30500D8F4B4 /* RadioButtonView.swift in Sources */,
 				B2C7ACFF26DC9F8F00D8F4B4 /* LocationDeniedView.swift in Sources */,
 				B2D200B726D6CFD700EDF6BD /* WelcomeVideo.swift in Sources */,

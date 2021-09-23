@@ -10,7 +10,9 @@
 #endif
 #endif
 
+#import "FIRCollectionReference 2.h"
 #import "FIRCollectionReference.h"
+#import "FIRDocumentChange 2.h"
 #import "FIRDocumentChange.h"
 #import "FIRDocumentReference.h"
 #import "FIRDocumentSnapshot.h"
