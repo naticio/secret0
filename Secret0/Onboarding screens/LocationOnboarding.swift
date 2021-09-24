@@ -35,12 +35,13 @@ struct LocationOnboarding: View {
             VStack {
                 
                 //let index = model.onboardingIndex
+                Spacer()
                 
                 Image(systemName: Constants.screens[index].image)
                     .resizable()
                     .scaledToFit()
                     .frame(width: 50, height: 50, alignment: .center)
-                Spacer()
+
                 
                 VStack(alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/) {
                     Text(Constants.screens[index].title)
@@ -53,10 +54,7 @@ struct LocationOnboarding: View {
                         .font(.caption)
                 }
                 .padding()
-                
-                
-                
-                Spacer()
+            
                 
                 NavigationLink(destination: genderOnboarding(index: index + 1)
                                 .environmentObject(ContentModel()), isActive: $goWhenTrue) {
@@ -86,6 +84,8 @@ struct LocationOnboarding: View {
                         
                     }, label: {
                         Text("Next")
+                            .accentColor(.red)
+                            .font(.title)
                         
                     })
                     .disabled(localizationModel.authorizationState == .notDetermined)
@@ -123,9 +123,10 @@ struct LocationOnboarding: View {
 }
 
 
-//struct LocationOnboarding_Previews: PreviewProvider {
-//    static var previews: some View {
-//        LocationOnboarding()
-//        //.environmentObject(localizationModel)
-//    }
-//}
+struct LocationOnboarding_Previews: PreviewProvider {
+    static var previews: some View {
+        LocationOnboarding(index: 4)
+            .environmentObject(ContentModel())
+            .environmentObject(LocationModel())
+    }
+}

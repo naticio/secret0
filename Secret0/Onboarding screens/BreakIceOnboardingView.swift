@@ -23,11 +23,11 @@ struct BreakIceOnboardingView: View {
                 
                 //let index = model.onboardingIndex
                 
+                Spacer()
                 Image(systemName: Constants.screens[index].image)
                     .resizable()
                     .scaledToFit()
                     .frame(width: 50, height: 50, alignment: .center)
-                Spacer()
                 
                 VStack(alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/) {
                     Text(Constants.screens[index].title)
@@ -45,8 +45,7 @@ struct BreakIceOnboardingView: View {
                     .scaledToFit()
                     .frame(width: 100, height: 100, alignment: .center)
                 
-                
-                Spacer()
+
                 
                 NavigationLink(destination: OnboardingQuestions(index: index + 1).environmentObject(ContentModel())
                                 .onAppear(perform: UIApplication.shared.addTapGestureRecognizer)
@@ -61,12 +60,13 @@ struct BreakIceOnboardingView: View {
                     } label: {
                         
                         Text("Next")
+                            .accentColor(.red)
+                            .font(.title)
                     }
                     .padding()
                     .background(Capsule().strokeBorder(Color.white, lineWidth: 1.5))
                     .frame(width: 100)
                 }
-                
                 
                 
                 Spacer()
@@ -77,8 +77,9 @@ struct BreakIceOnboardingView: View {
     }
 }
 //
-//struct BreakIceOnboardingView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        BreakIceOnboardingView()
-//    }
-//}
+struct BreakIceOnboardingView_Previews: PreviewProvider {
+    static var previews: some View {
+        BreakIceOnboardingView(index: 9)
+            .environmentObject(ContentModel())
+    }
+}

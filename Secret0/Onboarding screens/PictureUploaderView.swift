@@ -43,7 +43,7 @@ struct PictureUploaderView: View {
                                 Rectangle()
                                     .fill(Color.white)
                                     .frame(width:200, height: 200)
-                                    .border(Color.black)
+                                    .border(Color.gray)
                                 Image(systemName: "plus")
                             }
                         }
@@ -66,7 +66,7 @@ struct PictureUploaderView: View {
                                 Rectangle()
                                     .fill(Color.white)
                                     .frame(width:200, height: 200)
-                                    .border(Color.black)
+                                    .border(Color.gray)
                                 Image(systemName: "plus")
                             }
                         }
@@ -94,7 +94,7 @@ struct PictureUploaderView: View {
                                 Rectangle()
                                     .fill(Color.white)
                                     .frame(width:200, height: 200)
-                                    .border(Color.black)
+                                    .border(Color.gray)
                                 Image(systemName: "plus")
                             }
                         }
@@ -118,7 +118,7 @@ struct PictureUploaderView: View {
                                 Rectangle()
                                     .fill(Color.white)
                                     .frame(width:200, height: 200)
-                                    .border(Color.black)
+                                    .border(Color.gray)
                                 Image(systemName: "plus")
                             }
                         }
@@ -147,7 +147,7 @@ struct PictureUploaderView: View {
                                 Rectangle()
                                     .fill(Color.white)
                                     .frame(width:200, height: 200)
-                                    .border(Color.black)
+                                    .border(Color.gray)
                                 Image(systemName: "plus")
                             }
                         }
@@ -170,7 +170,7 @@ struct PictureUploaderView: View {
                                 Rectangle()
                                     .fill(Color.white)
                                     .frame(width:200, height: 200)
-                                    .border(Color.black)
+                                    .border(Color.gray)
                                 Image(systemName: "plus")
                             }
                         }
@@ -229,15 +229,18 @@ struct PictureUploaderView: View {
                             goWhenTrue = true
                             
                         }, label: {
-                            Text("NEXT")
+                            Text("Next")
+                                .accentColor(.red)
+                                .font(.title)
                         })
                     })
                     .padding()
             } //vstack closure
+            .navigationBarHidden(true)
             
             Spacer()
         }
-        .navigationBarHidden(true)
+
         .sheet(isPresented: $uploadPic, content: {
             PictureYourself(uploadPic: $uploadPic, picNumber: $picNumber)
         })
@@ -431,5 +434,7 @@ struct Media {
 struct PictureUploaderView_Previews: PreviewProvider {
     static var previews: some View {
         PictureUploaderView()
+            .environmentObject(ContentModel())
+            .environmentObject(ImageController())
     }
 }

@@ -22,12 +22,14 @@ struct NotifOnboarding: View {
             
             VStack {
                 
+                Spacer()
+                
                 //let index = model.onboardingIndex
                 Image(systemName: Constants.screens[index].image)
                     .resizable()
                     .scaledToFit()
                     .frame(width: 50, height: 50, alignment: .center)
-                Spacer()
+
                 
                 VStack(alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/) {
                     Text(Constants.screens[index].title)
@@ -39,8 +41,6 @@ struct NotifOnboarding: View {
                         .font(.caption)
                 }
                 .padding()
-                
-                Spacer()
                 
                 NavigationLink(
                     destination: LocationOnboarding(index: index+1)
@@ -67,6 +67,8 @@ struct NotifOnboarding: View {
                         
                     }, label: {
                         Text("Next")
+                            .accentColor(.red)
+                            .font(.title)
                         
                     })
                     .padding()
@@ -74,9 +76,7 @@ struct NotifOnboarding: View {
                     .frame(width: 100)
                 }
                 
-                
-                
-                
+            
                 Spacer()
             }
         }
@@ -88,6 +88,6 @@ struct NotifOnboarding: View {
 
 struct NotifOnboarding_Previews: PreviewProvider {
     static var previews: some View {
-        NotifOnboarding(index: 2)
+        NotifOnboarding(index: 3)
     }
 }

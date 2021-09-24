@@ -95,6 +95,7 @@ struct LoginSignupView: View {
             .edgesIgnoringSafeArea(.all)
         
         }
+        .background(Color.white)
         .navigationBarHidden(true)
         
       
@@ -117,9 +118,13 @@ struct LoginSubView: View {
     @Binding var showSheet: Bool
     
     var body: some View {
+        self.background(Color.white)
+        
         Spacer()
         TextField("Email", text: $email) //so it looks cute
         SecureField("Password", text: $password)
+        
+        self.background(Color.white)
         
         if errorMsg != nil {
             Text(errorMsg!)

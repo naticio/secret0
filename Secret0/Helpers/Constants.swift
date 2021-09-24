@@ -16,21 +16,21 @@ struct Constants {
     }
     
     static var screens = [
-        onboardingScreen(title: "How do you want to be called?", disclaimer: "You can use a fiction name if you want to", image: "person"), //for image use system name string
-        onboardingScreen(title: "Type and email & choose a password?", disclaimer: "This email will be used for password recovery", image: "envelope"), //for image use system name string
-        onboardingScreen(title: "What's your date of birth?", disclaimer: "This can't be changed later", image: "rosette"),
-        onboardingScreen(title: "Never miss a message from someone great", disclaimer: "", image: "zzz"),
+        onboardingScreen(title: "How do you want to be called?", disclaimer: "You can use a fiction name if you want to", image: "person.circle.fill"), //for image use system name string
+        onboardingScreen(title: "Type your email & choose a password", disclaimer: "This email will be used for password recovery", image: "envelope.circle"), //for image use system name string
+        onboardingScreen(title: "When is your birthdate?", disclaimer: "This can't be changed later", image: "calendar.circle"),
+        onboardingScreen(title: "Never miss a message from someone great", disclaimer: "", image: "moon.zzz.fill"),
         onboardingScreen(title: "Where do you live?", disclaimer: "Only neighborhood name is shown", image: "location"),
-        onboardingScreen(title: "What's your gender?", disclaimer: "", image: "person"),
+        onboardingScreen(title: "What's your gender?", disclaimer: "", image: "person.circle.fill"),
         onboardingScreen(title: "What's your sexuality?", disclaimer: "", image: "sparkles"),
-        onboardingScreen(title: "Who do you want to date?", disclaimer: "", image: "heart"),
+        onboardingScreen(title: "Who do you want to date?", disclaimer: "", image: "heart.circle.fill"),
         onboardingScreen(title: "How tall are you?", disclaimer: "", image: "ruler"),
-        onboardingScreen(title: "Help others break the ice", disclaimer: "", image: "flame"),
-        onboardingScreen(title: "If you had one day left to live, what would you do?", disclaimer: "", image: "flame"),
-        onboardingScreen(title: "What would you do if you won $100,000,000?", disclaimer: "", image: "flame"),
-        onboardingScreen(title: "If money didn't matter, what would you do with your time?", disclaimer: "", image: "flame"),
-        onboardingScreen(title: "What are three things on your bucket list?", disclaimer: "", image: "flame"),
-        onboardingScreen(title: "Know Any Good Jokes?", disclaimer: "", image: "flame"),
+        onboardingScreen(title: "Help others break the ice", disclaimer: "", image: "bolt.circle.fill"),
+        onboardingScreen(title: "If you had one day left to live, what would you do?", disclaimer: "", image: "1.square.fill"),
+        onboardingScreen(title: "What would you do if you won $100,000,000?", disclaimer: "", image: "dollarsign.circle.fill"),
+        onboardingScreen(title: "If money didn't matter, what would you do with your time?", disclaimer: "", image: "clock.fill"),
+        onboardingScreen(title: "What are three things on your bucket list?", disclaimer: "", image: "list.bullet.circle.fill"),
+        onboardingScreen(title: "Know Any Good Jokes?", disclaimer: "", image: "mouth.fill"),
         
     ]
     

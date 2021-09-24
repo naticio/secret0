@@ -105,9 +105,7 @@ struct EmailOnboardingView: View {
                     .background(Capsule().strokeBorder(Color.white, lineWidth: 1.5))
                     .frame(width: 100)
                 }
-            
-                
-                Spacer()
+    
                 Spacer()
             }
         }
@@ -150,8 +148,9 @@ struct EmailOnboardingView: View {
         
 }
 //
-//struct EmailOnboardingView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        EmailOnboardingView()
-//    }
-//}
+struct EmailOnboardingView_Previews: PreviewProvider {
+    static var previews: some View {
+        EmailOnboardingView(index: 1)
+            .environmentObject(ContentModel())
+    }
+}

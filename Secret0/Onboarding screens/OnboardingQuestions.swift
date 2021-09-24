@@ -26,27 +26,27 @@ struct OnboardingQuestions: View {
             VStack {
                 
                 //let index = model.onboardingIndex
+                Spacer()
                 
                 Image(systemName: Constants.screens[index].image)
                     .resizable()
                     .scaledToFit()
                     .frame(width: 50, height: 50, alignment: .center)
-                Spacer()
+                
                 
                 VStack(alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/) {
                     Text(Constants.screens[index].title)
                         .font(.title)
                         .bold()
                     
-                    
                     Text(Constants.screens[index].disclaimer)
                         .font(.caption)
                 }
-                .padding()
                 
-                TextEditor(text: $response).font(.title)
-                    .multilineTextAlignment(.center)
-                    .padding()
+                //RESPONSE
+                TextEditor(text: $response)
+                    .multilineTextAlignment(.leading)
+                    .frame(height: 400)
                 
                 if index < Constants.screens.count-1 {
                     NavigationLink(destination: OnboardingQuestions(index: index + 1)
@@ -62,6 +62,8 @@ struct OnboardingQuestions: View {
                             
                         } label: {
                             Text("Next")
+                                .accentColor(.red)
+                                .font(.title)
                         }
                         .padding()
                         .background(Capsule().strokeBorder(Color.white, lineWidth: 1.5))
@@ -81,17 +83,18 @@ struct OnboardingQuestions: View {
                             
                             isOnboarding = true
                             //save all data from model to the db
-                           
+                            
                             
                         } label: {
-                                Text("Next")
+                            Text("Next")
+                                .accentColor(.red)
+                                .font(.title)
                         }
                         .padding()
                         .background(Capsule().strokeBorder(Color.white, lineWidth: 1.5))
                         .frame(width: 100)
                     }
                 }
-                
                 Spacer()
             }
         }
@@ -101,7 +104,7 @@ struct OnboardingQuestions: View {
     
     //save data to firebase
     func saveDataHere() {
-    
+        
         //make sure user is not nil
         if let loggedInUser = Auth.auth().currentUser {
             let user = UserService.shared.user //user =  the current user using the app right now
@@ -162,8 +165,9 @@ extension UIApplication: UIGestureRecognizerDelegate {
     }
 }
 
-//struct Q1Day2LiveView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        OnboardingQuestions()
-//    }
-//}
+struct Q1Day2LiveView_Previews: PreviewProvider {
+    static var previews: some View {
+        OnboardingQuestions(index: 10)
+            .environmentObject(ContentModel())
+    }
+}

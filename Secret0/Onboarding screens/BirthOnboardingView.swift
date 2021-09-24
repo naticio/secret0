@@ -27,13 +27,14 @@ struct BirthOnboardingView: View {
             ZStack {
                 
                 VStack {
+                    Spacer()
                     
                     //let index = model.onboardingIndex
                     Image(systemName: Constants.screens[index].image)
                         .resizable()
                         .scaledToFit()
                         .frame(width: 50, height: 50, alignment: .center)
-                    Spacer()
+
                     
                     VStack(alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/) {
                         Text(Constants.screens[index].title)
@@ -43,14 +44,13 @@ struct BirthOnboardingView: View {
                         
                         DatePicker("",selection: $birthDate, displayedComponents: [.date])
                             .datePickerStyle(WheelDatePickerStyle())
+                            .labelsHidden()
                         
                         
                         Text(Constants.screens[index].disclaimer)
                             .font(.caption)
                     }
                     .padding()
-                    
-                    Spacer()
                     
                     NavigationLink(destination: NotifOnboarding(index: index+1)
                                     .environmentObject(ContentModel()), tag: 1, selection: $selection) {
@@ -70,10 +70,11 @@ struct BirthOnboardingView: View {
                             }
                         }) {
                             Text("Next")
+                                //.bold()
+                                .accentColor(.red)
+                                .font(.title)
                         }
-                        .accentColor(Color.red)
                         .padding()
-                        .background(Color(UIColor.red))
                         .cornerRadius(4.0)
                         .padding(Edge.Set.vertical, 20)
                     }
@@ -89,7 +90,6 @@ struct BirthOnboardingView: View {
                     } label: {
                         Text("Sign Out")
                     }
-                    
                     
                     Spacer()
                 }
@@ -131,8 +131,8 @@ struct BirthOnboardingView: View {
 
 
 
-//struct BirthOnboardingView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        BirthOnboardingView()
-//    }
-//}
+struct BirthOnboardingView_Previews: PreviewProvider {
+    static var previews: some View {
+        BirthOnboardingView(index: 2)
+    }
+}

@@ -27,19 +27,26 @@ struct NameOnboardingView: View {
     @State var index: Int = 0
     
     var body: some View {
+        
         NavigationView{
+            
             ZStack {
-       
+
                 VStack {
                     
                     //let index = 0
                     
-                    Image(systemName: Constants.screens[index].image)
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 50, height: 50, alignment: .center)
+//                    Image(systemName: Constants.screens[index].image)
+//                        .resizable()
+//                        .scaledToFit()
+//                        .frame(width: 50, height: 50, alignment: .center)
                     
-                    VStack(alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/) {
+                    Spacer()
+                    
+                    VStack(alignment: .center) {
+                        
+                        
+                        
                         Text(Constants.screens[index].title)
                             .font(.title)
                             .bold()
@@ -55,6 +62,7 @@ struct NameOnboardingView: View {
                     
                     //warning message if the text is not formatted correctly
                     Text(warningMsg)
+                        .font(.system(size: 9))
                     
                     NavigationLink(destination: EmailOnboardingView(index: index + 1), isActive: $goWhenTrue) {
                         //BUTTON NEXT
@@ -62,9 +70,9 @@ struct NameOnboardingView: View {
                             if textFormatOK() {
                                 //save user name in model
                                 model.usernameSignUp = username
-                               
+                                
                                 goWhenTrue = true
-                                  
+                                
                             } else {
                                 //show a warning message for the etxt to be longer than 1 chr
                                 if username.count == 0 {
@@ -75,8 +83,6 @@ struct NameOnboardingView: View {
                                 }
                                 
                             }
-                         
-                            
                             
                         } label: {
                             Text("Next")
@@ -85,18 +91,16 @@ struct NameOnboardingView: View {
                         .background(Capsule().strokeBorder(Color.white, lineWidth: 1.5))
                         .frame(width: 100)
                     }
-                    
-
-
+        
                     Spacer()
-
-                    }
+                    
                 }
             }
-            
-            //.navigationBarHidden(true)
-            .edgesIgnoringSafeArea(.all)
         }
+        .background(Color.white)
+        //.navigationBarHidden(true)
+        .edgesIgnoringSafeArea(.all)
+    }
     
     //MARK: - check if the Onboarding input field is ok
     func textFormatOK() -> Bool {
@@ -105,41 +109,41 @@ struct NameOnboardingView: View {
         } else {
             return false
         }
-       
-    }
         
-        //    func signUpUser(email: String, password: String, name: String) {
-        //        // Create a new account
-        //        Auth.auth().createUser(withEmail: email, password: password) { result, error in
-        //
-        //            // Check for errors
-        //            guard error == nil else {
-        //                let errorMessage = error!.localizedDescription
-        //                return
-        //            }
-        //            // Clear error message
-        ////                errorMessage = nil
-        //
-        //            // Save the first name
-        //            let firebaseuser = Auth.auth().currentUser
-        //            let db = Firestore.firestore()
-        //            let ref = db.collection("users").document(firebaseuser!.uid)
-        //
-        //            ref.setData(["name": name], merge: true)
-        //
-        //            // Update the user meta data
-        //            let user = UserService.shared.user
-        //            user.name = name
-        //
-        //            // Change the view to logged in view
-        //            model.checkLogin()
-        //        }
-        //    }
-
     }
     
-//    struct Name_Previews: PreviewProvider {
-//        static var previews: some View {
-//            NameOnboardingView()
-//        }
-//    }
+    //    func signUpUser(email: String, password: String, name: String) {
+    //        // Create a new account
+    //        Auth.auth().createUser(withEmail: email, password: password) { result, error in
+    //
+    //            // Check for errors
+    //            guard error == nil else {
+    //                let errorMessage = error!.localizedDescription
+    //                return
+    //            }
+    //            // Clear error message
+    ////                errorMessage = nil
+    //
+    //            // Save the first name
+    //            let firebaseuser = Auth.auth().currentUser
+    //            let db = Firestore.firestore()
+    //            let ref = db.collection("users").document(firebaseuser!.uid)
+    //
+    //            ref.setData(["name": name], merge: true)
+    //
+    //            // Update the user meta data
+    //            let user = UserService.shared.user
+    //            user.name = name
+    //
+    //            // Change the view to logged in view
+    //            model.checkLogin()
+    //        }
+    //    }
+    
+}
+
+    struct Name_Previews: PreviewProvider {
+        static var previews: some View {
+            NameOnboardingView()
+        }
+    }

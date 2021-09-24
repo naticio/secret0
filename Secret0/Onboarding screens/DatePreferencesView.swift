@@ -30,12 +30,13 @@ struct DatePreferencesView: View {
             VStack {
                 
                 //let index = model.onboardingIndex
+                Spacer()
                 
                 Image(systemName: Constants.screens[index].image)
                     .resizable()
                     .scaledToFit()
                     .frame(width: 50, height: 50, alignment: .center)
-                Spacer()
+                
                 
                 VStack(alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/) {
                     Text(Constants.screens[index].title)
@@ -84,7 +85,7 @@ struct DatePreferencesView: View {
                         self.menPressed = false
                         
                     } label: {
-                        Text("Everyone")
+                        Text("Any")
                     }
                     .padding()
                     .background(everyOnePressed ? Color.red : Color.white)
@@ -92,8 +93,6 @@ struct DatePreferencesView: View {
                     .cornerRadius(10.0)
                 }
                 
-                
-                Spacer()
                 
                 NavigationLink(destination: HeightOnboardingView(index: index + 1)
                                 .environmentObject(ContentModel()), isActive: $goWhenTrue) {
@@ -114,14 +113,14 @@ struct DatePreferencesView: View {
                         
                     } label: {
                         Text("Next")
+                            .accentColor(.red)
+                            .font(.title)
                     }
                     .disabled(menPressed == false && womenPressed == false && everyOnePressed == false)
                     .padding()
                     .background(Capsule().strokeBorder(Color.white, lineWidth: 1.5))
                     .frame(width: 100)
                 }
-                
-                
                 
                 
                 Spacer()
@@ -133,7 +132,7 @@ struct DatePreferencesView: View {
     
     //save data to firebase
     func saveDataHere() {
-    
+        
         //make sure user is not nil
         if let loggedInUser = Auth.auth().currentUser {
             let user = UserService.shared.user //user =  the current user using the app right now
@@ -146,8 +145,9 @@ struct DatePreferencesView: View {
     }
 }
 
-//struct DatePreferencesView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        DatePreferencesView()
-//    }
-//}
+struct DatePreferencesView_Previews: PreviewProvider {
+    static var previews: some View {
+        DatePreferencesView(index: 7)
+            .environmentObject(ContentModel())
+    }
+}

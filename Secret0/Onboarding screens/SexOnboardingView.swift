@@ -25,12 +25,13 @@ struct SexOnboardingView: View {
             VStack {
                 
                 //let index = model.onboardingIndex
+                Spacer()
                 
                 Image(systemName: Constants.screens[index].image)
                     .resizable()
                     .scaledToFit()
                     .frame(width: 50, height: 50, alignment: .center)
-                Spacer()
+
                 
                 VStack(alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/) {
                     Text(Constants.screens[index].title)
@@ -41,7 +42,6 @@ struct SexOnboardingView: View {
                     Text(Constants.screens[index].disclaimer)
                         .font(.caption)
                 }
-                .padding()
                 
                 
                 Picker("", selection: $selectedPref) {
@@ -50,8 +50,8 @@ struct SexOnboardingView: View {
                     }
                 }
                 .pickerStyle(WheelPickerStyle())
+                .labelsHidden()
                 
-                Spacer()
                 
                 NavigationLink(destination: DatePreferencesView(index: index + 1)
                                 .environmentObject(ContentModel())
@@ -68,6 +68,8 @@ struct SexOnboardingView: View {
                     } label: {
                         
                         Text("Next")
+                            .accentColor(.red)
+                            .font(.title)
                     }
                     //.disabled(index == nil)
                     .padding()
@@ -102,8 +104,9 @@ struct SexOnboardingView: View {
 
 
 
-//struct SexOnboardingView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        SexOnboardingView()
-//    }
-//}
+struct SexOnboardingView_Previews: PreviewProvider {
+    static var previews: some View {
+        SexOnboardingView(index: 6)
+            .environmentObject(ContentModel())
+    }
+}

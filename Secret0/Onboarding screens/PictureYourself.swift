@@ -393,6 +393,7 @@ struct PictureYourself_Previews: PreviewProvider {
     
     static var previews: some View {
         //so we can display the preview
-        PictureYourself(uploadPic: $picUpload, picNumber: $numberPic).environmentObject(ImageController())
+        PictureYourself(uploadPic: $picUpload, picNumber: $numberPic)
+            .environmentObject(ImageController())
     }
 }

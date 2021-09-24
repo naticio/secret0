@@ -27,11 +27,11 @@ struct MatchView: View {
         
         if model.usersLoaded == nil {
             ProgressView()
-                .navigationBarHidden(true)
+               .navigationBarHidden(true)
         } else {
             
             if model.matches.count == 0 {
-                Text("No available matches. matches.count == 0")
+                Text("No available matches")
             } else {
                 //view with matches
                 VStack {
@@ -62,17 +62,21 @@ struct MatchView: View {
                                     
                                     //IOS15 AsyncImage(url: URL(string: "https://your_image_url_address"))
                                     if model.matches[index].imageUrl1 == "" {
-                                        Image(systemName: "person")
+                                        Image("unknownUser")
+
                                             .resizable()
                                             .frame(height: 410, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
                                             //.aspectRatio(contentMode: .fit)
+                                            .cornerRadius(10)
                                             .padding(10)
                                            
                                     } else {
                                         
                                         RemoteImage(url: model.matches[index].imageUrl1!)
                                             //.aspectRatio(contentMode: .fit)
+
                                             .frame(height: 410, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+                                            .cornerRadius(10)
                                             .padding(10)
 
                                     }
@@ -85,7 +89,7 @@ struct MatchView: View {
                                 Group {
                                     //CustomImageView(urlString: model.matches[index].imageUrl2 ?? "")
                                     if model.matches[index].imageUrl2 == "" {
-                                        Image(systemName: "person")
+                                        Image("unknownUser")
                                             .resizable()
                                             .frame(height: 410, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
                                             .padding(10)
@@ -128,7 +132,7 @@ struct MatchView: View {
                                 Group {
                                     //CustomImageView(urlString: model.matches[index].imageUrl3 ?? "")
                                     if model.matches[index].imageUrl3 == "" {
-                                        Image(systemName: "person")
+                                        Image("unknownUser")
                                             .resizable()
                                             .frame(height: 410, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
                                             .padding(10)
@@ -145,7 +149,7 @@ struct MatchView: View {
                                 Group {
                                     //                                CustomImageView(urlString: model.matches[index].imageUrl4 ?? "")
                                     if model.matches[index].imageUrl4 == "" {
-                                        Image(systemName: "person")
+                                        Image("unknownUser")
                                             .resizable()
                                             .frame(height: 410, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
                                             .padding(10)
@@ -267,5 +271,6 @@ extension View{
 struct MatchView_Previews: PreviewProvider {
     static var previews: some View {
         MatchView(index: 0)
+            .environmentObject(ContentModel())
     }
 }

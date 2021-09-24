@@ -49,12 +49,13 @@ struct HeightOnboardingView: View {
             VStack {
                 
                 //let index = model.onboardingIndex
+                Spacer()
                 
                 Image(systemName: Constants.screens[index].image)
                     .resizable()
                     .scaledToFit()
                     .frame(width: 50, height: 50, alignment: .center)
-                Spacer()
+
                 
                 VStack(alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/) {
                     Text(Constants.screens[index].title)
@@ -65,7 +66,6 @@ struct HeightOnboardingView: View {
                     Text(Constants.screens[index].disclaimer)
                         .font(.caption)
                 }
-                .padding()
                 
                 
                 Picker("", selection: $selectedeHeight) {
@@ -74,8 +74,7 @@ struct HeightOnboardingView: View {
                     }
                 }
                 .pickerStyle(WheelPickerStyle())
-                
-                Spacer()
+                .labelsHidden()
                 
                 NavigationLink(destination: BreakIceOnboardingView(index: index + 1).environmentObject(ContentModel()), isActive: $goWhenTrue) {
                     //BUTTON NEXT
@@ -112,16 +111,14 @@ struct HeightOnboardingView: View {
                     } label: {
                         
                         Text("Next")
+                            .accentColor(.red)
+                            .font(.title)
                         
                     }
                     .padding()
                     .background(Capsule().strokeBorder(Color.white, lineWidth: 1.5))
                     .frame(width: 100)
                 }
-                
-                
-                
-                
                 
                 Spacer()
             }
@@ -145,8 +142,9 @@ struct HeightOnboardingView: View {
     }
 }
 
-//struct HeightPreferencesView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        HeightPreferencesView()
-//    }
-//}
+struct HeightOnboardingView_Previews: PreviewProvider {
+    static var previews: some View {
+        HeightOnboardingView(index: 8)
+            .environmentObject(ContentModel())
+    }
+}
