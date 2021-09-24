@@ -17,8 +17,9 @@ struct LaunchLogicView: View {
     
     var body: some View {
         
+        
         if model.loggedIn == false {
-            LoginSignupView()
+            LoginSignUpView()
                 .onAppear() {
                     model.checkLogin()
                 }

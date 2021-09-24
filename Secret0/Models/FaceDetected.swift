@@ -7,23 +7,10 @@
 
 import Foundation
 
-struct FaceDetected: Decodable {
-    
-    var faces = [Cord]()
-    var count : Int?
-    //var error : String?
-}
+
 
 struct Cord: Codable {
-    //var center = Coordinate()
-//    var bottom : Int?
-//    var face_id: Int?
-//    var height : Int?
-//    var left : Int?
-//    var right : Int?
-//    var top : Int?
-//    var width : Int?
-    
+
     var faces: [Face]
     var status: Int
 }

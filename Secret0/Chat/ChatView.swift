@@ -38,7 +38,7 @@ struct ChatView: View {
                     
                     //to make it prettier
                     RoundedRectangle(cornerRadius: 20)
-                        .stroke(Color("LightGrayColor"), lineWidth: 2)
+                        .stroke(Color.gray, lineWidth: 2)
                         .padding()
                     
                     //input binding to state var so everytime it changes binds

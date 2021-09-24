@@ -146,6 +146,7 @@ struct PictureYourself: View {
                     
                 }
             }
+            .navigationBarHidden(true)
             //.navigationBarTitle("Images", displayMode: .inline)
             //button for user to tap to the gallery
             //            .toolbar(content: {
@@ -249,7 +250,7 @@ struct PictureYourself: View {
                             print(cord.faces)
                             
                             let cordData = try! JSONEncoder().encode(cord.faces)
-                            let coordinates = try JSONSerialization.jsonObject(with: cordData, options: [])
+                            let coordinates = try JSONSerialization.jsonObject(with: cordData, options:[])
                             print(coordinates)
                             
                             //mogrify call
@@ -282,7 +283,7 @@ struct PictureYourself: View {
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         request.addValue("Bearer \(Constants.pixlabAPIkey)", forHTTPHeaderField: "Authorization")
         request.httpMethod = "POST"
-        request.httpBody = try! JSONSerialization.data(withJSONObject: param, options: [])
+        request.httpBody = try! JSONSerialization.data(withJSONObject: param, options:[])
         
         URLSession.shared.dataTask(with: request) { (data, response, error) in
             if error != nil {
@@ -290,7 +291,7 @@ struct PictureYourself: View {
                 return
             }
             do {
-                let json = try JSONSerialization.jsonObject(with: data!)
+                let json = try JSONSerialization.jsonObject(with: data!, options:[])
                 print("MOGRIFY response")
                 print(json)
                 

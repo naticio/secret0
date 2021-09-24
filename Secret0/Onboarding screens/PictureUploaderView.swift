@@ -16,6 +16,8 @@ struct PictureUploaderView: View {
     @EnvironmentObject var imageController: ImageController
     @EnvironmentObject var model: ContentModel
     
+    @AppStorage("isOnboarding") var isOnboarding: Bool?
+    
     @State var uploadPic: Bool = false
     @State var picNumber: Int = 0
     //@State var selectedImages: [UIImage] = []
@@ -23,8 +25,10 @@ struct PictureUploaderView: View {
     
     var body: some View {
         NavigationView{
-            Spacer()
+
             VStack {
+                Spacer()
+                //row 1
                 HStack {
                     //image1
                     Button(action: {
@@ -129,7 +133,6 @@ struct PictureUploaderView: View {
                 
                 //3rd row
                 HStack {
-                   
                     
                     //image5
                     Button(action: {
@@ -179,17 +182,6 @@ struct PictureUploaderView: View {
                     .disabled(imageController.image5 == nil)
                     
                 }
-
-                
-                /*
-                //Pixlab testing button
-                Button(action: {
-                    //uploadImage(image: imageController.image1!)
-                    requestNativeImageUpload(image: imageController.image1!)
-                }, label: {
-                    Text("Pixlab call")
-                }) */
-
                 
                 //UPLOAD IMAGE TO FIREBASE
                 NavigationLink(
@@ -227,6 +219,7 @@ struct PictureUploaderView: View {
 //
                             //model.checkLogin()
                             goWhenTrue = true
+                            isOnboarding = false
                             
                         }, label: {
                             Text("Next")
@@ -237,6 +230,7 @@ struct PictureUploaderView: View {
                     .padding()
             } //vstack closure
             .navigationBarHidden(true)
+            .navigationTitle("Upload some photos")
             
             Spacer()
         }
@@ -244,7 +238,8 @@ struct PictureUploaderView: View {
         .sheet(isPresented: $uploadPic, content: {
             PictureYourself(uploadPic: $uploadPic, picNumber: $picNumber)
         })
-        .navigationTitle("Upload some photos")
+        .navigationBarHidden(true)
+        
         
         
     }
@@ -368,7 +363,7 @@ func requestNativeImageUpload(image: UIImage) {
 
         if let data = data {
             do {
-                let json = try JSONSerialization.jsonObject(with: data, options: [])
+                let json = try JSONSerialization.jsonObject(with: data, options:[])
                 print(json)
             } catch {
                 print(error)

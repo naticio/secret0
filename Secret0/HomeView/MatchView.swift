@@ -41,8 +41,8 @@ struct MatchView: View {
                             .frame(alignment: .leading)
                             .font(.title)
                         
-                        Text("gender: \(model.matches[index].gender)")
-                        Text("wants: \(model.matches[index].datingPreferences)")
+                        Text(model.matches[index].gender)
+                        Text("wants \(model.matches[index].datingPreferences)")
                         
                         Button(action: {
                             //action to block or report user
@@ -62,7 +62,7 @@ struct MatchView: View {
                                     
                                     //IOS15 AsyncImage(url: URL(string: "https://your_image_url_address"))
                                     if model.matches[index].imageUrl1 == "" {
-                                        Image("unknownUser")
+                                        Image("noPic")
 
                                             .resizable()
                                             .frame(height: 410, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
@@ -89,7 +89,7 @@ struct MatchView: View {
                                 Group {
                                     //CustomImageView(urlString: model.matches[index].imageUrl2 ?? "")
                                     if model.matches[index].imageUrl2 == "" {
-                                        Image("unknownUser")
+                                        Image("noPic")
                                             .resizable()
                                             .frame(height: 410, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
                                             .padding(10)
@@ -101,6 +101,7 @@ struct MatchView: View {
                                             .frame(height: 410, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
                                             .padding(10)
                                     }
+                                    Text("What would you do if you won 100 million dollars?")
                                     Text(model.matches[index].QlotteryWin ?? "")
                                 }.padding()
                                 
@@ -124,6 +125,7 @@ struct MatchView: View {
                                             }.padding(.trailing)
                                         }
                                         
+                                        Text("What would you do with your time if money was not an issue")
                                         Text(model.matches[index].QmoneynotanIssue)
                                         
                                     }
@@ -132,50 +134,39 @@ struct MatchView: View {
                                 Group {
                                     //CustomImageView(urlString: model.matches[index].imageUrl3 ?? "")
                                     if model.matches[index].imageUrl3 == "" {
-                                        Image("unknownUser")
-                                            .resizable()
-                                            .frame(height: 410, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
-                                            .padding(10)
-                                            .cornerRadius(10)
+//                                        Image("noPic")
+//                                            .resizable()
+//                                            .frame(height: 410, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+//                                            .padding(10)
+//                                            .cornerRadius(10)
                                     } else {
                                         
                                         RemoteImage(url: model.matches[index].imageUrl3!)
                                             .frame(height: 410, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
                                             .padding(10)
                                     }
+                                    Text("What are three things in your bucket list?")
                                     Text(model.matches[index].bucketList)
                                 }.padding()
                                 
                                 Group {
-                                    //                                CustomImageView(urlString: model.matches[index].imageUrl4 ?? "")
+
                                     if model.matches[index].imageUrl4 == "" {
-                                        Image("unknownUser")
-                                            .resizable()
-                                            .frame(height: 410, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
-                                            .padding(10)
-                                            .cornerRadius(10)
+//                                        Image("noPic")
+//                                            .resizable()
+//                                            .frame(height: 410, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+//                                            .padding(10)
+//                                            .cornerRadius(10)
                                     } else {
                                         
                                         RemoteImage(url: model.matches[index].imageUrl4!)
                                             .frame(height: 410, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
                                             .padding(10)
                                     }
+                                    Text("Do you know any jokes")
                                     Text(model.matches[index].jokes)
                                 }.padding()
                                 
-                                
-                                //DISLIKE OR NEXT
-                                //                        NavigationLink(destination: MatchView(index: index + 1), isActive: $goWhenTrue) {
-                                //
-                                //                            Button {
-                                //                                goWhenTrue = true
-                                //                            } label: {
-                                //                                Text("Next")
-                                //                            }
-                                //                            .padding()
-                                //                            .background(Capsule().strokeBorder(Color.white, lineWidth: 1.5))
-                                //                            .frame(width: 100)
-                                //                        }
                             }
                             .id("SCROLL_TO_TOP")
                             
@@ -213,9 +204,9 @@ struct MatchView: View {
                             }, label: {
                                 Image(systemName: "xmark.circle.fill")
                                     .font(.system(size:50, weight: .semibold))
-                                    .foregroundColor(.white)
+                                    .foregroundColor(.black)
                                     .padding()
-                                    .background(Color("red"))
+                                    .background(Color.white)
                                     .clipShape(Circle())
                             })
                             .padding(.trailing)
@@ -250,9 +241,9 @@ struct FullScreenModalView: View {
     var body: some View {
         Image(systemName: "xmark.circle.fill")
             .font(.system(size:50, weight: .semibold))
-            .foregroundColor(.white)
+            .foregroundColor(.black)
             .padding()
-            .background(Color("red"))
+            .background(Color.white)
             .clipShape(Circle())
         
         

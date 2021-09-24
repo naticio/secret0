@@ -42,6 +42,7 @@ struct HomeView: View {
                     }
                 }
         }
+        .navigationBarHidden(true)
 //        .onAppear {
 //            model.getMatches()
 //        }

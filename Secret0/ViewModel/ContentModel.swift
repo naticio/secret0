@@ -51,7 +51,7 @@ class ContentModel: ObservableObject{
     //MARK: - authentication methods
     func checkLogin() {
         //to check if user is logged in or not every time the app opens
-        loggedIn = Auth.auth().currentUser != nil ? true : false
+        loggedIn = Auth.auth().currentUser == nil ? false : true
         //if current user is nil then loggedin = false
         
         //CHECK IF USERR metadata has been FETCHED. if the user was already logged in from a previous session, we need to get their data in a separate call
