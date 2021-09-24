@@ -18,7 +18,7 @@ struct ChatView: View {
                 ScrollViewReader { scrollView in
                     ScrollView { //to scroll nicely
                         ForEach(sampleConversation, id: \.messageID) { message in
-                            ChatRow(message: message) //send an instance of chatMessage model
+                            MessageRow(message: message) //send an instance of chatMessage model
                                 //assign an id to each chat message for scroll view reader
                                 //first index finds the actual index position of the message
                                 .id(sampleConversation.firstIndex(of: message))

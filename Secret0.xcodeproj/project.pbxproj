@@ -7,9 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3A39C2162A180FC19B0A02A8 /* Pods_Secret0.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A14857A00B1AF57B0886564 /* Pods_Secret0.framework */; };
+		03B2BD83ADF8147D65FBC8F7 /* Pods_Secret0.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DEDB806FE226973DDD6E1D06 /* Pods_Secret0.framework */; };
 		B25D75B126F3AD70008A42D5 /* multipartAPIcall.swift in Sources */ = {isa = PBXBuildFile; fileRef = B25D75B026F3AD70008A42D5 /* multipartAPIcall.swift */; };
 		B2827C4626DAE1D200A86AF4 /* NameOnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2827C4526DAE1D200A86AF4 /* NameOnboardingView.swift */; };
+		B2963E7326FD859600733D2B /* ChatRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2963E7226FD859600733D2B /* ChatRow.swift */; };
+		B2963E7526FD879700733D2B /* ListofChatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2963E7426FD879700733D2B /* ListofChatsView.swift */; };
 		B2C7ACEE26DB05C400D8F4B4 /* EmailOnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C7ACED26DB05C400D8F4B4 /* EmailOnboardingView.swift */; };
 		B2C7ACF326DB08AA00D8F4B4 /* BirthOnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C7ACF226DB08A900D8F4B4 /* BirthOnboardingView.swift */; };
 		B2C7ACF526DC2A9A00D8F4B4 /* NotifOnboarding.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C7ACF426DC2A9A00D8F4B4 /* NotifOnboarding.swift */; };
@@ -56,15 +58,16 @@
 		B2F95D3A26F901C10049A690 /* FaceDetected.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2F95D3926F901C10049A690 /* FaceDetected.swift */; };
 		B2F95D3D26FD1A060049A690 /* listChatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2F95D3C26FD1A060049A690 /* listChatsView.swift */; };
 		B2F95D3F26FD1AB40049A690 /* ChatMessages.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2F95D3E26FD1AB40049A690 /* ChatMessages.swift */; };
-		B2F95D4226FD1BC70049A690 /* ChatRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2F95D4126FD1BC70049A690 /* ChatRow.swift */; };
+		B2F95D4226FD1BC70049A690 /* MessageRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2F95D4126FD1BC70049A690 /* MessageRow.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		6EB7D463FD91ACDC9B3A9074 /* Pods-Secret0.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Secret0.release.xcconfig"; path = "Target Support Files/Pods-Secret0/Pods-Secret0.release.xcconfig"; sourceTree = "<group>"; };
-		7A14857A00B1AF57B0886564 /* Pods_Secret0.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Secret0.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		7CF2A57273FCC5287FBD5105 /* Pods-Secret0.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Secret0.debug.xcconfig"; path = "Target Support Files/Pods-Secret0/Pods-Secret0.debug.xcconfig"; sourceTree = "<group>"; };
+		612407EBEBD5719A78FAE3F4 /* Pods-Secret0.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Secret0.release.xcconfig"; path = "Target Support Files/Pods-Secret0/Pods-Secret0.release.xcconfig"; sourceTree = "<group>"; };
+		A629C9BFAD6DF6E8289BAB1F /* Pods-Secret0.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Secret0.debug.xcconfig"; path = "Target Support Files/Pods-Secret0/Pods-Secret0.debug.xcconfig"; sourceTree = "<group>"; };
 		B25D75B026F3AD70008A42D5 /* multipartAPIcall.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = multipartAPIcall.swift; sourceTree = "<group>"; };
 		B2827C4526DAE1D200A86AF4 /* NameOnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NameOnboardingView.swift; sourceTree = "<group>"; };
+		B2963E7226FD859600733D2B /* ChatRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRow.swift; sourceTree = "<group>"; };
+		B2963E7426FD879700733D2B /* ListofChatsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListofChatsView.swift; sourceTree = "<group>"; };
 		B2C7ACED26DB05C400D8F4B4 /* EmailOnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailOnboardingView.swift; sourceTree = "<group>"; };
 		B2C7ACF226DB08A900D8F4B4 /* BirthOnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BirthOnboardingView.swift; sourceTree = "<group>"; };
 		B2C7ACF426DC2A9A00D8F4B4 /* NotifOnboarding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotifOnboarding.swift; sourceTree = "<group>"; };
@@ -113,7 +116,8 @@
 		B2F95D3926F901C10049A690 /* FaceDetected.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FaceDetected.swift; sourceTree = "<group>"; };
 		B2F95D3C26FD1A060049A690 /* listChatsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = listChatsView.swift; sourceTree = "<group>"; };
 		B2F95D3E26FD1AB40049A690 /* ChatMessages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ChatMessages.swift; path = Secret0/Models/ChatMessages.swift; sourceTree = SOURCE_ROOT; };
-		B2F95D4126FD1BC70049A690 /* ChatRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRow.swift; sourceTree = "<group>"; };
+		B2F95D4126FD1BC70049A690 /* MessageRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageRow.swift; sourceTree = "<group>"; };
+		DEDB806FE226973DDD6E1D06 /* Pods_Secret0.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Secret0.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -121,17 +125,17 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3A39C2162A180FC19B0A02A8 /* Pods_Secret0.framework in Frameworks */,
+				03B2BD83ADF8147D65FBC8F7 /* Pods_Secret0.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		696BF379D87E040411C43D41 /* Frameworks */ = {
+		35F3586647C5DD6B4C4916A2 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				7A14857A00B1AF57B0886564 /* Pods_Secret0.framework */,
+				DEDB806FE226973DDD6E1D06 /* Pods_Secret0.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -186,7 +190,7 @@
 				B2D2007D26D5E97600EDF6BD /* Secret0 */,
 				B2D2007C26D5E97600EDF6BD /* Products */,
 				C5B4963D4C623E5763A76102 /* Pods */,
-				696BF379D87E040411C43D41 /* Frameworks */,
+				35F3586647C5DD6B4C4916A2 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -285,8 +289,10 @@
 		B2F95D4026FD1B8C0049A690 /* Chat */ = {
 			isa = PBXGroup;
 			children = (
+				B2963E7426FD879700733D2B /* ListofChatsView.swift */,
+				B2963E7226FD859600733D2B /* ChatRow.swift */,
 				B2C9AD1B26E913F800657BBD /* ChatView.swift */,
-				B2F95D4126FD1BC70049A690 /* ChatRow.swift */,
+				B2F95D4126FD1BC70049A690 /* MessageRow.swift */,
 			);
 			path = Chat;
 			sourceTree = "<group>";
@@ -294,8 +300,8 @@
 		C5B4963D4C623E5763A76102 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				7CF2A57273FCC5287FBD5105 /* Pods-Secret0.debug.xcconfig */,
-				6EB7D463FD91ACDC9B3A9074 /* Pods-Secret0.release.xcconfig */,
+				A629C9BFAD6DF6E8289BAB1F /* Pods-Secret0.debug.xcconfig */,
+				612407EBEBD5719A78FAE3F4 /* Pods-Secret0.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -307,11 +313,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = B2D2008F26D5E97700EDF6BD /* Build configuration list for PBXNativeTarget "Secret0" */;
 			buildPhases = (
-				D268695C5F6945AA215DF40A /* [CP] Check Pods Manifest.lock */,
+				A25DE02489C09DA8899B8A28 /* [CP] Check Pods Manifest.lock */,
 				B2D2007726D5E97600EDF6BD /* Sources */,
 				B2D2007826D5E97600EDF6BD /* Frameworks */,
 				B2D2007926D5E97600EDF6BD /* Resources */,
-				39E4E0C2A3E997A61BA6B18F /* [CP] Embed Pods Frameworks */,
+				94F113D6D3E68E1CE6C76C06 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -371,7 +377,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		39E4E0C2A3E997A61BA6B18F /* [CP] Embed Pods Frameworks */ = {
+		94F113D6D3E68E1CE6C76C06 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -388,7 +394,7 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Secret0/Pods-Secret0-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		D268695C5F6945AA215DF40A /* [CP] Check Pods Manifest.lock */ = {
+		A25DE02489C09DA8899B8A28 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -417,8 +423,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B2963E7326FD859600733D2B /* ChatRow.swift in Sources */,
 				B2D9C9A026E147B400965841 /* HomeView.swift in Sources */,
-				B2F95D4226FD1BC70049A690 /* ChatRow.swift in Sources */,
+				B2F95D4226FD1BC70049A690 /* MessageRow.swift in Sources */,
 				B2C7ACF326DB08AA00D8F4B4 /* BirthOnboardingView.swift in Sources */,
 				B2C7AD0826DEE4B400D8F4B4 /* HeightOnboardingView.swift in Sources */,
 				B2C9AD1C26E913F800657BBD /* ChatView.swift in Sources */,
@@ -428,6 +435,7 @@
 				B2D2009526D5EE2D00EDF6BD /* Constants.swift in Sources */,
 				B2E7C59326E3B97900CB73BB /* PictureYourself.swift in Sources */,
 				B25D75B126F3AD70008A42D5 /* multipartAPIcall.swift in Sources */,
+				B2963E7526FD879700733D2B /* ListofChatsView.swift in Sources */,
 				B2D200B326D6B23700EDF6BD /* LaunchLogicView.swift in Sources */,
 				B2E7C5B826E5B60000CB73BB /* Helper.swift in Sources */,
 				B2D2008826D5E97700EDF6BD /* Persistence.swift in Sources */,
@@ -584,13 +592,13 @@
 		};
 		B2D2009026D5E97700EDF6BD /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7CF2A57273FCC5287FBD5105 /* Pods-Secret0.debug.xcconfig */;
+			baseConfigurationReference = A629C9BFAD6DF6E8289BAB1F /* Pods-Secret0.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"Secret0/Preview Content\"";
-				DEVELOPMENT_TEAM = 3RF2T64DCN;
+				DEVELOPMENT_TEAM = 5Y524JAS88;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = Secret0/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
@@ -607,13 +615,13 @@
 		};
 		B2D2009126D5E97700EDF6BD /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6EB7D463FD91ACDC9B3A9074 /* Pods-Secret0.release.xcconfig */;
+			baseConfigurationReference = 612407EBEBD5719A78FAE3F4 /* Pods-Secret0.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"Secret0/Preview Content\"";
-				DEVELOPMENT_TEAM = 3RF2T64DCN;
+				DEVELOPMENT_TEAM = 5Y524JAS88;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = Secret0/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;

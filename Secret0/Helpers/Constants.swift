@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Firebase
 
 struct Constants {
     
@@ -35,5 +36,10 @@ struct Constants {
     
     static var pixlabAPIkey = "538f491a89c9026c28be8583aaf7219c"
     //static var apiUrl = "https://api.yelp.com/v3/businesses/search"
+    
+
+//
+//    let databaseRoot = Database.database().reference()
+//    let databaseChats = databaseRoot.child("chats")
 
 }

@@ -19,8 +19,11 @@ import Firebase
 @main
 struct Secret0App: App {
     @AppStorage("isOnboarding") var isOnboarding = true
-   
+//    @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     
+   // @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
+   
+    //PREVIOUS FIREBASE INITIALIZATOION
     init() {
         FirebaseApp.configure()
     }
