@@ -10,7 +10,7 @@ import SwiftUI
 //import Firebase
 
 struct NameOnboardingView: View {
-    
+
     
     @EnvironmentObject var model: ContentModel
     
@@ -142,8 +142,8 @@ struct NameOnboardingView: View {
     
 }
 
-    struct Name_Previews: PreviewProvider {
-        static var previews: some View {
-            NameOnboardingView()
-        }
-    }
+//    struct Name_Previews: PreviewProvider {
+//        static var previews: some View {
+//            NameOnboardingView()
+//        }
+//    }

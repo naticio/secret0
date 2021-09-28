@@ -10,8 +10,10 @@ import FirebaseFirestore
 import FirebaseAuth
 import FirebaseStorage
 import Firebase
+import SwiftUI
 
 class ContentModel: ObservableObject{
+    
     
     @Published var matches = [Matches]()
     @Published var usersLoaded : Bool?

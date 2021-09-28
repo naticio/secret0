@@ -11,18 +11,18 @@ struct LaunchLogicView: View {
     
     @AppStorage("isOnboarding") var isOnboarding: Bool?
     //@AppStorage("onboardingScreen") var onboardingScreen: String?
-    
+    @StateObject var viewRouter = ViewRouter()
     @EnvironmentObject var model: ContentModel //because we depend on content model to know if user is loggedin (loggedin property)
-    let persistenceController = PersistenceController.shared
+    //let persistenceController = PersistenceController.shared
     
     var body: some View {
         
         
         if model.loggedIn == false {
-            LoginSignUpView()
-                .onAppear() {
-                    model.checkLogin()
-                }
+                Index()
+                    .onAppear() {
+                        model.checkLogin()
+                    }
         }
         else {
             if isOnboarding == true {

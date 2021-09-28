@@ -6,10 +6,9 @@ target 'Secret0' do
   use_frameworks!
 
   # Pods for Secret0
-  pod 'Firebase/Analytics'
+  #pod 'Firebase/Analytics'
   pod 'Firebase/Firestore'
   pod 'Firebase/Auth' 
   pod 'Firebase/Storage'
-  pod 'Firebase/Database'
 
 end

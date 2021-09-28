@@ -13,7 +13,7 @@ struct HomeView: View {
     @EnvironmentObject var model: ContentModel
     
     var body: some View {
-
+        
         TabView {
             MatchView(index: 0)
                 .onAppear() {
@@ -43,9 +43,9 @@ struct HomeView: View {
                 }
         }
         .navigationBarHidden(true)
-//        .onAppear {
-//            model.getMatches()
-//        }
+        //        .onAppear {
+        //            model.getMatches()
+        //        }
         .onReceive(NotificationCenter.default.publisher(for: UIApplication.willResignActiveNotification)) { _ in
             
             // Save progress to the database when the app is moving from active to background

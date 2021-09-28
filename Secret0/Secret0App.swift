@@ -7,24 +7,31 @@
 
 import SwiftUI
 import Firebase
+import FirebaseAuth
 
-//DO I NEED TO DO THIS IOR THE INIT BELOW IS SUFFICIENT?
-//class AppDelegate: NSObject, UIApplicationDelegate {
-//    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
-//        FirebaseApp.configure()
-//        return true
-//    }
-//}
+
+//@UIApplicationMain
+//class AppDelegate: UIResponder, UIApplicationDelegate {
+//
+//  var window: UIWindow?
+//
+//  func application(_ application: UIApplication,
+//    didFinishLaunchingWithOptions launchOptions:
+//                   [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+//    FirebaseApp.configure()
+//
+//    return true
+
 
 @main
 struct Secret0App: App {
-    @AppStorage("isOnboarding") var isOnboarding = true
 //    @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     
-   // @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
+    @AppStorage("isOnboarding") var isOnboarding = true
+
    
     //PREVIOUS FIREBASE INITIALIZATOION
-    init() {
+    init(){
         FirebaseApp.configure()
     }
     
