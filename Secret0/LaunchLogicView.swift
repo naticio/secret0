@@ -42,7 +42,7 @@ struct LaunchLogicView: View {
                             }
                         }
                     
-                    ChatView()
+                    ChatViewOld()
                         .tabItem {
                             VStack {
                                 Image(systemName: "bubble.left.and.bubble.right.fill")

@@ -11,6 +11,7 @@ import SwiftUI
 struct HomeView: View {
     
     @EnvironmentObject var model: ContentModel
+    @StateObject var viewModel = ChatsViewModel()
     
     var body: some View {
         
@@ -18,6 +19,8 @@ struct HomeView: View {
             MatchView(index: 0)
                 .onAppear() {
                     model.getMatches()
+                    //get conversations
+                    viewModel.getFilteredConversations(query: "")
                 }
                 .tabItem {
                     VStack {
@@ -26,7 +29,7 @@ struct HomeView: View {
                     }
                 }
             
-            ChatView()
+            ConversationsView()
                 .tabItem {
                     VStack {
                         Image(systemName: "bubble.left.and.bubble.right.fill")

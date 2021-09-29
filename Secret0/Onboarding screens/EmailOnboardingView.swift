@@ -83,6 +83,9 @@ struct EmailOnboardingView: View {
                             let user = UserService.shared.user ///????????
                             user.name = name
                             
+                            //create REALTIME DB chat entry for the user
+                            DatabaseManager.shared.insertUser(with: ChatAppUser(firstName: name, emailAddress: email))
+                            
                             //flip the switch to navigation view to go to BIRTHDATE VIEW
                             isOnboarding = true
                             //onboardingScreen = "Birthdate"
