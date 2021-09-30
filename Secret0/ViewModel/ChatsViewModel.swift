@@ -35,12 +35,12 @@ class ChatsViewModel: ObservableObject {
     }
     
     //return an array of chats
-    func getFilteredConversations(query: String) -> [Conversation] {
+    func getFilteredConversations(query: String) {
         
         //let currentUser = UserService.shared.user
         
         if (user != nil) {
-            db.collection("conversations").whereField("users", arrayContains: user!.uid).addSnapshotListener({(snapshot, error) in
+            db.collection("conversations").whereField("users", arrayContains: user!.uid).addSnapshotListener({ [self](snapshot, error) in
                 guard let documents = snapshot?.documents else {
                     print("no conversations found")
                     return
@@ -63,16 +63,16 @@ class ChatsViewModel: ObservableObject {
                     //not getting messaages until chat is clicked
                     return Conversation(id: docId, parties: conversationParties, person1Img: p1Img, person2Img: p2Img, person1name: p1name, person2name: p2name, messages: msgs, hasUnreadMessage: unreadMsg)
                 })
-                
-                let sortedChats = chats.sorted {
-                    guard let date1 = $0.messages.last?.date else { return false }
-                    guard let date2 = $1.messages.last?.date else { return false }
-                    return date1 > date2
-                }
-                
-                if query == "" {
-                    return sortedChats
-                }
+//
+//                let sortedChats = chats.sorted {
+//                    guard let date1 = $0.messages.last?.date else { return false }
+//                    guard let date2 = $1.messages.last?.date else { return false }
+//                    return date1 > date2
+//                }
+//
+//                if (query == "") {
+//                    return sortedChats
+//                }
             })
         }
        
@@ -80,6 +80,30 @@ class ChatsViewModel: ObservableObject {
         
         //search for chats, hinge doesn't have it
 //        return sortedChats.filter { $0.person.name.lowercased().contains(query.lowercased()) }
+    }
+    
+    func startConversation(sender: String, receiver: String, message: String) {
+        
+        var ref: DocumentReference? = nil
+        if (user != nil) {
+            ref = db.collection("conversations").addDocument(data: ["Users" : ["0": user!.uid, "1": receiver]]) { err in
+                if let err = err {
+                    print("error writing doc")
+                } else {
+                    print("success writing document")
+                }
+            }
+            
+            //write the message
+            db.collection("conversations").document(ref!.documentID).collection("messages").addDocument(data: [
+                "from" : user!.displayName ?? "",
+                "message": message
+            ]){ errormsg in
+                if let error = errormsg {
+                    print("error writing message")
+            }
+        }
+    }
     }
     
     

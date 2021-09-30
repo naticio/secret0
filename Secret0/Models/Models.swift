@@ -10,6 +10,7 @@ import SwiftUI
 import CoreLocation
 
 class User {
+    var id: String = ""
     var name: String = ""
     var birthdate: Date = Date()
     var location: CLLocation?
@@ -37,6 +38,7 @@ class Matches: Decodable, Identifiable, ObservableObject {
     
     @Published var imageData: Data?
     
+    var id: String = ""
     var name: String = ""
     var birthdate: Date = Date()
     var location: Location?

@@ -18,7 +18,7 @@ struct ConversationsView: View {
     var body: some View {
         NavigationView {
             List {
-                ForEach(viewModel.getFilteredConversations(query: query)) { chat in
+                ForEach(viewModel.chats) { chat in
                     if #available(iOS 15.0, *) {
                         ZStack {
                             ConversationRow(chat: chat)

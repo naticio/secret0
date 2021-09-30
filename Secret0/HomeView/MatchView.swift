@@ -10,11 +10,15 @@ import SwiftUI
 struct MatchView: View {
     
     @EnvironmentObject var model: ContentModel
+
     
     //to hide view
     @State var viewShown = false
-    
     @State var transitionShown = false
+    
+    //modal like
+    @State var likeModal = false
+
     
     @State var index : Int
     @State var image1: String = ""
@@ -27,7 +31,7 @@ struct MatchView: View {
         
         if model.usersLoaded == nil {
             ProgressView()
-               .navigationBarHidden(true)
+                .navigationBarHidden(true)
         } else {
             
             if model.matches.count == 0 {
@@ -63,24 +67,39 @@ struct MatchView: View {
                                     //IOS15 AsyncImage(url: URL(string: "https://your_image_url_address"))
                                     if model.matches[index].imageUrl1 == "" {
                                         Image("noPic")
-
+                                        
                                             .resizable()
                                             .frame(height: 410, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
-                                            //.aspectRatio(contentMode: .fit)
+                                        //.aspectRatio(contentMode: .fit)
                                             .cornerRadius(10)
                                             .padding(10)
-                                           
+                                        
                                     } else {
                                         
                                         RemoteImage(url: model.matches[index].imageUrl1!)
-                                            //.aspectRatio(contentMode: .fit)
-
+                                        //.aspectRatio(contentMode: .fit)
+                                        
                                             .frame(height: 410, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
                                             .cornerRadius(10)
                                             .padding(10)
-
+                                            .overlay(
+                                                Button(action: {
+                                                    //open modal to send message
+                                                    likeModal.toggle()
+                                                }, label: {
+                                                    Image(systemName: "heart.fill")
+                                                })
+                                                    .fullScreenCover(isPresented: $likeModal, content: {
+                                                        //FullScreenModalView.init()
+                                                        LikeScreenModalView.init(input: model.matches[index].imageUrl1!, receiver: model.matches[index].id)
+                                                    })
+                                                
+                                                //fixing at bottom left the floating like !!
+                                                , alignment: .bottomTrailing
+                                            )
+                                        
                                     }
-                                
+                                    
                                     Text("What would you do if you only have 1 day left to live?")
                                     Text(model.matches[index].Q1day2live ?? "")
                                 }
@@ -97,7 +116,7 @@ struct MatchView: View {
                                     } else {
                                         
                                         RemoteImage(url: model.matches[index].imageUrl2!)
-                                            //.aspectRatio(contentMode: .fit)
+                                        //.aspectRatio(contentMode: .fit)
                                             .frame(height: 410, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
                                             .padding(10)
                                     }
@@ -134,11 +153,7 @@ struct MatchView: View {
                                 Group {
                                     //CustomImageView(urlString: model.matches[index].imageUrl3 ?? "")
                                     if model.matches[index].imageUrl3 == "" {
-//                                        Image("noPic")
-//                                            .resizable()
-//                                            .frame(height: 410, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
-//                                            .padding(10)
-//                                            .cornerRadius(10)
+                                        //?
                                     } else {
                                         
                                         RemoteImage(url: model.matches[index].imageUrl3!)
@@ -150,13 +165,13 @@ struct MatchView: View {
                                 }.padding()
                                 
                                 Group {
-
+                                    
                                     if model.matches[index].imageUrl4 == "" {
-//                                        Image("noPic")
-//                                            .resizable()
-//                                            .frame(height: 410, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
-//                                            .padding(10)
-//                                            .cornerRadius(10)
+                                        //                                        Image("noPic")
+                                        //                                            .resizable()
+                                        //                                            .frame(height: 410, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+                                        //                                            .padding(10)
+                                        //                                            .cornerRadius(10)
                                     } else {
                                         
                                         RemoteImage(url: model.matches[index].imageUrl4!)
@@ -174,57 +189,87 @@ struct MatchView: View {
                             
                         })//scroll view
                         //to recreate the veiw from scratch
-                        .id(self.scrollViewID)
+                            .id(self.scrollViewID)
                         //this is to show the rejection button
-                        .overlay(
-                            Button(action: {
-                                //move to the next match
-                                self.transitionShown.toggle()
-                                self.viewShown.toggle()
-                            
-                                
-                                //scroll to top
-                                withAnimation(.spring()) {
-                                    ProxyReader.scrollTo("SCROLL_TO_TOP", anchor: .top)
-                                    
-                                    if self.index == model.matches.count-1 {
-                                        //go back to first match
-                                        self.index = 0
-                                    } else {
-                                        self.index += 1
-                                    }
-                                }
-                                
-                                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                            .overlay(
+                                Button(action: {
+                                    //move to the next match
                                     self.transitionShown.toggle()
                                     self.viewShown.toggle()
-                                }
+                                    
+                                    
+                                    //scroll to top
+                                    withAnimation(.spring()) {
+                                        ProxyReader.scrollTo("SCROLL_TO_TOP", anchor: .top)
+                                        
+                                        if self.index == model.matches.count-1 {
+                                            //go back to first match
+                                            self.index = 0
+                                        } else {
+                                            self.index += 1
+                                        }
+                                    }
+                                    
+                                    DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                                        self.transitionShown.toggle()
+                                        self.viewShown.toggle()
+                                    }
+                                    
+                                    
+                                }, label: {
+                                    Image(systemName: "xmark.circle.fill")
+                                        .font(.system(size:50, weight: .semibold))
+                                        .foregroundColor(.black)
+                                        .padding()
+                                        .background(Color.white)
+                                        .clipShape(Circle())
+                                })
+                                    .padding(.trailing)
+                                    .padding(.bottom, getSafeArea().bottom == 0 ? 12 : 0) //this is an if statement
+                                //.opacity(-scrollViewOffset > 450 ? 1 : 0)
+                                    .animation(.easeInOut)
+                                
+                                //to show rejection transition
+                                    .fullScreenCover(isPresented: $transitionShown, content: {
+                                        RejectionModalView.init()
+                                        
+                                    })
                                 
                                 
-                            }, label: {
-                                Image(systemName: "xmark.circle.fill")
-                                    .font(.system(size:50, weight: .semibold))
-                                    .foregroundColor(.black)
-                                    .padding()
-                                    .background(Color.white)
-                                    .clipShape(Circle())
-                            })
-                            .padding(.trailing)
-                            .padding(.bottom, getSafeArea().bottom == 0 ? 12 : 0) //this is an if statement
-                            //.opacity(-scrollViewOffset > 450 ? 1 : 0)
-                            .animation(.easeInOut)
-                            
-                            //to show rejection transition
-                            .fullScreenCover(isPresented: $transitionShown, content: {
-                                FullScreenModalView.init()
+                                //fixing at bottom left the floating rejection !!
+                                , alignment: .bottomLeading
                                 
-                            })
-                            
-                            
-                            //fixing at bottom left the floating rejection !!
-                            , alignment: .bottomLeading
-                            
-                        )
+                            )
+                        //right accept button
+                            .overlay(
+                                Button(action: {
+                                    //show toggle to send a messaage
+                                    
+                                    
+                                }, label: {
+                                    Image(systemName: "xmark.circle.fill")
+                                        .font(.system(size:50, weight: .semibold))
+                                        .foregroundColor(.black)
+                                        .padding()
+                                        .background(Color.white)
+                                        .clipShape(Circle())
+                                })
+                                    .padding(.trailing)
+                                    .padding(.bottom, getSafeArea().bottom == 0 ? 12 : 0) //this is an if statement
+                                //.opacity(-scrollViewOffset > 450 ? 1 : 0)
+                                    .animation(.easeInOut)
+                                
+                                //to show rejection transition
+                                    .fullScreenCover(isPresented: $transitionShown, content: {
+                                        RejectionModalView.init()
+                                        
+                                    })
+                                
+                                //fixing at bottom left the floating like !!
+                                , alignment: .bottomTrailing
+                                
+                            )
+                        
                     }
                 } //vStack main matches view
                 .opacity(viewShown ? 0 : 1)
@@ -232,10 +277,11 @@ struct MatchView: View {
             }
         }
     }
-
+    
 }
 
-struct FullScreenModalView: View {
+//rejection
+struct RejectionModalView: View {
     @Environment(\.presentationMode) var presentationMode
     
     var body: some View {
@@ -245,7 +291,40 @@ struct FullScreenModalView: View {
             .padding()
             .background(Color.white)
             .clipShape(Circle())
-        
+    }
+}
+
+//accept/like/send message
+struct LikeScreenModalView: View {
+    @Environment(\.presentationMode) var presentationMode
+    @EnvironmentObject var chatModel: ChatsViewModel
+    
+    @State var opener: String = ""
+    var input : String
+    var receiver: String
+    
+    var body: some View {
+        VStack {
+            //object reference for opener
+            RemoteImage(url: input)
+            
+            TextField("Say something nice", text: $opener).font(.title)
+                .multilineTextAlignment(.center)
+                .padding()
+            
+            Button {
+                //write in firebase a new conversation
+                let user = UserService.shared.user
+                print(user.id)
+                chatModel.startConversation(sender: user.id, receiver: receiver, message: opener)
+            } label: {
+                Text("Send Message")
+            }
+
+            
+            
+        }
+
         
         
     }

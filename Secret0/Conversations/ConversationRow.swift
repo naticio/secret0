@@ -14,7 +14,7 @@ struct ConversationRow: View {
     
     var body: some View {
         HStack(spacing: 20) {
-            Image(chat.person.imgString)
+            Image(chat.person1Img)
                 .resizable()
                 .frame(width: 70, height: 70)
                 .clipShape(Circle())
@@ -22,7 +22,7 @@ struct ConversationRow: View {
             ZStack {
                 VStack(alignment: .leading, spacing: 5) {
                     HStack {
-                        Text(chat.person.name)
+                        Text(chat.person1name)
                             .bold()
                         Spacer()
                         Text(chat.messages.last?.date.descriptiveString() ?? "")
