@@ -134,7 +134,7 @@ class ContentModel: ObservableObject{
                         if doc["datingPreferences"] != nil {
                             if doc["datingPreferences"] as! String == currentUser.gender || doc["datingPreferences"] as! String == "Everyone" {
                                 var m = Matches()
-                                //q.id = doc["id"] as? String ?? ""
+                                m.id = doc["id"] as? String ?? ""
                                 m.name = doc["name"] as? String ?? ""
                                 m.birthdate = doc["birthdate"] as? Date ?? Date()
                                 m.gender = doc["gender"] as? String ?? ""

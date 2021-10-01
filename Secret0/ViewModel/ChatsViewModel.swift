@@ -90,7 +90,7 @@ class ChatsViewModel: ObservableObject {
                 if let err = err {
                     print("error writing doc")
                 } else {
-                    print("success writing document")
+                    print("success writing conversation/chat")
                 }
             }
             
@@ -101,7 +101,9 @@ class ChatsViewModel: ObservableObject {
             ]){ errormsg in
                 if let error = errormsg {
                     print("error writing message")
-            }
+                } else {
+                    print("success writing message")
+                }
         }
     }
     }

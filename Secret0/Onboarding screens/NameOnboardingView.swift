@@ -6,8 +6,8 @@
 //
 
 import SwiftUI
-//import FirebaseAuth
-//import Firebase
+import FirebaseAuth
+import Firebase
 
 struct NameOnboardingView: View {
 
@@ -63,15 +63,23 @@ struct NameOnboardingView: View {
                     //warning message if the text is not formatted correctly
                     Text(warningMsg)
                         .font(.system(size: 9))
-                    
+                
                     NavigationLink(destination: EmailOnboardingView(index: index + 1), isActive: $goWhenTrue) {
                         //BUTTON NEXT
                         Button {
+
                             if textFormatOK() {
-                                //save user name in model
-                                model.usernameSignUp = username
-                                
-                                goWhenTrue = true
+                                //check if name exists in firebase already
+                                checkUsername(username: username, completion: { userExist in
+                                    if userExist == true {
+                                        warningMsg = "Username already exists"
+                                    } else {
+                                        //save user name in model
+                                        model.usernameSignUp = username
+                                        
+                                        goWhenTrue = true
+                                    }
+                                })
                                 
                             } else {
                                 //show a warning message for the etxt to be longer than 1 chr
@@ -81,9 +89,7 @@ struct NameOnboardingView: View {
                                 if username.count > 15 {
                                     warningMsg = "Username is too long, must be less than 15 chrs"
                                 }
-                                
                             }
-                            
                         } label: {
                             Text("Next")
                         }
@@ -110,6 +116,31 @@ struct NameOnboardingView: View {
             return false
         }
         
+    }
+    
+    
+    func checkUsername(username: String, completion: @escaping (Bool) -> Void) {
+        
+        let db = Firestore.firestore()
+        
+        // Get your Firebase collection
+        let collectionRef = db.collection("users")
+
+        // Get all the documents where the field username is equal to the String you pass, loop over all the documents.
+
+        collectionRef.whereField("name", isEqualTo: username).getDocuments { (snapshot, err) in
+            if let err = err {
+                print("Error getting document: \(err)")
+            } else if (snapshot?.isEmpty)! {
+                completion(false)
+            } else {
+                for document in (snapshot?.documents)! {
+                    if document.data()["username"] != nil {
+                        completion(true)
+                    }
+                }
+            }
+        }
     }
     
     //    func signUpUser(email: String, password: String, name: String) {

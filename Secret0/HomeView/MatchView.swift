@@ -10,6 +10,7 @@ import SwiftUI
 struct MatchView: View {
     
     @EnvironmentObject var model: ContentModel
+    //@EnvironmentObject var chatModel: ChatsViewModel
 
     
     //to hide view
@@ -86,12 +87,15 @@ struct MatchView: View {
                                                 Button(action: {
                                                     //open modal to send message
                                                     likeModal.toggle()
+                                                    
+
                                                 }, label: {
                                                     Image(systemName: "heart.fill")
                                                 })
                                                     .fullScreenCover(isPresented: $likeModal, content: {
-                                                        //FullScreenModalView.init()
-                                                        LikeScreenModalView.init(input: model.matches[index].imageUrl1!, receiver: model.matches[index].id)
+                                                        LikeScreenModalView.init(likeModalShown: $likeModal, indexHere: $index, input: model.matches[index].imageUrl1!, receiver: model.matches[index].id)
+                                                        .environmentObject(ChatsViewModel())
+                                                        .environmentObject(ContentModel())
                                                     })
                                                 
                                                 //fixing at bottom left the floating like !!
@@ -190,6 +194,7 @@ struct MatchView: View {
                         })//scroll view
                         //to recreate the veiw from scratch
                             .id(self.scrollViewID)
+                        
                         //this is to show the rejection button
                             .overlay(
                                 Button(action: {
@@ -240,35 +245,6 @@ struct MatchView: View {
                                 , alignment: .bottomLeading
                                 
                             )
-                        //right accept button
-                            .overlay(
-                                Button(action: {
-                                    //show toggle to send a messaage
-                                    
-                                    
-                                }, label: {
-                                    Image(systemName: "xmark.circle.fill")
-                                        .font(.system(size:50, weight: .semibold))
-                                        .foregroundColor(.black)
-                                        .padding()
-                                        .background(Color.white)
-                                        .clipShape(Circle())
-                                })
-                                    .padding(.trailing)
-                                    .padding(.bottom, getSafeArea().bottom == 0 ? 12 : 0) //this is an if statement
-                                //.opacity(-scrollViewOffset > 450 ? 1 : 0)
-                                    .animation(.easeInOut)
-                                
-                                //to show rejection transition
-                                    .fullScreenCover(isPresented: $transitionShown, content: {
-                                        RejectionModalView.init()
-                                        
-                                    })
-                                
-                                //fixing at bottom left the floating like !!
-                                , alignment: .bottomTrailing
-                                
-                            )
                         
                     }
                 } //vStack main matches view
@@ -298,6 +274,11 @@ struct RejectionModalView: View {
 struct LikeScreenModalView: View {
     @Environment(\.presentationMode) var presentationMode
     @EnvironmentObject var chatModel: ChatsViewModel
+    @EnvironmentObject var model: ContentModel
+    
+    
+    @Binding var likeModalShown : Bool
+    @Binding var indexHere: Int
     
     @State var opener: String = ""
     var input : String
@@ -316,7 +297,20 @@ struct LikeScreenModalView: View {
                 //write in firebase a new conversation
                 let user = UserService.shared.user
                 print(user.id)
+                
+                //move to next match
+                if indexHere == model.matches.count-1 {
+                    //go back to first match
+                    indexHere = 0
+                } else {
+                    indexHere += 1
+                }
+                
+                likeModalShown.toggle() //flip to false
+                
                 chatModel.startConversation(sender: user.id, receiver: receiver, message: opener)
+                
+                
             } label: {
                 Text("Send Message")
             }
