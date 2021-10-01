@@ -23,7 +23,7 @@ struct EmailOnboardingView: View {
     @State var goWhenTrue : Bool = false
     @State var errorMsg: String?
     
-    @State var index: Int
+    @State var index: Int = 0
     
     var body: some View {
         ZStack {
@@ -59,7 +59,7 @@ struct EmailOnboardingView: View {
                     Text(errorMsg!)
                 }
                 
-                NavigationLink(destination: BirthOnboardingView(index: index+1), isActive: $goWhenTrue) {
+                NavigationLink(destination: NameOnboardingView(index: index+1), isActive: $goWhenTrue) {
                     Button {
                         //call firebase create user
                         Auth.auth().createUser(withEmail: email, password: password) { result, error in
@@ -74,18 +74,19 @@ struct EmailOnboardingView: View {
                             //save the first name in firebase
                             let db = Firestore.firestore()
                             let firebaseUser = Auth.auth().currentUser
-                            let ref = db.collection("users").document(firebaseUser!.uid)
-                            let name =  model.usernameSignUp
+                            let ref = db.collection("users").document(email)
+                            //let name =  model.usernameSignUp
                             
-                            ref.setData(["name" : name], merge: true) //merge = true because it updates or adds a user name, does not OVERWRITTE if the username exists
+                            //merge = true because it updates or adds a user name, does not OVERWRITTE if the username exists
+                            //ref.setData(["name" : name], merge: true)
                             
                             //update the user metadata
                             let user = UserService.shared.user ///????????
-                            user.name = name
+                            //user.name = name
                             
                             //create REALTIME DB chat entry for the user
-                            DatabaseManager.shared.insertUser(with: ChatAppUser(firstName: name, emailAddress: email))
-                            
+//                            DatabaseManager.shared.insertUser(with: ChatAppUser(firstName: name, emailAddress: email))
+//
                             //flip the switch to navigation view to go to BIRTHDATE VIEW
                             isOnboarding = true
                             //onboardingScreen = "Birthdate"

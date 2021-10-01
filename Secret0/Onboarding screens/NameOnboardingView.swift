@@ -24,7 +24,9 @@ struct NameOnboardingView: View {
     
     @State var goWhenTrue : Bool = false
     @State var warningMsg: String = ""
-    @State var index: Int = 0
+    
+    @State var index: Int
+
     
     var body: some View {
         
@@ -45,8 +47,6 @@ struct NameOnboardingView: View {
                     
                     VStack(alignment: .center) {
                         
-                        
-                        
                         Text(Constants.screens[index].title)
                             .font(.title)
                             .bold()
@@ -54,6 +54,7 @@ struct NameOnboardingView: View {
                         TextField("Username", text: $username).font(.title)
                             .multilineTextAlignment(.center)
                             .padding()
+                            .textCase(.lowercase)
                         
                         Text(Constants.screens[index].disclaimer)
                             .font(.caption)
@@ -64,18 +65,20 @@ struct NameOnboardingView: View {
                     Text(warningMsg)
                         .font(.system(size: 9))
                 
-                    NavigationLink(destination: EmailOnboardingView(index: index + 1), isActive: $goWhenTrue) {
+                    NavigationLink(destination: BirthOnboardingView(index: index + 1), isActive: $goWhenTrue) {
                         //BUTTON NEXT
                         Button {
 
                             if textFormatOK() {
                                 //check if name exists in firebase already
-                                checkUsername(username: username, completion: { userExist in
+                                checkUsername(username: username.lowercased(), completion: { userExist in
                                     if userExist == true {
                                         warningMsg = "Username already exists"
                                     } else {
+                                        
                                         //save user name in model
                                         model.usernameSignUp = username
+                                        saveDataHere(username: username)
                                         
                                         goWhenTrue = true
                                     }
@@ -142,34 +145,22 @@ struct NameOnboardingView: View {
             }
         }
     }
+
     
-    //    func signUpUser(email: String, password: String, name: String) {
-    //        // Create a new account
-    //        Auth.auth().createUser(withEmail: email, password: password) { result, error in
-    //
-    //            // Check for errors
-    //            guard error == nil else {
-    //                let errorMessage = error!.localizedDescription
-    //                return
-    //            }
-    //            // Clear error message
-    ////                errorMessage = nil
-    //
-    //            // Save the first name
-    //            let firebaseuser = Auth.auth().currentUser
-    //            let db = Firestore.firestore()
-    //            let ref = db.collection("users").document(firebaseuser!.uid)
-    //
-    //            ref.setData(["name": name], merge: true)
-    //
-    //            // Update the user meta data
-    //            let user = UserService.shared.user
-    //            user.name = name
-    //
-    //            // Change the view to logged in view
-    //            model.checkLogin()
-    //        }
-    //    }
+    //save data to firebase
+    func saveDataHere(username: String) {
+        
+        //make sure user is not nil
+        if let loggedInUser = Auth.auth().currentUser {
+            let user = UserService.shared.user //user =  the current user using the app right now
+            user.name = username //save to firebase user the values saved in the content model
+            
+            //save to the db
+            let db = Firestore.firestore()
+            let ref = db.collection("users").document(loggedInUser.uid)
+            ref.setData(["birthdate" : user.birthdate], merge: true)
+        }
+    }
     
 }
 

@@ -50,7 +50,7 @@ struct Index: View {
                     
                      //SIGN UP
                      NavigationLink(
-                     destination: NameOnboardingView()
+                     destination: EmailOnboardingView()
                      .environmentObject(ContentModel())
                      .navigationBarHidden(true),
                      label: {

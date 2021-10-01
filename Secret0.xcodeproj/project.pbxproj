@@ -173,8 +173,8 @@
 		B2827C4426DAE1A500A86AF4 /* Onboarding screens */ = {
 			isa = PBXGroup;
 			children = (
-				B2827C4526DAE1D200A86AF4 /* NameOnboardingView.swift */,
 				B2C7ACED26DB05C400D8F4B4 /* EmailOnboardingView.swift */,
+				B2827C4526DAE1D200A86AF4 /* NameOnboardingView.swift */,
 				B2C7ACF226DB08A900D8F4B4 /* BirthOnboardingView.swift */,
 				B2C7ACF426DC2A9A00D8F4B4 /* NotifOnboarding.swift */,
 				B2C7ACF626DC979700D8F4B4 /* LocationOnboarding.swift */,

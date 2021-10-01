@@ -16,8 +16,8 @@ struct Constants {
     }
     
     static var screens = [
-        onboardingScreen(title: "How do you want to be called?", disclaimer: "You can use a fiction name if you want to", image: "person.circle.fill"), //for image use system name string
         onboardingScreen(title: "Type your email & choose a password", disclaimer: "This email will be used for password recovery", image: "envelope.circle"), //for image use system name string
+        onboardingScreen(title: "How do you want to be called?", disclaimer: "You can use a fiction name if you want to", image: "person.circle.fill"), //for image use system name string
         onboardingScreen(title: "When is your birthdate?", disclaimer: "This can't be changed later", image: "calendar.circle"),
         onboardingScreen(title: "Never miss a message from someone great", disclaimer: "", image: "moon.zzz.fill"),
         onboardingScreen(title: "Where do you live?", disclaimer: "Only neighborhood name is shown", image: "location"),
