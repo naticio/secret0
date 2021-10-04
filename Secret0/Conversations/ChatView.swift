@@ -15,7 +15,7 @@ struct ChatView: View {
     let chat: Conversation
     
     @State private var text = ""
-    @FocusState private var isFocused
+    //@FocusState private var isFocused
     
     @State private var messageIDToScroll: UUID?
     
@@ -28,7 +28,7 @@ struct ChatView: View {
             GeometryReader { reader in
                 getChatsView(viewWidth: reader.size.width)
                     .onTapGesture {
-                        isFocused = false
+                        //isFocused = false
                     }
             }
             .padding(.bottom, 5)
@@ -73,15 +73,15 @@ struct ChatView: View {
                             }
                         }
                     }
-                    .onChange(of: isFocused) { _ in
-                        if isFocused {
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
-                                withAnimation(.easeIn(duration: 0.5)) {
-                                    scrollReader.scrollTo(chat.messages.last!.id, anchor: .bottom)
-                                }
-                            }
-                        }
-                    }
+//                    .onChange(of: isFocused) { _ in
+//                        if isFocused {
+//                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
+//                                withAnimation(.easeIn(duration: 0.5)) {
+//                                    scrollReader.scrollTo(chat.messages.last!.id, anchor: .bottom)
+//                                }
+//                            }
+//                        }
+//                    }
                     .onChange(of: messageIDToScroll) { _ in
                         // This scrolls down to the new sent Message
                         if let messageID = messageIDToScroll {
@@ -114,7 +114,7 @@ struct ChatView: View {
                         .frame(height: height)
                         .background(Color.white)
                         .clipShape(RoundedRectangle(cornerRadius: 13))
-                        .focused($isFocused)
+                        //.focused($isFocused)
                 } else {
                     // Fallback on earlier versions
                 }

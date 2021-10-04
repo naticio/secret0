@@ -39,7 +39,7 @@ struct PictureYourself: View {
                         Image(uiImage: imageToDisplay)
                             .resizable()
                             .aspectRatio(contentMode: .fill)
-                            .frame(width: geometry.size.width, height: geometry.size.height*0.7)
+                            .frame(width: geometry.size.width, height: geometry.size.height*0.5)
                             .clipped()
                         
                         //image filters
@@ -71,36 +71,36 @@ struct PictureYourself: View {
                                 if picNumber == 1 {
                                     imageController.image1 = imageController.displayedImage
 
-                                    storeImage(image: imageController.image1!, picNum: picNumber)
+                                    uploadImageToServer(image: imageController.image1!, picNum: picNumber)
                                 }
                                 if picNumber == 2 {
                                     imageController.image2 = imageController.displayedImage
 
-                                    storeImage(image: imageController.image2!, picNum: picNumber)
+                                    uploadImageToServer(image: imageController.image2!, picNum: picNumber)
                                     
                                 }
                                 if picNumber == 3 {
                                     imageController.image3 = imageController.displayedImage
                                     
-                                    storeImage(image: imageController.image3!, picNum: picNumber)
+                                    uploadImageToServer(image: imageController.image3!, picNum: picNumber)
                                     
                                 }
                                 if picNumber == 4 {
                                     imageController.image4 = imageController.displayedImage
                                     
-                                    storeImage(image: imageController.image4!, picNum: picNumber)
+                                    uploadImageToServer(image: imageController.image4!, picNum: picNumber)
                                     
                                 }
                                 if picNumber == 5 {
                                     imageController.image5 = imageController.displayedImage
                                     
-                                    storeImage(image: imageController.image5!, picNum: picNumber)
+                                    uploadImageToServer(image: imageController.image5!, picNum: picNumber)
                                     
                                 }
                                 if picNumber == 6 {
                                     imageController.image6 = imageController.displayedImage
                                     
-                                    storeImage(image: imageController.image6!, picNum: picNumber)
+                                    uploadImageToServer(image: imageController.image6!, picNum: picNumber)
                                 }
                             } else {
                                 //if false just save original image in memory to save it later firebase
@@ -167,7 +167,7 @@ struct PictureYourself: View {
     }
     
     //MARK: - store Image in pixlab for facedetect and mogrify
-    func storeImage(image: UIImage, picNum: Int) {
+    /*func storeImage(image: UIImage, picNum: Int) {
         
         let url = URL(string: "https://api.pixlab.io/store")
         let boundary = "Boundary-\(NSUUID().uuidString)"
@@ -184,7 +184,7 @@ struct PictureYourself: View {
             "Accept-Language": "en",
             "Accept": "application/json",
             "Content-Type": "multipart/form-data; boundary=\(boundary)",
-            "ApiKey": Constants.pixlabAPIkey
+            //"ApiKey": Constants.pixlabAPIkey
         ]
         
         let dataBody = createDataBody(withParameters: parameters, media: [mediaImage], boundary: boundary)
@@ -213,6 +213,72 @@ struct PictureYourself: View {
                 }
             }
         }.resume()
+    }*/
+    
+    func uploadImageToServer(image: UIImage, picNum: Int) {
+       let parameters = ["name": "MyTestFile123321",
+                         "id": "12345"]
+       guard let mediaImage = Media(withImage: image, forKey: "file") else { return }
+       guard let url = URL(string: "https://api.pixlab.io/store") else { return }
+       var request = URLRequest(url: url)
+       request.httpMethod = "POST"
+       
+        //create boundary
+       let boundary = "Boundary-\(NSUUID().uuidString)"
+       
+        //set content type
+       request.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
+        
+        request.allHTTPHeaderFields = [
+                       "X-User-Agent": "ios",
+                       "Accept-Language": "en",
+                       "Accept": "application/json",
+                       "Content-Type": "multipart/form-data; boundary=\(boundary)",
+                       "ApiKey": Constants.pixlabAPIkey
+                   ]
+
+       
+        //call createDataBody method
+       let dataBody = createDataBody(withParameters: parameters, media: [mediaImage], boundary: boundary)
+       request.httpBody = dataBody
+       let session = URLSession.shared
+       
+        session.dataTask(with: request) { (data, response, error) in
+          if let response = response {
+             print(response)
+          }
+          if let data = data {
+             do {
+                let json = try JSONSerialization.jsonObject(with: data, options: [])
+                print(json)
+             } catch {
+                print(error)
+             }
+          }
+       }.resume()
+    }
+    
+    func createDataBody(withParameters params: [String:String]?, media: [Media]?, boundary: String) -> Data {
+       let lineBreak = "\r\n"
+       var body = Data()
+       if let parameters = params {
+          for (key, value) in parameters {
+             body.append("--\(boundary + lineBreak)")
+             body.append("Content-Disposition: form-data; name=\"\(key)\"\(lineBreak + lineBreak)")
+             body.append("\(value as! String + lineBreak)")
+          }
+       }
+       if let media = media {
+          for photo in media {
+             body.append("--\(boundary + lineBreak)")
+             body.append("Content-Disposition: form-data; name=\"\(photo.key)\"; filename=\"\(photo.filename)\"\(lineBreak)")
+             body.append("Content-Type: \(photo.mimeType + lineBreak + lineBreak)")
+             body.append(photo.data)
+             body.append(lineBreak)
+          }
+       }
+       body.append("--\(boundary)--\(lineBreak)")
+       return body
     }
     
     //MARK: - PIXLAB facedetect
@@ -324,12 +390,31 @@ struct PictureYourself: View {
             }
         }.resume()
     }
-    
-    
 
     
-    
-    
+}
+
+struct Media {
+    let key: String
+    let filename: String
+    let data: Data
+    let mimeType: String
+    init?(withImage image: UIImage, forKey key: String) {
+        self.key = key
+        self.mimeType = "image/jpeg"
+        self.filename = "imagefile.jpg"
+        guard let data = image.jpegData(compressionQuality: 0.7) else { return nil }
+        self.data = data
+    }
+}
+
+extension Data {
+   mutating func append(_ string: String) {
+      if let data = string.data(using: .utf8) {
+         append(data)
+         print("data======>>>",data)
+      }
+   }
 }
 
 //preview image view

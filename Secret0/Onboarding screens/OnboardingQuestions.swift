@@ -47,6 +47,13 @@ struct OnboardingQuestions: View {
                 TextEditor(text: $response)
                     .multilineTextAlignment(.leading)
                     .frame(height: 400)
+                    .cornerRadius(25)
+                    .font(Font.custom("AvenirNext-Regular", size: 20, relativeTo: .body))
+                    .autocapitalization(.words)
+                    .disableAutocorrection(true)
+                    .border(Color.gray, width: 3)
+                    .padding()
+
                 
                 if index < Constants.screens.count-1 {
                     NavigationLink(destination: OnboardingQuestions(index: index + 1)

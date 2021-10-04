@@ -24,6 +24,7 @@ struct PictureUploaderView: View {
     @State var goWhenTrue: Bool = false
     
     var body: some View {
+        
         NavigationView{
 
             VStack {
@@ -240,8 +241,6 @@ struct PictureUploaderView: View {
         })
         .navigationBarHidden(true)
         
-        
-        
     }
     
     //UPLOAD IMAGE INTO FIREBASE STORAGE
@@ -328,102 +327,6 @@ struct PictureUploaderView: View {
     
 
     
-}
-
-
-//MARK: - ANOTHER TRY PIXLAB -stackoverflow
-func requestNativeImageUpload(image: UIImage) {
-
-    let url = URL(string: "https://api.pixlab.io/facedetect")
-    let boundary = "Boundary-\(NSUUID().uuidString)"
-    var request = URLRequest(url: url!)
-
-    let parameters = ["key" : "538f491a89c9026c28be8583aaf7219c"]
-
-    guard let mediaImage = Media(withImage: image, forKey: "file") else { return }
-
-    request.httpMethod = "POST"
-
-    request.allHTTPHeaderFields = [
-                "X-User-Agent": "ios",
-                "Accept-Language": "en",
-                "Accept": "application/json",
-                "Content-Type": "multipart/form-data; boundary=\(boundary)",
-                "ApiKey": "538f491a89c9026c28be8583aaf7219c"
-            ]
-
-    let dataBody = createDataBody(withParameters: parameters, media: [mediaImage], boundary: boundary)
-    request.httpBody = dataBody
-
-    let session = URLSession.shared
-    session.dataTask(with: request) { (data, response, error) in
-        if let response = response {
-            print(response)
-        }
-
-        if let data = data {
-            do {
-                let json = try JSONSerialization.jsonObject(with: data, options:[])
-                print(json)
-            } catch {
-                print(error)
-            }
-        }
-        }.resume()
-}
-
-func createDataBody(withParameters params: [String: String]?, media: [Media]?, boundary: String) -> Data {
-
-    let lineBreak = "\r\n"
-    var body = Data()
-
-    if let parameters = params {
-        for (key, value) in parameters {
-            body.append("--\(boundary + lineBreak)")
-            body.append("Content-Disposition: form-data; name=\"\(key)\"\(lineBreak + lineBreak)")
-            body.append("\(value + lineBreak)")
-        }
-    }
-
-    if let media = media {
-        for photo in media {
-            body.append("--\(boundary + lineBreak)")
-            body.append("Content-Disposition: form-data; name=\"\(photo.key)\"; filename=\"\(photo.fileName)\"\(lineBreak)")
-            body.append("Content-Type: \(photo.mimeType + lineBreak + lineBreak)")
-            body.append(photo.data)
-            body.append(lineBreak)
-        }
-    }
-
-    body.append("--\(boundary)--\(lineBreak)")
-
-    return body
-}
-
-
-extension Data {
-    mutating func append(_ string: String) {
-        if let data = string.data(using: .utf8) {
-            append(data)
-        }
-    }
-}
-
-
-struct Media {
-    let key: String
-    let fileName: String
-    let data: Data
-    let mimeType: String
-
-    init?(withImage image: UIImage, forKey key: String) {
-        self.key = key
-        self.mimeType = "image/jpg"
-        self.fileName = "\(arc4random()).jpeg"
-
-        guard let data = image.jpegData(compressionQuality: 0.1) else { return nil }
-        self.data = data
-    }
 }
 
 struct PictureUploaderView_Previews: PreviewProvider {
