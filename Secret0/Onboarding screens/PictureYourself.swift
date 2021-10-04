@@ -70,37 +70,37 @@ struct PictureYourself: View {
                             if hideIdentity == true {
                                 if picNumber == 1 {
                                     imageController.image1 = imageController.displayedImage
-
-                                    uploadImageToServer(image: imageController.image1!, picNum: picNumber)
+                                    
+                                    BrazilianUpload(image: imageController.image1!, picNum: picNumber)
                                 }
                                 if picNumber == 2 {
                                     imageController.image2 = imageController.displayedImage
-
-                                    uploadImageToServer(image: imageController.image2!, picNum: picNumber)
+                                    
+                                    BrazilianUpload(image: imageController.image2!, picNum: picNumber)
                                     
                                 }
                                 if picNumber == 3 {
                                     imageController.image3 = imageController.displayedImage
                                     
-                                    uploadImageToServer(image: imageController.image3!, picNum: picNumber)
+                                    BrazilianUpload(image: imageController.image3!, picNum: picNumber)
                                     
                                 }
                                 if picNumber == 4 {
                                     imageController.image4 = imageController.displayedImage
                                     
-                                    uploadImageToServer(image: imageController.image4!, picNum: picNumber)
+                                    BrazilianUpload(image: imageController.image4!, picNum: picNumber)
                                     
                                 }
                                 if picNumber == 5 {
                                     imageController.image5 = imageController.displayedImage
                                     
-                                    uploadImageToServer(image: imageController.image5!, picNum: picNumber)
+                                    BrazilianUpload(image: imageController.image5!, picNum: picNumber)
                                     
                                 }
                                 if picNumber == 6 {
                                     imageController.image6 = imageController.displayedImage
                                     
-                                    uploadImageToServer(image: imageController.image6!, picNum: picNumber)
+                                    BrazilianUpload(image: imageController.image6!, picNum: picNumber)
                                 }
                             } else {
                                 //if false just save original image in memory to save it later firebase
@@ -166,6 +166,70 @@ struct PictureYourself: View {
         
     }
     
+    func BrazilianUpload(image:UIImage, picNum: Int) {
+        let urlPath = "https://api.pixlab.io/store"
+        guard let endpoint = URL(string: urlPath) else {
+            print("Error creating endpoint")
+            return
+        }
+        var request = URLRequest(url: endpoint)
+        
+        request.httpMethod = "POST"
+        
+        let boundary = "Boundary-\(UUID().uuidString)"
+        
+        request.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
+        let mimeType = "image/jpg"
+        
+        let params: [String : String]? = ["key" :Constants.pixlabAPIkey]
+        
+        let body = NSMutableData()
+        let boundaryPrefix = " — \(boundary)\r\n"
+        
+        for (key, value) in params! {
+            body.append(boundaryPrefix)
+            body.append("Content-Disposition: form-data; name=\"\(key)\"\r\n\r\n")
+            body.append("\(value)\r\n")
+        }
+        
+        let imageData = image.jpegData(compressionQuality: 0.1)
+        var filename = "image1.png"
+        
+        body.append(boundaryPrefix)
+        body.append("Content-Disposition: form-data; name=\"image\"; filename=\"\(filename)\"\r\n")
+        body.append("Content-Type: \(mimeType)\r\n\r\n")
+        body.append(imageData!)
+        body.append("\r\n")
+        body.append(" — ".appending(boundary.appending(" — ")))
+        
+        URLSession.shared.dataTask(with: request) { (data, response, error) in
+        do {
+        //do whatever want with the response here
+            
+            if let response = response {
+                print(response)
+            }
+            
+            if let data = data {
+                do {
+                    let json = try JSONSerialization.jsonObject(with: data, options: [])
+                    print(json)
+                    
+                    //decode a json from data to storedImgJson
+                    let result = try! JSONDecoder().decode(storedImgJson.self, from: data)
+                    //var secureLink = result.sslLink
+                    
+                    //facedetectGET(uploadedUrl: result.ssl_link, picNum: picNum)
+                    
+                    
+                } catch {
+                    print(error)
+                }
+            }
+        }
+        }.resume()
+    }
+    
     //MARK: - store Image in pixlab for facedetect and mogrify
     /*func storeImage(image: UIImage, picNum: Int) {
         
@@ -184,7 +248,7 @@ struct PictureYourself: View {
             "Accept-Language": "en",
             "Accept": "application/json",
             "Content-Type": "multipart/form-data; boundary=\(boundary)",
-            //"ApiKey": Constants.pixlabAPIkey
+            "ApiKey": Constants.pixlabAPIkey
         ]
         
         let dataBody = createDataBody(withParameters: parameters, media: [mediaImage], boundary: boundary)
@@ -205,7 +269,7 @@ struct PictureYourself: View {
                     let result = try! JSONDecoder().decode(storedImgJson.self, from: data)
                     //var secureLink = result.sslLink
                     
-                    facedetectGET(uploadedUrl: result.ssl_link, picNum: picNum)
+                    //facedetectGET(uploadedUrl: result.ssl_link, picNum: picNum)
                     
                     
                 } catch {
@@ -215,75 +279,70 @@ struct PictureYourself: View {
         }.resume()
     }*/
     
-    func uploadImageToServer(image: UIImage, picNum: Int) {
-       let parameters = ["name": "MyTestFile123321",
-                         "id": "12345"]
-       guard let mediaImage = Media(withImage: image, forKey: "file") else { return }
-       guard let url = URL(string: "https://api.pixlab.io/store") else { return }
-       var request = URLRequest(url: url)
-       request.httpMethod = "POST"
-       
-        //create boundary
-       let boundary = "Boundary-\(NSUUID().uuidString)"
-       
-        //set content type
-       request.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
+    /*func uploadImageToServer(image: UIImage, picNum: Int) {
+        let parameters = ["key" : Constants.pixlabAPIkey,
+                          "name": "MyTestFile123321",
+                          "id": "12345"]
+        guard let mediaImage = Media(withImage: image, forKey: "file") else { return }
+        guard let url = URL(string: "https://api.pixlab.io/store") else { return }
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
         
-        request.allHTTPHeaderFields = [
-                       "X-User-Agent": "ios",
-                       "Accept-Language": "en",
-                       "Accept": "application/json",
-                       "Content-Type": "multipart/form-data; boundary=\(boundary)",
-                       "ApiKey": Constants.pixlabAPIkey
-                   ]
-
-       
+        //create boundary
+        let boundary = "Boundary-\(NSUUID().uuidString)"
+        
+        //set content type
+        request.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
         //call createDataBody method
-       let dataBody = createDataBody(withParameters: parameters, media: [mediaImage], boundary: boundary)
-       request.httpBody = dataBody
-       let session = URLSession.shared
-       
+        let dataBody = createDataBody(withParameters: parameters, media: [mediaImage], boundary: boundary)
+        
+        request.httpBody = dataBody
+        let session = URLSession.shared
+        
         session.dataTask(with: request) { (data, response, error) in
-          if let response = response {
-             print(response)
-          }
-          if let data = data {
-             do {
-                let json = try JSONSerialization.jsonObject(with: data, options: [])
-                print(json)
-             } catch {
-                print(error)
-             }
-          }
-       }.resume()
-    }
+            if let response = response {
+                print(response)
+            }
+            if let data = data {
+                do {
+                    let json = try JSONSerialization.jsonObject(with: data, options: [])
+                    print(json)
+                } catch {
+                    print(error)
+                }
+            }
+        }.resume()
+    }*/
     
-    func createDataBody(withParameters params: [String:String]?, media: [Media]?, boundary: String) -> Data {
-       let lineBreak = "\r\n"
-       var body = Data()
-       if let parameters = params {
-          for (key, value) in parameters {
-             body.append("--\(boundary + lineBreak)")
-             body.append("Content-Disposition: form-data; name=\"\(key)\"\(lineBreak + lineBreak)")
-             body.append("\(value as! String + lineBreak)")
-          }
-       }
-       if let media = media {
-          for photo in media {
-             body.append("--\(boundary + lineBreak)")
-             body.append("Content-Disposition: form-data; name=\"\(photo.key)\"; filename=\"\(photo.filename)\"\(lineBreak)")
-             body.append("Content-Type: \(photo.mimeType + lineBreak + lineBreak)")
-             body.append(photo.data)
-             body.append(lineBreak)
-          }
-       }
-       body.append("--\(boundary)--\(lineBreak)")
-       return body
-    }
+    /*func createDataBody(withParameters params: [String:String]?, media: [Media]?, boundary: String) -> Data {
+        let lineBreak = "\r\n"
+        var body = Data()
+        if let parameters = params {
+            for (key, value) in parameters {
+                body.append("--\(boundary + lineBreak)")
+                body.append("Content-Disposition: form-data; name=\"\(key)\"\(lineBreak + lineBreak)")
+                body.append("\(value as! String + lineBreak)")
+            }
+        }
+        if let media = media {
+            for photo in media {
+                body.append("--\(boundary + lineBreak)")
+                body.append("Content-Disposition: form-data; name=\"\(photo.key)\"; filename=\"\(photo.filename)\"\(lineBreak)")
+                body.append("Content-Disposition: form-data; name=\"image\"; filename=\"\(filename)\"\r\n")
+                body.append("Content-Type: \(photo.mimeType + lineBreak + lineBreak)")
+                body.append(photo.data)
+                body.append(lineBreak)
+                
+                
+            }
+        }
+        body.append("--\(boundary)--\(lineBreak)")
+        return body
+    }*/
     
     //MARK: - PIXLAB facedetect
     func facedetectGET(uploadedUrl: String, picNum: Int) {
-
+        
         var urlComponents = URLComponents(string: "https://api.pixlab.io/facedetect")
         
         urlComponents?.queryItems = [
@@ -322,7 +381,7 @@ struct PictureYourself: View {
                             //mogrify call
                             mogrify(uploadedUrl: uploadedUrl, cord: coordinates, picNum: picNum)
                         }
-
+                        
                         
                     }
                     catch {
@@ -390,7 +449,6 @@ struct PictureYourself: View {
             }
         }.resume()
     }
-
     
 }
 
@@ -403,19 +461,20 @@ struct Media {
         self.key = key
         self.mimeType = "image/jpeg"
         self.filename = "imagefile.jpg"
-        guard let data = image.jpegData(compressionQuality: 0.7) else { return nil }
+        guard let data = image.jpegData(compressionQuality: 0.1) else { return nil }
         self.data = data
     }
 }
 
-extension Data {
-   mutating func append(_ string: String) {
-      if let data = string.data(using: .utf8) {
-         append(data)
-         print("data======>>>",data)
-      }
-   }
-}
+
+//extension Data {
+//    mutating func append(_ string: String) {
+//        if let data = string.data(using: .utf8) {
+//            append(data)
+//            print("data======>>>",data)
+//        }
+//    }
+//}
 
 //preview image view
 struct ThumbnailView: View {
