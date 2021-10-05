@@ -101,6 +101,21 @@ struct NameOnboardingView: View {
                                                               let user = UserService.shared.user
                                                               user.name = username
                                                               user.email = loggedInUser.email ?? ""
+                                                              
+                                                              //put username as displayed name in the AUTHorized user list,so I can use it for getData()
+                                                              let changeRequest = loggedInUser.createProfileChangeRequest()
+                                                              changeRequest.displayName = username
+                                                              
+                                                              changeRequest.commitChanges(completion: { error in
+                                                                  if let error = error {
+                                                                    // An error happened.
+                                                                      print("error updating User.displayname")
+                                                                  } else {
+                                                                    // Profile updated.
+                                                                      print("User.displayname updated")
+                                                                  }
+                                                              })
+                                                              
                                                               //UserService.shared.user.name = username
                                                               model.usernameSignUp = username
                                                               goWhenTrue = true

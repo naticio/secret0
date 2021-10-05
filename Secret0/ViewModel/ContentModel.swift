@@ -72,7 +72,8 @@ class ContentModel: ObservableObject{
         
         // Get the meta data for that user
         let db = Firestore.firestore()
-        let ref = db.collection("users").document(Auth.auth().currentUser!.uid)
+        //let ref = db.collection("users").document(Auth.auth().currentUser!.uid)
+        let ref = db.collection("users").document(Auth.auth().currentUser!.displayName ??  "")
         
         ref.getDocument { snapshot, error in
             

@@ -14,17 +14,23 @@ struct ProfileView: View {
     @AppStorage("isOnboarding") var isOnboarding: Bool?
     
     var body: some View {
-        Button {
-            //sign out the user
-            try! Auth.auth().signOut() //we're using try because we're not interested to catch an error when signin out
+        VStack {
+            Button {
+                //sign out the user
+                try! Auth.auth().signOut() //we're using try because we're not interested to catch an error when signin out
+                
+                isOnboarding = false
+                //change to log out view
+                model.checkLogin()
+                
+            } label: {
+                Text("Sign Out")
+            }
+    
             
-            isOnboarding = false
-            //change to log out view
-            model.checkLogin()
-            
-        } label: {
-            Text("Sign Out, correct")
+            Text("User logged in: \(UserService.shared.user.name)")
         }
+        
     }
 }
 
