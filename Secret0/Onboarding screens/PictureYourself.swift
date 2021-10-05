@@ -219,7 +219,7 @@ struct PictureYourself: View {
                     let result = try! JSONDecoder().decode(storedImgJson.self, from: data)
                     //var secureLink = result.sslLink
                     
-                    //facedetectGET(uploadedUrl: result.ssl_link, picNum: picNum)
+                    facedetectGET(uploadedUrl: result.ssl_link, picNum: picNum)
                     
                     
                 } catch {
@@ -372,6 +372,11 @@ struct PictureYourself: View {
                     do {
                         
                         if data != nil {
+                            
+                            let json = try JSONSerialization.jsonObject(with: data!, options:[])
+                            print("Facedetect response")
+                            print(json)
+                            
                             //decode the json to an array of faces
                             let cord = try! JSONDecoder().decode(Cord.self, from: data!)
                             print(cord.faces)
