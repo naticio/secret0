@@ -12,6 +12,7 @@ struct LaunchLogicView: View {
     @AppStorage("isOnboarding") var isOnboarding: Bool?
     //@AppStorage("onboardingScreen") var onboardingScreen: String?
     @StateObject var viewRouter = ViewRouter()
+    @StateObject var chatViewModel = ChatsViewModel()
     @EnvironmentObject var model: ContentModel //because we depend on content model to know if user is loggedin (loggedin property)
     //let persistenceController = PersistenceController.shared
     
@@ -19,10 +20,10 @@ struct LaunchLogicView: View {
         
         
         if model.loggedIn == false {
-                Index()
-                    .onAppear() {
-                        model.checkLogin()
-                    }
+            Index()
+                .onAppear() {
+                    model.checkLogin()
+                }
         }
         else {
             if isOnboarding == true {
@@ -35,6 +36,11 @@ struct LaunchLogicView: View {
                 //TabView
                 TabView {
                     MatchView(index: 0)
+                        .onAppear() {
+                            model.getMatches()
+                            //get conversations
+                            chatViewModel.getFilteredConversations(query: "")
+                        }
                         .tabItem {
                             VStack {
                                 Image(systemName: "heart")
@@ -42,7 +48,7 @@ struct LaunchLogicView: View {
                             }
                         }
                     
-                    ChatViewOld()
+                    ConversationsView()
                         .tabItem {
                             VStack {
                                 Image(systemName: "bubble.left.and.bubble.right.fill")

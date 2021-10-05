@@ -139,7 +139,7 @@ struct DatePreferencesView: View {
             user.datingPreferences = datingPref //save to firebase user the values saved in the content model
             
             let db = Firestore.firestore()
-            let ref = db.collection("users").document(loggedInUser.uid)
+            let ref = db.collection("users").document(user.name)
             ref.setData(["datingPreferences" : datingPref], merge: true)
         }
     }

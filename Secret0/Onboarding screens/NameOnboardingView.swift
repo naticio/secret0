@@ -8,9 +8,10 @@
 import SwiftUI
 import FirebaseAuth
 import Firebase
+import simd
 
 struct NameOnboardingView: View {
-
+    
     
     @EnvironmentObject var model: ContentModel
     
@@ -26,22 +27,22 @@ struct NameOnboardingView: View {
     @State var warningMsg: String = ""
     
     @State var index: Int
-
+    
     
     var body: some View {
         
         NavigationView{
             
             ZStack {
-
+                
                 VStack {
                     
                     //let index = 0
                     
-//                    Image(systemName: Constants.screens[index].image)
-//                        .resizable()
-//                        .scaledToFit()
-//                        .frame(width: 50, height: 50, alignment: .center)
+                    //                    Image(systemName: Constants.screens[index].image)
+                    //                        .resizable()
+                    //                        .scaledToFit()
+                    //                        .frame(width: 50, height: 50, alignment: .center)
                     
                     Spacer()
                     
@@ -52,37 +53,71 @@ struct NameOnboardingView: View {
                             .bold()
                         
                         TextField("Username", text: $username).font(.title)
+                            .textCase(.lowercase)
+                            .autocapitalization(.none)
+                        //.textCase(.none)
                             .multilineTextAlignment(.center)
                             .padding()
-                            .textCase(.lowercase)
                         
-                        Text(Constants.screens[index].disclaimer)
-                            .font(.caption)
+                        if warningMsg != "" {
+                            Text(warningMsg)
+                                .font(.caption)
+                        } else {
+                            Text(Constants.screens[index].disclaimer)
+                                .font(.caption)
+                        }
+
                     }
                     .padding()
                     
-                    //warning message if the text is not formatted correctly
-                    Text(warningMsg)
-                        .font(.system(size: 9))
-                
+                    
                     NavigationLink(destination: BirthOnboardingView(index: index + 1), isActive: $goWhenTrue) {
                         //BUTTON NEXT
                         Button {
-
+                            
                             if textFormatOK() {
                                 //check if name exists in firebase already
-                                checkUsername(username: username.lowercased(), completion: { userExist in
-                                    if userExist == true {
-                                        warningMsg = "Username already exists"
-                                    } else {
-                                        
-                                        //save user name in model
-                                        model.usernameSignUp = username
-                                        saveDataHere(username: username)
-                                        
-                                        goWhenTrue = true
+                                
+                                //make sure user is not nil
+                                if let loggedInUser = Auth.auth().currentUser {
+
+                                    //save to the db
+                                    let db = Firestore.firestore()
+                                    let ref = db.collection("users").document(username)
+                                    
+                                    ref.getDocument { (document, error) in
+                                                if let document = document {
+                                                   if document.exists {
+                                                       warningMsg = "Username is taken, choose a different one"
+                                                  } else {
+                                                      //create username
+                                                      ref.setData(["name" : username]) { err in
+                                                          if err != nil {
+                                                              // Show error message
+                                                              print("Error saving user data to Firestore")
+                                                              
+                                                          } else {
+                                                              print("New user created in Firestore")
+                                                              model.usernameSignUp = username
+                                                              goWhenTrue = true
+                                                          }
+                                                      }
+                                                  }
+                                                }
                                     }
-                                })
+                                }
+                                //                                checkUsername(username: username.lowercased(), completion: { userExist in
+                                //                                    if userExist == true {
+                                //                                        warningMsg = "Username already exists"
+                                //                                    } else {
+                                //
+                                //                                        //save user name in model
+                                //                                        model.usernameSignUp = username
+                                //                                        saveDataHere(username: username)
+                                //
+                                //                                        goWhenTrue = true
+                                //                                    }
+                                //                                })
                                 
                             } else {
                                 //show a warning message for the etxt to be longer than 1 chr
@@ -100,7 +135,7 @@ struct NameOnboardingView: View {
                         .background(Capsule().strokeBorder(Color.white, lineWidth: 1.5))
                         .frame(width: 100)
                     }
-        
+                    
                     Spacer()
                     
                 }
@@ -128,9 +163,9 @@ struct NameOnboardingView: View {
         
         // Get your Firebase collection
         let collectionRef = db.collection("users")
-
+        
         // Get all the documents where the field username is equal to the String you pass, loop over all the documents.
-
+        
         collectionRef.whereField("name", isEqualTo: username).getDocuments { (snapshot, err) in
             if let err = err {
                 print("Error getting document: \(err)")
@@ -145,7 +180,7 @@ struct NameOnboardingView: View {
             }
         }
     }
-
+    
     
     //save data to firebase
     func saveDataHere(username: String) {
@@ -157,8 +192,8 @@ struct NameOnboardingView: View {
             
             //save to the db
             let db = Firestore.firestore()
-            let ref = db.collection("users").document(loggedInUser.uid)
-            ref.setData(["birthdate" : user.birthdate], merge: true)
+            let ref = db.collection("users").document(username)
+            ref.setData(["name" : username], merge: true)
         }
     }
     

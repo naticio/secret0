@@ -186,7 +186,7 @@ struct PictureUploaderView: View {
                 
                 //UPLOAD IMAGE TO FIREBASE
                 NavigationLink(
-                    destination: HomeView()
+                    destination: LaunchLogicView()
                         .navigationBarHidden(true)
                         .onAppear(perform: {
                             //mandalo con informacion papaw!
@@ -328,6 +328,35 @@ struct PictureUploaderView: View {
 
     
 }
+
+func createDataBody(withParameters params: [String: String]?, media: [Media]?, boundary: String) -> Data {
+
+    let lineBreak = "\r\n"
+    var body = Data()
+
+    if let parameters = params {
+        for (key, value) in parameters {
+            body.append("--\(boundary + lineBreak)")
+            body.append("Content-Disposition: form-data; name=\"\(key)\"\(lineBreak + lineBreak)")
+            body.append("\(value + lineBreak)")
+        }
+    }
+
+    if let media = media {
+        for photo in media {
+            body.append("--\(boundary + lineBreak)")
+            body.append("Content-Disposition: form-data; name=\"\(photo.key)\"; filename=\"\(photo.fileName)\"\(lineBreak)")
+            body.append("Content-Type: \(photo.mimeType + lineBreak + lineBreak)")
+            body.append(photo.data)
+            body.append(lineBreak)
+        }
+    }
+
+    body.append("--\(boundary)--\(lineBreak)")
+
+    return body
+}
+
 
 struct PictureUploaderView_Previews: PreviewProvider {
     static var previews: some View {

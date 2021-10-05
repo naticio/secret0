@@ -164,8 +164,8 @@
 			isa = PBXGroup;
 			children = (
 				B25E0FDC2704F3DF0018A389 /* ConversationsView.swift */,
-				B25E0FE12704F68D0018A389 /* ChatView.swift */,
 				B25E0FDE2704F4290018A389 /* ConversationRow.swift */,
+				B25E0FE12704F68D0018A389 /* ChatView.swift */,
 			);
 			path = Conversations;
 			sourceTree = "<group>";

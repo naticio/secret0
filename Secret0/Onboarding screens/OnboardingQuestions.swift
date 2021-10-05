@@ -120,35 +120,35 @@ struct OnboardingQuestions: View {
                 user.Q1day2live = response
                 
                 let db = Firestore.firestore()
-                let ref = db.collection("users").document(loggedInUser.uid)
+                let ref = db.collection("users").document(user.name)
                 ref.setData(["Q1day2live" : user.Q1day2live], merge: true)
             }
             if Constants.screens[index].title.contains("100,000,000") {
                 user.QlotteryWin = response
                 
                 let db = Firestore.firestore()
-                let ref = db.collection("users").document(loggedInUser.uid)
+                let ref = db.collection("users").document(user.name)
                 ref.setData(["QlotteryWin" : user.QlotteryWin], merge: true)
             }
             if Constants.screens[index].title.contains("money didn't matter") {
                 user.QmoneynotanIssue = response
                 
                 let db = Firestore.firestore()
-                let ref = db.collection("users").document(loggedInUser.uid)
+                let ref = db.collection("users").document(user.name)
                 ref.setData(["QmoneynotanIssue" : user.QmoneynotanIssue], merge: true)
             }
             if Constants.screens[index].title.contains("bucket list") {
                 user.bucketList = response
                 
                 let db = Firestore.firestore()
-                let ref = db.collection("users").document(loggedInUser.uid)
+                let ref = db.collection("users").document(user.name)
                 ref.setData(["bucketList" : user.bucketList], merge: true)
             }
             if Constants.screens[index].title.contains("Jokes") {
                 user.jokes = response
                 
                 let db = Firestore.firestore()
-                let ref = db.collection("users").document(loggedInUser.uid)
+                let ref = db.collection("users").document(user.name)
                 ref.setData(["jokes" : user.jokes], merge: true)
             }
         }

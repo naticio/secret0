@@ -23,7 +23,7 @@ struct ProfileView: View {
             model.checkLogin()
             
         } label: {
-            Text("Sign Out")
+            Text("Sign Out, correct")
         }
     }
 }

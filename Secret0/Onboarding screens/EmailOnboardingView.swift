@@ -43,9 +43,11 @@ struct EmailOnboardingView: View {
                         .bold()
                     
                     TextField("email", text: $email).font(.title)
+                        .autocapitalization(.none)
                         .multilineTextAlignment(.center)
                         .padding()
                     SecureField("Password", text: $password).font(.title)
+                        .autocapitalization(.none)
                         .multilineTextAlignment(.center)
                         .padding()
                     

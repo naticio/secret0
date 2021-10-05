@@ -113,7 +113,7 @@ struct LocationOnboarding: View {
             user.location = localizationModel.userLocation //save to firebase user the values saved in the content model
             
             let db = Firestore.firestore()
-            let ref = db.collection("users").document(loggedInUser.uid)
+            let ref = db.collection("users").document(user.name)
             ref.setData([
                 "latitude" : String(user.location!.coordinate.latitude),
                 "longitude" : String(user.location!.coordinate.longitude)

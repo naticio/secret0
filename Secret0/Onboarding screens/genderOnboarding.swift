@@ -126,7 +126,7 @@ struct genderOnboarding: View {
             user.gender = selectedGender //save to firebase user the values saved in the content model
             
             let db = Firestore.firestore()
-            let ref = db.collection("users").document(loggedInUser.uid)
+            let ref = db.collection("users").document(user.name)
             ref.setData(["gender" : user.gender], merge: true)
         }
     }

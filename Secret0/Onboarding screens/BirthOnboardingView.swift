@@ -123,7 +123,7 @@ struct BirthOnboardingView: View {
             
             //save to the db
             let db = Firestore.firestore()
-            let ref = db.collection("users").document(loggedInUser.uid)
+            let ref = db.collection("users").document(user.name)
             ref.setData(["birthdate" : user.birthdate], merge: true)
         }
     }
