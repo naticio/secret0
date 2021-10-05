@@ -12,6 +12,7 @@ import CoreLocation
 class User {
     var id: String = ""
     var name: String = ""
+    var email: String = ""
     var birthdate: Date = Date()
     var location: CLLocation?
     var latitude: Double?

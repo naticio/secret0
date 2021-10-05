@@ -91,7 +91,7 @@ struct NameOnboardingView: View {
                                                        warningMsg = "Username is taken, choose a different one"
                                                   } else {
                                                       //create username
-                                                      ref.setData(["name" : username]) { err in
+                                                      ref.setData(["name" : username, "email" : loggedInUser.email]) { err in
                                                           if err != nil {
                                                               // Show error message
                                                               print("Error saving user data to Firestore")
@@ -100,6 +100,7 @@ struct NameOnboardingView: View {
                                                               print("New user created in Firestore")
                                                               let user = UserService.shared.user
                                                               user.name = username
+                                                              user.email = loggedInUser.email ?? ""
                                                               //UserService.shared.user.name = username
                                                               model.usernameSignUp = username
                                                               goWhenTrue = true
@@ -142,10 +143,9 @@ struct NameOnboardingView: View {
                     Spacer()
                     
                 }
-            }
+            }        .navigationBarHidden(true)
         }
         .background(Color.white)
-        .navigationBarHidden(true)
         .edgesIgnoringSafeArea(.all)
     }
     
