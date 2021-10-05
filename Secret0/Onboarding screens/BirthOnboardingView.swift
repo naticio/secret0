@@ -53,7 +53,7 @@ struct BirthOnboardingView: View {
                     .padding()
                     
                     NavigationLink(destination: NotifOnboarding(index: index+1)
-                                    .environmentObject(ContentModel()), tag: 1, selection: $selection) {
+                                    .environmentObject(ContentModel()), isActive: $goWhenTrue) {
                         Button(action: {
                             self.selection = 1
                             
@@ -63,6 +63,8 @@ struct BirthOnboardingView: View {
                                 saveDataHere()
                                 
                                 isOnboarding = true
+                                
+                                goWhenTrue = true
                                 
                                 //save birthdate into core data
                                 

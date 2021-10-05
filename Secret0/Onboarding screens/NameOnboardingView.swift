@@ -98,6 +98,9 @@ struct NameOnboardingView: View {
                                                               
                                                           } else {
                                                               print("New user created in Firestore")
+                                                              let user = UserService.shared.user
+                                                              user.name = username
+                                                              //UserService.shared.user.name = username
                                                               model.usernameSignUp = username
                                                               goWhenTrue = true
                                                           }
@@ -142,7 +145,7 @@ struct NameOnboardingView: View {
             }
         }
         .background(Color.white)
-        //.navigationBarHidden(true)
+        .navigationBarHidden(true)
         .edgesIgnoringSafeArea(.all)
     }
     
