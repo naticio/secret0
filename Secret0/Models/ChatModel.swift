@@ -9,12 +9,12 @@ import Foundation
 
 struct Conversation: Identifiable {
     //var id: UUID { person.id }
-    var id: String
-    let parties: [String]
-    var person1Img: String
-    var person2Img: String
-    var person1name: String
-    var person2name: String
+    var id: String = UUID().uuidString
+    let users: [String]
+//    var person1Img: String
+//    var person2Img: String
+//    var person1name: String
+//    var person2name: String
     var messages: [Message]
     var hasUnreadMessage = false
 }

@@ -10,7 +10,7 @@ import SwiftUI
 
 struct ChatView: View {
     
-    @EnvironmentObject var viewModel: ChatsViewModel
+    @EnvironmentObject var chatModel: ChatsViewModel
     
     let chat: Conversation
     
@@ -40,7 +40,7 @@ struct ChatView: View {
         .navigationBarItems(leading: navBarLeadingBtn(), trailing: navBarTrailingBtn())
         .navigationBarTitleDisplayMode(.inline)
         .onAppear {
-            viewModel.markAsUnread(false, chat: chat)
+            chatModel.markAsUnread(false, chat: chat)
         }
     }
     
@@ -49,7 +49,7 @@ struct ChatView: View {
         ScrollView {
             ScrollViewReader { scrollReader in
                 LazyVGrid(columns: [GridItem(.flexible(minimum: 0))], spacing: 0, pinnedViews: [.sectionHeaders]) {
-                    let sectionMessages = viewModel.getSectionMessages(for: chat)
+                    let sectionMessages = chatModel.getSectionMessages(for: chat)
                     ForEach(sectionMessages.indices, id: \.self) { i in
                         let messages = sectionMessages[i]
                         Section(header: sectionHeader(firstMessage: messages.first!)) {
@@ -121,7 +121,7 @@ struct ChatView: View {
                 
                 //send message BUTTON
                 Button(action: {
-                    if let newMessage = viewModel.sendMessage(text, in: chat) {
+                    if let newMessage = chatModel.sendMessage(text, in: chat) {
                         text = ""
                         messageIDToScroll = newMessage.id
                     }
@@ -159,13 +159,25 @@ struct ChatView: View {
     func navBarLeadingBtn() -> some View {
         Button(action: {}) {
             HStack {
-                Image(chat.person2Img)
-                    .resizable()
-                    .frame(width: 40, height: 40)
-                    .clipShape(Circle())
+                if UserService.shared.user.name == chat.users[0] {
+                    Image(systemName: "person.fill")
+                        .resizable()
+                        .frame(width: 40, height: 40)
+                        .clipShape(Circle())
+                    
+                    Text(chat.users[1])
+                        .bold()
+                } else {
+                    Image(systemName: "person")
+                        .resizable()
+                        .frame(width: 40, height: 40)
+                        .clipShape(Circle())
+                    
+                    Text(chat.users[0])
+                        .bold()
+                }
                 
-                Text(chat.person2name)
-                    .bold()
+
             }
             .foregroundColor(.black)
         }

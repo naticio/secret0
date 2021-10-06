@@ -15,6 +15,7 @@ class ChatsViewModel: ObservableObject {
     ///FETCH DATA FROM FIREBASE HERE, GET CHATS from x user, or on appear
     //@Published var chats = Conversation.sampleChat
     @Published var chats = [Conversation]()
+    @Published var chatsRetrieved = false
     
     private let db = Firestore.firestore()
     private let user = Auth.auth().currentUser
@@ -27,7 +28,7 @@ class ChatsViewModel: ObservableObject {
         }
         return nil
     }
-    
+
     func markAsUnread(_ newValue: Bool, chat: Conversation) {
         if let index = chats.firstIndex(where: { $0.id == chat.id }) {
             chats[index].hasUnreadMessage = newValue
@@ -38,43 +39,47 @@ class ChatsViewModel: ObservableObject {
     func getFilteredConversations(query: String) {
         
         //let currentUser = UserService.shared.user
-        
-        if (user != nil) {
-            db.collection("conversations").whereField("users", arrayContains: user!.uid).addSnapshotListener({ [self](snapshot, error) in
-                guard let documents = snapshot?.documents else {
-                    print("no conversations found")
-                    return
-                }
-                
-                self.chats = documents.map({docSnapshot -> Conversation in
-                    let data = docSnapshot.data()
-                    let docId = docSnapshot.documentID
-                    let conversationParties = data["users"] as? [String] ?? [""]
-
-                    let p1Img = data["person1Img"] as? String ?? ""
-                    let p2Img = data["person2Img"] as? String ?? ""
-                    let p1name = data["person1name"] as? String ?? ""
-                    let p2name = data["person2name"] as? String ?? ""
-                    let msgs = data["messages"] as? [Message] ?? []
+        if chatsRetrieved == false {
+            if (user != nil) {
+                db.collection("conversations").whereField("users", arrayContains: user!.displayName).addSnapshotListener({ [self](snapshot, error) in
+                    guard let documents = snapshot?.documents else {
+                        print("no conversations found")
+                        return
+                    }
                     
-                    
-                    let unreadMsg = data["unreadMsg"] as? Bool ?? false
-                    
-                    //not getting messaages until chat is clicked
-                    return Conversation(id: docId, parties: conversationParties, person1Img: p1Img, person2Img: p2Img, person1name: p1name, person2name: p2name, messages: msgs, hasUnreadMessage: unreadMsg)
+                    self.chats = documents.map{(docSnapshot) -> Conversation in
+                        let data = docSnapshot.data()
+                        
+                        let docId = docSnapshot.documentID
+                        let users = data["users"] as? [String] ?? [""]
+//                        let p1Img = data["person1Img"] as? String ?? ""
+//                        let p2Img = data["person2Img"] as? String ?? ""
+//                        let p1name = data["person1name"] as? String ?? ""
+//                        let p2name = data["person2name"] as? String ?? ""
+                        let msgs = data["messages"] as? [Message] ?? []
+                        
+                        print("Users: \(users)")
+                        
+                        //let unreadMsg = data["unreadMsg"] as? Bool ?? false
+                        
+                        chatsRetrieved = true //so I don't execute this again
+                        //not getting messaages until chat is clicked
+                        return Conversation(id: docId, users: users, messages: msgs)
+                    }
+    //
+    //                let sortedChats = chats.sorted {
+    //                    guard let date1 = $0.messages.last?.date else { return false }
+    //                    guard let date2 = $1.messages.last?.date else { return false }
+    //                    return date1 > date2
+    //                }
+    //
+    //                if (query == "") {
+    //                    return sortedChats
+    //                }
                 })
-//
-//                let sortedChats = chats.sorted {
-//                    guard let date1 = $0.messages.last?.date else { return false }
-//                    guard let date2 = $1.messages.last?.date else { return false }
-//                    return date1 > date2
-//                }
-//
-//                if (query == "") {
-//                    return sortedChats
-//                }
-            })
+            }
         }
+        
        
 
         
@@ -86,7 +91,7 @@ class ChatsViewModel: ObservableObject {
         
         var ref: DocumentReference? = nil
         if (user != nil) {
-            ref = db.collection("conversations").addDocument(data: ["users" : ["0": user!.displayName, "1": receiver]]) { err in
+            ref = db.collection("conversations").addDocument(data: ["users" : [user!.displayName, receiver]]) { err in
                 if let err = err {
                     print("error writing doc")
                 } else {

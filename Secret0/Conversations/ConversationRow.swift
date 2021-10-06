@@ -14,19 +14,40 @@ struct ConversationRow: View {
     
     var body: some View {
         HStack(spacing: 20) {
-            Image(chat.person1Img)
-                .resizable()
-                .frame(width: 70, height: 70)
-                .clipShape(Circle())
+            //if current user == sender or creator of the conversation
+            if UserService.shared.user.name == chat.users[0] {
+                //show image of other person, 2nd index aka index 1
+                //Image(chat.users[1].imageUrl)
+                Image(systemName: "person.fill")
+                    .resizable()
+                    .frame(width: 70, height: 70)
+                    .clipShape(Circle())
+            } else {
+                //show image of other person, 1st index aka index 0
+                //Image(chat.users[0].imageUrl)
+                Image(systemName: "person")
+                    .resizable()
+                    .frame(width: 70, height: 70)
+                    .clipShape(Circle())
+            }
+
             
             ZStack {
                 VStack(alignment: .leading, spacing: 5) {
                     HStack {
-                        Text(chat.person1name)
-                            .bold()
+                        //if current user created the conversation
+                        if UserService.shared.user.name == chat.users[0] {
+                            //if I created the conversation show me the other person name
+                            Text(chat.users[1])
+                                .bold()
+                        } else {
+                            Text(chat.users[0])
+                                .bold()
+                        }
+
                         Spacer()
                         Text(chat.messages.last?.date.descriptiveString() ?? "")
-                            .foregroundColor(chat.hasUnreadMessage ? .blue : .gray)
+                            //.foregroundColor(chat.hasUnreadMessage ? .blue : .gray)
                     }
                     
                     HStack {
@@ -40,7 +61,7 @@ struct ConversationRow: View {
                 }
                 
                 Circle()
-                    .foregroundColor(chat.hasUnreadMessage ? .blue : .clear)
+                    //.foregroundColor(chat.hasUnreadMessage ? .blue : .clear)
                     .frame(width: 18, height: 18)
                     .frame(maxWidth: .infinity, alignment: .trailing)
             }
@@ -53,9 +74,7 @@ struct ConversationRow: View {
 
 //struct ContentView_Previews: PreviewProvider {
 //
-//    static let chat = Conversation(id: "1234", parties: [String]: ["test"],
-//                           messages: [Message("Hey flo, how are you?", type: .Received)],
-//                           hasUnreadMessage: true)
+//    static let chat = Conversation(id: "1", users: ["Lola", "Adal"], messages: [Message])
 //
 //    static var previews: some View {
 //        ConversationRow(chat: chat)

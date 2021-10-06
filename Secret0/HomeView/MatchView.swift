@@ -12,7 +12,6 @@ struct MatchView: View {
     @EnvironmentObject var model: ContentModel
     //@EnvironmentObject var chatModel: ChatsViewModel
 
-    
     //to hide view
     @State var viewShown = false
     @State var transitionShown = false

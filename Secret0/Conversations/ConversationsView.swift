@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ConversationsView: View {
     
-    @StateObject var viewModel = ChatsViewModel()
+    @StateObject var chatModel = ChatsViewModel()
     
     @State private var query = ""
 
@@ -18,13 +18,13 @@ struct ConversationsView: View {
     var body: some View {
         NavigationView {
             List {
-                ForEach(viewModel.chats) { chat in
+                ForEach(chatModel.chats) { chat in
                     if #available(iOS 15.0, *) {
                         ZStack {
                             ConversationRow(chat: chat)
                             
                             // hidden NavigationLink. This hides the disclosure arrow!
-                            NavigationLink(destination: ChatView(chat: chat).environmentObject(viewModel)) {}
+                            NavigationLink(destination: ChatView(chat: chat).environmentObject(chatModel)) {}
                             .buttonStyle(PlainButtonStyle())
                             .frame(width:0)
                             .opacity(0)
@@ -32,7 +32,7 @@ struct ConversationsView: View {
                         .swipeActions(edge: .leading, allowsFullSwipe: true) {
                             if #available(iOS 15.0, *) {
                                 Button(action: {
-                                    viewModel.markAsUnread(!chat.hasUnreadMessage, chat: chat)
+                                    chatModel.markAsUnread(!chat.hasUnreadMessage, chat: chat)
                                 }) {
                                     if chat.hasUnreadMessage {
                                         Label("Read", systemImage: "text.bubble")
@@ -51,7 +51,7 @@ struct ConversationsView: View {
                             ConversationRow(chat: chat)
                             
                             // hidden NavigationLink. This hides the disclosure arrow!
-                            NavigationLink(destination: ChatView(chat: chat).environmentObject(viewModel)) {}
+                            NavigationLink(destination: ChatView(chat: chat).environmentObject(chatModel)) {}
                             .buttonStyle(PlainButtonStyle())
                             .frame(width:0)
                             .opacity(0)
