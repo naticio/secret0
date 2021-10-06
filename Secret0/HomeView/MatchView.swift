@@ -39,21 +39,23 @@ struct MatchView: View {
                 Text("No available matches")
             } else {
                 //view with matches
+                //top bar
                 VStack {
-                    //top bar
-                    HStack {
-                        Text(model.matches[index].name)
-                            .frame(alignment: .leading)
-                            .font(.title)
-                        
-                        Text(model.matches[index].gender)
-                        Text("wants \(model.matches[index].datingPreferences)")
-                        
-                        Button(action: {
-                            //action to block or report user
-                        }, label: {
-                            Image(systemName: "ellxipsis")
-                        })
+                    Group {
+                        HStack {
+                            Text(model.matches[index].name)
+                                .frame(alignment: .leading)
+                                .font(.title)
+                            
+                            Text(model.matches[index].gender)
+                            Text("wants \(model.matches[index].datingPreferences)")
+                            
+                            Button(action: {
+                                //action to block or report user
+                            }, label: {
+                                Image(systemName: "ellxipsis")
+                            })
+                        }
                     }
                     
                     //scroll MAIN view
@@ -68,7 +70,6 @@ struct MatchView: View {
                                     //IOS15 AsyncImage(url: URL(string: "https://your_image_url_address"))
                                     if model.matches[index].imageUrl1 == "" {
                                         Image("noPic")
-                                        
                                             .resizable()
                                             .frame(height: 410, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
                                         //.aspectRatio(contentMode: .fit)
@@ -76,7 +77,6 @@ struct MatchView: View {
                                             .padding(10)
                                         
                                     } else {
-                                        
                                         RemoteImage(url: model.matches[index].imageUrl1!)
                                         //.aspectRatio(contentMode: .fit)
                                         
@@ -87,27 +87,57 @@ struct MatchView: View {
                                                 Button(action: {
                                                     //open modal to send message
                                                     likeModal.toggle()
-                                                    
 
                                                 }, label: {
                                                     Image(systemName: "heart.fill")
+                                                        .foregroundColor(Color(.systemRed))
                                                 })
+                                                //MARK: - like button
                                                     .fullScreenCover(isPresented: $likeModal, content: {
-                                                        LikeScreenModalView.init(likeModalShown: $likeModal, indexHere: $index, input: model.matches[index].imageUrl1!, receiver: model.matches[index].id)
+                                                        LikeScreenModalView.init(likeModalShown: $likeModal, indexHere: $index, input: model.matches[index].imageUrl1!, receiver: model.matches[index].name, type: "Image", question: "")
                                                         .environmentObject(ChatsViewModel())
                                                         .environmentObject(ContentModel())
                                                     })
-                                                
+
                                                 //fixing at bottom left the floating like !!
                                                 , alignment: .bottomTrailing
                                             )
                                         
                                     }
                                     
-                                    Text("What would you do if you only have 1 day left to live?")
-                                    Text(model.matches[index].Q1day2live ?? "")
+                                    
                                 }
-                                .padding()
+
+                                
+                                //2nd group with text
+                                Group {
+                                    VStack {
+                                        Text("What would you do if you only have 1 day left to live?")
+                                        Text(model.matches[index].Q1day2live ?? "")
+                                    }
+                                    
+                                }
+                                .overlay(
+                                    Button(action: {
+                                        //open modal to send message
+                                        likeModal.toggle()
+                                        
+
+                                    }, label: {
+                                        Image(systemName: "heart.fill")
+                                            .foregroundColor(Color(.systemRed))
+                                    })
+                                    //MARK: - like button
+                                        .fullScreenCover(isPresented: $likeModal, content: {
+                                            LikeScreenModalView.init(likeModalShown: $likeModal, indexHere: $index, input: model.matches[index].Q1day2live, receiver: model.matches[index].name, type: "Text", question: "What would you do if you only have 1 day left to live?")
+                                            .environmentObject(ChatsViewModel())
+                                            .environmentObject(ContentModel())
+                                        })
+                                    
+                                    //fixing at bottom left the floating like !!
+                                    , alignment: .bottomTrailing
+                                )
+   
                                 
                                 Group {
                                     //CustomImageView(urlString: model.matches[index].imageUrl2 ?? "")
@@ -202,7 +232,6 @@ struct MatchView: View {
                                     self.transitionShown.toggle()
                                     self.viewShown.toggle()
                                     
-                                    
                                     //scroll to top
                                     withAnimation(.spring()) {
                                         ProxyReader.scrollTo("SCROLL_TO_TOP", anchor: .top)
@@ -283,11 +312,21 @@ struct LikeScreenModalView: View {
     @State var opener: String = ""
     var input : String
     var receiver: String
+    var type: String
+    var question: String
     
     var body: some View {
         VStack {
             //object reference for opener
-            RemoteImage(url: input)
+            
+            if type == "Image" {
+                RemoteImage(url: input)
+            } else {
+                VStack {
+                    Text(input)
+                }
+            }
+
             
             TextField("Say something nice", text: $opener).font(.title)
                 .multilineTextAlignment(.center)
@@ -308,7 +347,7 @@ struct LikeScreenModalView: View {
                 
                 likeModalShown.toggle() //flip to false
                 
-                chatModel.startConversation(sender: user.id, receiver: receiver, message: opener)
+                chatModel.startConversation(receiver: receiver, message: opener)
                 
                 
             } label: {

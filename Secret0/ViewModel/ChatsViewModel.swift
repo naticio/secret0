@@ -82,11 +82,11 @@ class ChatsViewModel: ObservableObject {
 //        return sortedChats.filter { $0.person.name.lowercased().contains(query.lowercased()) }
     }
     
-    func startConversation(sender: String, receiver: String, message: String) {
+    func startConversation(receiver: String, message: String) {
         
         var ref: DocumentReference? = nil
         if (user != nil) {
-            ref = db.collection("conversations").addDocument(data: ["Users" : ["0": user!.uid, "1": receiver]]) { err in
+            ref = db.collection("conversations").addDocument(data: ["users" : ["0": user!.displayName, "1": receiver]]) { err in
                 if let err = err {
                     print("error writing doc")
                 } else {
