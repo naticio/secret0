@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ConversationsView: View {
     
-    @StateObject var chatModel = ChatsViewModel()
+    @ObservedObject var chatModel = ChatsViewModel()
     
     @State private var query = ""
 

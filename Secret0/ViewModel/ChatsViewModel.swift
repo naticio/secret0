@@ -8,6 +8,7 @@
 import Foundation
 import Firebase
 import FirebaseFirestore
+import FirebaseFirestoreSwift
 
 class ChatsViewModel: ObservableObject {
     
@@ -54,10 +55,13 @@ class ChatsViewModel: ObservableObject {
                 }
                 
                 
-                //mapping OLD WAY
-                self.chats = documents.map{(queryDocumentSnapshot) -> Conversations in
-                    let data = queryDocumentSnapshot.data()
+                //mapping
+                self.chats = documents.compactMap{(queryDocumentSnapshot) -> Conversations? in
+                    //same as below but simpler, shorter
+                    return try? queryDocumentSnapshot.data(as: Conversations.self)
                     
+                    /*
+                    let data = queryDocumentSnapshot.data()
                     let docId = queryDocumentSnapshot.documentID
                     let users = data["users"] as? [String] ?? [""]
                     let msgs = data["messages"] as? [Message] ?? []
@@ -70,6 +74,7 @@ class ChatsViewModel: ObservableObject {
                     //chatsRetrieved = true //so I don't execute this again
                     //not getting messaages until chat is clicked
                     return Conversations(id: docId, users: users, messages: msgs, hasUnreadMessage: unreadmsg)
+                     */
                 }
                 
                 /* FAILED ATTEMPT
@@ -160,70 +165,3 @@ class ChatsViewModel: ObservableObject {
         return res
     }
 }
-
-
-
-
-//extension Conversation {
-//
-//    static let sampleChat = [
-//        Conversation(person: Person(name: "Hakim", imgString: "img1"), messages: [
-//            Message("Hey Hakim", type: .Sent, date: Date(timeIntervalSinceNow: -86400 * 3)),
-//            Message("I am just developing an WhatsApp Clone App and it is so hard to create a fake chat conversation. Can you help me out with it?", type: .Sent, date: Date(timeIntervalSinceNow: -86400 * 3)),
-//            Message("Please I need your help 😔", type: .Sent, date: Date(timeIntervalSinceNow: -86400 * 3)),
-//            Message("Sure how can I help you flo?", type: .Received, date: Date(timeIntervalSinceNow: -86400 * 2)),
-//            Message("Maybe you send me some \"good\" jokes 😅", type: .Sent, date: Date(timeIntervalSinceNow: -86400 * 2)),
-//            Message("Sure I can do that. No problem 😂😂", type: .Received, date: Date(timeIntervalSinceNow: -86400 * 2)),
-//            Message("What do you call a fish with no eyes?", type: .Received, date: Date(timeIntervalSinceNow: -86400 * 1)),
-//            Message("Hmm, Idk", type: .Sent, date: Date(timeIntervalSinceNow: -86400 * 1)),
-//            Message("A fsh", type: .Received, date: Date(timeIntervalSinceNow: -86400 * 1)),
-//            Message("OMG so bad 😂😂", type: .Sent, date: Date(timeIntervalSinceNow: -86400 * 1)),
-//            Message("Let me try one", type: .Sent, date: Date(timeIntervalSinceNow: -86400 * 1)),
-//            Message("There are 10 types of people in this world, those who understand binary and those who don't", type: .Sent, date: Date(timeIntervalSinceNow: -86400 * 1)),
-//            Message("This joke is sooo old haha", type: .Received, date: Date()),
-//        ], hasUnreadMessage: true),
-//
-//        Conversation(person: Person(name: "Vladimir W.", imgString: "img6"), messages: [
-//            Message("Hey Vlad, how is your bootcamp going?", type: .Sent, date: Date(timeIntervalSinceNow: -86400 * 5)),
-//            Message("It's going great flo. I have just finished my first app, but I still have a lot to learn, but coding is so much fun. I love it :)", type: .Received, date: Date(timeIntervalSinceNow: -86400 * 3)),
-//            Message("Hey that sounds great. Congratulations Vlad 🥳", type: .Sent, date: Date(timeIntervalSinceNow: -86400 * 2)),
-//            Message("What type of app is it?", type: .Sent, date: Date(timeIntervalSinceNow: -86400 * 2)),
-//            Message("It's a Table App. I have coded it for the bootcamp, so that I get more familiar with SwiftUI.", type: .Received, date: Date()),
-//            Message("The big question now is if I should start a junior dev job or if I should do app development just for fun.", type: .Received, date: Date()),
-//        ]),
-//
-//        Conversation(person: Person(name: "Andrej", imgString: "img7"), messages: [
-//            Message("Hey Sensei 👋", type: .Sent, date: Date(timeIntervalSinceNow: -86400 * 3)),
-//            Message("Can you show me a new Meditation exercise? The last one was so helpfull ☺️", type: .Sent, date: Date(timeIntervalSinceNow: -86400 * 3)),
-//            Message("Yeah sure flo. Have you tested the mindful breathing techniques yet?", type: .Received, date: Date(timeIntervalSinceNow: -86400 * 2)),
-//            Message("No what is that?", type: .Sent, date: Date(timeIntervalSinceNow: -86400 * 1)),
-//            Message("This technique can increase your energy and help you to feel more alert.", type: .Received),
-//        ], hasUnreadMessage: true),
-//
-//        Conversation(person: Person(name: "Romesh", imgString: "img9"), messages: [
-//            Message("Hey Romesh, how is your dev journey going?", type: .Sent, date: Date(timeIntervalSinceNow: -86400 * 4)),
-//            Message("Thanks for asking flo. It is going great. I just completed the HWS course. I have learned so much an now I am starting to building my own app.", type: .Received, date: Date(timeIntervalSinceNow: -86400 * 4)),
-//            Message("That sounds great. I'm so proud of you, that you completed the course. Most people don't have the endurance to complete it, because the cannot sit with the problem long enough. So you can definetly see this as an archievment ☺️💪", type: .Sent, date: Date(timeIntervalSinceNow: -86400 * 2))
-//        ]),
-//
-//        Conversation(person: Person(name: "Dirk S.", imgString: "img8"), messages: [
-//            Message("Hey Dirk, are you from germany?", type: .Sent, date: Date(timeIntervalSinceNow: -86400 * 2)),
-//            Message("Hey Flo, yes I am.", type: .Received, date: Date(timeIntervalSinceNow: -86400 * 2)),
-//            Message("Ohh thats cool, how is your dev journey going?", type: .Sent, date: Date(timeIntervalSinceNow: -86400 * 2)),
-//            Message("SwiftUI is just amazing, it makes coding so fast and elegant. I have currently completed the 100 days of SwiftUI course from Paul Hudson. The course was awesome and I learned so much 😃", type: .Received, date: Date(timeIntervalSinceNow: -86400 * 2)),
-//            Message("Nice Dirk, Congratulations for completing the course. Yeah you are right, I also love developing apps in SwiftUI, because you can do so much crazy stuff with just a few lines of code.", type: .Sent, date: Date(timeIntervalSinceNow: -86400 * 1)),
-//            Message("SwiftUI is a real game changer for IOS Development 😍", type: .Sent, date: Date(timeIntervalSinceNow: -86400 * 1)),
-//        ]),
-//
-//        Conversation(person: Person(name: "Sandeep", imgString: "img2"), messages: [
-//            Message("Hey buddy, what are you doing?", type: .Sent, date: Date(timeIntervalSinceNow: -86400 * 10)),
-//            Message("I'm just learning SwiftUI. Do you know the awesome online course called Hacking With SwiftUI?", type: .Received, date: Date(timeIntervalSinceNow: -86400 * 10)),
-//            Message("Oh yeah, this course is awesome. I have completed it and I can fully recommend it as well 🙏", type: .Sent, date: Date(timeIntervalSinceNow: -86400 * 9)),
-//        ]),
-//
-//        Conversation(person: Person(name: "Wayne D.", imgString: "img3"), messages: [
-//            Message("Hey Wayne, I just want to say thank you so much for your support on Patreon 🙏", type: .Sent, date: Date(timeIntervalSinceNow: -86400 * 4)),
-//            Message("I hope you will read this ☺️", type: .Sent, date: Date(timeIntervalSinceNow: -86400 * 4)),
-//        ]),
-//    ]
-//}
