@@ -14,22 +14,29 @@ class ChatsViewModel: ObservableObject {
     //gets assigned an arrat of dummy chats
     ///FETCH DATA FROM FIREBASE HERE, GET CHATS from x user, or on appear
     //@Published var chats = Conversation.sampleChat
-    @Published var chats = [Conversation]()
+    @Published var chats = [Conversations]()
     @Published var chatsRetrieved = false
     
     private let db = Firestore.firestore()
     private let user = Auth.auth().currentUser
     
-    func sendMessage(_ text: String, in chat: Conversation) -> Message? {
+    func sendMessage(_ text: String, in chat: Conversations) -> Message? {
         if let index = chats.firstIndex(where: { $0.id == chat.id }) {
             let message = Message(text, type: .Sent)
-            chats[index].messages.append(message)
+            //chats[index].messages.append(message)
+            //chats[index].messages.append([user!.displayName])
+            
+            //call firebase add message
+            let ref = db.collection("conversations").document(chat.id)
+            //ref.setData(["gender" : user.gender], merge: true)
+            ref.setData(["messages" : [user!.displayName : text]], merge: true)
+            
             return message
         }
         return nil
     }
-
-    func markAsUnread(_ newValue: Bool, chat: Conversation) {
+    
+    func markAsUnread(_ newValue: Bool, chat: Conversations) {
         if let index = chats.firstIndex(where: { $0.id == chat.id }) {
             chats[index].hasUnreadMessage = newValue
         }
@@ -39,59 +46,76 @@ class ChatsViewModel: ObservableObject {
     func getFilteredConversations(query: String) {
         
         //let currentUser = UserService.shared.user
-        if chatsRetrieved == false {
-            if (user != nil) {
-                db.collection("conversations").whereField("users", arrayContains: user!.displayName).addSnapshotListener({ [self](snapshot, error) in
-                    guard let documents = snapshot?.documents else {
-                        print("no conversations found")
-                        return
-                    }
+        if (user != nil) {
+            db.collection("conversations").whereField("users", arrayContains: user!.displayName).addSnapshotListener({ [self](snapshot, error) in
+                guard let documents = snapshot?.documents else {
+                    print("no conversations found")
+                    return
+                }
+                
+                var chatshere = [Conversations]()
+                
+                for doc in snapshot!.documents {
+                    var conver = [Conversations]() //empty array of conversation
+                    conver.id = doc["id"] as? String ?? ""
+                    conver.users = doc["users"] as? [String] ?? [""]
+                    //conver.messages = doc["messages"] as? [Message] ?? []
+                    conver.hasUnreadMessage = doc["hasUnreadMessage"] as? Bool ?? false
                     
-                    self.chats = documents.map{(docSnapshot) -> Conversation in
-                        let data = docSnapshot.data()
-                        
-                        let docId = docSnapshot.documentID
-                        let users = data["users"] as? [String] ?? [""]
-//                        let p1Img = data["person1Img"] as? String ?? ""
-//                        let p2Img = data["person2Img"] as? String ?? ""
-//                        let p1name = data["person1name"] as? String ?? ""
-//                        let p2name = data["person2name"] as? String ?? ""
-                        let msgs = data["messages"] as? [Message] ?? []
-                        
-                        print("Users: \(users)")
-                        
-                        //let unreadMsg = data["unreadMsg"] as? Bool ?? false
-                        
-                        chatsRetrieved = true //so I don't execute this again
-                        //not getting messaages until chat is clicked
-                        return Conversation(id: docId, users: users, messages: msgs)
-                    }
-    //
-    //                let sortedChats = chats.sorted {
-    //                    guard let date1 = $0.messages.last?.date else { return false }
-    //                    guard let date2 = $1.messages.last?.date else { return false }
-    //                    return date1 > date2
-    //                }
-    //
-    //                if (query == "") {
-    //                    return sortedChats
-    //                }
-                })
-            }
+                    
+                    chatshere.append(conver)
+                    
+                }
+                
+                DispatchQueue.main.async {
+                    self.chats = chatshere
+                    //self.usersLoaded = true
+                }
+                
+                /*mapping OLD WAY
+                 self.chats = documents.map{(docSnapshot) -> Conversation in
+                 let data = docSnapshot.data()
+                 
+                 let docId = docSnapshot.documentID
+                 let users = data["users"] as? [String] ?? [""]
+                 //                        let p1Img = data["person1Img"] as? String ?? ""
+                 //                        let p2Img = data["person2Img"] as? String ?? ""
+                 //                        let p1name = data["person1name"] as? String ?? ""
+                 //                        let p2name = data["person2name"] as? String ?? ""
+                 let msgs = data["messages"] as? [Message] ?? []
+                 
+                 print("Users: \(users)")
+                 
+                 //let unreadMsg = data["unreadMsg"] as? Bool ?? false
+                 
+                 chatsRetrieved = true //so I don't execute this again
+                 //not getting messaages until chat is clicked
+                 return Conversation(id: docId, users: users, messages: msgs)
+                 }*/
+                //
+                //                let sortedChats = chats.sorted {
+                //                    guard let date1 = $0.messages.last?.date else { return false }
+                //                    guard let date2 = $1.messages.last?.date else { return false }
+                //                    return date1 > date2
+                //                }
+                //
+                //                if (query == "") {
+                //                    return sortedChats
+                //                }
+            })
         }
         
-       
-
         
         //search for chats, hinge doesn't have it
-//        return sortedChats.filter { $0.person.name.lowercased().contains(query.lowercased()) }
+        //        return sortedChats.filter { $0.person.name.lowercased().contains(query.lowercased()) }
     }
     
     func startConversation(receiver: String, message: String) {
         
         var ref: DocumentReference? = nil
         if (user != nil) {
-            ref = db.collection("conversations").addDocument(data: ["users" : [user!.displayName, receiver]]) { err in
+            ref = db.collection("conversations").addDocument(data: ["users" : [user!.displayName, receiver],
+                                                                    "messages" : [user!.displayName, message]]) { err in
                 if let err = err {
                     print("error writing doc")
                 } else {
@@ -109,17 +133,17 @@ class ChatsViewModel: ObservableObject {
                 } else {
                     print("success writing message")
                 }
+            }
         }
     }
-    }
     
     
-    func getSectionMessages(for chat: Conversation) -> [[Message]] {
+    func getSectionMessages(for chat: Conversations) -> [[Message]] {
         var res = [[Message]]()
         var tmp = [Message]()
         for message in chat.messages {
             if let firstMessage = tmp.first {
-                let daysBetween = firstMessage.date.daysBetween(date: message.date)
+                let daysBetween = firstMessage.date.daysBetween(date: message.date ?? Date())
                 if daysBetween >= 1 {
                     res.append(tmp)
                     tmp.removeAll()

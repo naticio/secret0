@@ -64,9 +64,9 @@ struct LaunchLogicView: View {
                             }
                         }
                 }
-                .onAppear {
-                    model.getMatches()
-                }
+//                .onAppear {
+//                    model.getMatches()
+//                }
             }
         }
         

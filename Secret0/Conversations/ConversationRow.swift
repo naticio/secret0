@@ -10,7 +10,7 @@ import SwiftUI
 
 struct ConversationRow: View {
     
-    let chat: Conversation
+    let chat: Conversations
     
     var body: some View {
         HStack(spacing: 20) {
@@ -46,7 +46,7 @@ struct ConversationRow: View {
                         }
 
                         Spacer()
-                        Text(chat.messages.last?.date.descriptiveString() ?? "")
+                        Text(chat.messages.last?.date!.descriptiveString() ?? "")
                             //.foregroundColor(chat.hasUnreadMessage ? .blue : .gray)
                     }
                     

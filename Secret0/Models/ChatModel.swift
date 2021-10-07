@@ -6,36 +6,33 @@
 //
 
 import Foundation
+import SwiftUI
 
-struct Conversation: Identifiable {
+class Conversations: Decodable, Identifiable, ObservableObject {
     //var id: UUID { person.id }
-    var id: String = UUID().uuidString
-    let users: [String]
-//    var person1Img: String
-//    var person2Img: String
-//    var person1name: String
-//    var person2name: String
-    var messages: [Message]
-    var hasUnreadMessage = false
+    var id: String = ""
+    var users: [String] = [""]
+    var messages: [Message] = []
+    var hasUnreadMessage : Bool = false
 }
 
-struct Message: Identifiable {
-    
+struct Message: Decodable {
+
     enum MessageType {
         case Sent, Received
     }
-    
+
     let id = UUID()
     let date: Date
     let text: String
-    let type: MessageType
-    
+    let type: MessageType?
+
     init(_ text: String, type: MessageType, date: Date) {
         self.date = date
         self.text = text
         self.type = type
     }
-    
+
     init(_ text: String, type: MessageType) {
         self.init(text, type: type, date: Date())
     }

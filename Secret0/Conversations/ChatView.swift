@@ -12,7 +12,7 @@ struct ChatView: View {
     
     @EnvironmentObject var chatModel: ChatsViewModel
     
-    let chat: Conversation
+    let chat: Conversations
     
     @State private var text = ""
     //@FocusState private var isFocused
@@ -94,7 +94,9 @@ struct ChatView: View {
                     }
                     .onAppear {
                         DispatchQueue.main.async {
-                            scrollReader.scrollTo(chat.messages.last!.id, anchor: .bottom)
+                            //scrollReader.scrollTo(chat.messages.last!.id, anchor: .bottom)
+                            scrollReader.scrollTo(chat.messages.last, anchor: .bottom)
+
                         }
                     }
                 }
@@ -145,7 +147,7 @@ struct ChatView: View {
     func sectionHeader(firstMessage message: Message) -> some View {
         ZStack {
             let color = Color(hue: 0.587, saturation: 0.742, brightness: 0.924)
-            Text(message.date.descriptiveString(dateStyle: .medium))
+            Text(message.date!.descriptiveString(dateStyle: .medium))
                 .foregroundColor(.white)
                 .font(.system(size: 14, weight: .regular))
                 .frame(width: 120)
