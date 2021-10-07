@@ -11,5 +11,6 @@ target 'Secret0' do
   pod 'Firebase/Auth' 
   pod 'Firebase/Storage'
   pod 'Firebase/Database'
+  pod 'FirebaseFirestoreSwift', '> 7.0-beta'
 
 end

@@ -103,7 +103,7 @@ struct ChatView: View {
                 .padding(.horizontal)
             }
         }
-        .background(Color.white)
+        //.background(Color.white)
     }
     
     func toolbarView() -> some View {
@@ -147,7 +147,7 @@ struct ChatView: View {
     func sectionHeader(firstMessage message: Message) -> some View {
         ZStack {
             let color = Color(hue: 0.587, saturation: 0.742, brightness: 0.924)
-            Text(message.date!.descriptiveString(dateStyle: .medium))
+            Text(message.date.descriptiveString(dateStyle: .medium))
                 .foregroundColor(.white)
                 .font(.system(size: 14, weight: .regular))
                 .frame(width: 120)

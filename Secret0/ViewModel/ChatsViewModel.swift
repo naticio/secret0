@@ -27,7 +27,7 @@ class ChatsViewModel: ObservableObject {
             //chats[index].messages.append([user!.displayName])
             
             //call firebase add message
-            let ref = db.collection("conversations").document(chat.id)
+            let ref = db.collection("conversations").document(chat.id!)
             //ref.setData(["gender" : user.gender], merge: true)
             ref.setData(["messages" : [user!.displayName : text]], merge: true)
             
@@ -47,51 +47,51 @@ class ChatsViewModel: ObservableObject {
         
         //let currentUser = UserService.shared.user
         if (user != nil) {
-            db.collection("conversations").whereField("users", arrayContains: user!.displayName).addSnapshotListener({ [self](snapshot, error) in
-                guard let documents = snapshot?.documents else {
+            db.collection("conversations").whereField("users", arrayContains: user!.displayName).addSnapshotListener { (querySnapshot, error) in
+                guard let documents = querySnapshot?.documents else {
                     print("no conversations found")
                     return
                 }
                 
-                var chatshere = [Conversations]()
                 
-                for doc in snapshot!.documents {
-                    var conver = [Conversations]() //empty array of conversation
-                    conver.id = doc["id"] as? String ?? ""
-                    conver.users = doc["users"] as? [String] ?? [""]
-                    //conver.messages = doc["messages"] as? [Message] ?? []
-                    conver.hasUnreadMessage = doc["hasUnreadMessage"] as? Bool ?? false
+                //mapping OLD WAY
+                self.chats = documents.map{(queryDocumentSnapshot) -> Conversations in
+                    let data = queryDocumentSnapshot.data()
                     
+                    let docId = queryDocumentSnapshot.documentID
+                    let users = data["users"] as? [String] ?? [""]
+                    let msgs = data["messages"] as? [Message] ?? []
+                    let unreadmsg = data["hasUnreadMessage"] as? Bool ?? false
                     
-                    chatshere.append(conver)
+                    print("Users: \(users)")
                     
+                    //let unreadMsg = data["unreadMsg"] as? Bool ?? false
+                    
+                    //chatsRetrieved = true //so I don't execute this again
+                    //not getting messaages until chat is clicked
+                    return Conversations(id: docId, users: users, messages: msgs, hasUnreadMessage: unreadmsg)
                 }
                 
-                DispatchQueue.main.async {
-                    self.chats = chatshere
-                    //self.usersLoaded = true
-                }
-                
-                /*mapping OLD WAY
-                 self.chats = documents.map{(docSnapshot) -> Conversation in
-                 let data = docSnapshot.data()
+                /* FAILED ATTEMPT
+                 var chatshere = [Conversations]()
                  
-                 let docId = docSnapshot.documentID
-                 let users = data["users"] as? [String] ?? [""]
-                 //                        let p1Img = data["person1Img"] as? String ?? ""
-                 //                        let p2Img = data["person2Img"] as? String ?? ""
-                 //                        let p1name = data["person1name"] as? String ?? ""
-                 //                        let p2name = data["person2name"] as? String ?? ""
-                 let msgs = data["messages"] as? [Message] ?? []
+                 for doc in snapshot!.documents {
+                 var conver = [Conversations]() //empty array of conversation
+                 conver.id = doc["id"] as? String ?? ""
+                 conver.users = doc["users"] as? [String] ?? [""]
+                 //conver.messages = doc["messages"] as? [Message] ?? []
+                 conver.hasUnreadMessage = doc["hasUnreadMessage"] as? Bool ?? false
                  
-                 print("Users: \(users)")
                  
-                 //let unreadMsg = data["unreadMsg"] as? Bool ?? false
+                 chatshere.append(conver)
                  
-                 chatsRetrieved = true //so I don't execute this again
-                 //not getting messaages until chat is clicked
-                 return Conversation(id: docId, users: users, messages: msgs)
+                 }
+                 
+                 DispatchQueue.main.async {
+                 self.chats = chatshere
+                 //self.usersLoaded = true
                  }*/
+                
                 //
                 //                let sortedChats = chats.sorted {
                 //                    guard let date1 = $0.messages.last?.date else { return false }
@@ -102,7 +102,7 @@ class ChatsViewModel: ObservableObject {
                 //                if (query == "") {
                 //                    return sortedChats
                 //                }
-            })
+            }
         }
         
         

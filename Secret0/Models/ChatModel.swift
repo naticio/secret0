@@ -7,18 +7,19 @@
 
 import Foundation
 import SwiftUI
+import FirebaseFirestoreSwift
 
-class Conversations: Decodable, Identifiable, ObservableObject {
+struct Conversations: Decodable, Identifiable {
     //var id: UUID { person.id }
-    var id: String = ""
+    @DocumentID var id: String? = UUID().uuidString
     var users: [String] = [""]
     var messages: [Message] = []
     var hasUnreadMessage : Bool = false
 }
 
-struct Message: Decodable {
+struct Message: Decodable, Identifiable, Hashable {
 
-    enum MessageType {
+    enum MessageType : Codable {
         case Sent, Received
     }
 

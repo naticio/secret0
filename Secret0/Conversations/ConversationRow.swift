@@ -46,7 +46,7 @@ struct ConversationRow: View {
                         }
 
                         Spacer()
-                        Text(chat.messages.last?.date!.descriptiveString() ?? "")
+                        Text(chat.messages.last?.date.descriptiveString() ?? "")
                             //.foregroundColor(chat.hasUnreadMessage ? .blue : .gray)
                     }
                     
