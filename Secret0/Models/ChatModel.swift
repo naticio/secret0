@@ -23,10 +23,10 @@ struct Message: Decodable, Identifiable, Hashable {
         case Sent, Received
     }
 
-    let id = UUID()
-    let date: Date
-    let text: String
-    let type: MessageType?
+    var id = UUID()
+    var date: Date
+    var text: String
+    var type: MessageType?
 
     init(_ text: String, type: MessageType, date: Date) {
         self.date = date
