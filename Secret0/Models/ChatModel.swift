@@ -24,18 +24,19 @@ struct Message: Decodable, Identifiable, Hashable {
     }
 
     var id = UUID()
+    //var id : Int
     var date: Date
-    var text: String
+    var msg: String
     var type: MessageType?
 
     init(_ text: String, type: MessageType, date: Date) {
         self.date = date
-        self.text = text
+        self.msg = text
         self.type = type
     }
 
-    init(_ text: String, type: MessageType) {
-        self.init(text, type: type, date: Date())
+    init(_ msg: String, type: MessageType) {
+        self.init(msg, type: type, date: Date())
     }
 }
 

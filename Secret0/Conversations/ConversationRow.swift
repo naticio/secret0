@@ -51,7 +51,7 @@ struct ConversationRow: View {
                     }
                     
                     HStack {
-                        Text(chat.messages.last?.text ?? "")
+                        Text(chat.messages.last?.msg ?? "")
                             .foregroundColor(.gray)
                             .lineLimit(2)
                             .frame(height: 50, alignment: .top)

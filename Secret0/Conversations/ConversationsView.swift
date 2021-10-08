@@ -66,6 +66,10 @@ struct ConversationsView: View {
                 Image(systemName: "square.and.pencil")
             })
         }
+        .onAppear() {
+            //get conversations
+            chatModel.getFilteredConversations(query: "")
+        }
     }
 }
 

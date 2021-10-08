@@ -39,7 +39,7 @@ struct LaunchLogicView: View {
                         .onAppear() {
                             model.getMatches()
                             //get conversations
-                            chatViewModel.getFilteredConversations(query: "")
+                            //chatViewModel.getFilteredConversations(query: "")
                         }
                         .tabItem {
                             VStack {

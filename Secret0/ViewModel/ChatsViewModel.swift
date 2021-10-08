@@ -58,9 +58,9 @@ class ChatsViewModel: ObservableObject {
                 //mapping
                 self.chats = documents.compactMap{(queryDocumentSnapshot) -> Conversations? in
                     //same as below but simpler, shorter
-                    return try? queryDocumentSnapshot.data(as: Conversations.self)
+                    //return try? queryDocumentSnapshot.data(as: Conversations.self)
+
                     
-                    /*
                     let data = queryDocumentSnapshot.data()
                     let docId = queryDocumentSnapshot.documentID
                     let users = data["users"] as? [String] ?? [""]
@@ -74,7 +74,7 @@ class ChatsViewModel: ObservableObject {
                     //chatsRetrieved = true //so I don't execute this again
                     //not getting messaages until chat is clicked
                     return Conversations(id: docId, users: users, messages: msgs, hasUnreadMessage: unreadmsg)
-                     */
+                    
                 }
                 
                 /* FAILED ATTEMPT

@@ -55,10 +55,11 @@ struct ChatView: View {
                         Section(header: sectionHeader(firstMessage: messages.first!)) {
                             ForEach(messages) { message in
                                 let isReceived = message.type == .Received
+                                //message sender is not me
                                 
                                 HStack {
                                     ZStack {
-                                        Text(message.text)
+                                        Text(message.msg)
                                             .padding(.horizontal)
                                             .padding(.vertical, 12)
                                             .background(isReceived ? Color.black.opacity(0.2) : Color.green.opacity(0.9))
