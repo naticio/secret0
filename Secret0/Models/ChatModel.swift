@@ -7,6 +7,7 @@
 
 import Foundation
 import SwiftUI
+import FirebaseFirestore
 import FirebaseFirestoreSwift
 
 struct Conversation: Decodable, Identifiable {
@@ -20,15 +21,15 @@ struct Conversation: Decodable, Identifiable {
 struct Message: Decodable {
     var createdBy: String?
     var msg: String?
-    var date = Date()
+    @ServerTimestamp var date : Timestamp?
     var id : String?
 }
 
 let sampleConv = Conversation(id: "abc", users: ["lolameraz", "charly"], messages: sampleMessages)
 
 let sampleMessages = [
-    Message(createdBy: "lolameraz", msg: "mensaje test", date: Date(), id: "123"),
-    Message(createdBy: "charly", msg: "mensaje response", date: Date(), id: "456")
+    Message(createdBy: "lolameraz", msg: "mensaje test", date: Timestamp(), id: "123"),
+    Message(createdBy: "charly", msg: "mensaje response", date: Timestamp(), id: "456")
 ]
 
 /*struct Message: Decodable, Identifiable, Hashable {

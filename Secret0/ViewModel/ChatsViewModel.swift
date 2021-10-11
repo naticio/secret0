@@ -89,20 +89,20 @@ class ChatsViewModel: ObservableObject {
                             
                         }
                         
-                       
+                        
                     }
-            }
-                    
+                }
+            
+            
+        }
         
-            }
-            
-            
-            
+        
+        
     }
     
     func sendMessageChat(_ text: String, in chat: Conversation, chatid: String) -> Message? {
         if let index = chats.firstIndex(where: { $0.id == chat.id }) {
-            let message = Message(createdBy: user!.displayName, msg: text, date: Date())
+            let message = Message(createdBy: user!.displayName, msg: text, date: Timestamp())
             //chats[index].messages.append(message)
             //chats[index].messages.append([user!.displayName])
             
@@ -133,7 +133,9 @@ class ChatsViewModel: ObservableObject {
         
         //let currentUser = UserService.shared.user
         if (user != nil) {
-            db.collection("conversations").whereField("users", arrayContains: user!.displayName).addSnapshotListener { (querySnapshot, error) in
+            db.collection("conversations").whereField("users", arrayContains: user!.displayName)
+                .order(by: "createdTime")
+                .addSnapshotListener { (querySnapshot, error) in
                 guard let documents = querySnapshot?.documents else {
                     print("no conversations found")
                     return
@@ -144,21 +146,41 @@ class ChatsViewModel: ObservableObject {
                 self.chats = documents.map {(queryDocumentSnapshot) -> Conversation in
                     //same as below but simpler, shorter
                     //return try? queryDocumentSnapshot.data(as: Conversations.self)
-                    
+                    var mensajes = [Message]()
                     
                     let data = queryDocumentSnapshot.data()
                     let docId = queryDocumentSnapshot.documentID
                     let users = data["users"] as? [String] ?? [""]
-                    let msgs = data["messages"] as? [Message] ?? []
+                    //let msgs = data["messages"] as? [Message] ?? []
                     let unreadmsg = data["hasUnreadMessage"] as? Bool ?? false
                     
+                    //MARK: - GET MESSAGES
+                    self.db.collection("conversations").document(docId).collection("messages")
+                        .order(by: "date")
+                        .addSnapshotListener{ (querySnapshot, err) in
+                            
+                            guard let documents = querySnapshot?.documents else {
+                                print("no messages found")
+                                return
+                            }
+                            
+                           
+                            mensajes = documents.map {(queryDocumentSnapshot) -> Message in
+                                
+                                let data = queryDocumentSnapshot.data()
+                                let docId = queryDocumentSnapshot.documentID
+                                let createdby = data["created_by"] as? String ?? ""
+                                let msg = data["msg"] as? String ?? ""
+                                let date = data["date"] as? Timestamp ?? Timestamp()
+                                
+                                return Message(createdBy: createdby, msg: msg, date: date, id: docId)
+                                
+                            }
+                        }
+                    
                     print("Users: \(users)")
-                    
-                    //let unreadMsg = data["unreadMsg"] as? Bool ?? false
-                    
-                    //chatsRetrieved = true //so I don't execute this again
-                    //not getting messaages until chat is clicked
-                    return Conversation(id: docId, users: users, messages: msgs, hasUnreadMessage: unreadmsg)
+
+                    return Conversation(id: docId, users: users, messages: mensajes, hasUnreadMessage: unreadmsg)
                     
                 }
                 
@@ -204,7 +226,7 @@ class ChatsViewModel: ObservableObject {
         
         //let currentUser = UserService.shared.user
         if (user != nil) {
-            db.collection("conversations").document(chatId).collection("messages").getDocuments() { (querySnapshot, err) in
+            db.collection("conversations").document(chatId).collection("messages").getDocuments(){ (querySnapshot, err) in
                 
                 guard let documents = querySnapshot?.documents else {
                     print("no conversations found")
@@ -224,7 +246,7 @@ class ChatsViewModel: ObservableObject {
                     let docId = queryDocumentSnapshot.documentID
                     let createdby = data["created_by"] as? String ?? ""
                     let msg = data["msg"] as? String ?? ""
-                    let date = data["date"] as? Date ?? Date()
+                    let date = data["date"] as? Timestamp ?? Timestamp()
                     let unreadmsg = data["hasUnreadMessage"] as? Bool ?? false
                     
                     //print("messages: \(msgs)")
@@ -237,25 +259,25 @@ class ChatsViewModel: ObservableObject {
     }
     
     
-    func getSectionMessages(for chat: Conversation) -> [[Message]] {
-        var res = [[Message]]()
-        var tmp = [Message]()
-        for message in chat.messages {
-            if let firstMessage = tmp.first {
-                let daysBetween = firstMessage.date.daysBetween(date: message.date ?? Date())
-                if daysBetween >= 1 {
-                    res.append(tmp)
-                    tmp.removeAll()
-                    tmp.append(message)
-                } else {
-                    tmp.append(message)
-                }
-            } else {
-                tmp.append(message)
-            }
-        }
-        res.append(tmp)
-        
-        return res
-    }
+    /*func getSectionMessages(for chat: Conversation) -> [[Message]] {
+     var res = [[Message]]()
+     var tmp = [Message]()
+     for message in chat.messages {
+     if let firstMessage = tmp.first {
+     let daysBetween = firstMessage.date.daysBetween(date: message.date ?? Date())
+     if daysBetween >= 1 {
+     res.append(tmp)
+     tmp.removeAll()
+     tmp.append(message)
+     } else {
+     tmp.append(message)
+     }
+     } else {
+     tmp.append(message)
+     }
+     }
+     res.append(tmp)
+     
+     return res
+     }*/
 }

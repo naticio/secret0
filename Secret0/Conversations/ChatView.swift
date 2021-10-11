@@ -26,6 +26,8 @@ struct ChatView: View {
                 //to programatically change the scroll position of a scroll view, similar to gemotry reader
                 ScrollViewReader { scrollView in
                     ScrollView { //to scroll nicely
+                        //sort by date
+                        //let sortedMsgs = chatModel.msgs.sorted(by: { $0.date > $1.date })
                         ForEach(chatModel.msgs, id: \.id) { message in
                             //if current user == whoever sent the message
                             if user.name == message.createdBy {
