@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 import FirebaseFirestoreSwift
 
-struct Conversations: Decodable, Identifiable {
+struct Conversation: Decodable, Identifiable {
     //var id: UUID { person.id }
     @DocumentID var id: String? = UUID().uuidString
     var users: [String] = [""]
@@ -17,7 +17,14 @@ struct Conversations: Decodable, Identifiable {
     var hasUnreadMessage : Bool = false
 }
 
-struct Message: Decodable, Identifiable, Hashable {
+struct Message: Decodable, Hashable {
+    var createdBy: String?
+    var msg: String?
+    var date = Date()
+    var id = UUID()
+}
+
+/*struct Message: Decodable, Identifiable, Hashable {
 
     enum MessageType : Codable {
         case Sent, Received
@@ -38,7 +45,7 @@ struct Message: Decodable, Identifiable, Hashable {
     init(_ msg: String, type: MessageType) {
         self.init(msg, type: type, date: Date())
     }
-}
+}*/
 
 //struct Person: Identifiable {
 //    let id = UUID()

@@ -15,29 +15,58 @@ class ChatsViewModel: ObservableObject {
     //gets assigned an arrat of dummy chats
     ///FETCH DATA FROM FIREBASE HERE, GET CHATS from x user, or on appear
     //@Published var chats = Conversation.sampleChat
-    @Published var chats = [Conversations]()
+    @Published var chats = [Conversation]()
     @Published var chatsRetrieved = false
     
     private let db = Firestore.firestore()
     private let user = Auth.auth().currentUser
+
     
-    func sendMessage(_ text: String, in chat: Conversations) -> Message? {
+    func startConversation(receiver: String, message: String) {
+        
+        var ref: DocumentReference? = nil
+        if (user != nil) {
+            ref = db.collection("conversations").addDocument(data: ["users" : [user!.displayName, receiver],
+                                                                    "messages":["created_by" : user!.displayName, "msg" : message, "date" : Date()]]) { err in
+                if let err = err {
+                    print("error writing doc")
+                } else {
+                    print("success writing conversation/chat")
+                }
+            }
+            
+            //write the message in the subcollection
+//            db.collection("conversations").document(ref!.documentID).collection("messages").addDocument(data: [
+//                "created_by" : user!.displayName ?? "",
+//                "msg": message,
+//                "date": Date()
+//            ]){ errormsg in
+//                if let error = errormsg {
+//                    print("error writing message")
+//                } else {
+//                    print("success writing message")
+//                }
+//            }
+        }
+    }
+    
+    func sendMessageChat(_ text: String, in chat: Conversation, chatid: String) -> Message? {
         if let index = chats.firstIndex(where: { $0.id == chat.id }) {
-            let message = Message(text, type: .Sent)
+            let message = Message(createdBy: user!.displayName, msg: text, date: Date())
             //chats[index].messages.append(message)
             //chats[index].messages.append([user!.displayName])
             
             //call firebase add message
             let ref = db.collection("conversations").document(chat.id!)
             //ref.setData(["gender" : user.gender], merge: true)
-            ref.setData(["messages" : [user!.displayName : text]], merge: true)
+            ref.setData(["messages":["created_by" : user!.displayName, "msg" : message, "date" : Date()]], merge: false)
             
             return message
         }
         return nil
     }
     
-    func markAsUnread(_ newValue: Bool, chat: Conversations) {
+    func markAsUnread(_ newValue: Bool, chat: Conversation) {
         if let index = chats.firstIndex(where: { $0.id == chat.id }) {
             chats[index].hasUnreadMessage = newValue
         }
@@ -56,7 +85,7 @@ class ChatsViewModel: ObservableObject {
                 
                 
                 //mapping
-                self.chats = documents.compactMap{(queryDocumentSnapshot) -> Conversations? in
+                self.chats = documents.compactMap{(queryDocumentSnapshot) -> Conversation? in
                     //same as below but simpler, shorter
                     //return try? queryDocumentSnapshot.data(as: Conversations.self)
 
@@ -73,7 +102,7 @@ class ChatsViewModel: ObservableObject {
                     
                     //chatsRetrieved = true //so I don't execute this again
                     //not getting messaages until chat is clicked
-                    return Conversations(id: docId, users: users, messages: msgs, hasUnreadMessage: unreadmsg)
+                    return Conversation(id: docId, users: users, messages: msgs, hasUnreadMessage: unreadmsg)
                     
                 }
                 
@@ -114,36 +143,10 @@ class ChatsViewModel: ObservableObject {
         //search for chats, hinge doesn't have it
         //        return sortedChats.filter { $0.person.name.lowercased().contains(query.lowercased()) }
     }
-    
-    func startConversation(receiver: String, message: String) {
-        
-        var ref: DocumentReference? = nil
-        if (user != nil) {
-            ref = db.collection("conversations").addDocument(data: ["users" : [user!.displayName, receiver],
-                                                                    "messages" : [user!.displayName, message]]) { err in
-                if let err = err {
-                    print("error writing doc")
-                } else {
-                    print("success writing conversation/chat")
-                }
-            }
-            
-            //write the message
-            db.collection("conversations").document(ref!.documentID).collection("messages").addDocument(data: [
-                "from" : user!.displayName ?? "",
-                "message": message
-            ]){ errormsg in
-                if let error = errormsg {
-                    print("error writing message")
-                } else {
-                    print("success writing message")
-                }
-            }
-        }
-    }
+
     
     
-    func getSectionMessages(for chat: Conversations) -> [[Message]] {
+    func getSectionMessages(for chat: Conversation) -> [[Message]] {
         var res = [[Message]]()
         var tmp = [Message]()
         for message in chat.messages {

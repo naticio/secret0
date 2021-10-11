@@ -10,7 +10,7 @@ import SwiftUI
 
 struct ConversationRow: View {
     
-    let chat: Conversations
+    let chat: Conversation
     
     var body: some View {
         HStack(spacing: 20) {

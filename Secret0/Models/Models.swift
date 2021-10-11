@@ -70,33 +70,6 @@ class Matches: Decodable, Identifiable, ObservableObject {
         case imageUrl5 = "image_url5"
         case imageUrl6 = "image_url6"
     }
-    
-    //func to get images from matches
-//    func getImageData() -> Data? {
-//
-//        // Check that image url isn't nil
-//        guard imageUrl1 != nil || imageUrl1 == "" else {
-//            return Data()
-//        }
-//
-//        // Download the data for the image
-//        if let url = URL(string: imageUrl1!) {
-//
-//            // Get a session
-//            let session = URLSession.shared
-//            let dataTask = session.dataTask(with: url) { (data, response, error) in
-//
-//                if error == nil {
-//
-//                    DispatchQueue.main.async {
-//                        // Set the image data
-//                        self.imageData = data!
-//                    }
-//                }
-//            }
-//            dataTask.resume()
-//        }
-//    }
 }
 
 struct Location: Decodable {

@@ -29,22 +29,22 @@ struct ConversationsView: View {
                             .frame(width:0)
                             .opacity(0)
                         }
-                        .swipeActions(edge: .leading, allowsFullSwipe: true) {
-                            if #available(iOS 15.0, *) {
-                                Button(action: {
-                                    chatModel.markAsUnread(!chat.hasUnreadMessage, chat: chat)
-                                }) {
-                                    if chat.hasUnreadMessage {
-                                        Label("Read", systemImage: "text.bubble")
-                                    } else {
-                                        Label("Read", systemImage: "circle.fill")
-                                    }
-                                }
-                                .tint(.blue)
-                            } else {
-                                // Fallback on earlier versions
-                            }
-                        }
+//                        .swipeActions(edge: .leading, allowsFullSwipe: true) {
+//                            if #available(iOS 15.0, *) {
+//                                Button(action: {
+//                                    chatModel.markAsUnread(!chat.hasUnreadMessage, chat: chat)
+//                                }) {
+//                                    if chat.hasUnreadMessage {
+//                                        Label("Read", systemImage: "text.bubble")
+//                                    } else {
+//                                        Label("Read", systemImage: "circle.fill")
+//                                    }
+//                                }
+//                                .tint(.blue)
+//                            } else {
+//                                // Fallback on earlier versions
+//                            }
+//                        }
                     } else {
                         // Fallback on earlier versions
                         ZStack {
