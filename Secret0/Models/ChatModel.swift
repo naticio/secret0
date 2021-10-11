@@ -24,6 +24,13 @@ struct Message: Decodable {
     var id : String?
 }
 
+let sampleConv = Conversation(id: "abc", users: ["lolameraz", "charly"], messages: sampleMessages)
+
+let sampleMessages = [
+    Message(createdBy: "lolameraz", msg: "mensaje test", date: Date(), id: "123"),
+    Message(createdBy: "charly", msg: "mensaje response", date: Date(), id: "456")
+]
+
 /*struct Message: Decodable, Identifiable, Hashable {
 
     enum MessageType : Codable {

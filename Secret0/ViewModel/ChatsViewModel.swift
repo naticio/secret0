@@ -204,7 +204,7 @@ class ChatsViewModel: ObservableObject {
         
         //let currentUser = UserService.shared.user
         if (user != nil) {
-            db.collection("users").document(chatId).collection("messages").getDocuments() { (querySnapshot, err) in
+            db.collection("conversations").document(chatId).collection("messages").getDocuments() { (querySnapshot, err) in
                 
                 guard let documents = querySnapshot?.documents else {
                     print("no conversations found")
@@ -217,6 +217,7 @@ class ChatsViewModel: ObservableObject {
                 }
                 
                 //map docs to conversation messages
+                self.msgs = [Message]()
                 self.msgs = documents.map {(queryDocumentSnapshot) -> Message in
                     
                     let data = queryDocumentSnapshot.data()

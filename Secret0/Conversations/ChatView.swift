@@ -26,22 +26,22 @@ struct ChatView: View {
                 //to programatically change the scroll position of a scroll view, similar to gemotry reader
                 ScrollViewReader { scrollView in
                     ScrollView { //to scroll nicely
-                        ForEach(chat.messages, id: \.id) { message in
+                        ForEach(chatModel.msgs, id: \.id) { message in
                             //if current user == whoever sent the message
                             if user.name == message.createdBy {
                                 ChatRow(message: message, isMe: true) //send an instance of chatMessage model
                                     //assign an id to each chat message for scroll view reader
                                     //first index finds the actual index position of the message
-                                    //.id(chat.messages.firstIndex(of: message))
+                                    //.id(chatModel.msgs.firstIndex(of: message))
                             } else {
                                 ChatRow(message: message, isMe: false)
-                                    //.id(chat.messages.firstIndex(of: message))
+                                    //.id(chatModel.msgs.firstIndex(of: message))
                             }
 
                             
                         }
                         //on appear shows the LAST message
-                        .onAppear(perform: {scrollView.scrollTo(sampleConversation.count-1)})
+                        .onAppear(perform: {scrollView.scrollTo(chatModel.msgs.count-1)})
                     }
                     
                 }
@@ -87,8 +87,8 @@ struct ChatView: View {
     }
 }
 
-//struct ChatView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        ChatView(chat: <#T##Conversation#>)
-//    }
-//}
+struct ChatView_Previews: PreviewProvider {
+    static var previews: some View {
+        ChatView(chat: sampleConv)
+    }
+}
