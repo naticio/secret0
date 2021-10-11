@@ -17,11 +17,11 @@ struct Conversation: Decodable, Identifiable {
     var hasUnreadMessage : Bool = false
 }
 
-struct Message: Decodable, Hashable {
+struct Message: Decodable {
     var createdBy: String?
     var msg: String?
     var date = Date()
-    var id = UUID()
+    var id : String?
 }
 
 /*struct Message: Decodable, Identifiable, Hashable {

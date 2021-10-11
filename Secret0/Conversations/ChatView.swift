@@ -32,10 +32,10 @@ struct ChatView: View {
                                 ChatRow(message: message, isMe: true) //send an instance of chatMessage model
                                     //assign an id to each chat message for scroll view reader
                                     //first index finds the actual index position of the message
-                                    .id(chat.messages.firstIndex(of: message))
+                                    //.id(chat.messages.firstIndex(of: message))
                             } else {
                                 ChatRow(message: message, isMe: false)
-                                    .id(chat.messages.firstIndex(of: message))
+                                    //.id(chat.messages.firstIndex(of: message))
                             }
 
                             
@@ -78,6 +78,10 @@ struct ChatView: View {
                 .frame(height: 70)
             }
             .navigationTitle("Chat")
+        }
+        .onAppear() {
+            //get all messages from the conversation collection
+            chatModel.getMessages(chatId: chat.id!)
         }
         
     }

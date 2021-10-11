@@ -16,38 +16,88 @@ class ChatsViewModel: ObservableObject {
     ///FETCH DATA FROM FIREBASE HERE, GET CHATS from x user, or on appear
     //@Published var chats = Conversation.sampleChat
     @Published var chats = [Conversation]()
+    @Published var msgs = [Message]()
     @Published var chatsRetrieved = false
     
     private let db = Firestore.firestore()
     private let user = Auth.auth().currentUser
-
+    
     
     func startConversation(receiver: String, message: String) {
         
         var ref: DocumentReference? = nil
         if (user != nil) {
-            ref = db.collection("conversations").addDocument(data: ["users" : [user!.displayName, receiver],
-                                                                    "messages":["created_by" : user!.displayName, "msg" : message, "date" : Date()]]) { err in
-                if let err = err {
-                    print("error writing doc")
-                } else {
-                    print("success writing conversation/chat")
-                }
+            
+            ///check if cnversation already exists then skip this step with an if!!!!
+            
+            db.collection("conversations").whereField("users", arrayContains: [user!.displayName, receiver])
+                .getDocuments() { (querySnapshot, err) in
+                    if let err = err {
+                        print("Error getting documents: \(err)")
+                    } else {
+                        if querySnapshot!.documents.count == 0 {
+                            //no documents available, adddocument
+                            //create main collection conversations
+                            ref = self.db.collection("conversations").addDocument(data: ["users" : [self.user!.displayName, receiver]]) { err in
+                                if let err = err {
+                                    print("error writing doc")
+                                } else {
+                                    print("success writing conversation/chat")
+                                }
+                            }
+                            
+                            //write the message in the subcollection
+                            self.db.collection("conversations").document(ref!.documentID).collection("messages").addDocument(data: [
+                                "created_by" : self.user!.displayName ?? "",
+                                "msg": message,
+                                "date": Date()
+                            ]){ errormsg in
+                                if let error = errormsg {
+                                    print("error writing message")
+                                } else {
+                                    print("success writing message")
+                                }
+                            }
+                        } else {
+                            //print document and set Data with merge
+                            for document in querySnapshot!.documents {
+                                print("\(document.documentID) => \(document.data())")
+                                //hopefiully it'ss just one doc
+                                self.db.collection("conversations").document(document.documentID).setData( ["users" : [self.user!.displayName, receiver]], merge: true) { err in
+                                    if let err = err {
+                                        print("Error writing conversation: \(err)")
+                                    } else {
+                                        print("conversation successfully created")
+                                        
+                                        
+                                        //write the message in the subcollection
+                                        self.db.collection("conversations").document(ref!.documentID).collection("messages").addDocument(data: [
+                                            "created_by" : self.user!.displayName ?? "",
+                                            "msg": message,
+                                            "date": Date()
+                                        ]){ errormsg in
+                                            if let error = errormsg {
+                                                print("error writing message")
+                                            } else {
+                                                print("success writing message")
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            
+                            
+                        }
+                        
+                       
+                    }
+            }
+                    
+        
             }
             
-            //write the message in the subcollection
-//            db.collection("conversations").document(ref!.documentID).collection("messages").addDocument(data: [
-//                "created_by" : user!.displayName ?? "",
-//                "msg": message,
-//                "date": Date()
-//            ]){ errormsg in
-//                if let error = errormsg {
-//                    print("error writing message")
-//                } else {
-//                    print("success writing message")
-//                }
-//            }
-        }
+            
+            
     }
     
     func sendMessageChat(_ text: String, in chat: Conversation, chatid: String) -> Message? {
@@ -56,10 +106,16 @@ class ChatsViewModel: ObservableObject {
             //chats[index].messages.append(message)
             //chats[index].messages.append([user!.displayName])
             
-            //call firebase add message
-            let ref = db.collection("conversations").document(chat.id!)
+            //call firebase add message into messages subcollection
+            let ref = db.collection("conversations").document(chat.id!).collection("messages")
             //ref.setData(["gender" : user.gender], merge: true)
-            ref.setData(["messages":["created_by" : user!.displayName, "msg" : text, "date" : Date()]], merge: true)
+            ref.addDocument(data: ["created_by" : user!.displayName, "msg" : text, "date" : Date()]){ errormsg in
+                if let error = errormsg {
+                    print("error writing message")
+                } else {
+                    print("success writing message")
+                }
+            }
             
             return message
         }
@@ -88,7 +144,7 @@ class ChatsViewModel: ObservableObject {
                 self.chats = documents.map {(queryDocumentSnapshot) -> Conversation in
                     //same as below but simpler, shorter
                     //return try? queryDocumentSnapshot.data(as: Conversations.self)
-
+                    
                     
                     let data = queryDocumentSnapshot.data()
                     let docId = queryDocumentSnapshot.documentID
@@ -143,7 +199,41 @@ class ChatsViewModel: ObservableObject {
         //search for chats, hinge doesn't have it
         //        return sortedChats.filter { $0.person.name.lowercased().contains(query.lowercased()) }
     }
-
+    
+    func getMessages(chatId: String) {
+        
+        //let currentUser = UserService.shared.user
+        if (user != nil) {
+            db.collection("users").document(chatId).collection("messages").getDocuments() { (querySnapshot, err) in
+                
+                guard let documents = querySnapshot?.documents else {
+                    print("no conversations found")
+                    return
+                }
+                
+                
+                for document in querySnapshot!.documents {
+                    print("\(document.documentID) => \(document.data())")
+                }
+                
+                //map docs to conversation messages
+                self.msgs = documents.map {(queryDocumentSnapshot) -> Message in
+                    
+                    let data = queryDocumentSnapshot.data()
+                    let docId = queryDocumentSnapshot.documentID
+                    let createdby = data["created_by"] as? String ?? ""
+                    let msg = data["msg"] as? String ?? ""
+                    let date = data["date"] as? Date ?? Date()
+                    let unreadmsg = data["hasUnreadMessage"] as? Bool ?? false
+                    
+                    //print("messages: \(msgs)")
+                    
+                    return Message(createdBy: createdby, msg: msg, date: date, id: docId)
+                    
+                }
+            }
+        }
+    }
     
     
     func getSectionMessages(for chat: Conversation) -> [[Message]] {
