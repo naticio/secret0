@@ -59,7 +59,7 @@ class ChatsViewModel: ObservableObject {
             //call firebase add message
             let ref = db.collection("conversations").document(chat.id!)
             //ref.setData(["gender" : user.gender], merge: true)
-            ref.setData(["messages":["created_by" : user!.displayName, "msg" : message, "date" : Date()]], merge: false)
+            ref.setData(["messages":["created_by" : user!.displayName, "msg" : text, "date" : Date()]], merge: true)
             
             return message
         }
@@ -85,7 +85,7 @@ class ChatsViewModel: ObservableObject {
                 
                 
                 //mapping
-                self.chats = documents.compactMap{(queryDocumentSnapshot) -> Conversation? in
+                self.chats = documents.map {(queryDocumentSnapshot) -> Conversation in
                     //same as below but simpler, shorter
                     //return try? queryDocumentSnapshot.data(as: Conversations.self)
 

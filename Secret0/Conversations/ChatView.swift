@@ -66,6 +66,7 @@ struct ChatView: View {
                         
                         //send button
                         Button(action: {
+                            chatModel.sendMessageChat(newMessageInput, in: chat, chatid: chat.id ?? "")
                             print("Send message.")
                         }) {
                             Image(systemName: "paperplane")
