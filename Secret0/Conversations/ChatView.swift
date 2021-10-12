@@ -12,17 +12,13 @@ import FirebaseFirestore
 
 struct ChatView: View {
     
-
+    
     @EnvironmentObject var chatModel: ChatsViewModel
     
     let chat: Conversation
     let user = UserService.shared.user
     @State var messagesSnapshot = [Message]()
-    
-//    init() {
-//        messagesSnapshot = chatModel.msgs
-//    }
-//
+
     @State var newMessageInput = ""
     
     var body: some View {
@@ -34,65 +30,65 @@ struct ChatView: View {
                         //sort by date
                         //let sortedMsgs = chatModel.msgs.sorted(by: { $0.date > $1.date })
                         ForEach(chat.messages, id: \.id) { message in
-                            //if current user == whoever sent the message
                             if user.name == message.createdBy {
-                                ChatRow(message: message, isMe: true) //send an instance of chatMessage model
-                                    //assign an id to each chat message for scroll view reader
-                                    //first index finds the actual index position of the message
-                                    //.id(chatModel.msgs.firstIndex(of: message))
+                                ChatRow(message: message, isMe: true)
                             } else {
                                 ChatRow(message: message, isMe: false)
-                                    //.id(chatModel.msgs.firstIndex(of: message))
                             }
 
-                            
-                        }
-                        //on appear shows the LAST message
-                        .onAppear(perform: {scrollView.scrollTo(chat.messages.count-1)})
-                    }
-                    
-                }
-                Spacer()
-                
-                //send a new message
-                ZStack {
-                    Rectangle()
-                        .foregroundColor(.white)
-                    
-                    //to make it prettier
-                    RoundedRectangle(cornerRadius: 20)
-                        .stroke(Color("LightGrayColor"), lineWidth: 2)
-                        .padding()
-                    
-                    //input binding to state var so everytime it changes binds
-                    HStack {
-                        TextField("New message...", text: $newMessageInput, onCommit: {
-                            print("Send Message")
-                        })
-                        .padding(30)
+                            //assign an id to each chat message for scroll view reader
+                            //first index finds the actual index position of the message
+                            //.id(chat.messages.firstIndex(of: message))
                         
-                        //send button
-                        Button(action: {
-                            //messagesSnapshot.append(Message(createdBy: user.name, msg: newMessageInput, date: Timestamp(), id: "test" ))
-                            chatModel.sendMessageChat(newMessageInput, in: chat, chatid: chat.id ?? "")
-                            print("Send message.")
-                        }) {
-                            Image(systemName: "paperplane")
-                                .imageScale(.large)
-                                .padding(30)
-                        }
+                        
+                    }
+                    //on appear shows the LAST message
+                    .onAppear(perform: {scrollView.scrollTo(chat.messages.count-1)})
+                }
+                
+            }
+            Spacer()
+            
+            //send a new message
+            ZStack {
+                Rectangle()
+                    .foregroundColor(.white)
+                
+                //to make it prettier
+                RoundedRectangle(cornerRadius: 20)
+                    .stroke(Color("LightGrayColor"), lineWidth: 2)
+                    .padding()
+                
+                //input binding to state var so everytime it changes binds
+                HStack {
+                    TextField("New message...", text: $newMessageInput, onCommit: {
+                        print("Send Message")
+                    })
+                    .padding(30)
+                    
+                    //send button
+                    Button(action: {
+                        //messagesSnapshot.append(Message(createdBy: user.name, msg: newMessageInput, date: Timestamp(), id: "test" ))
+                        chatModel.sendMessageChat(newMessageInput, in: chat, chatid: chat.id ?? "")
+                        print("Send message.")
+                    }) {
+                        Image(systemName: "paperplane")
+                            .imageScale(.large)
+                            .padding(30)
                     }
                 }
-                .frame(height: 70)
             }
-            .navigationTitle("Chat")
+            .frame(height: 70)
         }
-//        .onAppear() {
-//            //get all messages from the conversation collection
-//            chatModel.getMessages(chatId: chat.id!)
-//        }
-//        
+        .navigationTitle("Chat")
     }
+    
+    //        .onAppear() {
+    //            //get all messages from the conversation collection
+    //            chatModel.getMessages(chatId: chat.id!)
+    //        }
+    //
+}
 }
 
 //struct ChatView_Previews: PreviewProvider {
