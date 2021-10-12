@@ -217,7 +217,7 @@ struct LoginView: View {
                 //clear error mesage for future sign ins
                 self.errorMsg = nil
                 
-                model.getUserData()
+                //model.getUserData()
                 
                 //change the view to login view
                 

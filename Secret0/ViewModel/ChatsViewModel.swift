@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 import Firebase
 import FirebaseFirestore
 import FirebaseFirestoreSwift
@@ -38,7 +39,7 @@ class ChatsViewModel: ObservableObject {
                         if querySnapshot!.documents.count == 0 {
                             //no documents available, adddocument
                             //create main collection conversations
-                            ref = self.db.collection("conversations").addDocument(data: ["users" : [self.user!.displayName, receiver]]) { err in
+                            ref = self.db.collection("conversations").addDocument(data: ["users" : [self.user!.displayName, receiver], "createdTime" : Timestamp()]) { err in
                                 if let err = err {
                                     print("error writing doc")
                                 } else {
@@ -140,62 +141,35 @@ class ChatsViewModel: ObservableObject {
                         print("no conversations found")
                         return
                     }
-                    
-                    
-                    //mapping
+                    //cycle through all conversations to fetch messages and other fields
+                    for doc in querySnapshot!.documents {
+                    //query messaages
+                        
+                    //map all the other fields
+                    }
+                    //MARK: - MAPPING CONVERSATIONS
                     self.chats = documents.map {(queryDocumentSnapshot) -> Conversation in
                         //same as below but simpler, shorter
                         //return try? queryDocumentSnapshot.data(as: Conversations.self)
-                        //var mensajes = [Message]()
+                        var mensajes = [Message]()
+                        var index = 0
                         
                         let data = queryDocumentSnapshot.data()
                         let docId = queryDocumentSnapshot.documentID
                         let users = data["users"] as? [String] ?? [""]
-                        //let msgs = data["messages"] as? [Message] ?? []
+                        //let mess = data["messages"] as? [Message] ?? []
                         let unreadmsg = data["hasUnreadMessage"] as? Bool ?? false
                         
-                        //MARK: - GET MESSAGES
-                        self.db.collection("conversations").document(docId).collection("messages")
-                            .order(by: "date")
-                            .addSnapshotListener{ (querySnapshot, err) in
-                                
-                                guard let documents = querySnapshot?.documents else {
-                                    print("no messages found")
-                                    return
-                                }
-                                
-                                var mensajes = [Message]()
-                                //                                //get all nested messages
-                                //                                for doc in documents {
-                                //                                    var m = Message() //dummy instance
-                                //
-                                //                                    m.createdBy = data["created_by"] as? String ?? ""
-                                //                                    m.date = data["date"] as? Timestamp ?? Timestamp()
-                                //                                    m.id = doc.documentID
-                                //                                    m.msg = data["msg"] as? String ?? ""
-                                //
-                                //                                    mensajes.append(m)
-                                //                                }
-                                
-                                mensajes = documents.map {(queryDocumentSnapshot) -> Message in
-                                    
-                                    let data = queryDocumentSnapshot.data()
-                                    let docId = queryDocumentSnapshot.documentID
-                                    let createdby = data["created_by"] as? String ?? ""
-                                    let msg = data["msg"] as? String ?? ""
-                                    let date = data["date"] as? Timestamp ?? Timestamp()
-                                    
-                                    return Message(createdBy: createdby, msg: msg, date: date, id: docId)
-                                    
-                                }
-                            }
+                        print("Conversation: \(docId)")
                         
-                        print("Users: \(users)")
-                        
-                        return Conversation(id: docId, users: users, messages: mensajes, hasUnreadMessage: unreadmsg)
+                        print("finished one cycle of conversation")
+                        //return Conversation(id: docId, users: users, messages: mensajes, hasUnreadMessage: unreadmsg)
+                        return Conversation(id: docId, users: users, messages: [], hasUnreadMessage: unreadmsg)
                         
                     }
-                }
+                    
+                } //after listener
+            
         }
         
         

@@ -17,7 +17,12 @@ struct ChatView: View {
     
     let chat: Conversation
     let user = UserService.shared.user
+    @State var messagesSnapshot = [Message]()
     
+//    init() {
+//        messagesSnapshot = chatModel.msgs
+//    }
+//
     @State var newMessageInput = ""
     
     var body: some View {
@@ -28,7 +33,7 @@ struct ChatView: View {
                     ScrollView { //to scroll nicely
                         //sort by date
                         //let sortedMsgs = chatModel.msgs.sorted(by: { $0.date > $1.date })
-                        ForEach(chatModel.msgs, id: \.id) { message in
+                        ForEach(chat.messages, id: \.id) { message in
                             //if current user == whoever sent the message
                             if user.name == message.createdBy {
                                 ChatRow(message: message, isMe: true) //send an instance of chatMessage model
@@ -43,7 +48,7 @@ struct ChatView: View {
                             
                         }
                         //on appear shows the LAST message
-                        .onAppear(perform: {scrollView.scrollTo(chatModel.msgs.count-1)})
+                        .onAppear(perform: {scrollView.scrollTo(chat.messages.count-1)})
                     }
                     
                 }
@@ -68,6 +73,7 @@ struct ChatView: View {
                         
                         //send button
                         Button(action: {
+                            //messagesSnapshot.append(Message(createdBy: user.name, msg: newMessageInput, date: Timestamp(), id: "test" ))
                             chatModel.sendMessageChat(newMessageInput, in: chat, chatid: chat.id ?? "")
                             print("Send message.")
                         }) {
@@ -81,16 +87,16 @@ struct ChatView: View {
             }
             .navigationTitle("Chat")
         }
-        .onAppear() {
-            //get all messages from the conversation collection
-            chatModel.getMessages(chatId: chat.id!)
-        }
-        
+//        .onAppear() {
+//            //get all messages from the conversation collection
+//            chatModel.getMessages(chatId: chat.id!)
+//        }
+//        
     }
 }
 
-struct ChatView_Previews: PreviewProvider {
-    static var previews: some View {
-        ChatView(chat: sampleConv)
-    }
-}
+//struct ChatView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        ChatView(chat: sampleConv)
+//    }
+//}
