@@ -131,7 +131,9 @@ class ChatsViewModel: ObservableObject {
     
     //return an array of chats
     func getFilteredConversations(query: String) {
+        //var conversations = [Conversation]() //empty array of conversations
         
+        var conversations = [Conversation]()
         //let currentUser = UserService.shared.user
         if (user != nil) {
             db.collection("conversations").whereField("users", arrayContains: user!.displayName)
@@ -141,40 +143,80 @@ class ChatsViewModel: ObservableObject {
                         print("no conversations found")
                         return
                     }
+                    var index = 0
                     //cycle through all conversations to fetch messages and other fields
-                    for doc in querySnapshot!.documents {
-                    //query messaages
+                    for conversationDoc in querySnapshot!.documents {
+                    //query messages
+                        var conver = Conversation() //empty converaation to host the mapping
+                        var mensajesTotal = [Message]() //empty array of messages
                         
+                        //map all fields to conversation
+                        conver.id = conversationDoc.documentID //conversation id
+                        conver.users = conversationDoc["users"] as? [String] ?? [""]
+                        //conver.messages = mensajesTotal
+                        
+                        self.chats.append(conver)
+                        //conversations.append(conver)//append the mapped conversation to viewModel
                     //map all the other fields
-                    }
-                    //MARK: - MAPPING CONVERSATIONS
-                    self.chats = documents.map {(queryDocumentSnapshot) -> Conversation in
-                        //same as below but simpler, shorter
-                        //return try? queryDocumentSnapshot.data(as: Conversations.self)
-                        var mensajes = [Message]()
-                        var index = 0
-                        
-                        let data = queryDocumentSnapshot.data()
-                        let docId = queryDocumentSnapshot.documentID
-                        let users = data["users"] as? [String] ?? [""]
-                        //let mess = data["messages"] as? [Message] ?? []
-                        let unreadmsg = data["hasUnreadMessage"] as? Bool ?? false
-                        
-                        print("Conversation: \(docId)")
-                        
-                        print("finished one cycle of conversation")
-                        //return Conversation(id: docId, users: users, messages: mensajes, hasUnreadMessage: unreadmsg)
-                        return Conversation(id: docId, users: users, messages: [], hasUnreadMessage: unreadmsg)
-                        
-                    }
+                        self.addMessagesToConv(conversation: self.chats[index], index: index)
+                        index += 1
+                    }//end of conversations for loop
                     
-                } //after listener
+                    
+//                    DispatchQueue.main.async {
+//                        self.chats = conversations
+//                    }
+                    
+                    //MARK: - MAPPING CONVERSATIONS
+//                    self.chats = documents.map {(queryDocumentSnapshot) -> Conversation in
+//                        //same as below but simpler, shorter
+//                        //return try? queryDocumentSnapshot.data(as: Conversations.self)
+//                        var mensajes = [Message]()
+//                        var index = 0
+//
+//                        let data = queryDocumentSnapshot.data()
+//                        let docId = queryDocumentSnapshot.documentID
+//                        let users = data["users"] as? [String] ?? [""]
+//                        //let mess = data["messages"] as? [Message] ?? []
+//                        let unreadmsg = data["hasUnreadMessage"] as? Bool ?? false
+//
+//                        print("Conversation: \(docId)")
+//
+//                        print("finished one cycle of conversation")
+//                        //return Conversation(id: docId, users: users, messages: mensajes, hasUnreadMessage: unreadmsg)
+//                        return Conversation(id: docId, users: users, messages: [], hasUnreadMessage: unreadmsg)
+                } //end of snapshot listener
             
         }
         
         
         //search for chats, hinge doesn't have it
         //        return sortedChats.filter { $0.person.name.lowercased().contains(query.lowercased()) }
+    }
+    
+    
+    func addMessagesToConv(conversation: Conversation, index: Int) {
+            var mensajesTotal = [Message]()
+        
+            let ref = self.db.collection("conversations").document(conversation.id!).collection("messages")
+            ref.getDocuments { querySnapshotmsg, error in
+                
+                if error == nil {
+                    //loop throug the messages/docs
+                    for msgDoc in querySnapshotmsg!.documents {
+                        var m = Message() //emtpy struc message
+                        m.createdBy = msgDoc["created_by"] as? String ?? ""
+                        m.date = msgDoc["date"] as? Timestamp ?? Timestamp()
+                        m.msg = msgDoc["msg"] as? String ?? ""
+                        m.id = msgDoc.documentID //firebase auto id
+                        
+                        mensajesTotal.append(m) //append this message to the total of messages
+                        self.chats[index].messages = mensajesTotal
+                    }
+                } else {
+                    print("error: \(error!.localizedDescription)")
+                }
+            }
     }
     
     func getMessages(chatId: String) {
