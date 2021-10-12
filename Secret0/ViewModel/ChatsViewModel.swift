@@ -136,85 +136,66 @@ class ChatsViewModel: ObservableObject {
             db.collection("conversations").whereField("users", arrayContains: user!.displayName)
                 .order(by: "createdTime")
                 .addSnapshotListener { (querySnapshot, error) in
-                guard let documents = querySnapshot?.documents else {
-                    print("no conversations found")
-                    return
-                }
-                
-                
-                //mapping
-                self.chats = documents.map {(queryDocumentSnapshot) -> Conversation in
-                    //same as below but simpler, shorter
-                    //return try? queryDocumentSnapshot.data(as: Conversations.self)
-                    var mensajes = [Message]()
+                    guard let documents = querySnapshot?.documents else {
+                        print("no conversations found")
+                        return
+                    }
                     
-                    let data = queryDocumentSnapshot.data()
-                    let docId = queryDocumentSnapshot.documentID
-                    let users = data["users"] as? [String] ?? [""]
-                    //let msgs = data["messages"] as? [Message] ?? []
-                    let unreadmsg = data["hasUnreadMessage"] as? Bool ?? false
                     
-                    //MARK: - GET MESSAGES
-                    self.db.collection("conversations").document(docId).collection("messages")
-                        .order(by: "date")
-                        .addSnapshotListener{ (querySnapshot, err) in
-                            
-                            guard let documents = querySnapshot?.documents else {
-                                print("no messages found")
-                                return
+                    //mapping
+                    self.chats = documents.map {(queryDocumentSnapshot) -> Conversation in
+                        //same as below but simpler, shorter
+                        //return try? queryDocumentSnapshot.data(as: Conversations.self)
+                        //var mensajes = [Message]()
+                        
+                        let data = queryDocumentSnapshot.data()
+                        let docId = queryDocumentSnapshot.documentID
+                        let users = data["users"] as? [String] ?? [""]
+                        //let msgs = data["messages"] as? [Message] ?? []
+                        let unreadmsg = data["hasUnreadMessage"] as? Bool ?? false
+                        
+                        //MARK: - GET MESSAGES
+                        self.db.collection("conversations").document(docId).collection("messages")
+                            .order(by: "date")
+                            .addSnapshotListener{ (querySnapshot, err) in
+                                
+                                guard let documents = querySnapshot?.documents else {
+                                    print("no messages found")
+                                    return
+                                }
+                                
+                                var mensajes = [Message]()
+                                //                                //get all nested messages
+                                //                                for doc in documents {
+                                //                                    var m = Message() //dummy instance
+                                //
+                                //                                    m.createdBy = data["created_by"] as? String ?? ""
+                                //                                    m.date = data["date"] as? Timestamp ?? Timestamp()
+                                //                                    m.id = doc.documentID
+                                //                                    m.msg = data["msg"] as? String ?? ""
+                                //
+                                //                                    mensajes.append(m)
+                                //                                }
+                                
+                                mensajes = documents.map {(queryDocumentSnapshot) -> Message in
+                                    
+                                    let data = queryDocumentSnapshot.data()
+                                    let docId = queryDocumentSnapshot.documentID
+                                    let createdby = data["created_by"] as? String ?? ""
+                                    let msg = data["msg"] as? String ?? ""
+                                    let date = data["date"] as? Timestamp ?? Timestamp()
+                                    
+                                    return Message(createdBy: createdby, msg: msg, date: date, id: docId)
+                                    
+                                }
                             }
-                            
-                           
-                            mensajes = documents.map {(queryDocumentSnapshot) -> Message in
-                                
-                                let data = queryDocumentSnapshot.data()
-                                let docId = queryDocumentSnapshot.documentID
-                                let createdby = data["created_by"] as? String ?? ""
-                                let msg = data["msg"] as? String ?? ""
-                                let date = data["date"] as? Timestamp ?? Timestamp()
-                                
-                                return Message(createdBy: createdby, msg: msg, date: date, id: docId)
-                                
-                            }
-                        }
-                    
-                    print("Users: \(users)")
-
-                    return Conversation(id: docId, users: users, messages: mensajes, hasUnreadMessage: unreadmsg)
-                    
+                        
+                        print("Users: \(users)")
+                        
+                        return Conversation(id: docId, users: users, messages: mensajes, hasUnreadMessage: unreadmsg)
+                        
+                    }
                 }
-                
-                /* FAILED ATTEMPT
-                 var chatshere = [Conversations]()
-                 
-                 for doc in snapshot!.documents {
-                 var conver = [Conversations]() //empty array of conversation
-                 conver.id = doc["id"] as? String ?? ""
-                 conver.users = doc["users"] as? [String] ?? [""]
-                 //conver.messages = doc["messages"] as? [Message] ?? []
-                 conver.hasUnreadMessage = doc["hasUnreadMessage"] as? Bool ?? false
-                 
-                 
-                 chatshere.append(conver)
-                 
-                 }
-                 
-                 DispatchQueue.main.async {
-                 self.chats = chatshere
-                 //self.usersLoaded = true
-                 }*/
-                
-                //
-                //                let sortedChats = chats.sorted {
-                //                    guard let date1 = $0.messages.last?.date else { return false }
-                //                    guard let date2 = $1.messages.last?.date else { return false }
-                //                    return date1 > date2
-                //                }
-                //
-                //                if (query == "") {
-                //                    return sortedChats
-                //                }
-            }
         }
         
         
