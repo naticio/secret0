@@ -10,6 +10,7 @@ import SwiftUI
 import Firebase
 import FirebaseFirestore
 import FirebaseFirestoreSwift
+import FirebaseAuth
 
 class ChatsViewModel: ObservableObject {
     
@@ -196,13 +197,15 @@ class ChatsViewModel: ObservableObject {
     
     
     func addMessagesToConv(conversation: Conversation, index: Int) {
-        var mensajesTotal = [Message]()
+
         
         let ref = self.db.collection("conversations").document(conversation.id!).collection("messages")
             .order(by: "date")
             .addSnapshotListener { querySnapshotmsg, error in
             
-            if error == nil {
+            var mensajesTotal = [Message]()
+            
+                if error == nil {
                 //loop throug the messages/docs
                 for msgDoc in querySnapshotmsg!.documents {
                     var m = Message() //emtpy struc message

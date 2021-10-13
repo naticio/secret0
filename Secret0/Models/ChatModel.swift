@@ -18,7 +18,7 @@ struct Conversation: Decodable, Identifiable {
     var hasUnreadMessage : Bool = false
 }
 
-struct Message: Decodable {
+struct Message: Decodable, Hashable {
     var createdBy: String?
     var msg: String?
     @ServerTimestamp var date : Timestamp?

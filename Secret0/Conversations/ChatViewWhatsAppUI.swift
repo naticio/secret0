@@ -15,7 +15,7 @@ import SwiftUI
     let chat: Conversation
     
     @State private var text = ""
-    //@FocusState private var isFocused
+    @FocusState private var isFocused
     
     @State private var messageIDToScroll: UUID?
     
@@ -28,12 +28,12 @@ import SwiftUI
             GeometryReader { reader in
                 getChatsView(viewWidth: reader.size.width)
                     .onTapGesture {
-                        //isFocused = false
+                        isFocused = false
                     }
             }
             .padding(.bottom, 5)
             
-            //SEND MESSAGE button
+            SEND MESSAGE button
             toolbarView()
         }
         .padding(.top, 1)
@@ -50,14 +50,14 @@ import SwiftUI
         ScrollView {
             ScrollViewReader { scrollReader in
                 LazyVGrid(columns: [GridItem(.flexible(minimum: 0))], spacing: 0, pinnedViews: [.sectionHeaders]) {
-                    //let sectionMessages = chatModel.getSectionMessages(for: chat)
+                    let sectionMessages = chatModel.getSectionMessages(for: chat)
                     let sectionMessages = chat.messages
                     ForEach(sectionMessages.indices, id: \.self) { i in
                         let messages = sectionMessages[i]
                         Section(header: sectionHeader(firstMessage: messages.first!)) {
                             ForEach(messages) { message in
-                               // let isReceived = message.type == .Received
-                                //message sender is not me!!! that's it
+                                let isReceived = message.type == .Received
+                                message sender is not me!!! that's it
                                 if message.createdBy == chatModel.user!.displayName {
                                     isReceived = true
                                 } else {isReceived = false }
@@ -75,21 +75,21 @@ import SwiftUI
                                     
                                 }
                                 .frame(maxWidth: .infinity, alignment: isReceived ? .leading  : .trailing)
-                                //.id(message.id)
+                                .id(message.id)
                             }
                         }
                     }
-//                    .onChange(of: isFocused) { _ in
-//                        if isFocused {
-//                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
-//                                withAnimation(.easeIn(duration: 0.5)) {
-//                                    scrollReader.scrollTo(chat.messages.last!.id, anchor: .bottom)
-//                                }
-//                            }
-//                        }
-//                    }
+                    .onChange(of: isFocused) { _ in
+                        if isFocused {
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
+                                withAnimation(.easeIn(duration: 0.5)) {
+                                    scrollReader.scrollTo(chat.messages.last!.id, anchor: .bottom)
+                                }
+                            }
+                        }
+                    }
                     .onChange(of: messageIDToScroll) { _ in
-                        // This scrolls down to the new sent Message
+                         This scrolls down to the new sent Message
                         if let messageID = messageIDToScroll {
                             DispatchQueue.main.async {
                                 withAnimation(.easeIn) {
@@ -100,7 +100,7 @@ import SwiftUI
                     }
                     .onAppear {
                         DispatchQueue.main.async {
-                            //scrollReader.scrollTo(chat.messages.last!.id, anchor: .bottom)
+                            scrollReader.scrollTo(chat.messages.last!.id, anchor: .bottom)
                             scrollReader.scrollTo(chat.messages.last, anchor: .bottom)
 
                         }
@@ -109,7 +109,7 @@ import SwiftUI
                 .padding(.horizontal)
             }
         }
-        //.background(Color.white)
+        .background(Color.white)
     }
     
     func toolbarView() -> some View {
@@ -122,12 +122,12 @@ import SwiftUI
                         .frame(height: height)
                         .background(Color.white)
                         .clipShape(RoundedRectangle(cornerRadius: 13))
-                        //.focused($isFocused)
+                        .focused($isFocused)
                 } else {
-                    // Fallback on earlier versions
+                     Fallback on earlier versions
                 }
                 
-                //send message BUTTON
+                send message BUTTON
                 Button(action: {
                     if let newMessage = chatModel.sendMessageChat(text, in: chat, chatid: chat) {
                         text = ""
@@ -147,7 +147,7 @@ import SwiftUI
         }
         .padding(.vertical, 10)
         .padding(.horizontal)
-        //.background(.thickMaterial)
+        .background(.thickMaterial)
     }
     
     func sectionHeader(firstMessage message: Message) -> some View {
