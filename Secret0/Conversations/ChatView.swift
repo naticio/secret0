@@ -72,6 +72,7 @@ struct ChatView: View {
                             //messagesSnapshot.append(Message(createdBy: user.name, msg: newMessageInput, date: Timestamp(), id: "test" ))
                             chatModel.sendMessageChat(newMessageInput, in: chat, chatid: chat.id ?? "")
                             print("Send message.")
+                            newMessageInput = ""
                             //perform: {scrollView.scrollTo(chat.messages.count-1)}
                         }) {
                             Image(systemName: "paperplane")
