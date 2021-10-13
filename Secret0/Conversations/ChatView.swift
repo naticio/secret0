@@ -41,7 +41,7 @@ struct ChatView: View {
                         }
                         //on appear shows the LAST message
                         .onAppear(perform: {
-                            scrollView.scrollTo(chat.messages.endIndex)
+                            scrollView.scrollTo(chat.messages.count-1)
                         })
                         .onChange(of: chat.messages.count, perform: { _ in
                             scrollView.scrollTo(chat.messages.endIndex)
