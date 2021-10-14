@@ -11,6 +11,7 @@ import FirebaseAuth
 import FirebaseStorage
 import Firebase
 import SwiftUI
+import GeoFire
 
 class ContentModel: ObservableObject{
     
@@ -291,6 +292,86 @@ class ContentModel: ObservableObject{
                 }
         }
         
+    }
+    
+    //MARK: - GET MATCHES WITH GEOHASH
+    func getMatchesNearMe(radius: Double) {
+        // Find matches within 50km of my location
+        let user = UserService.shared.user
+        let center = CLLocationCoordinate2D(latitude: user.latitude ?? 0, longitude: user.longitude ?? 0)
+        let radiusInKilometers: Double = radius
+
+        // Each item in 'bounds' represents a startAt/endAt pair. We have to issue
+        // a separate query for each pair. There can be up to 9 pairs of bounds
+        // depending on overlap, but in most cases there are 4.
+        let queryBounds = GFUtils.queryBounds(forLocation: center,
+                                              withRadius: radiusInKilometers)
+        let queries = queryBounds.compactMap { (any) -> Query? in
+            guard let bound = any as? GFGeoQueryBounds else { return nil }
+            return db.collection("users")
+                .order(by: "geohash")
+                .start(at: [bound.startValue])
+                .end(at: [bound.endValue])
+            ///ADD FILTERS WHERE CLAUSES
+        }
+
+        var matchingDocs = [Matches]()
+        // Collect all the query results together into a single list
+        func getDocumentsCompletion(snapshot: QuerySnapshot?, error: Error?) -> () {
+            guard let documents = snapshot?.documents else {
+                print("Unable to fetch snapshot data. \(String(describing: error))")
+                return
+            }
+            
+            print("\nDocs: Count \(documents.count)")
+            for doc in snapshot!.documents {
+                var m = Matches()
+                m.latitude = doc.data()["latitude"] as? Double ?? 0
+                m.longitude = doc.data()["longitude"] as? Double ?? 0
+                let coordinates = CLLocation(latitude: m.latitude ?? 0, longitude: m.longitude ?? 0)
+                let centerPoint = CLLocation(latitude: center.latitude, longitude: center.longitude)
+                
+                m.id = doc.data()["id"] as? String ?? ""
+                m.name = doc.data()["name"] as? String ?? ""
+                m.birthdate = doc.data()["birthdate"] as? Date ?? Date()
+                m.gender = doc.data()["gender"] as? String ?? ""
+                m.datingPreferences = doc.data()["datingPreferences"] as? String ?? ""
+                m.height = doc.data()["height"] as? Int ?? 0
+                
+                m.imageUrl1 = doc.data()["photo1"] as? String ?? ""
+                m.imageUrl2 = doc.data()["photo2"] as? String ?? ""
+                m.imageUrl3 = doc.data()["photo3"] as? String ?? ""
+                m.imageUrl4 = doc.data()["photo4"] as? String ?? ""
+                m.imageUrl5 = doc.data()["photo5"] as? String ?? ""
+                m.imageUrl6 = doc.data()["photo6"] as? String ?? ""
+                
+                m.Q1day2live = doc.data()["Q1day2live"] as? String ?? ""
+                m.QlotteryWin = doc.data()["QlotteryWin"] as? String ?? ""
+                m.QmoneynotanIssue = doc.data()["QmoneynotanIssue"] as? String ?? ""
+                m.bucketList = doc.data()["bucketList"] as? String ?? ""
+                m.jokes = doc.data()["jokes"] as? String ?? ""
+
+                // We have to filter out a few false positives due to GeoHash accuracy, but
+                // most will match
+                let distance = GFUtils.distance(from: centerPoint, to: coordinates)
+                print("MatchName: \(m.name), distance: \(distance) \tlat: \(m.latitude), \(m.longitude)")
+                if distance <= radiusInKilometers {
+                    matchingDocs.append(m)
+                }
+            }
+        }
+
+        // After all callbacks have executed, matchingDocs contains the result. Note that this
+        // sample does not demonstrate how to wait on all callbacks to complete.
+        for query in queries {
+            query.getDocuments(completion: getDocumentsCompletion)
+        }
+        print("Docs: \(matchingDocs.count)")
+        
+        DispatchQueue.main.async {
+            self.matches = matchingDocs
+            //self.usersLoaded = true
+        }
     }
     
     //MARK: - data methods - save data into firebase etc to track the user usage

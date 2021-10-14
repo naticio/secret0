@@ -9,6 +9,7 @@ import SwiftUI
 import CoreLocation
 import FirebaseAuth
 import Firebase
+import GeoFire
 
 struct LocationOnboarding: View {
     
@@ -112,11 +113,19 @@ struct LocationOnboarding: View {
             let user = UserService.shared.user //user =  the current user using the app right now
             user.location = localizationModel.userLocation //save to firebase user the values saved in the content model
             
+            let latitude = user.location!.coordinate.latitude
+            let longitude = user.location!.coordinate.longitude
+            //geoHash field
+            let location = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+            
+            let hash = GFUtils.geoHash(forLocation: location)
+            
             let db = Firestore.firestore()
             let ref = db.collection("users").document(user.name)
             ref.setData([
-                "latitude" : String(user.location!.coordinate.latitude),
-                "longitude" : String(user.location!.coordinate.longitude)
+                "latitude" : user.location!.coordinate.latitude,
+                "longitude" : user.location!.coordinate.longitude,
+                "geohash" : hash
             ], merge: true)
         }
     }

@@ -12,5 +12,6 @@ target 'Secret0' do
   pod 'Firebase/Storage'
   pod 'Firebase/Database'
   pod 'FirebaseFirestoreSwift'
+  pod 'GeoFire/Utils'
 
 end
