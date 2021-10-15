@@ -126,7 +126,7 @@ class ContentModel: ObservableObject{
         
         if currentUser.datingPreferences == "Women" {
             let query = usersCollection
-                .whereField("gender", in: ["Women"])
+                .whereField("gender", isEqualTo: "Women")
                 //.whereField("geohas", isEqualTo: "mylocation")
                 .whereField("datingPreferences", in: [currentUser.gender, "Everyone"])
                 
@@ -182,8 +182,7 @@ class ContentModel: ObservableObject{
         //if user wants to date MALE
         if currentUser.datingPreferences == "Men" {
             let query = usersCollection
-                .whereField("gender", in: ["Men"])
-                //.whereField("geohas", isEqualTo: "mylocation")
+                .whereField("gender", isEqualTo: "Men")
                 .whereField("datingPreferences", in: [currentUser.gender, "Everyone"])
                 
                 .addSnapshotListener { snapshot, error in
@@ -239,9 +238,6 @@ class ContentModel: ObservableObject{
         //if user wants to date EVERYONE
         if currentUser.datingPreferences == "Everyone" {
             let query = usersCollection
-                .whereField("gender", in: ["Men", "Women"])
-                .whereField("gender", in: ["Women"])
-                //.whereField("geohas", isEqualTo: "mylocation")
                 .whereField("datingPreferences", in: [currentUser.gender, "Everyone"])
                 
                 .addSnapshotListener { snapshot, error in
@@ -309,10 +305,37 @@ class ContentModel: ObservableObject{
                                               withRadius: radiusInKilometers)
         let queries = queryBounds.compactMap { (any) -> Query? in
             guard let bound = any as? GFGeoQueryBounds else { return nil }
-            return db.collection("users")
-                .order(by: "geohash")
-                .start(at: [bound.startValue])
-                .end(at: [bound.endValue])
+            
+            //results for matches that prefer men
+            if user.datingPreferences == "Women" {
+                return db.collection("users")
+                    .order(by: "geohash")
+                    .start(at: [bound.startValue])
+                    .end(at: [bound.endValue])
+                    .whereField("gender", isEqualTo: "Women")
+                    .whereField("datingPreferences", in: [user.gender, "Everyone"])
+            }
+            
+            //results for matches that prefer women
+            if user.datingPreferences == "Men" {
+                return db.collection("users")
+                    .order(by: "geohash")
+                    .start(at: [bound.startValue])
+                    .end(at: [bound.endValue])
+                    .whereField("gender", isEqualTo: "Men")
+                    .whereField("datingPreferences", in: [user.gender, "Everyone"])
+            }
+            
+            //results for matches that like tocho
+            if user.datingPreferences == "Everybody" {
+                return db.collection("users")
+                    .order(by: "geohash")
+                    .start(at: [bound.startValue])
+                    .end(at: [bound.endValue])
+                    .whereField("datingPreferences", in: [user.gender, "Everyone"])
+            }
+            
+            return nil
         }
         
         var matchingDocs = [Matches]()
@@ -367,11 +390,12 @@ class ContentModel: ObservableObject{
         // After all callbacks have executed, matchingDocs contains the result. Note that this
         // sample does not demonstrate how to wait on all callbacks to complete.
         for query in queries {
-            query
-                .whereField("gender", in: ["Women", "men"])
-                .whereField("conversations", notIn: [user.name])
-                //.getDocuments(completion: getDocumentsCompletion)
-                .addSnapshotListener(getDocumentsCompletion)
+            query.addSnapshotListener(getDocumentsCompletion)
+//            query
+//                .whereField("gender", in: ["Women", "men"])
+//                .whereField("conversations", notIn: [user.name])
+//                //.getDocuments(completion: getDocumentsCompletion)
+//                .addSnapshotListener(getDocumentsCompletion)
         }
         print("Docs: \(matchingDocs.count)")
         
