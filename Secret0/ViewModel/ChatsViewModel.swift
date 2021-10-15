@@ -60,6 +60,16 @@ class ChatsViewModel: ObservableObject {
                                     print("success writing message")
                                 }
                             }
+                            
+                            //MARK: - write the conversation to the current user and receiver for GetMatches
+                            self.db.collection("users").document(self.user!.displayName!).updateData([
+                                "conversations": FieldValue.arrayUnion([receiver])
+                            ])
+                            
+                            self.db.collection("users").document(receiver).updateData([
+                                "conversations": FieldValue.arrayUnion([receiver])
+                            ])
+                            
                         } else {
                             //print document and set Data with merge
                             for document in querySnapshot!.documents {
@@ -84,6 +94,15 @@ class ChatsViewModel: ObservableObject {
                                                 print("success writing message")
                                             }
                                         }
+                                        
+                                        //MARK: - write the conversation to the current user and receiver for GetMatches
+                                        self.db.collection("users").document(self.user!.displayName!).updateData([
+                                            "conversations": FieldValue.arrayUnion([receiver])
+                                        ])
+                                        
+                                        self.db.collection("users").document(receiver).updateData([
+                                            "conversations": FieldValue.arrayUnion([receiver])
+                                        ])
                                     }
                                 }
                             }
@@ -197,68 +216,68 @@ class ChatsViewModel: ObservableObject {
     
     
     func addMessagesToConv(conversation: Conversation, index: Int) {
-
+        
         
         let ref = self.db.collection("conversations").document(conversation.id!).collection("messages")
             .order(by: "date")
             .addSnapshotListener { querySnapshotmsg, error in
-            
-            var mensajesTotal = [Message]()
-            
+                
+                var mensajesTotal = [Message]()
+                
                 if error == nil {
-                //loop throug the messages/docs
-                for msgDoc in querySnapshotmsg!.documents {
-                    var m = Message() //emtpy struc message
-                    m.createdBy = msgDoc["created_by"] as? String ?? ""
-                    m.date = msgDoc["date"] as? Timestamp ?? Timestamp()
-                    m.msg = msgDoc["msg"] as? String ?? ""
-                    m.id = msgDoc.documentID //firebase auto id
-                    
-                    mensajesTotal.append(m) //append this message to the total of messages
-                    self.chats[index].messages.removeAll()
-                    self.chats[index].messages = mensajesTotal
+                    //loop throug the messages/docs
+                    for msgDoc in querySnapshotmsg!.documents {
+                        var m = Message() //emtpy struc message
+                        m.createdBy = msgDoc["created_by"] as? String ?? ""
+                        m.date = msgDoc["date"] as? Timestamp ?? Timestamp()
+                        m.msg = msgDoc["msg"] as? String ?? ""
+                        m.id = msgDoc.documentID //firebase auto id
+                        
+                        mensajesTotal.append(m) //append this message to the total of messages
+                        self.chats[index].messages.removeAll()
+                        self.chats[index].messages = mensajesTotal
+                    }
+                } else {
+                    print("error: \(error!.localizedDescription)")
                 }
-            } else {
-                print("error: \(error!.localizedDescription)")
             }
-        }
     }
     
-//    func getMessages(chatId: String) {
-//
-//        //let currentUser = UserService.shared.user
-//        if (user != nil) {
-//            db.collection("conversations").document(chatId).collection("messages").getDocuments(){ (querySnapshot, err) in
-//
-//                guard let documents = querySnapshot?.documents else {
-//                    print("no conversations found")
-//                    return
-//                }
-//
-//
-//                for document in querySnapshot!.documents {
-//                    print("\(document.documentID) => \(document.data())")
-//                }
-//
-//                //map docs to conversation messages
-//                self.msgs = [Message]()
-//                self.msgs = documents.map {(queryDocumentSnapshot) -> Message in
-//
-//                    let data = queryDocumentSnapshot.data()
-//                    let docId = queryDocumentSnapshot.documentID
-//                    let createdby = data["created_by"] as? String ?? ""
-//                    let msg = data["msg"] as? String ?? ""
-//                    let date = data["date"] as? Timestamp ?? Timestamp()
-//                    let unreadmsg = data["hasUnreadMessage"] as? Bool ?? false
-//
-//                    //print("messages: \(msgs)")
-//
-//                    return Message(createdBy: createdby, msg: msg, date: date, id: docId)
-//
-//                }
-//            }
-//        }
-//    }
+    //    func getMessages(chatId: String) {
+    //
+    //        //let currentUser = UserService.shared.user
+    //        if (user != nil) {
+    //            db.collection("conversations").document(chatId).collection("messages").getDocuments(){ (querySnapshot, err) in
+    //
+    //                guard let documents = querySnapshot?.documents else {
+    //                    print("no conversations found")
+    //                    return
+    //                }
+    //
+    //
+    //                for document in querySnapshot!.documents {
+    //                    print("\(document.documentID) => \(document.data())")
+    //                }
+    //
+    //                //map docs to conversation messages
+    //                self.msgs = [Message]()
+    //                self.msgs = documents.map {(queryDocumentSnapshot) -> Message in
+    //
+    //                    let data = queryDocumentSnapshot.data()
+    //                    let docId = queryDocumentSnapshot.documentID
+    //                    let createdby = data["created_by"] as? String ?? ""
+    //                    let msg = data["msg"] as? String ?? ""
+    //                    let date = data["date"] as? Timestamp ?? Timestamp()
+    //                    let unreadmsg = data["hasUnreadMessage"] as? Bool ?? false
+    //
+    //                    //print("messages: \(msgs)")
+    //
+    //                    return Message(createdBy: createdby, msg: msg, date: date, id: docId)
+    //
+    //                }
+    //            }
+    //        }
+    //    }
     
     
     /*func getSectionMessages(for chat: Conversation) -> [[Message]] {

@@ -206,14 +206,17 @@ struct LoginView: View {
         }
         
         Button {
-            isPresented = false
-            
+
             Auth.auth().signIn(withEmail: email, password: password) { result, error in
                 //check for errors
                 guard error == nil else {
                     errorMsg = error!.localizedDescription
+                    print("error, valiendo verga: \(errorMsg)")
                     return
                 }
+                
+                isPresented = false //hide modal
+                
                 //clear error mesage for future sign ins
                 self.errorMsg = nil
                 
@@ -223,6 +226,7 @@ struct LoginView: View {
                 
                 model.checkLogin() //because this will flip the Model published property "loggedIn" to true
                 //log the user in
+
                 
                 //print(self.showSheet)
             }
@@ -232,6 +236,13 @@ struct LoginView: View {
                 Text("Sign In").foregroundColor(.white)
             }
         }
+        
+        Button {
+            //restore pwd
+        } label: {
+            Text("Restore password")
+        }
+
         Spacer()
     }
 }

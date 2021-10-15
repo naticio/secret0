@@ -17,7 +17,7 @@ class ContentModel: ObservableObject{
     
     
     @Published var matches = [Matches]()
-    @Published var usersLoaded : Bool?
+    @Published var usersLoaded : Bool =  false
     
     @Published var userDataCompletion = false
     @Published var loggedIn = false //assume user is not loggfed in,published to notify al views that use this property
@@ -58,7 +58,7 @@ class ContentModel: ObservableObject{
         //if current user is nil then loggedin = false
         
         //CHECK IF USERR metadata has been FETCHED. if the user was already logged in from a previous session, we need to get their data in a separate call
-        if UserService.shared.user.name == "" { 
+        if UserService.shared.user.name == "" {
             getUserData() //to fetch metadata related to user
         }
     }
@@ -104,14 +104,15 @@ class ContentModel: ObservableObject{
             user.imageUrl5 = data?["photo5"] as? String ?? ""
             user.imageUrl6 = data?["photo6"] as? String ?? ""
             
-            
             user.Q1day2live = data?["Q1day2live"] as? String ?? ""
             user.QlotteryWin = data?["QlotteryWin"] as? String ?? ""
             user.QmoneynotanIssue = data?["QmoneynotanIssue"] as? String ?? ""
             user.bucketList = data?["bucketList"] as? String ?? ""
             user.jokes = data?["jokes"] as? String ?? ""
             
-            self.userDataCompletion = true
+            DispatchQueue.main.async {
+                self.userDataCompletion = true
+            }
         }
     }
     
@@ -300,7 +301,7 @@ class ContentModel: ObservableObject{
         let user = UserService.shared.user
         let center = CLLocationCoordinate2D(latitude: user.latitude ?? 0, longitude: user.longitude ?? 0)
         let radiusInKilometers: Double = radius
-
+        
         // Each item in 'bounds' represents a startAt/endAt pair. We have to issue
         // a separate query for each pair. There can be up to 9 pairs of bounds
         // depending on overlap, but in most cases there are 4.
@@ -312,9 +313,8 @@ class ContentModel: ObservableObject{
                 .order(by: "geohash")
                 .start(at: [bound.startValue])
                 .end(at: [bound.endValue])
-            ///ADD FILTERS WHERE CLAUSES
         }
-
+        
         var matchingDocs = [Matches]()
         // Collect all the query results together into a single list
         func getDocumentsCompletion(snapshot: QuerySnapshot?, error: Error?) -> () {
@@ -350,7 +350,7 @@ class ContentModel: ObservableObject{
                 m.QmoneynotanIssue = doc.data()["QmoneynotanIssue"] as? String ?? ""
                 m.bucketList = doc.data()["bucketList"] as? String ?? ""
                 m.jokes = doc.data()["jokes"] as? String ?? ""
-
+                
                 // We have to filter out a few false positives due to GeoHash accuracy, but
                 // most will match
                 let distance = GFUtils.distance(from: centerPoint, to: coordinates)
@@ -358,19 +358,125 @@ class ContentModel: ObservableObject{
                 if distance <= radiusInKilometers {
                     matchingDocs.append(m)
                 }
-            }
+            } //end for loop
+            
+            self.matches = matchingDocs
+            self.usersLoaded = true
         }
-
+        
         // After all callbacks have executed, matchingDocs contains the result. Note that this
         // sample does not demonstrate how to wait on all callbacks to complete.
         for query in queries {
-            query.getDocuments(completion: getDocumentsCompletion)
+            query
+                .whereField("gender", in: ["Women", "men"])
+                .whereField("conversations", notIn: [user.name])
+                //.getDocuments(completion: getDocumentsCompletion)
+                .addSnapshotListener(getDocumentsCompletion)
         }
         print("Docs: \(matchingDocs.count)")
         
-        DispatchQueue.main.async {
-            self.matches = matchingDocs
-            //self.usersLoaded = true
+    }
+    
+    func getMatchesNearMeDispatch(radius: Double) {
+        // Find matches within 50km of my location
+        let user = UserService.shared.user
+        let center = CLLocationCoordinate2D(latitude: user.latitude ?? 0, longitude: user.longitude ?? 0)
+        let radiusInKilometers: Double = radius
+        
+        // Each item in 'bounds' represents a startAt/endAt pair. We have to issue
+        // a separate query for each pair. There can be up to 9 pairs of bounds
+        // depending on overlap, but in most cases there are 4.
+        let queryBounds = GFUtils.queryBounds(forLocation: center,
+                                              withRadius: radiusInKilometers)
+        let queries = queryBounds.compactMap { (any) -> Query? in
+            guard let bound = any as? GFGeoQueryBounds else { return nil }
+            return db.collection("users")
+                .order(by: "geohash")
+                .start(at: [bound.startValue])
+                .end(at: [bound.endValue])
+        }
+        
+        // Create a dispatch group outside of the query loop since each iteration of the loop
+        // performs an asynchronous task.
+        let dispatch = DispatchGroup()
+        
+        var matchingDocs = [QueryDocumentSnapshot]()
+        var matchesNear = [Matches]()
+        // Collect all the query results together into a single list
+        func getDocumentsCompletion(snapshot: QuerySnapshot?, error: Error?) -> () {
+            guard let documents = snapshot?.documents else {
+                print("Unable to fetch snapshot data. \(String(describing: error))")
+                dispatch.leave() // leave the dispatch group when we exit this completion
+                return
+            }
+            
+            print("\nDocs: Count \(documents.count)")
+            for doc in documents {
+                
+                let lat = doc.data()["latitude"] as? Double ?? 0
+                let lng = doc.data()["longitude"] as? Double ?? 0
+                let name = doc.data()["name"] as? String ?? "no name"
+                let coordinates = CLLocation(latitude: lat, longitude: lng)
+                let centerPoint = CLLocation(latitude: center.latitude, longitude: center.longitude)
+                
+                // We have to filter out a few false positives due to GeoHash accuracy, but
+                // most will match
+                let distance = GFUtils.distance(from: centerPoint, to: coordinates)
+                //print("MatchName: \(m.name), distance: \(distance) \tlat: \(m.latitude), \(m.longitude)")
+                if distance <= radiusInKilometers {
+                    matchingDocs.append(doc)
+                }
+            } //end for loop
+            dispatch.leave() // leave the dispatch group when we exit this completion
+        }
+        
+        // After all callbacks have executed, matchingDocs contains the result. Note that this
+        // sample does not demonstrate how to wait on all callbacks to complete.
+        for query in queries {
+            dispatch.enter() // enter the dispatch group on each iteration
+            query.getDocuments(completion: getDocumentsCompletion)
+        }
+        // [END fs_geo_query_hashes]
+        // This is the completion handler of the dispatch group. When all of the leave()
+        // calls equal the number of enter() calls, this notify function is called.
+        dispatch.notify(queue: .main) {
+            for doc in matchingDocs {
+                var m = Matches()
+                
+                m.latitude = doc.data()["latitude"] as? Double ?? 0
+                m.longitude = doc.data()["longitude"] as? Double ?? 0
+                let coordinates = CLLocation(latitude: m.latitude ?? 0, longitude: m.longitude ?? 0)
+                let centerPoint = CLLocation(latitude: center.latitude, longitude: center.longitude)
+                
+                m.id = doc.data()["id"] as? String ?? ""
+                m.name = doc.data()["name"] as? String ?? ""
+                m.birthdate = doc.data()["birthdate"] as? Date ?? Date()
+                m.gender = doc.data()["gender"] as? String ?? ""
+                m.datingPreferences = doc.data()["datingPreferences"] as? String ?? ""
+                m.height = doc.data()["height"] as? Int ?? 0
+                
+                m.imageUrl1 = doc.data()["photo1"] as? String ?? ""
+                m.imageUrl2 = doc.data()["photo2"] as? String ?? ""
+                m.imageUrl3 = doc.data()["photo3"] as? String ?? ""
+                m.imageUrl4 = doc.data()["photo4"] as? String ?? ""
+                m.imageUrl5 = doc.data()["photo5"] as? String ?? ""
+                m.imageUrl6 = doc.data()["photo6"] as? String ?? ""
+                
+                m.Q1day2live = doc.data()["Q1day2live"] as? String ?? ""
+                m.QlotteryWin = doc.data()["QlotteryWin"] as? String ?? ""
+                m.QmoneynotanIssue = doc.data()["QmoneynotanIssue"] as? String ?? ""
+                m.bucketList = doc.data()["bucketList"] as? String ?? ""
+                m.jokes = doc.data()["jokes"] as? String ?? ""
+                
+                let distance = GFUtils.distance(from: centerPoint, to: coordinates)
+                print("MatchName: \(m.name), distance: \(distance) \tlat: \(m.latitude), \(m.longitude)")
+                if distance <= radiusInKilometers {
+                    matchesNear.append(m)
+                }
+            } //end of for loop
+            
+            self.matches = matchesNear
+            self.usersLoaded = true
         }
     }
     

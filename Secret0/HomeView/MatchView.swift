@@ -34,7 +34,7 @@ struct MatchView: View {
                 .navigationBarHidden(true)
         } else {
             
-            if model.matches.count == 0 {
+            if model.matches.count == 0 || (model.matches.count == index) {
                 Text("No available matches")
             } else {
                 //view with matches

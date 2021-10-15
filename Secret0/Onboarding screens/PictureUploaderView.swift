@@ -190,7 +190,9 @@ struct PictureUploaderView: View {
                         .navigationBarHidden(true)
                         .onAppear(perform: {
                             //mandalo con informacion papaw!
-                            model.getMatches()
+                            
+                            //model.getMatches()
+                            model.getMatchesNearMe(radius: 50)
                         }),
                     isActive: $goWhenTrue,
                     label: {
