@@ -414,10 +414,39 @@ class ContentModel: ObservableObject{
                                               withRadius: radiusInKilometers)
         let queries = queryBounds.compactMap { (any) -> Query? in
             guard let bound = any as? GFGeoQueryBounds else { return nil }
-            return db.collection("users")
-                .order(by: "geohash")
-                .start(at: [bound.startValue])
-                .end(at: [bound.endValue])
+            //results for matches that prefer men
+            if user.datingPreferences == "Women" {
+                return db.collection("users")
+                    .order(by: "geohash")
+                    .start(at: [bound.startValue])
+                    .end(at: [bound.endValue])
+                    .whereField("gender", isEqualTo: "Women")
+                    .whereField("datingPreferences", in: [user.gender, "Everyone"])
+                    //.whereField("conversations", notIn: [user.name]) //I don't have a convo with this user already
+            }
+            
+            //results for matches that prefer women
+            if user.datingPreferences == "Men" {
+                return db.collection("users")
+                    .order(by: "geohash")
+                    .start(at: [bound.startValue])
+                    .end(at: [bound.endValue])
+                    .whereField("gender", isEqualTo: "Men")
+                    .whereField("datingPreferences", in: [user.gender, "Everyone"])
+                    //.whereField("conversations", notIn: [user.name])
+            }
+            
+            //results for matches that like tocho
+            if user.datingPreferences == "Everybody" {
+                return db.collection("users")
+                    .order(by: "geohash")
+                    .start(at: [bound.startValue])
+                    .end(at: [bound.endValue])
+                    .whereField("datingPreferences", in: [user.gender, "Everyone"])
+                    //.whereField("conversations", notIn: [user.name])
+            }
+            
+            return nil
         }
         
         // Create a dispatch group outside of the query loop since each iteration of the loop
@@ -465,42 +494,51 @@ class ContentModel: ObservableObject{
         // calls equal the number of enter() calls, this notify function is called.
         dispatch.notify(queue: .main) {
             for doc in matchingDocs {
-                var m = Matches()
+                let conversationsWith = doc.data()["conversations"] as? [String] ?? []
                 
-                m.latitude = doc.data()["latitude"] as? Double ?? 0
-                m.longitude = doc.data()["longitude"] as? Double ?? 0
-                let coordinates = CLLocation(latitude: m.latitude ?? 0, longitude: m.longitude ?? 0)
-                let centerPoint = CLLocation(latitude: center.latitude, longitude: center.longitude)
-                
-                m.id = doc.data()["id"] as? String ?? ""
-                m.name = doc.data()["name"] as? String ?? ""
-                m.birthdate = doc.data()["birthdate"] as? Date ?? Date()
-                m.gender = doc.data()["gender"] as? String ?? ""
-                m.datingPreferences = doc.data()["datingPreferences"] as? String ?? ""
-                m.height = doc.data()["height"] as? Int ?? 0
-                
-                m.imageUrl1 = doc.data()["photo1"] as? String ?? ""
-                m.imageUrl2 = doc.data()["photo2"] as? String ?? ""
-                m.imageUrl3 = doc.data()["photo3"] as? String ?? ""
-                m.imageUrl4 = doc.data()["photo4"] as? String ?? ""
-                m.imageUrl5 = doc.data()["photo5"] as? String ?? ""
-                m.imageUrl6 = doc.data()["photo6"] as? String ?? ""
-                
-                m.Q1day2live = doc.data()["Q1day2live"] as? String ?? ""
-                m.QlotteryWin = doc.data()["QlotteryWin"] as? String ?? ""
-                m.QmoneynotanIssue = doc.data()["QmoneynotanIssue"] as? String ?? ""
-                m.bucketList = doc.data()["bucketList"] as? String ?? ""
-                m.jokes = doc.data()["jokes"] as? String ?? ""
-                
-                let distance = GFUtils.distance(from: centerPoint, to: coordinates)
-                print("MatchName: \(m.name), distance: \(distance) \tlat: \(m.latitude), \(m.longitude)")
-                if distance <= radiusInKilometers {
-                    matchesNear.append(m)
+                if conversationsWith.contains(user.name) {
+                    //do nothing
+                } else {
+                    var m = Matches()
+                    
+                    m.latitude = doc.data()["latitude"] as? Double ?? 0
+                    m.longitude = doc.data()["longitude"] as? Double ?? 0
+                    let coordinates = CLLocation(latitude: m.latitude ?? 0, longitude: m.longitude ?? 0)
+                    let centerPoint = CLLocation(latitude: center.latitude, longitude: center.longitude)
+                    
+                    m.id = doc.data()["id"] as? String ?? ""
+                    m.name = doc.data()["name"] as? String ?? ""
+                    m.birthdate = doc.data()["birthdate"] as? Date ?? Date()
+                    m.gender = doc.data()["gender"] as? String ?? ""
+                    m.datingPreferences = doc.data()["datingPreferences"] as? String ?? ""
+                    m.height = doc.data()["height"] as? Int ?? 0
+                    
+                    m.imageUrl1 = doc.data()["photo1"] as? String ?? ""
+                    m.imageUrl2 = doc.data()["photo2"] as? String ?? ""
+                    m.imageUrl3 = doc.data()["photo3"] as? String ?? ""
+                    m.imageUrl4 = doc.data()["photo4"] as? String ?? ""
+                    m.imageUrl5 = doc.data()["photo5"] as? String ?? ""
+                    m.imageUrl6 = doc.data()["photo6"] as? String ?? ""
+                    
+                    m.Q1day2live = doc.data()["Q1day2live"] as? String ?? ""
+                    m.QlotteryWin = doc.data()["QlotteryWin"] as? String ?? ""
+                    m.QmoneynotanIssue = doc.data()["QmoneynotanIssue"] as? String ?? ""
+                    m.bucketList = doc.data()["bucketList"] as? String ?? ""
+                    m.jokes = doc.data()["jokes"] as? String ?? ""
+                    
+                    let distance = GFUtils.distance(from: centerPoint, to: coordinates)
+                    print("MatchName: \(m.name), distance: \(distance) \tlat: \(m.latitude), \(m.longitude)")
+                    if distance <= radiusInKilometers {
+                        matchesNear.append(m)
+                    }
                 }
+                
             } //end of for loop
             
-            self.matches = matchesNear
-            self.usersLoaded = true
+            DispatchQueue.main.async {
+                self.matches = matchesNear
+                self.usersLoaded = true
+            }
         }
     }
     
