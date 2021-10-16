@@ -47,7 +47,8 @@ struct RemoteImage: View {
             .cornerRadius(10)
     }
 
-    init(url: String, loading: Image = Image(systemName: "photo"), failure: Image = Image(systemName: "multiply.circle")) {
+    init(url: String, loading: Image = Image(systemName: "photo"),
+         failure: Image = Image("noPic")) {
         _loader = StateObject(wrappedValue: Loader(url: url))
         self.loading = loading
         self.failure = failure

@@ -20,6 +20,8 @@ struct HeightOnboardingView: View {
     @State var selectedeHeight: String = "5'7 (170 cm)"
     @State var heightOptions = [
         "4'9 (144 cm)",
+        "4'10 (147 cm)",
+        "4'11 (150 cm)",
         "5'0 (152 cm)",
         "5'1 (155 cm)",
         "5'2 (158 cm)",
@@ -79,25 +81,27 @@ struct HeightOnboardingView: View {
                 NavigationLink(destination: BreakIceOnboardingView(index: index + 1).environmentObject(ContentModel()), isActive: $goWhenTrue) {
                     //BUTTON NEXT
                     Button {
-                        if selectedeHeight.contains("144") { selectedHeightNumber = 144}
-                        if selectedeHeight.contains("152") { selectedHeightNumber = 152}
-                        if selectedeHeight.contains("155") { selectedHeightNumber = 155}
-                        if selectedeHeight.contains("158") { selectedHeightNumber = 158}
-                        if selectedeHeight.contains("160") { selectedHeightNumber = 160}
-                        if selectedeHeight.contains("163") { selectedHeightNumber = 163}
-                        if selectedeHeight.contains("165") { selectedHeightNumber = 165}
-                        if selectedeHeight.contains("168") { selectedHeightNumber = 168}
-                        if selectedeHeight.contains("170") { selectedHeightNumber = 170}
-                        if selectedeHeight.contains("173") { selectedHeightNumber = 173}
-                        if selectedeHeight.contains("175") { selectedHeightNumber = 175}
-                        if selectedeHeight.contains("178") { selectedHeightNumber = 178}
-                        if selectedeHeight.contains("180") { selectedHeightNumber = 180}
-                        if selectedeHeight.contains("183") { selectedHeightNumber = 183}
-                        if selectedeHeight.contains("185") { selectedHeightNumber = 185}
-                        if selectedeHeight.contains("188") { selectedHeightNumber = 188}
-                        if selectedeHeight.contains("190") { selectedHeightNumber = 190}
-                        if selectedeHeight.contains("193") { selectedHeightNumber = 193}
-                        if selectedeHeight.contains("195") { selectedHeightNumber = 195}
+                        if selectedeHeight.contains("144") { selectedHeightNumber = 57}
+                        if selectedeHeight.contains("147") { selectedHeightNumber = 58}
+                        if selectedeHeight.contains("150") { selectedHeightNumber = 59}
+                        if selectedeHeight.contains("152") { selectedHeightNumber = 60}
+                        if selectedeHeight.contains("155") { selectedHeightNumber = 61}
+                        if selectedeHeight.contains("158") { selectedHeightNumber = 62}
+                        if selectedeHeight.contains("160") { selectedHeightNumber = 63}
+                        if selectedeHeight.contains("163") { selectedHeightNumber = 64}
+                        if selectedeHeight.contains("165") { selectedHeightNumber = 65}
+                        if selectedeHeight.contains("168") { selectedHeightNumber = 66}
+                        if selectedeHeight.contains("170") { selectedHeightNumber = 67}
+                        if selectedeHeight.contains("173") { selectedHeightNumber = 68}
+                        if selectedeHeight.contains("175") { selectedHeightNumber = 69}
+                        if selectedeHeight.contains("178") { selectedHeightNumber = 70}
+                        if selectedeHeight.contains("180") { selectedHeightNumber = 71}
+                        if selectedeHeight.contains("183") { selectedHeightNumber = 72}
+                        if selectedeHeight.contains("185") { selectedHeightNumber = 73}
+                        if selectedeHeight.contains("188") { selectedHeightNumber = 74}
+                        if selectedeHeight.contains("190") { selectedHeightNumber = 75}
+                        if selectedeHeight.contains("193") { selectedHeightNumber = 76}
+                        if selectedeHeight.contains("195") { selectedHeightNumber = 77}
                         
                         
                         saveDataHere()

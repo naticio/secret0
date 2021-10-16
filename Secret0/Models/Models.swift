@@ -8,12 +8,14 @@
 import Foundation
 import SwiftUI
 import CoreLocation
+//import FirebaseFirestoreSwift
 
 class User {
     var id: String = ""
     var name: String = ""
     var email: String = ""
     var birthdate: Date = Date()
+    //var birthdateTimestamp: Timestamp?
     var location: CLLocation?
     var latitude: Double?
     var longitude: Double?
@@ -60,6 +62,7 @@ class Matches: Decodable, Identifiable, ObservableObject {
     var imageUrl4: String?
     var imageUrl5: String?
     var imageUrl6: String?
+    var conversations : [String]?
 
     enum CodingKeys: String, CodingKey {
         

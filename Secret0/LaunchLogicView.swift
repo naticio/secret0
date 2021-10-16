@@ -40,7 +40,7 @@ struct LaunchLogicView: View {
                             
                             //model.getMatches()
                             
-                            model.getMatchesNearMe(radius: 50)
+                            model.getMatchesNearMeDispatch(radius: 50)
                             
                             //get conversations
                             //chatViewModel.getFilteredConversations(query: "")

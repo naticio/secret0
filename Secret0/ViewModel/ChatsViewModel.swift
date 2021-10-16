@@ -153,12 +153,15 @@ class ChatsViewModel: ObservableObject {
     func getFilteredConversations(query: String) {
         //var conversations = [Conversation]() //empty array of conversations
         
-        var conversations = [Conversation]()
+
         //let currentUser = UserService.shared.user
         if (user != nil) {
             db.collection("conversations").whereField("users", arrayContains: user!.displayName)
                 .order(by: "createdTime")
                 .addSnapshotListener { (querySnapshot, error) in
+                    self.chats.removeAll()
+                    var conversations = [Conversation]()
+                    
                     guard let documents = querySnapshot?.documents else {
                         print("no conversations found")
                         return

@@ -48,7 +48,30 @@ class ContentModel: ObservableObject{
     let db = Firestore.firestore()
     
     init() {
+        let matchDummy = Matches()
+        matchDummy.name = "Poncho de Nigris"
+        matchDummy.birthdate = Date()
+        matchDummy.gender = "Male"
+        matchDummy.height = 180
+        matchDummy.latitude = 32
+        matchDummy.longitude = 50
+        matchDummy.datingPreferences = "Women"
+        matchDummy.sexuality = "Straight"
         
+        matchDummy.imageUrl1 = "https://firebasestorage.googleapis.com/v0/b/secret0-63695.appspot.com/o/4rX78fIQPPeWaJIr8OUuQ8bHNgq2%2F2A846400-EEE3-4244-A6D4-6952ED07675D?alt=media&token=0299ed53-1d8d-4aaf-b997-7ffc98ca1937"
+        matchDummy.imageUrl2 = "https://firebasestorage.googleapis.com/v0/b/secret0-63695.appspot.com/o/4rX78fIQPPeWaJIr8OUuQ8bHNgq2%2F2A846400-EEE3-4244-A6D4-6952ED07675D?alt=media&token=0299ed53-1d8d-4aaf-b997-7ffc98ca1937"
+        matchDummy.imageUrl3 = "https://firebasestorage.googleapis.com/v0/b/secret0-63695.appspot.com/o/4rX78fIQPPeWaJIr8OUuQ8bHNgq2%2F2A846400-EEE3-4244-A6D4-6952ED07675D?alt=media&token=0299ed53-1d8d-4aaf-b997-7ffc98ca1937"
+        matchDummy.imageUrl4 = "http://www.profightdb.com/img/wrestlers/thumbs-600/213517f78aponchodenegris.jpg"
+        matchDummy.imageUrl5 = "https://firebasestorage.googleapis.com/v0/b/secret0-63695.appspot.com/o/4rX78fIQPPeWaJIr8OUuQ8bHNgq2%2F2A846400-EEE3-4244-A6D4-6952ED07675D?alt=media&token=0299ed53-1d8d-4aaf-b997-7ffc98ca1937"
+        matchDummy.imageUrl6 = "http://www.profightdb.com/img/wrestlers/thumbs-600/213517f78aponchodenegris.jpg"
+        
+        matchDummy.Q1day2live = "Alfonso de Nigris Guajardo (Monterrey, Nuevo León, México; 3 de marzo de 1976), conocido como Poncho de Nigris, es un presentador, actor, bailarín e influencer mexicano. Es hermano de los exfutbolistas Aldo de Nigris y Antonio de Nigris"
+        matchDummy.QlotteryWin = "Alfonso de Nigris Guajardo nació el 3 de marzo de 1973 en Monterrey, Nuevo León. Hijo de Alfonso de Nigris Dávila y de Leticia Guajardo Cantú, es el mayor de los hermanos Antonio de Nigris y Aldo de Nigris"
+        matchDummy.QmoneynotanIssue = "s egresado del ITESM Campus Monterrey como Licenciado en Administración de Empresas. Inició su carrera en el mundo del espectáculo tras participar en la segunda temporada del reality show, Big Brother "
+        matchDummy.bucketList = "Ser cantante"
+        matchDummy.jokes = "Ya llego papa"
+
+        self.matches.append(matchDummy)
     }
     
     //MARK: - authentication methods
@@ -508,7 +531,9 @@ class ContentModel: ObservableObject{
                     
                     m.id = doc.data()["id"] as? String ?? ""
                     m.name = doc.data()["name"] as? String ?? ""
-                    m.birthdate = doc.data()["birthdate"] as? Date ?? Date()
+                    
+                    let birthDateTimestamp = doc.data()["birthdate"] as? Timestamp ?? nil
+                    m.birthdate = birthDateTimestamp!.dateValue()
                     m.gender = doc.data()["gender"] as? String ?? ""
                     m.datingPreferences = doc.data()["datingPreferences"] as? String ?? ""
                     m.height = doc.data()["height"] as? Int ?? 0

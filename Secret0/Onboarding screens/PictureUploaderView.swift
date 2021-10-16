@@ -192,7 +192,7 @@ struct PictureUploaderView: View {
                             //mandalo con informacion papaw!
                             
                             //model.getMatches()
-                            model.getMatchesNearMe(radius: 50)
+                            model.getMatchesNearMeDispatch(radius: 50)
                         }),
                     isActive: $goWhenTrue,
                     label: {

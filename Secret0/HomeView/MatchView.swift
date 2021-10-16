@@ -11,14 +11,14 @@ struct MatchView: View {
     
     @EnvironmentObject var model: ContentModel
     //@EnvironmentObject var chatModel: ChatsViewModel
-
+    
     //to hide view
     @State var viewShown = false
     @State var transitionShown = false
     
     //modal like
     @State var likeModal = false
-
+    
     
     @State var index : Int
     @State var image1: String = ""
@@ -44,7 +44,8 @@ struct MatchView: View {
                         HStack {
                             Text(model.matches[index].name)
                                 .frame(alignment: .leading)
-                                .font(.title)
+                                .font(.title.bold())
+                                
                             
                             Text(model.matches[index].gender)
                             Text("wants \(model.matches[index].datingPreferences)")
@@ -71,14 +72,14 @@ struct MatchView: View {
                                         Image("noPic")
                                             .resizable()
                                             .frame(height: 410, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
-                                        //.aspectRatio(contentMode: .fit)
+                                            //.aspectRatio(contentMode: .fit)
                                             .cornerRadius(10)
                                             .padding(10)
                                         
                                     } else {
                                         RemoteImage(url: model.matches[index].imageUrl1!)
-                                        //.aspectRatio(contentMode: .fit)
-                                        
+                                            //.aspectRatio(contentMode: .fit)
+                                            
                                             .frame(height: 410, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
                                             .cornerRadius(10)
                                             .padding(10)
@@ -86,18 +87,18 @@ struct MatchView: View {
                                                 Button(action: {
                                                     //open modal to send message
                                                     likeModal.toggle()
-
+                                                    
                                                 }, label: {
                                                     Image(systemName: "heart.fill")
                                                         .foregroundColor(Color(.systemRed))
                                                 })
                                                 //MARK: - like button
-                                                    .fullScreenCover(isPresented: $likeModal, content: {
-                                                        LikeScreenModalView.init(likeModalShown: $likeModal, indexHere: $index, input: model.matches[index].imageUrl1!, receiver: model.matches[index].name, type: "Image", question: "")
+                                                .fullScreenCover(isPresented: $likeModal, content: {
+                                                    LikeScreenModalView.init(likeModalShown: $likeModal, indexHere: $index, input: model.matches[index].imageUrl1!, receiver: model.matches[index].name, type: "Image", question: "")
                                                         .environmentObject(ChatsViewModel())
                                                         .environmentObject(ContentModel())
-                                                    })
-
+                                                })
+                                                
                                                 //fixing at bottom left the floating like !!
                                                 , alignment: .bottomTrailing
                                             )
@@ -105,39 +106,45 @@ struct MatchView: View {
                                     }
                                     
                                     
-                                }
-
+                                }.padding(.horizontal)
+                                
                                 
                                 //2nd group with text
                                 Group {
                                     VStack {
                                         Text("What would you do if you only have 1 day left to live?")
+                                            .font(.title2)
+                                            .bold()
+                                            .padding(.bottom)
+                                        
                                         Text(model.matches[index].Q1day2live ?? "")
-                                    }
+            
+                                    }.padding()
                                     
                                 }
+                                .padding(.horizontal)
                                 .overlay(
                                     Button(action: {
                                         //open modal to send message
                                         likeModal.toggle()
                                         
-
+                                        
                                     }, label: {
                                         Image(systemName: "heart.fill")
                                             .foregroundColor(Color(.systemRed))
                                     })
                                     //MARK: - like button
-                                        .fullScreenCover(isPresented: $likeModal, content: {
-                                            LikeScreenModalView.init(likeModalShown: $likeModal, indexHere: $index, input: model.matches[index].Q1day2live, receiver: model.matches[index].name, type: "Text", question: "What would you do if you only have 1 day left to live?")
+                                    .fullScreenCover(isPresented: $likeModal, content: {
+                                        LikeScreenModalView.init(likeModalShown: $likeModal, indexHere: $index, input: model.matches[index].Q1day2live, receiver: model.matches[index].name, type: "Text", question: "What would you do if you only have 1 day left to live?")
                                             .environmentObject(ChatsViewModel())
                                             .environmentObject(ContentModel())
-                                        })
+                                    })
                                     
                                     //fixing at bottom left the floating like !!
                                     , alignment: .bottomTrailing
                                 )
-   
                                 
+                                ///3RD GROUP IMAGE
                                 Group {
                                     //CustomImageView(urlString: model.matches[index].imageUrl2 ?? "")
                                     if model.matches[index].imageUrl2 == "" {
@@ -149,39 +156,57 @@ struct MatchView: View {
                                     } else {
                                         
                                         RemoteImage(url: model.matches[index].imageUrl2!)
-                                        //.aspectRatio(contentMode: .fit)
+                                            //.aspectRatio(contentMode: .fit)
                                             .frame(height: 410, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
                                             .padding(10)
                                     }
-                                    Text("What would you do if you won 100 million dollars?")
-                                    Text(model.matches[index].QlotteryWin ?? "")
-                                }.padding()
+                                    VStack{
+                                        Text("What would you do if you won 100 million dollars?")
+                                            .font(.title2)
+                                            .bold()
+                                            .padding(.bottom)
+                                        Text(model.matches[index].QlotteryWin ?? "")
+                                    }.padding()
+
+                                }
+                                .padding(.horizontal)
+                                //add overlay
                                 
-                                
+                                //4th group quest
                                 Group {
                                     VStack {
                                         HStack {
                                             Group {
                                                 Image(systemName: "sun.min")
-                                                Text("Age")
+                                                //let age = getAge(dateBirth: model.matches[index].birthdate)
+                                                Text(String(model.matches[index].birthdate.age))
                                             }.padding(.trailing)
                                             
                                             Group {
                                                 Image(systemName: "ruler")
-                                                Text(String(model.matches[index].height) ?? "")
+                                                Text(getInches(height: model.matches[index].height))
+                                                //Text(String(model.matches[index].height) ?? "")
                                             }.padding(.trailing)
                                             
                                             Group {
                                                 Image(systemName: "mappin.and.ellipse")
                                                 Text("Location")
                                             }.padding(.trailing)
-                                        }
+                                        }.padding(.vertical)
                                         
-                                        Text("What would you do with your time if money was not an issue")
-                                        Text(model.matches[index].QmoneynotanIssue)
+                                        VStack{
+                                            Text("What would you do with your time if money was not an issue")
+                                                .font(.title2)
+                                                .bold()
+                                                .padding(.bottom)
+                                            Text(model.matches[index].QmoneynotanIssue)
+                                        }.padding()
+
                                         
                                     }
                                 }
+                                .padding(.horizontal)
+                                //add overlay for the LIKE
                                 
                                 Group {
                                     //CustomImageView(urlString: model.matches[index].imageUrl3 ?? "")
@@ -193,9 +218,17 @@ struct MatchView: View {
                                             .frame(height: 410, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
                                             .padding(10)
                                     }
-                                    Text("What are three things in your bucket list?")
-                                    Text(model.matches[index].bucketList)
-                                }.padding()
+                                    VStack {
+                                        Text("What are three things in your bucket list?")
+                                            .font(.title2)
+                                            .bold()
+                                            .padding(.bottom)
+                                        Text(model.matches[index].bucketList)
+                                    }.padding()
+
+                                }
+                                .padding(.horizontal)
+                                //add overlay
                                 
                                 Group {
                                     
@@ -211,9 +244,15 @@ struct MatchView: View {
                                             .frame(height: 410, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
                                             .padding(10)
                                     }
-                                    Text("Do you know any jokes")
-                                    Text(model.matches[index].jokes)
-                                }.padding()
+                                    VStack{
+                                        Text("Do you know any jokes")
+                                            .font(.title2)
+                                            .bold()
+                                            .padding(.bottom)
+                                        Text(model.matches[index].jokes)
+                                    }.padding()
+
+                                }.padding(.horizontal)
                                 
                             }
                             .id("SCROLL_TO_TOP")
@@ -222,57 +261,57 @@ struct MatchView: View {
                             
                         })//scroll view
                         //to recreate the veiw from scratch
-                            .id(self.scrollViewID)
+                        .id(self.scrollViewID)
                         
                         //this is to show the rejection button
-                            .overlay(
-                                Button(action: {
-                                    //move to the next match
+                        .overlay(
+                            Button(action: {
+                                //move to the next match
+                                self.transitionShown.toggle()
+                                self.viewShown.toggle()
+                                
+                                //scroll to top
+                                withAnimation(.spring()) {
+                                    ProxyReader.scrollTo("SCROLL_TO_TOP", anchor: .top)
+                                    
+                                    if self.index == model.matches.count-1 {
+                                        //go back to first match
+                                        self.index = 0
+                                    } else {
+                                        self.index += 1
+                                    }
+                                }
+                                
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                                     self.transitionShown.toggle()
                                     self.viewShown.toggle()
-                                    
-                                    //scroll to top
-                                    withAnimation(.spring()) {
-                                        ProxyReader.scrollTo("SCROLL_TO_TOP", anchor: .top)
-                                        
-                                        if self.index == model.matches.count-1 {
-                                            //go back to first match
-                                            self.index = 0
-                                        } else {
-                                            self.index += 1
-                                        }
-                                    }
-                                    
-                                    DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                                        self.transitionShown.toggle()
-                                        self.viewShown.toggle()
-                                    }
-                                    
-                                    
-                                }, label: {
-                                    Image(systemName: "xmark.circle.fill")
-                                        .font(.system(size:50, weight: .semibold))
-                                        .foregroundColor(.black)
-                                        .padding()
-                                        .background(Color.white)
-                                        .clipShape(Circle())
-                                })
-                                    .padding(.trailing)
-                                    .padding(.bottom, getSafeArea().bottom == 0 ? 12 : 0) //this is an if statement
-                                //.opacity(-scrollViewOffset > 450 ? 1 : 0)
-                                    .animation(.easeInOut)
-                                
-                                //to show rejection transition
-                                    .fullScreenCover(isPresented: $transitionShown, content: {
-                                        RejectionModalView.init()
-                                        
-                                    })
+                                }
                                 
                                 
-                                //fixing at bottom left the floating rejection !!
-                                , alignment: .bottomLeading
+                            }, label: {
+                                Image(systemName: "xmark.circle.fill")
+                                    .font(.system(size:50, weight: .semibold))
+                                    .foregroundColor(.black)
+                                    .padding()
+                                    .background(Color.white)
+                                    .clipShape(Circle())
+                            })
+                            .padding(.trailing)
+                            .padding(.bottom, getSafeArea().bottom == 0 ? 12 : 0) //this is an if statement
+                            //.opacity(-scrollViewOffset > 450 ? 1 : 0)
+                            .animation(.easeInOut)
+                            
+                            //to show rejection transition
+                            .fullScreenCover(isPresented: $transitionShown, content: {
+                                RejectionModalView.init()
                                 
-                            )
+                            })
+                            
+                            
+                            //fixing at bottom left the floating rejection !!
+                            , alignment: .bottomLeading
+                            
+                        )
                         
                     }
                 } //vStack main matches view
@@ -281,6 +320,70 @@ struct MatchView: View {
             }
         }
     }
+    
+    func getInches(height: Int) -> String {
+        
+        var heightInches = ""
+        
+        switch height {
+        case 57:
+            heightInches = "4'9"
+        case 58:
+            heightInches = "4'10"
+        case 59:
+            heightInches = "4'11"
+        case 60:
+            heightInches = "5'0"
+        case 61:
+            heightInches = "5'1"
+        case 62:
+            heightInches = "5'2"
+        case 63:
+            heightInches = "5'3"
+        case 64:
+            heightInches = "5'4"
+        case 65:
+            heightInches = "5'5"
+        case 66:
+            heightInches = "5'6"
+        case 67:
+            heightInches = "5'7"
+        case 68:
+            heightInches = "5'8"
+        case 69:
+            heightInches = "5'9"
+        case 70:
+            heightInches = "5'10"
+        case 71:
+            heightInches = "5'11"
+        case 72:
+            heightInches = "6'0"
+        case 73:
+            heightInches = "6'1"
+        case 74:
+            heightInches = "6'2"
+        case 75:
+            heightInches = "6'3"
+        case 76:
+            heightInches = "6'4"
+        case 77:
+            heightInches = "6'5"
+        
+        default:
+            heightInches = ""
+        }
+        
+        return heightInches
+    }
+    
+//    func getAge(dateBirth: Date) -> Int {
+//
+//        let calendar = Calendar.current
+//
+//        let dateComponent = calendar.dateComponents([.year], from: dateBirth, to: Date())
+//
+//        return (dateComponent.year!)
+//    }
     
 }
 
@@ -325,7 +428,7 @@ struct LikeScreenModalView: View {
                     Text(input)
                 }
             }
-
+            
             
             TextField("Say something nice", text: $opener).font(.title)
                 .multilineTextAlignment(.center)
@@ -352,11 +455,11 @@ struct LikeScreenModalView: View {
             } label: {
                 Text("Send Message")
             }
-
+            
             
             
         }
-
+        
         
         
     }
