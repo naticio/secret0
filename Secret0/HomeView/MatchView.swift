@@ -89,7 +89,7 @@ struct MatchView: View {
                                                     likeModal.toggle()
                                                     
                                                 }, label: {
-                                                    Image(systemName: "heart.fill")
+                                                    Image("corazon")
                                                         .foregroundColor(Color(.systemRed))
                                                 })
                                                 //MARK: - like button
@@ -119,30 +119,35 @@ struct MatchView: View {
                                         
                                         Text(model.matches[index].Q1day2live ?? "")
             
-                                    }.padding()
+                                    }
+                                    .padding()
+                                    .border(Color.gray)
+                                    //.cornerRadius(5)
+                                    .overlay(
+                                        Button(action: {
+                                            //open modal to send message
+                                            likeModal.toggle()
+                                            
+                                            
+                                        }, label: {
+                                            Image("corazon")
+                                                .foregroundColor(Color(.systemRed))
+                                        })
+                                        //MARK: - like button
+                                        .fullScreenCover(isPresented: $likeModal, content: {
+                                            LikeScreenModalView.init(likeModalShown: $likeModal, indexHere: $index, input: model.matches[index].Q1day2live, receiver: model.matches[index].name, type: "Text", question: "What would you do if you only have 1 day left to live?")
+                                                .environmentObject(ChatsViewModel())
+                                                .environmentObject(ContentModel())
+                                        })
+                                        
+                                        //fixing at bottom left the floating like !!
+                                        , alignment: .bottomTrailing
+                                    )
+                                    
                                     
                                 }
                                 .padding(.horizontal)
-                                .overlay(
-                                    Button(action: {
-                                        //open modal to send message
-                                        likeModal.toggle()
-                                        
-                                        
-                                    }, label: {
-                                        Image(systemName: "heart.fill")
-                                            .foregroundColor(Color(.systemRed))
-                                    })
-                                    //MARK: - like button
-                                    .fullScreenCover(isPresented: $likeModal, content: {
-                                        LikeScreenModalView.init(likeModalShown: $likeModal, indexHere: $index, input: model.matches[index].Q1day2live, receiver: model.matches[index].name, type: "Text", question: "What would you do if you only have 1 day left to live?")
-                                            .environmentObject(ChatsViewModel())
-                                            .environmentObject(ContentModel())
-                                    })
-                                    
-                                    //fixing at bottom left the floating like !!
-                                    , alignment: .bottomTrailing
-                                )
+
                                 
                                 ///3RD GROUP IMAGE
                                 Group {
@@ -159,6 +164,26 @@ struct MatchView: View {
                                             //.aspectRatio(contentMode: .fit)
                                             .frame(height: 410, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
                                             .padding(10)
+                                            .overlay(
+                                                Button(action: {
+                                                    //open modal to send message
+                                                    likeModal.toggle()
+                                                    
+                                                    
+                                                }, label: {
+                                                    Image("corazon")
+                                                        .foregroundColor(Color(.systemRed))
+                                                })
+                                                //MARK: - like button
+                                                .fullScreenCover(isPresented: $likeModal, content: {
+                                                    LikeScreenModalView.init(likeModalShown: $likeModal, indexHere: $index, input: model.matches[index].imageUrl2!, receiver: model.matches[index].name, type: "Text", question: "")
+                                                        .environmentObject(ChatsViewModel())
+                                                        .environmentObject(ContentModel())
+                                                })
+                                                
+                                                //fixing at bottom left the floating like !!
+                                                , alignment: .bottomTrailing
+                                            )
                                     }
                                     VStack{
                                         Text("What would you do if you won 100 million dollars?")
@@ -167,6 +192,28 @@ struct MatchView: View {
                                             .padding(.bottom)
                                         Text(model.matches[index].QlotteryWin ?? "")
                                     }.padding()
+                                    .border(Color.gray)
+                                    .overlay(
+                                        Button(action: {
+                                            //open modal to send message
+                                            likeModal.toggle()
+                                            
+                                            
+                                        }, label: {
+                                            Image("corazon")
+                                                .foregroundColor(Color(.systemRed))
+                                        })
+                                        //MARK: - like button
+                                        .fullScreenCover(isPresented: $likeModal, content: {
+                                            LikeScreenModalView.init(likeModalShown: $likeModal, indexHere: $index, input: model.matches[index].QlotteryWin, receiver: model.matches[index].name, type: "Text", question: "What would you do if you won 100 million dollars")
+                                                .environmentObject(ChatsViewModel())
+                                                .environmentObject(ContentModel())
+                                        })
+                                        
+                                        //fixing at bottom left the floating like !!
+                                        , alignment: .bottomTrailing
+                                    )
+                                    
 
                                 }
                                 .padding(.horizontal)
@@ -191,19 +238,42 @@ struct MatchView: View {
                                             Group {
                                                 Image(systemName: "mappin.and.ellipse")
                                                 Text("Location")
-                                            }.padding(.trailing)
-                                        }.padding(.vertical)
+                                            }
+                                        }
+                                        .padding()
+                                        .border(Color.gray)
                                         
                                         VStack{
-                                            Text("What would you do with your time if money was not an issue")
+                                            Text("What would you do with your time if money was not an issue?")
                                                 .font(.title2)
                                                 .bold()
                                                 .padding(.bottom)
                                             Text(model.matches[index].QmoneynotanIssue)
                                         }.padding()
-
+                                        .border(Color.gray)
+                                        .overlay(
+                                            Button(action: {
+                                                //open modal to send message
+                                                likeModal.toggle()
+                                                
+                                                
+                                            }, label: {
+                                                Image("corazon")
+                                                    .foregroundColor(Color(.systemRed))
+                                            })
+                                            //MARK: - like button
+                                            .fullScreenCover(isPresented: $likeModal, content: {
+                                                LikeScreenModalView.init(likeModalShown: $likeModal, indexHere: $index, input: model.matches[index].QmoneynotanIssue, receiver: model.matches[index].name, type: "Text", question: "What would you do with your time if money was not an issue?")
+                                                    .environmentObject(ChatsViewModel())
+                                                    .environmentObject(ContentModel())
+                                            })
+                                            
+                                            //fixing at bottom left the floating like !!
+                                            , alignment: .bottomTrailing
+                                        )
                                         
                                     }
+
                                 }
                                 .padding(.horizontal)
                                 //add overlay for the LIKE
@@ -217,6 +287,26 @@ struct MatchView: View {
                                         RemoteImage(url: model.matches[index].imageUrl3!)
                                             .frame(height: 410, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
                                             .padding(10)
+                                            .overlay(
+                                                Button(action: {
+                                                    //open modal to send message
+                                                    likeModal.toggle()
+                                                    
+                                                    
+                                                }, label: {
+                                                    Image("corazon")
+                                                        .foregroundColor(Color(.systemRed))
+                                                })
+                                                //MARK: - like button
+                                                .fullScreenCover(isPresented: $likeModal, content: {
+                                                    LikeScreenModalView.init(likeModalShown: $likeModal, indexHere: $index, input: model.matches[index].imageUrl3!, receiver: model.matches[index].name, type: "Text", question: "")
+                                                        .environmentObject(ChatsViewModel())
+                                                        .environmentObject(ContentModel())
+                                                })
+                                                
+                                                //fixing at bottom left the floating like !!
+                                                , alignment: .bottomTrailing
+                                            )
                                     }
                                     VStack {
                                         Text("What are three things in your bucket list?")
@@ -224,7 +314,29 @@ struct MatchView: View {
                                             .bold()
                                             .padding(.bottom)
                                         Text(model.matches[index].bucketList)
-                                    }.padding()
+                                    }
+                                    .padding()
+                                    .border(Color.gray)
+                                    .overlay(
+                                        Button(action: {
+                                            //open modal to send message
+                                            likeModal.toggle()
+                                            
+                                            
+                                        }, label: {
+                                            Image("corazon")
+                                                .foregroundColor(Color(.systemRed))
+                                        })
+                                        //MARK: - like button
+                                        .fullScreenCover(isPresented: $likeModal, content: {
+                                            LikeScreenModalView.init(likeModalShown: $likeModal, indexHere: $index, input: model.matches[index].QlotteryWin, receiver: model.matches[index].bucketList, type: "Text", question: "What are three things in your bucket list?")
+                                                .environmentObject(ChatsViewModel())
+                                                .environmentObject(ContentModel())
+                                        })
+                                        
+                                        //fixing at bottom left the floating like !!
+                                        , alignment: .bottomTrailing
+                                    )
 
                                 }
                                 .padding(.horizontal)
@@ -243,14 +355,57 @@ struct MatchView: View {
                                         RemoteImage(url: model.matches[index].imageUrl4!)
                                             .frame(height: 410, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
                                             .padding(10)
+                                            .overlay(
+                                                Button(action: {
+                                                    //open modal to send message
+                                                    likeModal.toggle()
+                                                    
+                                                    
+                                                }, label: {
+                                                    Image("corazon")
+                                                        .foregroundColor(Color(.systemRed))
+                                                })
+                                                //MARK: - like button
+                                                .fullScreenCover(isPresented: $likeModal, content: {
+                                                    LikeScreenModalView.init(likeModalShown: $likeModal, indexHere: $index, input: model.matches[index].imageUrl4!, receiver: model.matches[index].name, type: "Text", question: "")
+                                                        .environmentObject(ChatsViewModel())
+                                                        .environmentObject(ContentModel())
+                                                })
+                                                
+                                                //fixing at bottom left the floating like !!
+                                                , alignment: .bottomTrailing
+                                            )
                                     }
                                     VStack{
-                                        Text("Do you know any jokes")
+                                        Text("Do you know any jokes?")
                                             .font(.title2)
                                             .bold()
                                             .padding(.bottom)
                                         Text(model.matches[index].jokes)
-                                    }.padding()
+                                    }
+                                    .padding()
+                                    .border(Color.gray)
+                                    .overlay(
+                                        Button(action: {
+                                            //open modal to send message
+                                            likeModal.toggle()
+                                            
+                                            
+                                        }, label: {
+                                            Image("corazon")
+                                                .foregroundColor(Color(.systemRed))
+                                        })
+                                        //MARK: - like button
+                                        .fullScreenCover(isPresented: $likeModal, content: {
+                                            LikeScreenModalView.init(likeModalShown: $likeModal, indexHere: $index, input: model.matches[index].jokes, receiver: model.matches[index].name, type: "Text", question: "Do you know any jokes?")
+                                                .environmentObject(ChatsViewModel())
+                                                .environmentObject(ContentModel())
+                                        })
+                                        
+                                        //fixing at bottom left the floating like !!
+                                        , alignment: .bottomTrailing
+                                    )
+
 
                                 }.padding(.horizontal)
                                 

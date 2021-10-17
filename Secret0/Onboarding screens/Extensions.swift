@@ -50,3 +50,8 @@ extension CLPlacemark {
         return formatter.string(from: postalAddress)
     }
 }
+
+
+extension Date {
+    var age: Int { Calendar.current.dateComponents([.year], from: self, to: Date()).year! }
+}
