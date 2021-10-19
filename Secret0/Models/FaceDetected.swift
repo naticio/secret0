@@ -43,6 +43,11 @@ struct storedImgJson: Decodable {
     var status : Int
 }
 
+struct faceBlurImage: Decodable {
+    
+    //var success : String
+    var image : String
+}
 
 
 

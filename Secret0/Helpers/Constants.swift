@@ -37,6 +37,8 @@ struct Constants {
     static var pixlabAPIkey = "538f491a89c9026c28be8583aaf7219c"
     //static var apiUrl = "https://api.yelp.com/v3/businesses/search"
     
+    static var faceBlurAPIkey = "7703bb8c2bf1461ebd5547a32b12db34"
+    
 
 //
 //    let databaseRoot = Database.database().reference()

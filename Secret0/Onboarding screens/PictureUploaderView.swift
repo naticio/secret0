@@ -192,7 +192,10 @@ struct PictureUploaderView: View {
                             //mandalo con informacion papaw!
                             
                             //model.getMatches()
-                            model.getMatchesNearMeDispatch(radius: 50)
+                            if model.usersLoaded == false {
+                                model.getMatchesNearMeDispatch(radius: 50)
+                            }
+
                         }),
                     isActive: $goWhenTrue,
                     label: {
@@ -286,8 +289,37 @@ struct PictureUploaderView: View {
                             print(url!.absoluteString)
                             //if hideIdentity toggle  = true then
                             
-                            //SAVE MOGRIFIED IMAGE INTO FIREBASE COLLECTION as url reference
+                            //SAVE BLURRED IMAGE INTO FIREBASE COLLECTION as url reference
                             switch picNumber {
+                            case 1:
+                                if imageController.faceBlurredImage1 != nil {
+                                    FirestoreRef.setData(["photoHidden\(picNumber)": imageController.faceBlurredImage1], merge: true)
+                                }
+                            case 2:
+                                if imageController.faceBlurredImage2 != nil {
+                                    FirestoreRef.setData(["photoHidden\(picNumber)": imageController.faceBlurredImage2], merge: true)
+                                }
+                            case 3:
+                                if imageController.faceBlurredImage3 != nil {
+                                    FirestoreRef.setData(["photoHidden\(picNumber)": imageController.faceBlurredImage3], merge: true)
+                                }
+                            case 4:
+                                if imageController.faceBlurredImage4 != nil {
+                                    FirestoreRef.setData(["photoHidden\(picNumber)": imageController.faceBlurredImage4], merge: true)
+                                }
+                            case 5:
+                                if imageController.faceBlurredImage5 != nil {
+                                    FirestoreRef.setData(["photoHidden\(picNumber)": imageController.faceBlurredImage5], merge: true)
+                                }
+                            case 6:
+                                if imageController.faceBlurredImage6 != nil {
+                                    FirestoreRef.setData(["photoHidden\(picNumber)": imageController.faceBlurredImage6], merge: true)
+                                }
+                            default:
+                                print("No hidden images this time my friend")
+                            }
+                            
+                            /*switch picNumber {
                             case 1:
                                 if imageController.image1Mogrify != nil {
                                     FirestoreRef.setData(["photoHidden\(picNumber)": imageController.image1Mogrify], merge: true)
@@ -314,7 +346,7 @@ struct PictureUploaderView: View {
                                 }
                             default:
                                 print("No hidden images this time my friend")
-                            }
+                            }*/
                             
                         }
                         

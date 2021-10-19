@@ -29,6 +29,7 @@ struct MatchView: View {
     
     var body: some View {
         
+        
         if model.usersLoaded == nil {
             ProgressView()
                 .navigationBarHidden(true)
@@ -45,7 +46,7 @@ struct MatchView: View {
                             Text(model.matches[index].name)
                                 .frame(alignment: .leading)
                                 .font(.title.bold())
-                                
+                            
                             
                             Text(model.matches[index].gender)
                             Text("wants \(model.matches[index].datingPreferences)")
@@ -75,6 +76,7 @@ struct MatchView: View {
                                             //.aspectRatio(contentMode: .fit)
                                             .cornerRadius(10)
                                             .padding(10)
+                                            .shadow(radius: 5)
                                         
                                     } else {
                                         RemoteImage(url: model.matches[index].imageUrl1!)
@@ -106,53 +108,63 @@ struct MatchView: View {
                                     }
                                     
                                     
-                                }.padding(.horizontal)
+                                }.padding(.horizontal,10)
+                                
                                 
                                 
                                 //2nd group with text
-                                Group {
-                                    Section(){
+                                Group{
+                                    ZStack {
+                                        Rectangle()
+                                            .foregroundColor(.white)
+                                            .cornerRadius(10)
+                                            .shadow(radius: 5)
+                                            .aspectRatio(CGSize(width: 335, height: 175), contentMode: .fit)
+                                        
                                         VStack {
                                             Text("What would you do if you only have 1 day left to live?")
                                                 .font(.title2)
                                                 .bold()
-                                                .padding(.bottom)
-
+                                                .padding(.horizontal, 5)
+                                            
                                             
                                             Text(model.matches[index].Q1day2live ?? "")
-                
-                                        }
-                                        .padding()
-                                        //.border(Color.gray)
-                                        //.cornerRadius(5)
-                                        .overlay(
-                                            Button(action: {
-                                                //open modal to send message
-                                                likeModal.toggle()
-                                                
-                                                
-                                            }, label: {
-                                                Image("corazon")
-                                                    .foregroundColor(Color(.systemRed))
-                                            })
-                                            //MARK: - like button
-                                            .fullScreenCover(isPresented: $likeModal, content: {
-                                                LikeScreenModalView.init(likeModalShown: $likeModal, indexHere: $index, input: model.matches[index].Q1day2live, receiver: model.matches[index].name, type: "Text", question: "What would you do if you only have 1 day left to live?")
-                                                    .environmentObject(ChatsViewModel())
-                                                    .environmentObject(ContentModel())
-                                            })
+                                                //.padding()
+                                                .font(Font.system(size: 14))
+                                                .padding([.top, (.horizontal)])
                                             
-                                            //fixing at bottom left the floating like !!
-                                            , alignment: .bottomTrailing
-                                        )
+                                            
+                                        }
+                                        .cornerRadius(15)
+                                        //.padding(.horizontal, 10)
+                                        
                                     }
-
+                                    .overlay(
+                                        Button(action: {
+                                            //open modal to send message
+                                            likeModal.toggle()
+                                            
+                                            
+                                        }, label: {
+                                            Image("corazon")
+                                                .foregroundColor(Color(.systemRed))
+                                        })
+                                        //MARK: - like button
+                                        .fullScreenCover(isPresented: $likeModal, content: {
+                                            LikeScreenModalView.init(likeModalShown: $likeModal, indexHere: $index, input: model.matches[index].Q1day2live, receiver: model.matches[index].name, type: "Text", question: "What would you do if you only have 1 day left to live?")
+                                                .environmentObject(ChatsViewModel())
+                                                .environmentObject(ContentModel())
+                                        })
+                                        
+                                        //fixing at bottom left the floating like !!
+                                        , alignment: .bottomTrailing
+                                    )
                                     
-                                    
-                                }
-                                .padding(.horizontal)
-                                //.scaledToFit()
-
+                                }.padding(.horizontal,20)
+                                
+                                
+                                
+                                
                                 
                                 ///3RD GROUP IMAGE
                                 Group {
@@ -163,6 +175,7 @@ struct MatchView: View {
                                             .frame(height: 410, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
                                             .padding(10)
                                             .cornerRadius(10)
+                                            .shadow(radius: 5)
                                     } else {
                                         
                                         RemoteImage(url: model.matches[index].imageUrl2!)
@@ -190,70 +203,112 @@ struct MatchView: View {
                                                 , alignment: .bottomTrailing
                                             )
                                     }
-                                    VStack{
-                                        Text("What would you do if you won 100 million dollars?")
-                                            .font(.title2)
-                                            .bold()
-                                            .padding(.bottom)
-                                        Text(model.matches[index].QlotteryWin ?? "")
-                                    }.padding()
-                                    //.border(Color.gray)
-                                    .overlay(
-                                        Button(action: {
-                                            //open modal to send message
-                                            likeModal.toggle()
-                                            
-                                            
-                                        }, label: {
-                                            Image("corazon")
-                                                .foregroundColor(Color(.systemRed))
-                                        })
-                                        //MARK: - like button
-                                        .fullScreenCover(isPresented: $likeModal, content: {
-                                            LikeScreenModalView.init(likeModalShown: $likeModal, indexHere: $index, input: model.matches[index].QlotteryWin, receiver: model.matches[index].name, type: "Text", question: "What would you do if you won 100 million dollars")
-                                                .environmentObject(ChatsViewModel())
-                                                .environmentObject(ContentModel())
-                                        })
-                                        
-                                        //fixing at bottom left the floating like !!
-                                        , alignment: .bottomTrailing
-                                    )
                                     
-
+                                    
                                 }
-                                .padding(.horizontal)
+                                .padding(.horizontal, 10)
                                 //add overlay
                                 
-                                //4th group quest
+                                //text
                                 Group {
-                                    VStack {
-                                        HStack {
-                                            Group {
-                                                Image(systemName: "sun.min")
-                                                //let age = getAge(dateBirth: model.matches[index].birthdate)
-                                                Text(String(model.matches[index].birthdate.age))
-                                            }.padding(.trailing)
+                                    ZStack {
+                                        Rectangle()
+                                            .foregroundColor(.white)
+                                            .cornerRadius(10)
+                                            .shadow(radius: 5)
+                                            .aspectRatio(CGSize(width: 335, height: 175), contentMode: .fit)
+                                    
+                                        VStack{
+                                            Text("What would you do if you won 100 million dollars?")
+                                                .font(.title2)
+                                                .bold()
+                                                .padding(.horizontal, 5)
                                             
-                                            Group {
-                                                Image(systemName: "ruler")
-                                                Text(getInches(height: model.matches[index].height))
-                                                //Text(String(model.matches[index].height) ?? "")
-                                            }.padding(.trailing)
-                                            
-                                            Group {
-                                                Image(systemName: "mappin.and.ellipse")
-                                                Text(model.matches[index].city!)
-                                            }
+                                            Text(model.matches[index].QlotteryWin ?? "")
+                                                .font(Font.system(size: 14))
+                                                .padding([.top, (.horizontal)])
                                         }
                                         .padding()
-                                        //.border(Color.gray)
+                                        .overlay(
+                                            Button(action: {
+                                                //open modal to send message
+                                                likeModal.toggle()
+                                                
+                                                
+                                            }, label: {
+                                                Image("corazon")
+                                                    .foregroundColor(Color(.systemRed))
+                                            })
+                                            //MARK: - like button
+                                            .fullScreenCover(isPresented: $likeModal, content: {
+                                                LikeScreenModalView.init(likeModalShown: $likeModal, indexHere: $index, input: model.matches[index].QlotteryWin, receiver: model.matches[index].name, type: "Text", question: "What would you do if you won 100 million dollars")
+                                                    .environmentObject(ChatsViewModel())
+                                                    .environmentObject(ContentModel())
+                                            })
+                                            
+                                            //fixing at bottom left the floating like !!
+                                            , alignment: .bottomTrailing
+                                        )
+                                    }
+                                }.padding(.horizontal,20)
+                               
+                                
+                                //4th HSTACK match data
+                                Group {
+                                    ZStack {
+                                        Rectangle()
+                                            .foregroundColor(.white)
+                                            .cornerRadius(10)
+                                            .shadow(radius: 5)
+                                            .aspectRatio(CGSize(width: 335, height: 50), contentMode: .fit)
+                                        
+                                        VStack {
+                                            HStack {
+                                                Group {
+                                                    Image(systemName: "sun.min")
+                                                    //let age = getAge(dateBirth: model.matches[index].birthdate)
+                                                    Text(String(model.matches[index].birthdate.age))
+                                                }.padding(.trailing)
+                                                
+                                                Group {
+                                                    Image(systemName: "ruler")
+                                                    Text(getInches(height: model.matches[index].height))
+                                                    //Text(String(model.matches[index].height) ?? "")
+                                                }.padding(.trailing)
+                                                
+                                                Group {
+                                                    Image(systemName: "mappin.and.ellipse")
+                                                    Text(model.matches[index].city!)
+                                                }
+                                            }
+                                            .padding()
+                                            //.border(Color.gray)
+                                            
+                                        }
+                                    }
+                                    
+                                    
+                                }
+                                .padding(.horizontal, 20)
+
+                                //QUESTION - money not an issue
+                                Group {
+                                    ZStack {
+                                        Rectangle()
+                                            .foregroundColor(.white)
+                                            .cornerRadius(10)
+                                            .shadow(radius: 5)
+                                            .aspectRatio(CGSize(width: 335, height: 175), contentMode: .fit)
                                         
                                         VStack{
                                             Text("What would you do with your time if money was not an issue?")
                                                 .font(.title2)
                                                 .bold()
-                                                .padding(.bottom)
+                                                .padding(.horizontal, 5)
+                                            
                                             Text(model.matches[index].QmoneynotanIssue)
+                                                .font(Font.system(size: 14))
+                                                .padding([.top, (.horizontal)])
                                         }.padding()
                                         //.border(Color.gray)
                                         .overlay(
@@ -276,17 +331,19 @@ struct MatchView: View {
                                             //fixing at bottom left the floating like !!
                                             , alignment: .bottomTrailing
                                         )
-                                        
                                     }
 
-                                }
-                                .padding(.horizontal)
-                                //add overlay for the LIKE
+                                }.padding(.horizontal,20)
                                 
+                                //IMAGE - 3
                                 Group {
-                                    //CustomImageView(urlString: model.matches[index].imageUrl3 ?? "")
                                     if model.matches[index].imageUrl3 == "" {
-                                        //?
+                                        Image("noPic")
+                                            .resizable()
+                                            .frame(height: 410, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+                                            .padding(10)
+                                            .cornerRadius(10)
+                                            .shadow(radius: 5)
                                     } else {
                                         
                                         RemoteImage(url: model.matches[index].imageUrl3!)
@@ -313,16 +370,31 @@ struct MatchView: View {
                                                 , alignment: .bottomTrailing
                                             )
                                     }
-                                    VStack {
-                                        Text("What are three things in your bucket list?")
-                                            .font(.title2)
-                                            .bold()
-                                            .padding(.bottom)
-                                        Text(model.matches[index].bucketList)
+                                    
+                                }
+                                .padding(.horizontal)
+                                
+                                //QUESTION - bucket list
+                                Group {
+                                    ZStack {
+                                        Rectangle()
+                                            .foregroundColor(.white)
+                                            .cornerRadius(10)
+                                            .shadow(radius: 5)
+                                            .aspectRatio(CGSize(width: 335, height: 175), contentMode: .fit)
+                                        
+                                        VStack {
+                                            Text("What are three things in your bucket list?")
+                                                .font(.title2)
+                                                .bold()
+                                                .padding(.horizontal, 5)
+                                            Text(model.matches[index].bucketList)
+                                                .font(Font.system(size: 14))
+                                                .padding([.top, (.horizontal)])
+                                        }
+                                        .padding()
+                                       
                                     }
-                                    .padding()
-                                    //.border(Color.gray)
-                                    //.scaledToFit()
                                     .overlay(
                                         Button(action: {
                                             //open modal to send message
@@ -343,19 +415,19 @@ struct MatchView: View {
                                         //fixing at bottom left the floating like !!
                                         , alignment: .bottomTrailing
                                     )
-
-                                }
-                                .padding(.horizontal)
-                                //add overlay
+                                   
+                                }.padding(.horizontal,20)
                                 
+                                //IMAGE - 4
                                 Group {
                                     
                                     if model.matches[index].imageUrl4 == "" {
-                                        //                                        Image("noPic")
-                                        //                                            .resizable()
-                                        //                                            .frame(height: 410, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
-                                        //                                            .padding(10)
-                                        //                                            .cornerRadius(10)
+//                                        Image("noPic")
+//                                            .resizable()
+//                                            .frame(height: 410, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+//                                            .cornerRadius(10)
+//                                            .padding(10)
+//                                            .shadow(radius: 5)
                                     } else {
                                         
                                         RemoteImage(url: model.matches[index].imageUrl4!)
@@ -382,16 +454,31 @@ struct MatchView: View {
                                                 , alignment: .bottomTrailing
                                             )
                                     }
-                                    VStack{
-                                        Text("Do you know any jokes?")
-                                            .font(.title2)
-                                            .bold()
-                                            .padding(.bottom)
-                                        Text(model.matches[index].jokes)
+                                    
+                                    
+                                }.padding(.horizontal)
+                                
+                                //QUESTION - Jokes
+                                Group{
+                                    ZStack{
+                                        Rectangle()
+                                            .foregroundColor(.white)
+                                            .cornerRadius(10)
+                                            .shadow(radius: 5)
+                                            .aspectRatio(CGSize(width: 335, height: 175), contentMode: .fit)
+                                        
+                                        VStack{
+                                            Text("Do you know any jokes?")
+                                                .font(.title2)
+                                                .bold()
+                                                .padding(.bottom)
+                                            Text(model.matches[index].jokes)
+                                        }
+                                        .padding()
+                                        //.border(Color.gray)
+                                        //.scaledToFit()
+
                                     }
-                                    .padding()
-                                    //.border(Color.gray)
-                                    //.scaledToFit()
                                     .overlay(
                                         Button(action: {
                                             //open modal to send message
@@ -412,11 +499,10 @@ struct MatchView: View {
                                         //fixing at bottom left the floating like !!
                                         , alignment: .bottomTrailing
                                     )
-
-
-                                }.padding(.horizontal)
+                                }
                                 
                             }
+                            
                             .id("SCROLL_TO_TOP")
                             
                             
@@ -438,12 +524,12 @@ struct MatchView: View {
                                     
                                     self.index += 1
                                     
-//                                    if self.index == model.matches.count-1 {
-//                                        //go back to first match
-//                                        self.index = 0
-//                                    } else {
-//                                        self.index += 1
-//                                    }
+                                    //                                    if self.index == model.matches.count-1 {
+                                    //                                        //go back to first match
+                                    //                                        self.index = 0
+                                    //                                    } else {
+                                    //                                        self.index += 1
+                                    //                                    }
                                 }
                                 
                                 DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
@@ -532,7 +618,7 @@ struct MatchView: View {
             heightInches = "6'4"
         case 77:
             heightInches = "6'5"
-        
+            
         default:
             heightInches = ""
         }
@@ -540,14 +626,14 @@ struct MatchView: View {
         return heightInches
     }
     
-//    func getAge(dateBirth: Date) -> Int {
-//
-//        let calendar = Calendar.current
-//
-//        let dateComponent = calendar.dateComponents([.year], from: dateBirth, to: Date())
-//
-//        return (dateComponent.year!)
-//    }
+    //    func getAge(dateBirth: Date) -> Int {
+    //
+    //        let calendar = Calendar.current
+    //
+    //        let dateComponent = calendar.dateComponents([.year], from: dateBirth, to: Date())
+    //
+    //        return (dateComponent.year!)
+    //    }
     
 }
 

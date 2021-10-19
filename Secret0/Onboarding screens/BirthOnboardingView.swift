@@ -84,11 +84,11 @@ struct BirthOnboardingView: View {
                     Button {
                         //sign out the user
                         try! Auth.auth().signOut() //we're using try because we're not interested to catch an error when signin out
-                        
+
                         isOnboarding = false
                         //change to log out view
                         model.checkLogin()
-                        
+
                     } label: {
                         Text("Sign Out")
                     }
@@ -104,14 +104,25 @@ struct BirthOnboardingView: View {
     
     func userOver18() -> Bool {
         
-        let age = Calendar.current.dateComponents([.year, .month, .day], from: birthDate, to: Date())
+        //let age = Calendar.current.dateComponents([.year, .month, .day], from: birthDate, to: Date())
         
+        let age = Calendar.current.dateComponents([.year],
+                                                  from: birthDate,
+                                                  to: Date())
+        .year
         
-        if age.year! > 17 {
-            return true
+        print(age!)
+        
+        if age != nil {
+            if age! > 17 {
+                return true
+            } else {
+                return false
+            }
         } else {
             return false
         }
+
     }
     
     

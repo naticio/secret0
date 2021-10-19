@@ -39,8 +39,9 @@ struct LaunchLogicView: View {
                         .onAppear() {
                             
                             //model.getMatches()
-                            
-                            model.getMatchesNearMeDispatch(radius: 50)
+                            if model.usersLoaded ==  false {
+                                model.getMatchesNearMeDispatch(radius: 50)
+                            }
                             
                             //get conversations
                             //chatViewModel.getFilteredConversations(query: "")

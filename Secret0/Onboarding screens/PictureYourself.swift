@@ -71,36 +71,37 @@ struct PictureYourself: View {
                                 if picNumber == 1 {
                                     imageController.image1 = imageController.displayedImage
                                     
-                                    storeImage(image: imageController.image1!, picNum: picNumber)
+                                    FaceBlur(image: imageController.image1!, picNum: picNumber)
+                                    //storeImage(image: imageController.image1!, picNum: picNumber)
                                 }
                                 if picNumber == 2 {
                                     imageController.image2 = imageController.displayedImage
-                                    
-                                    storeImage(image: imageController.image2!, picNum: picNumber)
+                                    FaceBlur(image: imageController.image2!, picNum: picNumber)
+                                    //storeImage(image: imageController.image2!, picNum: picNumber)
                                     
                                 }
                                 if picNumber == 3 {
                                     imageController.image3 = imageController.displayedImage
-                                    
-                                    storeImage(image: imageController.image3!, picNum: picNumber)
+                                    FaceBlur(image: imageController.image3!, picNum: picNumber)
+                                    //storeImage(image: imageController.image3!, picNum: picNumber)
                                     
                                 }
                                 if picNumber == 4 {
                                     imageController.image4 = imageController.displayedImage
-                                    
-                                    storeImage(image: imageController.image4!, picNum: picNumber)
+                                    FaceBlur(image: imageController.image4!, picNum: picNumber)
+                                    //storeImage(image: imageController.image4!, picNum: picNumber)
                                     
                                 }
                                 if picNumber == 5 {
                                     imageController.image5 = imageController.displayedImage
-                                    
-                                    storeImage(image: imageController.image5!, picNum: picNumber)
+                                    FaceBlur(image: imageController.image5!, picNum: picNumber)
+                                    //storeImage(image: imageController.image5!, picNum: picNumber)
                                     
                                 }
                                 if picNumber == 6 {
                                     imageController.image6 = imageController.displayedImage
-                                    
-                                    storeImage(image: imageController.image6!, picNum: picNumber)
+                                    FaceBlur(image: imageController.image6!, picNum: picNumber)
+                                    //storeImage(image: imageController.image6!, picNum: picNumber)
                                 }
                             } else {
                                 //if false just save original image in memory to save it later firebase
@@ -229,6 +230,74 @@ struct PictureYourself: View {
         }
         }.resume()
     }*/
+    
+    //MARK: - faceBlur
+    func FaceBlur(image: UIImage, picNum: Int) {
+            
+            let url = URL(string: "https://api.faceblurapi.com/v1/blur")
+            let boundary = "Boundary-\(NSUUID().uuidString)"
+            var request = URLRequest(url: url!)
+            
+            let parameters = ["key" : Constants.faceBlurAPIkey]
+            
+            guard let mediaImage = Media(withImage: image, forKey: "image") else { return }
+            
+            request.httpMethod = "POST"
+            
+            request.allHTTPHeaderFields = [
+                "X-User-Agent": "ios",
+                "Accept-Language": "en",
+                "Accept": "application/json",
+                "Content-Type": "multipart/form-data; boundary=\(boundary)",
+                "ApiKey": Constants.faceBlurAPIkey
+            ]
+            
+        let dataBody = createDataBody(withParameters: parameters, media: [mediaImage], boundary: boundary)
+            request.httpBody = dataBody
+            
+            let session = URLSession.shared
+            session.dataTask(with: request) { (data, response, error) in
+                if let response = response {
+                    print(response)
+                }
+                
+                if let data = data {
+                    do {
+                        let json = try JSONSerialization.jsonObject(with: data, options: [])
+                        print(json)
+                        
+                        //decode a json from data to storedImgJson
+                        let result = try! JSONDecoder().decode(faceBlurImage.self, from: data)
+                        //var secureLink = result.sslLink
+                        
+                        //facedetectGET(uploadedUrl: result.image, picNum: picNum)
+                        
+                        DispatchQueue.main.async {
+                            switch picNum {
+                            case 1:
+                                imageController.faceBlurredImage1 = result.image
+                            case 2:
+                                imageController.faceBlurredImage2 = result.image
+                            case 3:
+                                imageController.faceBlurredImage3 = result.image
+                            case 4:
+                                imageController.faceBlurredImage4 = result.image
+                            case 5:
+                                imageController.faceBlurredImage5 = result.image
+                            case 6:
+                                imageController.faceBlurredImage6 = result.image
+                                
+                            default:
+                                print("No picNum provided")
+                            }
+                        }
+                        
+                    } catch {
+                        print(error)
+                    }
+                }
+            }.resume()
+        }
     
     //MARK: - store Image in pixlab for facedetect and mogrify
     func storeImage(image: UIImage, picNum: Int) {

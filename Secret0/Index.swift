@@ -206,7 +206,8 @@ struct LoginView: View {
         }
         
         Button {
-
+            isPresented = false //hide modal
+            
             Auth.auth().signIn(withEmail: email, password: password) { result, error in
                 //check for errors
                 guard error == nil else {
@@ -215,7 +216,7 @@ struct LoginView: View {
                     return
                 }
                 
-                isPresented = false //hide modal
+
                 
                 //clear error mesage for future sign ins
                 self.errorMsg = nil
