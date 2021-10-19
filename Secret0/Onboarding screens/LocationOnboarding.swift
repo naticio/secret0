@@ -119,13 +119,15 @@ struct LocationOnboarding: View {
             let location = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
             
             let hash = GFUtils.geoHash(forLocation: location)
+            let city = localizationModel.placemark?.locality //to get city
             
             let db = Firestore.firestore()
             let ref = db.collection("users").document(user.name)
             ref.setData([
                 "latitude" : user.location!.coordinate.latitude,
                 "longitude" : user.location!.coordinate.longitude,
-                "geohash" : hash
+                "geohash" : hash,
+                "city" : city
             ], merge: true)
         }
     }

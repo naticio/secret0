@@ -34,6 +34,7 @@ class User {
     var imageUrl4: String?
     var imageUrl5: String?
     var imageUrl6: String?
+    var city: String?
     
 }
 
@@ -63,6 +64,7 @@ class Matches: Decodable, Identifiable, ObservableObject {
     var imageUrl5: String?
     var imageUrl6: String?
     var conversations : [String]?
+    var city: String?
 
     enum CodingKeys: String, CodingKey {
         

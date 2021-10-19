@@ -111,42 +111,47 @@ struct MatchView: View {
                                 
                                 //2nd group with text
                                 Group {
-                                    VStack {
-                                        Text("What would you do if you only have 1 day left to live?")
-                                            .font(.title2)
-                                            .bold()
-                                            .padding(.bottom)
-                                        
-                                        Text(model.matches[index].Q1day2live ?? "")
-            
+                                    Section(){
+                                        VStack {
+                                            Text("What would you do if you only have 1 day left to live?")
+                                                .font(.title2)
+                                                .bold()
+                                                .padding(.bottom)
+
+                                            
+                                            Text(model.matches[index].Q1day2live ?? "")
+                
+                                        }
+                                        .padding()
+                                        //.border(Color.gray)
+                                        //.cornerRadius(5)
+                                        .overlay(
+                                            Button(action: {
+                                                //open modal to send message
+                                                likeModal.toggle()
+                                                
+                                                
+                                            }, label: {
+                                                Image("corazon")
+                                                    .foregroundColor(Color(.systemRed))
+                                            })
+                                            //MARK: - like button
+                                            .fullScreenCover(isPresented: $likeModal, content: {
+                                                LikeScreenModalView.init(likeModalShown: $likeModal, indexHere: $index, input: model.matches[index].Q1day2live, receiver: model.matches[index].name, type: "Text", question: "What would you do if you only have 1 day left to live?")
+                                                    .environmentObject(ChatsViewModel())
+                                                    .environmentObject(ContentModel())
+                                            })
+                                            
+                                            //fixing at bottom left the floating like !!
+                                            , alignment: .bottomTrailing
+                                        )
                                     }
-                                    .padding()
-                                    .border(Color.gray)
-                                    //.cornerRadius(5)
-                                    .overlay(
-                                        Button(action: {
-                                            //open modal to send message
-                                            likeModal.toggle()
-                                            
-                                            
-                                        }, label: {
-                                            Image("corazon")
-                                                .foregroundColor(Color(.systemRed))
-                                        })
-                                        //MARK: - like button
-                                        .fullScreenCover(isPresented: $likeModal, content: {
-                                            LikeScreenModalView.init(likeModalShown: $likeModal, indexHere: $index, input: model.matches[index].Q1day2live, receiver: model.matches[index].name, type: "Text", question: "What would you do if you only have 1 day left to live?")
-                                                .environmentObject(ChatsViewModel())
-                                                .environmentObject(ContentModel())
-                                        })
-                                        
-                                        //fixing at bottom left the floating like !!
-                                        , alignment: .bottomTrailing
-                                    )
+
                                     
                                     
                                 }
                                 .padding(.horizontal)
+                                //.scaledToFit()
 
                                 
                                 ///3RD GROUP IMAGE
@@ -192,7 +197,7 @@ struct MatchView: View {
                                             .padding(.bottom)
                                         Text(model.matches[index].QlotteryWin ?? "")
                                     }.padding()
-                                    .border(Color.gray)
+                                    //.border(Color.gray)
                                     .overlay(
                                         Button(action: {
                                             //open modal to send message
@@ -237,11 +242,11 @@ struct MatchView: View {
                                             
                                             Group {
                                                 Image(systemName: "mappin.and.ellipse")
-                                                Text("Location")
+                                                Text(model.matches[index].city!)
                                             }
                                         }
                                         .padding()
-                                        .border(Color.gray)
+                                        //.border(Color.gray)
                                         
                                         VStack{
                                             Text("What would you do with your time if money was not an issue?")
@@ -250,7 +255,7 @@ struct MatchView: View {
                                                 .padding(.bottom)
                                             Text(model.matches[index].QmoneynotanIssue)
                                         }.padding()
-                                        .border(Color.gray)
+                                        //.border(Color.gray)
                                         .overlay(
                                             Button(action: {
                                                 //open modal to send message
@@ -316,7 +321,8 @@ struct MatchView: View {
                                         Text(model.matches[index].bucketList)
                                     }
                                     .padding()
-                                    .border(Color.gray)
+                                    //.border(Color.gray)
+                                    //.scaledToFit()
                                     .overlay(
                                         Button(action: {
                                             //open modal to send message
@@ -384,7 +390,8 @@ struct MatchView: View {
                                         Text(model.matches[index].jokes)
                                     }
                                     .padding()
-                                    .border(Color.gray)
+                                    //.border(Color.gray)
+                                    //.scaledToFit()
                                     .overlay(
                                         Button(action: {
                                             //open modal to send message
@@ -429,12 +436,14 @@ struct MatchView: View {
                                 withAnimation(.spring()) {
                                     ProxyReader.scrollTo("SCROLL_TO_TOP", anchor: .top)
                                     
-                                    if self.index == model.matches.count-1 {
-                                        //go back to first match
-                                        self.index = 0
-                                    } else {
-                                        self.index += 1
-                                    }
+                                    self.index += 1
+                                    
+//                                    if self.index == model.matches.count-1 {
+//                                        //go back to first match
+//                                        self.index = 0
+//                                    } else {
+//                                        self.index += 1
+//                                    }
                                 }
                                 
                                 DispatchQueue.main.asyncAfter(deadline: .now() + 1) {

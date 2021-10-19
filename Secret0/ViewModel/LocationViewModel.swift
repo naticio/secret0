@@ -33,14 +33,14 @@ class LocationModel: NSObject, CLLocationManagerDelegate, ObservableObject {
         
     }
     
-    
+    //request is triggered on appear of the screen
     func requestGeolocationPermission() {
         
         // Request permission from the user
         locationManager.requestWhenInUseAuthorization()
     }
 
-    
+    //when the authorization location changed or was selected
     // MARK: - Location Manager Delegate Methods
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
         

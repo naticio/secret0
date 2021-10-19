@@ -70,6 +70,7 @@ class ContentModel: ObservableObject{
         matchDummy.QmoneynotanIssue = "s egresado del ITESM Campus Monterrey como Licenciado en Administración de Empresas. Inició su carrera en el mundo del espectáculo tras participar en la segunda temporada del reality show, Big Brother "
         matchDummy.bucketList = "Ser cantante"
         matchDummy.jokes = "Ya llego papa"
+        matchDummy.city = "NYC"
 
         self.matches.append(matchDummy)
     }
@@ -537,6 +538,7 @@ class ContentModel: ObservableObject{
                     m.gender = doc.data()["gender"] as? String ?? ""
                     m.datingPreferences = doc.data()["datingPreferences"] as? String ?? ""
                     m.height = doc.data()["height"] as? Int ?? 0
+                    m.city = doc.data()["city"] as? String ?? ""
                     
                     m.imageUrl1 = doc.data()["photo1"] as? String ?? ""
                     m.imageUrl2 = doc.data()["photo2"] as? String ?? ""
