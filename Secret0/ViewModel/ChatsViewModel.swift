@@ -23,9 +23,10 @@ class ChatsViewModel: ObservableObject {
     
     private let db = Firestore.firestore()
     private let user = Auth.auth().currentUser
+    private let currentUser = UserService.shared.user
     
     
-    func startConversation(receiver: String, message: String) {
+    func startConversation(receiver: String, message: String, receiverImg: String) {
         
         var ref: DocumentReference? = nil
         if (user != nil) {
@@ -40,7 +41,10 @@ class ChatsViewModel: ObservableObject {
                         if querySnapshot!.documents.count == 0 {
                             //no documents available, adddocument
                             //create main collection conversations
-                            ref = self.db.collection("conversations").addDocument(data: ["users" : [self.user!.displayName, receiver], "createdTime" : Timestamp()]) { err in
+                            ref = self.db.collection("conversations").addDocument(data:
+                                ["users" : [self.user!.displayName, receiver],
+                                 "createdTime" : Timestamp(),
+                                 "profilePics": [self.currentUser.imageUrl1 ?? "", receiverImg]]) { err in
                                 if let err = err {
                                     print("error writing doc")
                                 } else {
@@ -152,8 +156,7 @@ class ChatsViewModel: ObservableObject {
     //return an array of chats
     func getFilteredConversations(query: String) {
         //var conversations = [Conversation]() //empty array of conversations
-        
-
+    
         //let currentUser = UserService.shared.user
         if (user != nil) {
             db.collection("conversations").whereField("users", arrayContains: user!.displayName)
@@ -170,13 +173,15 @@ class ChatsViewModel: ObservableObject {
                     //cycle through all conversations to fetch messages and other fields
                     for conversationDoc in querySnapshot!.documents {
                         //query messages
-                        var conver = Conversation() //empty converaation to host the mapping
+                        var conver = Conversation() //empty conversation to host the mapping
                         var mensajesTotal = [Message]() //empty array of messages
                         
                         //map all fields to conversation
                         conver.id = conversationDoc.documentID //conversation id
+                        conver.createdTime = conversationDoc["createdTime"] as? Timestamp ?? Timestamp()
+                        conver.profilePics = conversationDoc["profilePics"] as? [String] ?? [""]
                         conver.users = conversationDoc["users"] as? [String] ?? [""]
-                        //conver.messages = mensajesTotal
+
                         
                         self.chats.append(conver)
                         //conversations.append(conver)//append the mapped conversation to viewModel

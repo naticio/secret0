@@ -27,6 +27,8 @@ struct MatchView: View {
     @State private var scrollViewID = UUID()
     @State private var reader: ScrollViewProxy?
     
+    //@State var currentUser = UserService.shared.user
+    
     var body: some View {
         
         
@@ -96,7 +98,7 @@ struct MatchView: View {
                                                 })
                                                 //MARK: - like button
                                                 .fullScreenCover(isPresented: $likeModal, content: {
-                                                    LikeScreenModalView.init(likeModalShown: $likeModal, indexHere: $index, input: model.matches[index].imageUrl1!, receiver: model.matches[index].name, type: "Image", question: "")
+                                                    LikeScreenModalView.init(likeModalShown: $likeModal, indexHere: $index, input: model.matches[index].imageUrl1!, receiver: model.matches[index].name, type: "Image", question: "", receiverImage: model.matches[index].imageUrl1!)
                                                         .environmentObject(ChatsViewModel())
                                                         .environmentObject(ContentModel())
                                                 })
@@ -108,8 +110,7 @@ struct MatchView: View {
                                     }
                                     
                                     
-                                }.padding(.horizontal,10)
-                                
+                                }.padding(.horizontal,5)
                                 
                                 
                                 //2nd group with text
@@ -151,7 +152,7 @@ struct MatchView: View {
                                         })
                                         //MARK: - like button
                                         .fullScreenCover(isPresented: $likeModal, content: {
-                                            LikeScreenModalView.init(likeModalShown: $likeModal, indexHere: $index, input: model.matches[index].Q1day2live, receiver: model.matches[index].name, type: "Text", question: "What would you do if you only have 1 day left to live?")
+                                            LikeScreenModalView.init(likeModalShown: $likeModal, indexHere: $index, input: model.matches[index].Q1day2live, receiver: model.matches[index].name, type: "Text", question: "What would you do if you only have 1 day left to live?", receiverImage: model.matches[index].imageUrl1!)
                                                 .environmentObject(ChatsViewModel())
                                                 .environmentObject(ContentModel())
                                         })
@@ -159,11 +160,7 @@ struct MatchView: View {
                                         //fixing at bottom left the floating like !!
                                         , alignment: .bottomTrailing
                                     )
-                                    
-                                }.padding(.horizontal,20)
-                                
-                                
-                                
+                                }.padding(.horizontal,13)
                                 
                                 
                                 ///3RD GROUP IMAGE
@@ -194,7 +191,7 @@ struct MatchView: View {
                                                 })
                                                 //MARK: - like button
                                                 .fullScreenCover(isPresented: $likeModal, content: {
-                                                    LikeScreenModalView.init(likeModalShown: $likeModal, indexHere: $index, input: model.matches[index].imageUrl2!, receiver: model.matches[index].name, type: "Text", question: "")
+                                                    LikeScreenModalView.init(likeModalShown: $likeModal, indexHere: $index, input: model.matches[index].imageUrl2!, receiver: model.matches[index].name, type: "Text", question: "", receiverImage: model.matches[index].imageUrl1!)
                                                         .environmentObject(ChatsViewModel())
                                                         .environmentObject(ContentModel())
                                                 })
@@ -205,53 +202,7 @@ struct MatchView: View {
                                     }
                                     
                                     
-                                }
-                                .padding(.horizontal, 10)
-                                //add overlay
-                                
-                                //text
-                                Group {
-                                    ZStack {
-                                        Rectangle()
-                                            .foregroundColor(.white)
-                                            .cornerRadius(10)
-                                            .shadow(radius: 5)
-                                            .aspectRatio(CGSize(width: 335, height: 175), contentMode: .fit)
-                                    
-                                        VStack{
-                                            Text("What would you do if you won 100 million dollars?")
-                                                .font(.title2)
-                                                .bold()
-                                                .padding(.horizontal, 5)
-                                            
-                                            Text(model.matches[index].QlotteryWin ?? "")
-                                                .font(Font.system(size: 14))
-                                                .padding([.top, (.horizontal)])
-                                        }
-                                        .padding()
-                                        .overlay(
-                                            Button(action: {
-                                                //open modal to send message
-                                                likeModal.toggle()
-                                                
-                                                
-                                            }, label: {
-                                                Image("corazon")
-                                                    .foregroundColor(Color(.systemRed))
-                                            })
-                                            //MARK: - like button
-                                            .fullScreenCover(isPresented: $likeModal, content: {
-                                                LikeScreenModalView.init(likeModalShown: $likeModal, indexHere: $index, input: model.matches[index].QlotteryWin, receiver: model.matches[index].name, type: "Text", question: "What would you do if you won 100 million dollars")
-                                                    .environmentObject(ChatsViewModel())
-                                                    .environmentObject(ContentModel())
-                                            })
-                                            
-                                            //fixing at bottom left the floating like !!
-                                            , alignment: .bottomTrailing
-                                        )
-                                    }
-                                }.padding(.horizontal,20)
-                               
+                                }.padding(.horizontal, 5)
                                 
                                 //4th HSTACK match data
                                 Group {
@@ -288,9 +239,53 @@ struct MatchView: View {
                                     }
                                     
                                     
-                                }
-                                .padding(.horizontal, 20)
-
+                                }.padding(.horizontal, 13)
+                                
+                                //text
+                                /*Group {
+                                    ZStack {
+                                        Rectangle()
+                                            .foregroundColor(.white)
+                                            .cornerRadius(10)
+                                            .shadow(radius: 5)
+                                            .aspectRatio(CGSize(width: 335, height: 175), contentMode: .fit)
+                                        
+                                        VStack{
+                                            Text("What would you do if you won 100 million dollars?")
+                                                .font(.title2)
+                                                .bold()
+                                                .padding(.horizontal, 5)
+                                            
+                                            Text(model.matches[index].QlotteryWin ?? "")
+                                                .font(Font.system(size: 14))
+                                                .padding([.top, (.horizontal)])
+                                        }
+                                        .padding()
+                                        .overlay(
+                                            Button(action: {
+                                                //open modal to send message
+                                                likeModal.toggle()
+                                                
+                                                
+                                            }, label: {
+                                                Image("corazon")
+                                                    .foregroundColor(Color(.systemRed))
+                                            })
+                                            //MARK: - like button
+                                            .fullScreenCover(isPresented: $likeModal, content: {
+                                                LikeScreenModalView.init(likeModalShown: $likeModal, indexHere: $index, input: model.matches[index].QlotteryWin, receiver: model.matches[index].name, type: "Text", question: "What would you do if you won 100 million dollars")
+                                                    .environmentObject(ChatsViewModel())
+                                                    .environmentObject(ContentModel())
+                                            })
+                                            
+                                            //fixing at bottom left the floating like !!
+                                            , alignment: .bottomTrailing
+                                        )
+                                    }
+                                    
+                                }.padding(.horizontal,13)*/
+                                
+                                
                                 //QUESTION - money not an issue
                                 Group {
                                     ZStack {
@@ -323,7 +318,7 @@ struct MatchView: View {
                                             })
                                             //MARK: - like button
                                             .fullScreenCover(isPresented: $likeModal, content: {
-                                                LikeScreenModalView.init(likeModalShown: $likeModal, indexHere: $index, input: model.matches[index].QmoneynotanIssue, receiver: model.matches[index].name, type: "Text", question: "What would you do with your time if money was not an issue?")
+                                                LikeScreenModalView.init(likeModalShown: $likeModal, indexHere: $index, input: model.matches[index].QmoneynotanIssue, receiver: model.matches[index].name, type: "Text", question: "What would you do with your time if money was not an issue?", receiverImage: model.matches[index].imageUrl1!)
                                                     .environmentObject(ChatsViewModel())
                                                     .environmentObject(ContentModel())
                                             })
@@ -332,8 +327,8 @@ struct MatchView: View {
                                             , alignment: .bottomTrailing
                                         )
                                     }
-
-                                }.padding(.horizontal,20)
+                                    
+                                }.padding(.horizontal,13)
                                 
                                 //IMAGE - 3
                                 Group {
@@ -361,7 +356,7 @@ struct MatchView: View {
                                                 })
                                                 //MARK: - like button
                                                 .fullScreenCover(isPresented: $likeModal, content: {
-                                                    LikeScreenModalView.init(likeModalShown: $likeModal, indexHere: $index, input: model.matches[index].imageUrl3!, receiver: model.matches[index].name, type: "Text", question: "")
+                                                    LikeScreenModalView.init(likeModalShown: $likeModal, indexHere: $index, input: model.matches[index].imageUrl3!, receiver: model.matches[index].name, type: "Text", question: "", receiverImage: model.matches[index].imageUrl1!)
                                                         .environmentObject(ChatsViewModel())
                                                         .environmentObject(ContentModel())
                                                 })
@@ -371,8 +366,7 @@ struct MatchView: View {
                                             )
                                     }
                                     
-                                }
-                                .padding(.horizontal)
+                                }.padding(.horizontal,5)
                                 
                                 //QUESTION - bucket list
                                 Group {
@@ -393,7 +387,7 @@ struct MatchView: View {
                                                 .padding([.top, (.horizontal)])
                                         }
                                         .padding()
-                                       
+                                        
                                     }
                                     .overlay(
                                         Button(action: {
@@ -407,7 +401,7 @@ struct MatchView: View {
                                         })
                                         //MARK: - like button
                                         .fullScreenCover(isPresented: $likeModal, content: {
-                                            LikeScreenModalView.init(likeModalShown: $likeModal, indexHere: $index, input: model.matches[index].QlotteryWin, receiver: model.matches[index].bucketList, type: "Text", question: "What are three things in your bucket list?")
+                                            LikeScreenModalView.init(likeModalShown: $likeModal, indexHere: $index, input: model.matches[index].QlotteryWin, receiver: model.matches[index].bucketList, type: "Text", question: "What are three things in your bucket list?", receiverImage: model.matches[index].imageUrl1!)
                                                 .environmentObject(ChatsViewModel())
                                                 .environmentObject(ContentModel())
                                         })
@@ -415,19 +409,19 @@ struct MatchView: View {
                                         //fixing at bottom left the floating like !!
                                         , alignment: .bottomTrailing
                                     )
-                                   
-                                }.padding(.horizontal,20)
+                                    
+                                }.padding(.horizontal,13)
                                 
                                 //IMAGE - 4
                                 Group {
                                     
                                     if model.matches[index].imageUrl4 == "" {
-//                                        Image("noPic")
-//                                            .resizable()
-//                                            .frame(height: 410, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
-//                                            .cornerRadius(10)
-//                                            .padding(10)
-//                                            .shadow(radius: 5)
+                                        //                                        Image("noPic")
+                                        //                                            .resizable()
+                                        //                                            .frame(height: 410, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+                                        //                                            .cornerRadius(10)
+                                        //                                            .padding(10)
+                                        //                                            .shadow(radius: 5)
                                     } else {
                                         
                                         RemoteImage(url: model.matches[index].imageUrl4!)
@@ -445,7 +439,7 @@ struct MatchView: View {
                                                 })
                                                 //MARK: - like button
                                                 .fullScreenCover(isPresented: $likeModal, content: {
-                                                    LikeScreenModalView.init(likeModalShown: $likeModal, indexHere: $index, input: model.matches[index].imageUrl4!, receiver: model.matches[index].name, type: "Text", question: "")
+                                                    LikeScreenModalView.init(likeModalShown: $likeModal, indexHere: $index, input: model.matches[index].imageUrl4!, receiver: model.matches[index].name, type: "Text", question: "", receiverImage: model.matches[index].imageUrl1!)
                                                         .environmentObject(ChatsViewModel())
                                                         .environmentObject(ContentModel())
                                                 })
@@ -456,7 +450,7 @@ struct MatchView: View {
                                     }
                                     
                                     
-                                }.padding(.horizontal)
+                                }.padding(.horizontal,5)
                                 
                                 //QUESTION - Jokes
                                 Group{
@@ -477,7 +471,7 @@ struct MatchView: View {
                                         .padding()
                                         //.border(Color.gray)
                                         //.scaledToFit()
-
+                                        
                                     }
                                     .overlay(
                                         Button(action: {
@@ -491,7 +485,7 @@ struct MatchView: View {
                                         })
                                         //MARK: - like button
                                         .fullScreenCover(isPresented: $likeModal, content: {
-                                            LikeScreenModalView.init(likeModalShown: $likeModal, indexHere: $index, input: model.matches[index].jokes, receiver: model.matches[index].name, type: "Text", question: "Do you know any jokes?")
+                                            LikeScreenModalView.init(likeModalShown: $likeModal, indexHere: $index, input: model.matches[index].jokes, receiver: model.matches[index].name, type: "Text", question: "Do you know any jokes?", receiverImage: model.matches[index].imageUrl1!)
                                                 .environmentObject(ChatsViewModel())
                                                 .environmentObject(ContentModel())
                                         })
@@ -499,11 +493,11 @@ struct MatchView: View {
                                         //fixing at bottom left the floating like !!
                                         , alignment: .bottomTrailing
                                     )
-                                }
+                                }.padding(.horizontal,13)
                                 
                             }
-                            
                             .id("SCROLL_TO_TOP")
+                            .background(Color(.systemGroupedBackground))
                             
                             
                             
@@ -666,6 +660,8 @@ struct LikeScreenModalView: View {
     var receiver: String
     var type: String
     var question: String
+    var receiverImage: String
+    //var senderImage: String
     
     var body: some View {
         VStack {
@@ -699,7 +695,7 @@ struct LikeScreenModalView: View {
                 
                 likeModalShown.toggle() //flip to false
                 
-                chatModel.startConversation(receiver: receiver, message: opener)
+                chatModel.startConversation(receiver: receiver, message: opener, receiverImg: receiverImage)
                 
                 
             } label: {

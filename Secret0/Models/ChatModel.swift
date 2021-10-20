@@ -14,6 +14,8 @@ struct Conversation: Decodable, Identifiable {
     //var id: UUID { person.id }
     @DocumentID var id: String? = UUID().uuidString
     var users: [String] = [""]
+    var profilePics : [String] = [""]
+    var createdTime : Timestamp?
     var messages: [Message] = []
     var hasUnreadMessage : Bool = false
 }
@@ -25,12 +27,12 @@ struct Message: Decodable, Hashable {
     var id : String?
 }
 
-let sampleConv = Conversation(id: "abc", users: ["lolameraz", "charly"], messages: sampleMessages)
-
-let sampleMessages = [
-    Message(createdBy: "lolameraz", msg: "mensaje test", date: Timestamp(), id: "123"),
-    Message(createdBy: "charly", msg: "mensaje response", date: Timestamp(), id: "456")
-]
+//let sampleConv = Conversation(id: "abc", users: ["lolameraz", "charly"], messages: sampleMessages)
+//
+//let sampleMessages = [
+//    Message(createdBy: "lolameraz", msg: "mensaje test", date: Timestamp(), id: "123"),
+//    Message(createdBy: "charly", msg: "mensaje response", date: Timestamp(), id: "456")
+//]
 
 /*struct Message: Decodable, Identifiable, Hashable {
 

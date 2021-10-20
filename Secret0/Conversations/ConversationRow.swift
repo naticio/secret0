@@ -17,16 +17,15 @@ struct ConversationRow: View {
             //if current user == sender or creator of the conversation
             if UserService.shared.user.name == chat.users[0] {
                 //show image of other person, 2nd index aka index 1
-                //Image(chat.users[1].imageUrl)
-                Image(systemName: "person.fill")
-                    .resizable()
+                RemoteImage(url: chat.profilePics[1])
+                    //.resizable()
                     .frame(width: 70, height: 70)
                     .clipShape(Circle())
             } else {
                 //show image of other person, 1st index aka index 0
                 //Image(chat.users[0].imageUrl)
-                Image(systemName: "person")
-                    .resizable()
+                RemoteImage(url: chat.profilePics[0])
+                    //.resizable()
                     .frame(width: 70, height: 70)
                     .clipShape(Circle())
             }
