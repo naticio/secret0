@@ -110,8 +110,8 @@
             filePath = "Secret0/ViewModel/ChatsViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "119"
-            endingLineNumber = "119"
+            startingLineNumber = "124"
+            endingLineNumber = "124"
             landmarkName = "startConversation(receiver:message:)"
             landmarkType = "7">
          </BreakpointContent>
