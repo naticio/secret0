@@ -11,6 +11,7 @@ import Firebase
 import FirebaseFirestore
 import FirebaseFirestoreSwift
 import FirebaseAuth
+import GeoFire
 
 class ChatsViewModel: ObservableObject {
     
@@ -20,6 +21,8 @@ class ChatsViewModel: ObservableObject {
     @Published var chats = [Conversation]()
     @Published var msgs = [Message]()
     @Published var chatsRetrieved = false
+    
+    @Published var profileMatch = Matches()
     
     private let db = Firestore.firestore()
     private let user = Auth.auth().currentUser
@@ -42,9 +45,9 @@ class ChatsViewModel: ObservableObject {
                             //no documents available, adddocument
                             //create main collection conversations
                             ref = self.db.collection("conversations").addDocument(data:
-                                ["users" : [self.user!.displayName, receiver],
-                                 "createdTime" : Timestamp(),
-                                 "profilePics": [self.currentUser.imageUrl1 ?? "", receiverImg]]) { err in
+                                                                                    ["users" : [self.user!.displayName, receiver],
+                                                                                     "createdTime" : Timestamp(),
+                                                                                     "profilePics": [self.currentUser.imageUrl1 ?? "", receiverImg]]) { err in
                                 if let err = err {
                                     print("error writing doc")
                                 } else {
@@ -156,7 +159,7 @@ class ChatsViewModel: ObservableObject {
     //return an array of chats
     func getFilteredConversations(query: String) {
         //var conversations = [Conversation]() //empty array of conversations
-    
+        
         //let currentUser = UserService.shared.user
         if (user != nil) {
             db.collection("conversations").whereField("users", arrayContains: user!.displayName)
@@ -181,7 +184,7 @@ class ChatsViewModel: ObservableObject {
                         conver.createdTime = conversationDoc["createdTime"] as? Timestamp ?? Timestamp()
                         conver.profilePics = conversationDoc["profilePics"] as? [String] ?? [""]
                         conver.users = conversationDoc["users"] as? [String] ?? [""]
-
+                        
                         
                         self.chats.append(conver)
                         //conversations.append(conver)//append the mapped conversation to viewModel
@@ -249,6 +252,59 @@ class ChatsViewModel: ObservableObject {
                     print("error: \(error!.localizedDescription)")
                 }
             }
+    }
+    
+    func getProfileMatch(username: String) {
+        let user = UserService.shared.user
+        let center = CLLocationCoordinate2D(latitude: user.latitude ?? 0, longitude: user.longitude ?? 0)
+        
+        db.collection("users").document(username).getDocument { document, error in
+            
+            guard error == nil else {
+                print("No documents")
+                return
+            }
+            
+            if let document = document, document.exists {
+                let data = document.data()
+                if let data = data {
+                    print("data", data)
+                    self.profileMatch.name = data["name"] as? String ?? ""
+                    
+                    self.profileMatch.latitude = data["latitude"] as? Double ?? 0
+                    self.profileMatch.longitude = data["longitude"] as? Double ?? 0
+                    let coordinates = CLLocation(latitude: self.profileMatch.latitude ?? 0, longitude: self.profileMatch.longitude ?? 0)
+                    let centerPoint = CLLocation(latitude: center.latitude, longitude: center.longitude)
+                    
+                    self.profileMatch.id = data["id"] as? String ?? ""
+                    self.profileMatch.name = data["name"] as? String ?? ""
+                    
+                    let birthDateTimestamp = data["birthdate"] as? Timestamp ?? nil
+                    self.profileMatch.birthdate = birthDateTimestamp!.dateValue()
+                    self.profileMatch.gender = data["gender"] as? String ?? ""
+                    self.profileMatch.datingPreferences = data["datingPreferences"] as? String ?? ""
+                    self.profileMatch.height = data["height"] as? Int ?? 0
+                    self.profileMatch.city = data["city"] as? String ?? ""
+                    
+                    self.profileMatch.imageUrl1 = data["photo1"] as? String ?? ""
+                    self.profileMatch.imageUrl2 = data["photo2"] as? String ?? ""
+                    self.profileMatch.imageUrl3 = data["photo3"] as? String ?? ""
+                    self.profileMatch.imageUrl4 = data["photo4"] as? String ?? ""
+                    self.profileMatch.imageUrl5 = data["photo5"] as? String ?? ""
+                    self.profileMatch.imageUrl6 = data["photo6"] as? String ?? ""
+                    
+                    self.profileMatch.Q1day2live = data["Q1day2live"] as? String ?? ""
+                    self.profileMatch.QlotteryWin = data["QlotteryWin"] as? String ?? ""
+                    self.profileMatch.QmoneynotanIssue = data["QmoneynotanIssue"] as? String ?? ""
+                    self.profileMatch.bucketList = data["bucketList"] as? String ?? ""
+                    self.profileMatch.jokes = data["jokes"] as? String ?? ""
+                    
+                }
+            }
+            
+            
+            
+        }
     }
     
     //    func getMessages(chatId: String) {
