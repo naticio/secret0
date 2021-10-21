@@ -26,6 +26,7 @@ struct MatchView: View {
     
     @State private var scrollViewID = UUID()
     @State private var reader: ScrollViewProxy?
+    @State private var viewAllMatches = false
     
     //@State var currentUser = UserService.shared.user
     
@@ -37,7 +38,7 @@ struct MatchView: View {
                 .navigationBarHidden(true)
         } else {
             
-            if model.matches.count == 0 || (model.matches.count == index) {
+            if model.matches.count == 0 || viewAllMatches ==  true {
                 Text("No available matches")
             } else {
                 //view with matches
@@ -516,7 +517,13 @@ struct MatchView: View {
                                 withAnimation(.spring()) {
                                     ProxyReader.scrollTo("SCROLL_TO_TOP", anchor: .top)
                                     
-                                    self.index += 1
+                                    if index < model.matches.count-1 {
+                                        self.index += 1
+                                    } else {
+                                        viewAllMatches = true
+                                    }
+
+
                                     
                                     //                                    if self.index == model.matches.count-1 {
                                     //                                        //go back to first match
