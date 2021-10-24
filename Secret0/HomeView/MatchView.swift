@@ -45,7 +45,7 @@ struct MatchView: View {
             } else {
                 //view with matches
                 //top bar
-                LazyVStack {
+                VStack {
                     Group {
                         HStack {
                             Text(model.matches[index].name)
@@ -69,7 +69,7 @@ struct MatchView: View {
                     ScrollViewReader {ProxyReader in
                         ScrollView(.vertical, showsIndicators: false, content: {
                             
-
+                            
                             VStack {
                                 Group {
                                     
@@ -86,11 +86,13 @@ struct MatchView: View {
                                     } else {
                                         
                                         WebImage(url: URL(string: model.matches[index].imageUrl1!))
-                                            .frame(height: 410, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+//                                            .frame(height: 410, alignment: .center)
+//                                            .padding(10)
+                                            .resizable()
+                                            .aspectRatio(contentMode: .fit)
+                                            .cornerRadius(10)
                                             .padding(10)
-                                                   .resizable()
-                                                   .aspectRatio(contentMode: .fit)
-
+                                            
                                             .overlay(
                                                 Button(action: {
                                                     //open modal to send message
@@ -110,14 +112,14 @@ struct MatchView: View {
                                                 //fixing at bottom left the floating like !!
                                                 , alignment: .bottomTrailing
                                             )
-
-//                                            RemoteImage(url: model.matches[index].imageUrl1!)
-//                                                //.aspectRatio(contentMode: .fit)
-//
-//                                                .frame(height: 410, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
-//                                                .cornerRadius(10)
-//                                                .padding(10)
-                                            
+                                        
+                                        //                                            RemoteImage(url: model.matches[index].imageUrl1!)
+                                        //                                                //.aspectRatio(contentMode: .fit)
+                                        //
+                                        //                                                .frame(height: 410, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+                                        //                                                .cornerRadius(10)
+                                        //                                                .padding(10)
+                                        
                                         
                                     }
                                     
@@ -187,9 +189,12 @@ struct MatchView: View {
                                             .shadow(radius: 5)
                                     } else {
                                         
-                                        RemoteImage(url: model.matches[index].imageUrl2!)
-                                            //.aspectRatio(contentMode: .fit)
-                                            .frame(height: 410, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+                                        WebImage(url: URL(string: model.matches[index].imageUrl2!))
+//                                            .frame(height: 410, alignment: .center)
+//                                            .padding(10)
+                                            .resizable()
+                                            .aspectRatio(contentMode: .fit)
+                                            .cornerRadius(10)
                                             .padding(10)
                                             .overlay(
                                                 Button(action: {
@@ -255,47 +260,47 @@ struct MatchView: View {
                                 
                                 //text
                                 /*Group {
-                                    ZStack {
-                                        Rectangle()
-                                            .foregroundColor(.white)
-                                            .cornerRadius(10)
-                                            .shadow(radius: 5)
-                                            .aspectRatio(CGSize(width: 335, height: 175), contentMode: .fit)
-                                        
-                                        VStack{
-                                            Text("What would you do if you won 100 million dollars?")
-                                                .font(.title2)
-                                                .bold()
-                                                .padding(.horizontal, 5)
-                                            
-                                            Text(model.matches[index].QlotteryWin ?? "")
-                                                .font(Font.system(size: 14))
-                                                .padding([.top, (.horizontal)])
-                                        }
-                                        .padding()
-                                        .overlay(
-                                            Button(action: {
-                                                //open modal to send message
-                                                likeModal.toggle()
-                                                
-                                                
-                                            }, label: {
-                                                Image("corazon")
-                                                    .foregroundColor(Color(.systemRed))
-                                            })
-                                            //MARK: - like button
-                                            .fullScreenCover(isPresented: $likeModal, content: {
-                                                LikeScreenModalView.init(likeModalShown: $likeModal, indexHere: $index, input: model.matches[index].QlotteryWin, receiver: model.matches[index].name, type: "Text", question: "What would you do if you won 100 million dollars")
-                                                    .environmentObject(ChatsViewModel())
-                                                    .environmentObject(ContentModel())
-                                            })
-                                            
-                                            //fixing at bottom left the floating like !!
-                                            , alignment: .bottomTrailing
-                                        )
-                                    }
-                                    
-                                }.padding(.horizontal,13)*/
+                                 ZStack {
+                                 Rectangle()
+                                 .foregroundColor(.white)
+                                 .cornerRadius(10)
+                                 .shadow(radius: 5)
+                                 .aspectRatio(CGSize(width: 335, height: 175), contentMode: .fit)
+                                 
+                                 VStack{
+                                 Text("What would you do if you won 100 million dollars?")
+                                 .font(.title2)
+                                 .bold()
+                                 .padding(.horizontal, 5)
+                                 
+                                 Text(model.matches[index].QlotteryWin ?? "")
+                                 .font(Font.system(size: 14))
+                                 .padding([.top, (.horizontal)])
+                                 }
+                                 .padding()
+                                 .overlay(
+                                 Button(action: {
+                                 //open modal to send message
+                                 likeModal.toggle()
+                                 
+                                 
+                                 }, label: {
+                                 Image("corazon")
+                                 .foregroundColor(Color(.systemRed))
+                                 })
+                                 //MARK: - like button
+                                 .fullScreenCover(isPresented: $likeModal, content: {
+                                 LikeScreenModalView.init(likeModalShown: $likeModal, indexHere: $index, input: model.matches[index].QlotteryWin, receiver: model.matches[index].name, type: "Text", question: "What would you do if you won 100 million dollars")
+                                 .environmentObject(ChatsViewModel())
+                                 .environmentObject(ContentModel())
+                                 })
+                                 
+                                 //fixing at bottom left the floating like !!
+                                 , alignment: .bottomTrailing
+                                 )
+                                 }
+                                 
+                                 }.padding(.horizontal,13)*/
                                 
                                 //QUESTION - money not an issue
                                 Group {
@@ -352,8 +357,12 @@ struct MatchView: View {
                                             .shadow(radius: 5)
                                     } else {
                                         
-                                        RemoteImage(url: model.matches[index].imageUrl3!)
-                                            .frame(height: 410, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+                                        WebImage(url: URL(string: model.matches[index].imageUrl3!))
+//                                            .frame(height: 410, alignment: .center)
+//                                            .padding(10)
+                                            .resizable()
+                                            .aspectRatio(contentMode: .fit)
+                                            .cornerRadius(10)
                                             .padding(10)
                                             .overlay(
                                                 Button(action: {
@@ -435,8 +444,12 @@ struct MatchView: View {
                                         //                                            .shadow(radius: 5)
                                     } else {
                                         
-                                        RemoteImage(url: model.matches[index].imageUrl4!)
-                                            .frame(height: 410, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+                                        WebImage(url: URL(string: model.matches[index].imageUrl4!))
+//                                            .frame(height: 410, alignment: .center)
+//                                            .padding(10)
+                                            .resizable()
+                                            .aspectRatio(contentMode: .fit)
+                                            .cornerRadius(10)
                                             .padding(10)
                                             .overlay(
                                                 Button(action: {
@@ -523,31 +536,31 @@ struct MatchView: View {
                                 self.transitionShown.toggle()
                                 self.viewShown.toggle()
                                 
-
+                                
                                 
                                 //scroll to top
                                 withAnimation(.spring()) {
                                     ProxyReader.scrollTo("SCROLL_TO_TOP", anchor: .top)
                                     
                                     
-//                                    if index < model.matches.count-1 {
-//                                        self.index += 1
-//                                    } else {
-//                                        viewAllMatches = true
-//                                    }
+                                    //                                    if index < model.matches.count-1 {
+                                    //                                        self.index += 1
+                                    //                                    } else {
+                                    //                                        viewAllMatches = true
+                                    //                                    }
                                     
-                                                                        if self.index == model.matches.count-1 {
-                                                                            //go back to first match
-                                                                            self.index = 0
-                                                                        } else {
-                                                                            self.index += 1
-                                                                        }
+                                    if self.index == model.matches.count-1 {
+                                        //go back to first match
+                                        self.index = 0
+                                    } else {
+                                        self.index += 1
+                                    }
                                 }
                                 
                                 DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                                     self.transitionShown.toggle()
                                     self.viewShown.toggle()
-
+                                    
                                 }
                                 
                                 
