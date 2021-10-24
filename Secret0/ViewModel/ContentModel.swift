@@ -47,44 +47,51 @@ class ContentModel: ObservableObject{
     
     let db = Firestore.firestore()
     
-    init() {
-        let matchDummy = Matches()
-        matchDummy.name = "Poncho de Nigris"
-        matchDummy.birthdate = Date()
-        matchDummy.gender = "Male"
-        matchDummy.height = 180
-        matchDummy.latitude = 32
-        matchDummy.longitude = 50
-        matchDummy.datingPreferences = "Women"
-        matchDummy.sexuality = "Straight"
-        
-        matchDummy.imageUrl1 = "https://firebasestorage.googleapis.com/v0/b/secret0-63695.appspot.com/o/4rX78fIQPPeWaJIr8OUuQ8bHNgq2%2F2A846400-EEE3-4244-A6D4-6952ED07675D?alt=media&token=0299ed53-1d8d-4aaf-b997-7ffc98ca1937"
-        matchDummy.imageUrl2 = "https://firebasestorage.googleapis.com/v0/b/secret0-63695.appspot.com/o/4rX78fIQPPeWaJIr8OUuQ8bHNgq2%2F2A846400-EEE3-4244-A6D4-6952ED07675D?alt=media&token=0299ed53-1d8d-4aaf-b997-7ffc98ca1937"
-        matchDummy.imageUrl3 = "https://firebasestorage.googleapis.com/v0/b/secret0-63695.appspot.com/o/4rX78fIQPPeWaJIr8OUuQ8bHNgq2%2F2A846400-EEE3-4244-A6D4-6952ED07675D?alt=media&token=0299ed53-1d8d-4aaf-b997-7ffc98ca1937"
-        matchDummy.imageUrl4 = "http://www.profightdb.com/img/wrestlers/thumbs-600/213517f78aponchodenegris.jpg"
-        matchDummy.imageUrl5 = "https://firebasestorage.googleapis.com/v0/b/secret0-63695.appspot.com/o/4rX78fIQPPeWaJIr8OUuQ8bHNgq2%2F2A846400-EEE3-4244-A6D4-6952ED07675D?alt=media&token=0299ed53-1d8d-4aaf-b997-7ffc98ca1937"
-        matchDummy.imageUrl6 = "http://www.profightdb.com/img/wrestlers/thumbs-600/213517f78aponchodenegris.jpg"
-        
-        matchDummy.Q1day2live = "Alfonso de Nigris Guajardo (Monterrey, Nuevo León, México; 3 de marzo de 1976), conocido como Poncho de Nigris, es un presentador, actor, bailarín e influencer mexicano. Es hermano de los exfutbolistas Aldo de Nigris y Antonio de Nigris"
-        matchDummy.QlotteryWin = "Alfonso de Nigris Guajardo nació el 3 de marzo de 1973 en Monterrey, Nuevo León. Hijo de Alfonso de Nigris Dávila y de Leticia Guajardo Cantú, es el mayor de los hermanos Antonio de Nigris y Aldo de Nigris"
-        matchDummy.QmoneynotanIssue = "s egresado del ITESM Campus Monterrey como Licenciado en Administración de Empresas. Inició su carrera en el mundo del espectáculo tras participar en la segunda temporada del reality show, Big Brother "
-        matchDummy.bucketList = "Ser cantante"
-        matchDummy.jokes = "Ya llego papa"
-        matchDummy.city = "NYC"
-
-        self.matches.append(matchDummy)
-    }
+//    init() {
+//        let matchDummy = Matches()
+//        matchDummy.name = "Poncho de Nigris"
+//        matchDummy.birthdate = Date()
+//        matchDummy.gender = "Male"
+//        matchDummy.height = 180
+//        matchDummy.latitude = 32
+//        matchDummy.longitude = 50
+//        matchDummy.datingPreferences = "Women"
+//        matchDummy.sexuality = "Straight"
+//
+//        matchDummy.imageUrl1 = "https://firebasestorage.googleapis.com/v0/b/secret0-63695.appspot.com/o/4rX78fIQPPeWaJIr8OUuQ8bHNgq2%2F2A846400-EEE3-4244-A6D4-6952ED07675D?alt=media&token=0299ed53-1d8d-4aaf-b997-7ffc98ca1937"
+//        matchDummy.imageUrl2 = "https://firebasestorage.googleapis.com/v0/b/secret0-63695.appspot.com/o/4rX78fIQPPeWaJIr8OUuQ8bHNgq2%2F2A846400-EEE3-4244-A6D4-6952ED07675D?alt=media&token=0299ed53-1d8d-4aaf-b997-7ffc98ca1937"
+//        matchDummy.imageUrl3 = "https://firebasestorage.googleapis.com/v0/b/secret0-63695.appspot.com/o/4rX78fIQPPeWaJIr8OUuQ8bHNgq2%2F2A846400-EEE3-4244-A6D4-6952ED07675D?alt=media&token=0299ed53-1d8d-4aaf-b997-7ffc98ca1937"
+//        matchDummy.imageUrl4 = "http://www.profightdb.com/img/wrestlers/thumbs-600/213517f78aponchodenegris.jpg"
+//        matchDummy.imageUrl5 = "https://firebasestorage.googleapis.com/v0/b/secret0-63695.appspot.com/o/4rX78fIQPPeWaJIr8OUuQ8bHNgq2%2F2A846400-EEE3-4244-A6D4-6952ED07675D?alt=media&token=0299ed53-1d8d-4aaf-b997-7ffc98ca1937"
+//        matchDummy.imageUrl6 = "http://www.profightdb.com/img/wrestlers/thumbs-600/213517f78aponchodenegris.jpg"
+//
+//        matchDummy.Q1day2live = "Alfonso de Nigris Guajardo (Monterrey, Nuevo León, México; 3 de marzo de 1976), conocido como Poncho de Nigris, es un presentador, actor, bailarín e influencer mexicano. Es hermano de los exfutbolistas Aldo de Nigris y Antonio de Nigris"
+//        matchDummy.QlotteryWin = "Alfonso de Nigris Guajardo nació el 3 de marzo de 1973 en Monterrey, Nuevo León. Hijo de Alfonso de Nigris Dávila y de Leticia Guajardo Cantú, es el mayor de los hermanos Antonio de Nigris y Aldo de Nigris"
+//        matchDummy.QmoneynotanIssue = "s egresado del ITESM Campus Monterrey como Licenciado en Administración de Empresas. Inició su carrera en el mundo del espectáculo tras participar en la segunda temporada del reality show, Big Brother "
+//        matchDummy.bucketList = "Ser cantante"
+//        matchDummy.jokes = "Ya llego papa"
+//        matchDummy.city = "NYC"
+//
+//        self.matches.append(matchDummy)
+//    }
     
     //MARK: - authentication methods
     func checkLogin() {
+        
+        
+        if Auth.auth().currentUser == nil {
+            loggedIn = false
+            self.userDataCompletion = false
+        } else {
+            loggedIn = true
+            getUserData()
+        }
         //to check if user is logged in or not every time the app opens
-        loggedIn = Auth.auth().currentUser == nil ? false : true
-        //if current user is nil then loggedin = false
+        //loggedIn = Auth.auth().currentUser == nil ? false : true
+
         
         //CHECK IF USERR metadata has been FETCHED. if the user was already logged in from a previous session, we need to get their data in a separate call
-        if UserService.shared.user.name == "" {
-            getUserData() //to fetch metadata related to user
-        }
+        //
     }
     
     //retrieve user data for the first time
@@ -568,6 +575,8 @@ class ContentModel: ObservableObject{
             }
         }
     }
+    
+
     
     //MARK: - data methods - save data into firebase etc to track the user usage
     //parameter so we don't save to the db every single fucking time...it would be a waste of process! by default false

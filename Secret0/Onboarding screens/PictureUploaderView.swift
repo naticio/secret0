@@ -184,6 +184,10 @@ struct PictureUploaderView: View {
                     
                 }
                 
+                if imageController.image1 == nil {
+                    Text("Updload one picture at least")
+                }
+                
                 //UPLOAD IMAGE TO FIREBASE
                 NavigationLink(
                     destination: LaunchLogicView()
@@ -201,7 +205,6 @@ struct PictureUploaderView: View {
                     label: {
                         Button(action: {
                             
-                            //make face detect call but using url for image
                             
                             //I need to send all images at once as array I believe
                             if imageController.image1 != nil {
@@ -253,8 +256,9 @@ struct PictureUploaderView: View {
         
         if let imageData = image.jpegData(compressionQuality: 0.1){
             
-            let userDocument = Auth.auth().currentUser! //get document id for current user
+            //let userDocument = Auth.auth().currentUser! //get document id for current user
             let storage = Storage.storage()
+            let user = UserService.shared.user
             
             let uploadMetaData = StorageMetadata()
             uploadMetaData.contentType = "image/jpeg"
@@ -264,7 +268,7 @@ struct PictureUploaderView: View {
             
             //SAVE IMAGE TO STORAGE
             ///reference to storage root, bucket is userDocument id, then files are photo uploaded with a unique id
-            let storageRef = storage.reference().child(userDocument.uid).child(documentID)
+            let storageRef = storage.reference().child(user.name).child(user.name + documentID)
             let uploadTask = storageRef.putData(imageData, metadata: uploadMetaData){
                 (_, err) in
                 if let err = err {
@@ -277,7 +281,7 @@ struct PictureUploaderView: View {
                     
                     //ref = path in the users collection, doc is the user id document, create a sub collection photos with the document id
                     //let ref = db.collection("users").document(userDocument.uid).collection("photos").document(documentID)
-                    let FirestoreRef = db.collection("users").document(userDocument.uid)
+                    let FirestoreRef = db.collection("users").document(user.name)
                     
                     //download URL of the pic just posted
                     storageRef.downloadURL { url, error in

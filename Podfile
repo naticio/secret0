@@ -13,5 +13,6 @@ target 'Secret0' do
   pod 'Firebase/Database'
   pod 'FirebaseFirestoreSwift'
   pod 'GeoFire/Utils'
+  pod ‘SDWebImageSwiftUI’
 
 end

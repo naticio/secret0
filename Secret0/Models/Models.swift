@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 import CoreLocation
-//import FirebaseFirestoreSwift
+import FirebaseFirestoreSwift
 
 class User {
     var id: String = ""
@@ -42,7 +42,7 @@ class Matches: Decodable, Identifiable, ObservableObject {
     
     @Published var imageData: Data?
     
-    var id: String = ""
+    @DocumentID var id: String? = UUID().uuidString
     var name: String = ""
     var birthdate: Date = Date()
     var location: Location?

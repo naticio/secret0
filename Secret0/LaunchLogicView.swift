@@ -37,12 +37,9 @@ struct LaunchLogicView: View {
                 TabView {
                     MatchView(index: 0)
                         .onAppear() {
-                            
-                            //model.getMatches()
-                            if model.usersLoaded ==  false {
+                            //if model.usersLoaded == false && model.loggedIn == true {
                                 model.getMatchesNearMeDispatch(radius: 50)
-                            }
-                            
+                            //}
                             //get conversations
                             //chatViewModel.getFilteredConversations(query: "")
                         }

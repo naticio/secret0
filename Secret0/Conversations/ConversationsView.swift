@@ -51,7 +51,10 @@ struct ConversationsView: View {
                             ConversationRow(chat: chat)
                             
                             // hidden NavigationLink. This hides the disclosure arrow!
-                            NavigationLink(destination: ChatView(chat: chat).environmentObject(chatModel)) {}
+                            NavigationLink(destination: ChatView(chat: chat)
+                                            .navigationBarTitle("")
+                                            .navigationBarHidden(true)
+                                            .environmentObject(chatModel)) {}
                             .buttonStyle(PlainButtonStyle())
                             .frame(width:0)
                             .opacity(0)
@@ -69,6 +72,7 @@ struct ConversationsView: View {
         .onAppear() {
             //get conversations
             chatModel.getFilteredConversations(query: "")
+            //chatModel.getProfileMatch(username: chatModel.chats[1].users[1])
         }
     }
 }

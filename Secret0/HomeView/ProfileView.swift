@@ -20,9 +20,11 @@ struct ProfileView: View {
                 try! Auth.auth().signOut() //we're using try because we're not interested to catch an error when signin out
                 
                 isOnboarding = false
-                UserService.shared.user.name = ""
+                model.usersLoaded =  false
+                //UserService.shared.user.name = ""
+                model.checkLogin()
                 //change to log out view
-                model.loggedIn = false
+                //model.loggedIn = false
                 
             } label: {
                 Text("Sign Out")

@@ -13,6 +13,7 @@ struct ChatRow: View {
     
     let message: Message
     var isMe:  Bool
+    var profilePic: String
  
     
     var body: some View {
@@ -23,7 +24,22 @@ struct ChatRow: View {
             //right align if I sent the message
             if isMe == true {Spacer()} //puts the space on the left
             
+            if isMe == true {
+                if profilePic == "NoImage" {
+                    Image(systemName: "person.fill")
+                        .frame(width: 70, height: 70)
+                        .clipShape(Circle())
+                } else {
+                    RemoteImage(url: profilePic)
+                        //.resizable()
+                        .frame(width: 70, height: 70)
+                        .clipShape(Circle())
+                }
+
+            }
+            
             VStack(alignment: .leading) {
+                
                 //sender
                 Text(message.createdBy!)
                     .font(.footnote)

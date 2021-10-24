@@ -6,6 +6,8 @@
 //
 
 import SwiftUI
+import FirebaseStorage
+import SDWebImageSwiftUI
 
 struct MatchView: View {
     
@@ -43,7 +45,7 @@ struct MatchView: View {
             } else {
                 //view with matches
                 //top bar
-                VStack {
+                LazyVStack {
                     Group {
                         HStack {
                             Text(model.matches[index].name)
@@ -67,7 +69,7 @@ struct MatchView: View {
                     ScrollViewReader {ProxyReader in
                         ScrollView(.vertical, showsIndicators: false, content: {
                             
-                            //first block
+
                             VStack {
                                 Group {
                                     
@@ -82,12 +84,13 @@ struct MatchView: View {
                                             .shadow(radius: 5)
                                         
                                     } else {
-                                        RemoteImage(url: model.matches[index].imageUrl1!)
-                                            //.aspectRatio(contentMode: .fit)
-                                            
+                                        
+                                        WebImage(url: URL(string: model.matches[index].imageUrl1!))
                                             .frame(height: 410, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
-                                            .cornerRadius(10)
                                             .padding(10)
+                                                   .resizable()
+                                                   .aspectRatio(contentMode: .fit)
+
                                             .overlay(
                                                 Button(action: {
                                                     //open modal to send message
@@ -107,6 +110,14 @@ struct MatchView: View {
                                                 //fixing at bottom left the floating like !!
                                                 , alignment: .bottomTrailing
                                             )
+
+//                                            RemoteImage(url: model.matches[index].imageUrl1!)
+//                                                //.aspectRatio(contentMode: .fit)
+//
+//                                                .frame(height: 410, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+//                                                .cornerRadius(10)
+//                                                .padding(10)
+                                            
                                         
                                     }
                                     
@@ -285,7 +296,6 @@ struct MatchView: View {
                                     }
                                     
                                 }.padding(.horizontal,13)*/
-                                
                                 
                                 //QUESTION - money not an issue
                                 Group {
@@ -513,29 +523,31 @@ struct MatchView: View {
                                 self.transitionShown.toggle()
                                 self.viewShown.toggle()
                                 
+
+                                
                                 //scroll to top
                                 withAnimation(.spring()) {
                                     ProxyReader.scrollTo("SCROLL_TO_TOP", anchor: .top)
                                     
-                                    if index < model.matches.count-1 {
-                                        self.index += 1
-                                    } else {
-                                        viewAllMatches = true
-                                    }
-
-
                                     
-                                    //                                    if self.index == model.matches.count-1 {
-                                    //                                        //go back to first match
-                                    //                                        self.index = 0
-                                    //                                    } else {
-                                    //                                        self.index += 1
-                                    //                                    }
+//                                    if index < model.matches.count-1 {
+//                                        self.index += 1
+//                                    } else {
+//                                        viewAllMatches = true
+//                                    }
+                                    
+                                                                        if self.index == model.matches.count-1 {
+                                                                            //go back to first match
+                                                                            self.index = 0
+                                                                        } else {
+                                                                            self.index += 1
+                                                                        }
                                 }
                                 
                                 DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                                     self.transitionShown.toggle()
                                     self.viewShown.toggle()
+
                                 }
                                 
                                 
@@ -726,9 +738,9 @@ extension View{
     }
 }
 
-struct MatchView_Previews: PreviewProvider {
-    static var previews: some View {
-        MatchView(index: 0)
-            .environmentObject(ContentModel())
-    }
-}
+//struct MatchView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        MatchView(index: 0)
+//            .environmentObject(ContentModel())
+//    }
+//}

@@ -11,7 +11,7 @@ import Firebase
 import FirebaseFirestore
 
 struct ChatView: View {
-    
+    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     
     @EnvironmentObject var chatModel: ChatsViewModel
     
@@ -21,6 +21,40 @@ struct ChatView: View {
     
     @State var newMessageInput = ""
     
+    var chatUser: String {
+        if user.name == chat.users[0] {
+            return chat.users[1]
+           } else {
+               return chat.users[0]
+           }
+       }
+    
+    var backButton : some View {
+            Button(action: {
+                self.presentationMode.wrappedValue.dismiss()
+            }) {
+                HStack(spacing: 0) {
+                    Image(systemName: "chevron.left")
+                        .font(.title2)
+                    Text(chatUser)
+                }
+            }
+        }
+    
+    var profilePic : String {
+        //if I created the conversation
+        
+        if chat.profilePics.count > 1 { //no pics
+            if user.name == chat.users[0] {
+                    return chat.profilePics[1]
+               } else {
+                   return chat.profilePics[0]
+               }
+        }
+        return "NoImage"
+
+    }
+    
     var body: some View {
         NavigationView {
             VStack {
@@ -29,12 +63,12 @@ struct ChatView: View {
                     ScrollView(.vertical) { //to scroll
                         ForEach(chat.messages, id: \.id) { message in
                             if user.name == message.createdBy {
-                                ChatRow(message: message, isMe: false)
+                                ChatRow(message: message, isMe: false, profilePic: profilePic)
                                     //.id(message.id)
                                     .id(chat.messages.firstIndex(of: message))
                                 
                             } else {
-                                ChatRow(message: message, isMe: true)
+                                ChatRow(message: message, isMe: true, profilePic: profilePic)
                                     .id(chat.messages.firstIndex(of: message))
                             }
                             
@@ -50,7 +84,7 @@ struct ChatView: View {
                 }
                 Spacer()
                 
-                //send a new message
+                //SEND A MESSAGE
                 ZStack {
                     Rectangle()
                         .foregroundColor(.white)
@@ -83,14 +117,20 @@ struct ChatView: View {
                 }
                 .frame(height: 70)
             }
-            .navigationTitle("Chat")
+            .navigationBarBackButtonHidden(true)
+            .navigationBarItems(leading: backButton)
+//            .navigationTitle(chatUser)
+//            .navigationBarTitle(chatUser, displayMode: .inline)
+            //.navigationTitle(/*@START_MENU_TOKEN@*//*@PLACEHOLDER=Title@*/Text("Title")/*@END_MENU_TOKEN@*/)
+            //.edgesIgnoringSafeArea(.all)
         }
+        .navigationViewStyle(StackNavigationViewStyle())
         
-        //        .onAppear() {
-        //            //get all messages from the conversation collection
-        //            chatModel.getMessages(chatId: chat.id!)
-        //        }
-        //
+                .onAppear() {
+                    //get profile of the person Im chatting with
+                    chatModel.getProfileMatch(username: chatUser)
+                }
+        
     }
 }
 
