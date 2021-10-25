@@ -181,12 +181,12 @@ struct MatchView: View {
                                 Group {
                                     //CustomImageView(urlString: model.matches[index].imageUrl2 ?? "")
                                     if model.matches[index].imageUrl2 == "" {
-                                        Image("noPic")
-                                            .resizable()
-                                            .frame(height: 410, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
-                                            .padding(10)
-                                            .cornerRadius(10)
-                                            .shadow(radius: 5)
+//                                        Image("noPic")
+//                                            .resizable()
+//                                            .frame(height: 410, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+//                                            .padding(10)
+//                                            .cornerRadius(10)
+//                                            .shadow(radius: 5)
                                     } else {
                                         
                                         WebImage(url: URL(string: model.matches[index].imageUrl2!))
@@ -349,12 +349,12 @@ struct MatchView: View {
                                 //IMAGE - 3
                                 Group {
                                     if model.matches[index].imageUrl3 == "" {
-                                        Image("noPic")
-                                            .resizable()
-                                            .frame(height: 410, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
-                                            .padding(10)
-                                            .cornerRadius(10)
-                                            .shadow(radius: 5)
+//                                        Image("noPic")
+//                                            .resizable()
+//                                            .frame(height: 410, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+//                                            .padding(10)
+//                                            .cornerRadius(10)
+//                                            .shadow(radius: 5)
                                     } else {
                                         
                                         WebImage(url: URL(string: model.matches[index].imageUrl3!))

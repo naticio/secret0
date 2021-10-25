@@ -32,6 +32,7 @@ struct Secret0App: App {
    
     //PREVIOUS FIREBASE INITIALIZATOION
     init(){
+        //try! Auth.auth().signOut()
         FirebaseApp.configure()
     }
     //change

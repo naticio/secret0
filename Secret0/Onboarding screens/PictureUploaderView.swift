@@ -191,7 +191,7 @@ struct PictureUploaderView: View {
                 //UPLOAD IMAGE TO FIREBASE
                 NavigationLink(
                     destination: LaunchLogicView()
-                        .navigationBarHidden(true)
+                        .navigationBarBackButtonHidden(true)
                         .onAppear(perform: {
                             //mandalo con informacion papaw!
                             

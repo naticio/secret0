@@ -61,6 +61,7 @@ struct DatePreferencesView: View {
                     }
                     .padding()
                     .background(menPressed ? Color.red : Color.white)
+                    .accentColor(menPressed ? Color.white : Color.black)
                     .frame(width: 100)
                     .cornerRadius(10.0)
                     
@@ -75,6 +76,7 @@ struct DatePreferencesView: View {
                     }
                     .padding()
                     .background(womenPressed ? Color.red : Color.white)
+                    .accentColor(womenPressed ? Color.white : Color.black)
                     .frame(width: 100)
                     .cornerRadius(10.0)
                     
@@ -89,13 +91,16 @@ struct DatePreferencesView: View {
                     }
                     .padding()
                     .background(everyOnePressed ? Color.red : Color.white)
+                    .accentColor(everyOnePressed ? Color.white : Color.black)
                     .frame(width: 100)
                     .cornerRadius(10.0)
                 }
                 
                 
                 NavigationLink(destination: HeightOnboardingView(index: index + 1)
-                                .environmentObject(ContentModel()), isActive: $goWhenTrue) {
+                                .environmentObject(ContentModel())
+                                .navigationBarBackButtonHidden(true)
+                               , isActive: $goWhenTrue) {
                     //BUTTON NEXT
                     Button {
                         if menPressed == true || womenPressed == true || everyOnePressed == true {
@@ -123,6 +128,7 @@ struct DatePreferencesView: View {
                 }
                 
                 
+                Spacer()
                 Spacer()
             }
         }

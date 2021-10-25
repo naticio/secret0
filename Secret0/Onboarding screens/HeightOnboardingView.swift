@@ -78,7 +78,10 @@ struct HeightOnboardingView: View {
                 .pickerStyle(WheelPickerStyle())
                 .labelsHidden()
                 
-                NavigationLink(destination: BreakIceOnboardingView(index: index + 1).environmentObject(ContentModel()), isActive: $goWhenTrue) {
+                NavigationLink(destination: BreakIceOnboardingView(index: index + 1)
+                                .environmentObject(ContentModel())
+                                .navigationBarBackButtonHidden(true)
+                               , isActive: $goWhenTrue) {
                     //BUTTON NEXT
                     Button {
                         if selectedeHeight.contains("144") { selectedHeightNumber = 57}
@@ -124,6 +127,7 @@ struct HeightOnboardingView: View {
                     .frame(width: 100)
                 }
                 
+                Spacer()
                 Spacer()
             }
         }

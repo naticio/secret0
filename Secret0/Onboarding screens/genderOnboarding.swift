@@ -61,8 +61,10 @@ struct genderOnboarding: View {
                     }
                     .padding()
                     .background(maleButtonPressed ? Color.red : Color.white)
+                    .accentColor(maleButtonPressed ? Color.white : Color.black)
                     .frame(width: 100)
-                    .cornerRadius(10.0)
+                    .cornerRadius(20.0)
+
                     
                     //Female button
                     Button {
@@ -76,6 +78,7 @@ struct genderOnboarding: View {
                     }
                     .padding()
                     .background(femaleButtonPressed ? Color.red : Color.white)
+                    .accentColor(femaleButtonPressed ? Color.white : Color.black)
                     .frame(width: 100)
                     .cornerRadius(10.0)
                 }
@@ -83,6 +86,7 @@ struct genderOnboarding: View {
                 
                 NavigationLink(destination: SexOnboardingView(index: index + 1)
                                 .environmentObject(ContentModel())
+                                .navigationBarBackButtonHidden(true)
                                , isActive: $goWhenTrue) {
                     //ONBOARIDNG NEXT BUTTON
                     Button(action: {
@@ -110,6 +114,7 @@ struct genderOnboarding: View {
                     .frame(width: 100)
                     
                 }
+                Spacer()
                 Spacer()
             }
             .navigationBarHidden(true)

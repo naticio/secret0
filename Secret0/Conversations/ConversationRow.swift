@@ -94,9 +94,10 @@ struct ConversationRow: View {
                 }
                 
                 Circle()
-                    //.foregroundColor(chat.hasUnreadMessage ? .blue : .clear)
+                    .foregroundColor(chat.hasUnreadMessage && chat.lastSender != UserService.shared.user.name ? .red : .clear)
                     .frame(width: 18, height: 18)
                     .frame(maxWidth: .infinity, alignment: .trailing)
+                    //.background(chat.hasUnreadMessage ? Color.red : Color.black)
             }
         }
         .frame(height: 80)

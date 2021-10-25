@@ -58,7 +58,9 @@ struct LocationOnboarding: View {
             
                 
                 NavigationLink(destination: genderOnboarding(index: index + 1)
-                                .environmentObject(ContentModel()), isActive: $goWhenTrue) {
+                                .environmentObject(ContentModel())
+                                .navigationBarBackButtonHidden(true)
+                               , isActive: $goWhenTrue) {
                     //ONBOARIDNG NEXT BUTTON
                     Button(action: {
                         //save username (to create user once we have password and email
@@ -98,6 +100,7 @@ struct LocationOnboarding: View {
                     .frame(width: 100)
                 }
                 
+                Spacer()
                 Spacer()
             }
         }

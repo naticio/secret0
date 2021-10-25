@@ -71,7 +71,9 @@ struct NameOnboardingView: View {
                     .padding()
                     
                     
-                    NavigationLink(destination: BirthOnboardingView(index: index + 1), isActive: $goWhenTrue) {
+                    NavigationLink(destination: BirthOnboardingView(index: index + 1)
+                                    .navigationBarBackButtonHidden(true)
+                                   , isActive: $goWhenTrue) {
                         //BUTTON NEXT
                         Button {
                             
@@ -153,8 +155,11 @@ struct NameOnboardingView: View {
                         .padding()
                         .background(Capsule().strokeBorder(Color.white, lineWidth: 1.5))
                         .frame(width: 100)
+                        .font(.title)
+                        .accentColor(.red)
                     }
                     
+                    Spacer()
                     Spacer()
                     
                 }

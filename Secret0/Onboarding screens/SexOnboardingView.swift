@@ -55,6 +55,7 @@ struct SexOnboardingView: View {
                 
                 NavigationLink(destination: DatePreferencesView(index: index + 1)
                                 .environmentObject(ContentModel())
+                                .navigationBarBackButtonHidden(true)
                                , isActive: $goWhenTrue) {
                     //BUTTON NEXT
                     Button {
@@ -78,6 +79,7 @@ struct SexOnboardingView: View {
                 }
                 
                 
+                Spacer()
                 Spacer()
             }
         }

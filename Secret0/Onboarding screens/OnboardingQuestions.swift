@@ -46,18 +46,21 @@ struct OnboardingQuestions: View {
                 //RESPONSE
                 TextEditor(text: $response)
                     .multilineTextAlignment(.leading)
-                    .frame(height: 400)
+                    .frame(height: 270)
                     .cornerRadius(25)
                     .font(Font.custom("AvenirNext-Regular", size: 20, relativeTo: .body))
-                    .autocapitalization(.words)
+                    //.autocapitalization(.words)
                     .disableAutocorrection(true)
                     .border(Color.gray, width: 3)
-                    .padding()
+                    .padding([.leading, .bottom, .trailing]) 
 
                 
                 if index < Constants.screens.count-1 {
                     NavigationLink(destination: OnboardingQuestions(index: index + 1)
-                                    .environmentObject(model), isActive: $goWhenTrue) {
+                                    .environmentObject(model)
+                                    .navigationBarBackButtonHidden(true)
+                                   , isActive: $goWhenTrue)
+                    {
                         //BUTTON NEXT
                         Button {
                             
@@ -72,7 +75,6 @@ struct OnboardingQuestions: View {
                                 .accentColor(.red)
                                 .font(.title)
                         }
-                        .padding()
                         .background(Capsule().strokeBorder(Color.white, lineWidth: 1.5))
                         .frame(width: 100)
                         
@@ -97,11 +99,12 @@ struct OnboardingQuestions: View {
                                 .accentColor(.red)
                                 .font(.title)
                         }
-                        .padding()
                         .background(Capsule().strokeBorder(Color.white, lineWidth: 1.5))
                         .frame(width: 100)
                     }
                 }
+                Spacer()
+                Spacer()
                 Spacer()
             }
         }

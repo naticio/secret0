@@ -53,6 +53,7 @@ struct BirthOnboardingView: View {
                     .padding()
                     
                     NavigationLink(destination: NotifOnboarding(index: index+1)
+                                    .navigationBarBackButtonHidden(true)
                                     .environmentObject(ContentModel()), isActive: $goWhenTrue) {
                         Button(action: {
                             self.selection = 1
@@ -93,6 +94,7 @@ struct BirthOnboardingView: View {
                         Text("Sign Out")
                     }
                     
+                    Spacer()
                     Spacer()
                 }
             }

@@ -41,12 +41,15 @@ class ChatsViewModel: ObservableObject {
                     if let err = err {
                         print("Error getting documents: \(err)")
                     } else {
+                        //NEW CONVERSATION
                         if querySnapshot!.documents.count == 0 {
                             //no documents available, adddocument
                             //create main collection conversations
                             ref = self.db.collection("conversations").addDocument(data:
                                                                                     ["users" : [self.user!.displayName, receiver],
                                                                                      "createdTime" : Timestamp(),
+                                                                                     "hasUnreadMessage" : true,
+                                                                                     "lastSender" : self.user!.displayName,
                                                                                      "profilePics": [self.currentUser.imageUrl1 ?? "", receiverImg]]) { err in
                                 if let err = err {
                                     print("error writing doc")
@@ -82,7 +85,8 @@ class ChatsViewModel: ObservableObject {
                             for document in querySnapshot!.documents {
                                 print("\(document.documentID) => \(document.data())")
                                 //hopefiully it'ss just one doc
-                                self.db.collection("conversations").document(document.documentID).setData( ["users" : [self.user!.displayName, receiver]], merge: true) { err in
+                                self.db.collection("conversations").document(document.documentID).setData(
+                                    ["users" : [self.user!.displayName, receiver],"lastSender" : self.user!.displayName, "hasUnreadMessage" : true], merge: true) { err in
                                     if let err = err {
                                         print("Error writing conversation: \(err)")
                                     } else {
@@ -134,6 +138,9 @@ class ChatsViewModel: ObservableObject {
             //chats[index].messages.append(message)
             //chats[index].messages.append([user!.displayName])
             
+            //specify convesation has a new message
+            self.db.collection("conversations").document(chat.id ?? "").setData(["hasUnreadMessage" : true, "lastSender" : user!.displayName], merge: true)
+            
             //call firebase add message into messages subcollection
             let ref = db.collection("conversations").document(chat.id!).collection("messages")
             //ref.setData(["gender" : user.gender], merge: true)
@@ -150,10 +157,13 @@ class ChatsViewModel: ObservableObject {
         return nil
     }
     
-    func markAsUnread(_ newValue: Bool, chat: Conversation) {
-        if let index = chats.firstIndex(where: { $0.id == chat.id }) {
-            chats[index].hasUnreadMessage = newValue
-        }
+    func markAsUnread(chat: Conversation) {
+        
+        let ref = self.db.collection("conversations").document(chat.id ?? "")
+        ref.updateData(["hasUnreadMessage" : false])
+//        if let index = chats.firstIndex(where: { $0.id == chat.id }) {
+//            chats[index].hasUnreadMessage = newValue
+//        }
     }
     
     //return an array of chats
@@ -162,8 +172,10 @@ class ChatsViewModel: ObservableObject {
         
         //let currentUser = UserService.shared.user
         if (user != nil) {
-            db.collection("conversations").whereField("users", arrayContains: user!.displayName)
-                .order(by: "createdTime")
+            db.collection("conversations")
+                .whereField("users", arrayContains: user!.displayName)
+                .order(by: "hasUnreadMessage", descending: true)
+                .limit(to: 50)
                 .addSnapshotListener { (querySnapshot, error) in
                     self.chats.removeAll()
                     var conversations = [Conversation]()
@@ -183,6 +195,8 @@ class ChatsViewModel: ObservableObject {
                         conver.id = conversationDoc.documentID //conversation id
                         conver.createdTime = conversationDoc["createdTime"] as? Timestamp ?? Timestamp()
                         conver.profilePics = conversationDoc["profilePics"] as? [String] ?? [""]
+                        conver.hasUnreadMessage = conversationDoc["hasUnreadMessage"] as? Bool ?? false
+                        conver.lastSender = conversationDoc["lastSender"] as? String ?? ""
                         conver.users = conversationDoc["users"] as? [String] ?? [""]
                         
                         

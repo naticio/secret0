@@ -18,6 +18,7 @@ struct Conversation: Decodable, Identifiable {
     var createdTime : Timestamp?
     var messages: [Message] = []
     var hasUnreadMessage : Bool = false
+    var lastSender: String = ""
 }
 
 struct Message: Decodable, Hashable {

@@ -45,11 +45,11 @@ struct EmailOnboardingView: View {
                     TextField("email", text: $email).font(.title)
                         .autocapitalization(.none)
                         .multilineTextAlignment(.center)
-                        .padding()
-                    SecureField("Password", text: $password).font(.title)
+                        .padding([.leading, .bottom, .trailing])
+                    SecureField("password", text: $password).font(.title)
                         .autocapitalization(.none)
                         .multilineTextAlignment(.center)
-                        .padding()
+                        .padding([.leading, .bottom, .trailing])
                     
                     Text(Constants.screens[index].disclaimer)
                         .font(.caption)
@@ -61,7 +61,9 @@ struct EmailOnboardingView: View {
                     Text(errorMsg!)
                 }
                 
-                NavigationLink(destination: NameOnboardingView(index: index+1), isActive: $goWhenTrue) {
+                NavigationLink(destination: NameOnboardingView(index: index+1)
+                                .navigationBarBackButtonHidden(true)
+                               , isActive: $goWhenTrue) {
                     Button {
                         //call firebase create user
                         Auth.auth().createUser(withEmail: email, password: password) { result, error in
@@ -74,9 +76,9 @@ struct EmailOnboardingView: View {
                             self.errorMsg = nil
                             
                             //save the first name in firebase
-                            let db = Firestore.firestore()
-                            let firebaseUser = Auth.auth().currentUser
-                            let ref = db.collection("users").document(email)
+//                            let db = Firestore.firestore()
+//                            let firebaseUser = Auth.auth().currentUser
+//                            let ref = db.collection("users").document(email)
                             //let name =  model.usernameSignUp
                             
                             //merge = true because it updates or adds a user name, does not OVERWRITTE if the username exists
@@ -110,8 +112,11 @@ struct EmailOnboardingView: View {
                     .padding()
                     .background(Capsule().strokeBorder(Color.white, lineWidth: 1.5))
                     .frame(width: 100)
+                    .accentColor(.red)
+                    .font(.title)
                 }
     
+                Spacer()
                 Spacer()
             }
         }

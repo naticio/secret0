@@ -46,6 +46,7 @@ struct NotifOnboarding: View {
                     destination: LocationOnboarding(index: index+1)
                         .environmentObject(LocationModel())
                         .environmentObject(ContentModel())
+                        .navigationBarBackButtonHidden(true)
                         .onAppear {
                             locModel.requestGeolocationPermission()
                         }
@@ -77,6 +78,7 @@ struct NotifOnboarding: View {
                 }
                 
             
+                Spacer()
                 Spacer()
             }
         }

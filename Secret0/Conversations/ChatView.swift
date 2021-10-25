@@ -127,8 +127,9 @@ struct ChatView: View {
         .navigationViewStyle(StackNavigationViewStyle())
         
                 .onAppear() {
-                    //get profile of the person Im chatting with
+                    //get profile of the person Im chatting with so I can show PROFILE when I lcik pic
                     chatModel.getProfileMatch(username: chatUser)
+                    chatModel.markAsUnread(chat: chat)
                 }
         
     }

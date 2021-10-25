@@ -47,7 +47,9 @@ struct BreakIceOnboardingView: View {
                 
 
                 
-                NavigationLink(destination: OnboardingQuestions(index: index + 1).environmentObject(ContentModel())
+                NavigationLink(destination: OnboardingQuestions(index: index + 1)
+                                .environmentObject(ContentModel())
+                                .navigationBarBackButtonHidden(true)
                                 .onAppear(perform: UIApplication.shared.addTapGestureRecognizer)
                                , isActive: $goWhenTrue) {
                     //BUTTON NEXT
@@ -69,6 +71,7 @@ struct BreakIceOnboardingView: View {
                 }
                 
                 
+                Spacer()
                 Spacer()
             }
         }
