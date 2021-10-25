@@ -23,49 +23,54 @@ struct ChatRow: View {
         HStack {
 
             //right align if I sent the message
-            if isMe == true {Spacer()} //puts the space on the left
+//            if isMe == true {} //puts the space on the left
             
             if isMe == true {
-                if profilePic == "NoImage" {
-                    Image(systemName: "person.fill")
-                        .frame(width: 70, height: 70)
-                        .clipShape(Circle())
-                } else {
-//                    RemoteImage(url: profilePic)
-//                        //.resizable()
-//                        .frame(width: 70, height: 70)
-//                        .clipShape(Circle())
-                    
-                    WebImage(url: URL(string: profilePic))
-                        //.resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: 70, height: 70)
-                        .clipShape(Circle())
-                        .cornerRadius(10)
-                        .padding(10)
-                }
+                Spacer()
 
             }
-            
-            VStack(alignment: .leading) {
+            HStack {
+                if isMe == true {
+                    if profilePic == "NoImage" {
+                        Image(systemName: "person.fill")
+                            .frame(width: 70, height: 70)
+                            .clipShape(Circle())
+                    } else {
+                        WebImage(url: URL(string: profilePic))
+//                            .aspectRatio(contentMode: .fit)
+//                            .frame(width: 70, height: 70)
+//                            .clipShape(Circle())
+//                            .cornerRadius(10)
+//                            .padding(.leading,100)
+                            .renderingMode(.original)
+                            .resizable()
+                            .aspectRatio(contentMode: .fill)
+                            .frame(width: 70, height: 70)
+                            .clipShape(Circle())
+                    }
+                }
                 
-                //sender
-                Text(message.createdBy!)
-                    .font(.footnote)
-                    .foregroundColor(isMe ? .white : .gray)
-                //message
-                Text(message.msg!)
-                    .font(.body)
-                    .foregroundColor(isMe ? .white : .black)
-                    .lineLimit(nil)
+                VStack(alignment: .leading) {
+                    
+                    //sender
+                    Text(message.createdBy!)
+                        .font(.footnote)
+                        .foregroundColor(isMe ? .white : .gray)
+                    //message
+                    Text(message.msg!)
+                        .font(.body)
+                        .foregroundColor(isMe ? .white : .black)
+                        .lineLimit(nil)
+                }
+                //create the bubble effect
+                .padding(10)
+                //if sent by me then color red
+                .background(isMe ? Color.blue : Color("LightGrayColor"))
+                .cornerRadius (10)
+                .frame(maxWidth: 280, alignment: isMe ? .trailing : .leading)
+                
             }
-            //create the bubble effect
-            .padding(10)
-            //if sent by me then color red
-            .background(isMe ? Color.blue : Color("LightGrayColor"))
-            .cornerRadius (10)
-            .frame(maxWidth: 280, alignment: isMe ? .trailing : .leading)
-            
+           
             //if msg sent by another person then left aligned
             if isMe == false  { Spacer() }//put the space on the right
         }.padding()

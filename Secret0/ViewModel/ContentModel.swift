@@ -527,7 +527,7 @@ class ContentModel: ObservableObject{
             for doc in matchingDocs {
                 let conversationsWith = doc.data()["conversations"] as? [String] ?? []
                 
-                if conversationsWith.contains(doc.data()["name"] as? String ?? "") {
+                if conversationsWith.contains(user.name) {
                     //do nothing
                 } else {
                     var m = Matches()
