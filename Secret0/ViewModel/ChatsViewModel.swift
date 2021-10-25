@@ -74,7 +74,7 @@ class ChatsViewModel: ObservableObject {
                             ])
                             
                             self.db.collection("users").document(receiver).updateData([
-                                "conversations": FieldValue.arrayUnion([receiver])
+                                "conversations": FieldValue.arrayUnion([self.user!.displayName])
                             ])
                             
                         } else {

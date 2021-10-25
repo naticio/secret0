@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SDWebImageSwiftUI
 
 struct ChatRow: View {
     
@@ -30,10 +31,18 @@ struct ChatRow: View {
                         .frame(width: 70, height: 70)
                         .clipShape(Circle())
                 } else {
-                    RemoteImage(url: profilePic)
+//                    RemoteImage(url: profilePic)
+//                        //.resizable()
+//                        .frame(width: 70, height: 70)
+//                        .clipShape(Circle())
+                    
+                    WebImage(url: URL(string: profilePic))
                         //.resizable()
+                        .aspectRatio(contentMode: .fit)
                         .frame(width: 70, height: 70)
                         .clipShape(Circle())
+                        .cornerRadius(10)
+                        .padding(10)
                 }
 
             }

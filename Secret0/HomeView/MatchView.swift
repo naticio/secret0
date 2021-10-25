@@ -40,7 +40,7 @@ struct MatchView: View {
                 .navigationBarHidden(true)
         } else {
             
-            if model.matches.count == 0 || viewAllMatches ==  true {
+            if model.matches.count == 0 || viewAllMatches ==  true || index == model.matches.count  {
                 Text("No available matches")
             } else {
                 //view with matches
@@ -529,7 +529,7 @@ struct MatchView: View {
                         //to recreate the veiw from scratch
                         .id(self.scrollViewID)
                         
-                        //this is to show the rejection button
+                        //MARK: - rejection button
                         .overlay(
                             Button(action: {
                                 //move to the next match
@@ -537,17 +537,9 @@ struct MatchView: View {
                                 self.viewShown.toggle()
                                 
                                 
-                                
                                 //scroll to top
                                 withAnimation(.spring()) {
                                     ProxyReader.scrollTo("SCROLL_TO_TOP", anchor: .top)
-                                    
-                                    
-                                    //                                    if index < model.matches.count-1 {
-                                    //                                        self.index += 1
-                                    //                                    } else {
-                                    //                                        viewAllMatches = true
-                                    //                                    }
                                     
                                     if self.index == model.matches.count-1 {
                                         //go back to first match
@@ -700,7 +692,11 @@ struct LikeScreenModalView: View {
             //object reference for opener
             
             if type == "Image" {
-                RemoteImage(url: input)
+                WebImage(url: URL(string: input))
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .cornerRadius(10)
+                    .padding(10)
             } else {
                 VStack {
                     Text(input)
@@ -718,12 +714,15 @@ struct LikeScreenModalView: View {
                 print(user.id)
                 
                 //move to next match
-                if indexHere == model.matches.count-1 {
-                    //go back to first match
-                    indexHere = 0
-                } else {
-                    indexHere += 1
+                DispatchQueue.main.async {
+                    if indexHere == model.matches.count-1 {
+                        //go back to first match
+                        indexHere = 0
+                    } else {
+                        indexHere += 1
+                    }
                 }
+
                 
                 likeModalShown.toggle() //flip to false
                 

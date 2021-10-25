@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SDWebImageSwiftUI
 
 
 struct ConversationRow: View {
@@ -22,10 +23,19 @@ struct ConversationRow: View {
                         .frame(width: 70, height: 70)
                         .clipShape(Circle())
                 } else {
-                    RemoteImage(url: chat.profilePics[1])
+                    WebImage(url: URL(string: chat.profilePics[1]))
                         //.resizable()
+//                        .frame(width: 70, height: 70)
+//                        .scaledToFill()
+//                        .cornerRadius(10)
+//                        .clipShape(Circle())
+//                        .padding(10)
+                        .renderingMode(.original)
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
                         .frame(width: 70, height: 70)
                         .clipShape(Circle())
+
                 }
 
             } else {
@@ -37,8 +47,17 @@ struct ConversationRow: View {
                 } else {
                     //show image of other person, 1st index aka index 0
                     //Image(chat.users[0].imageUrl)
-                    RemoteImage(url: chat.profilePics[0])
+                    WebImage(url: URL(string: chat.profilePics[0]))
                         //.resizable()
+//                        .frame(width: 70, height: 70)
+//                        .aspectRatio(contentMode: .fit)
+//                        .scaledToFill()
+//                        .cornerRadius(10)
+//                        .clipShape(Circle())
+//                        .padding(10)
+                        .renderingMode(.original)
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
                         .frame(width: 70, height: 70)
                         .clipShape(Circle())
                 }
