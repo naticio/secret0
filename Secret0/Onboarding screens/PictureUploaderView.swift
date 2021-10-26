@@ -198,6 +198,7 @@ struct PictureUploaderView: View {
                             //model.getMatches()
                             if model.usersLoaded == false {
                                 model.getMatchesNearMeDispatch(radius: 50)
+                                model.getUserData()
                             }
 
                         }),
