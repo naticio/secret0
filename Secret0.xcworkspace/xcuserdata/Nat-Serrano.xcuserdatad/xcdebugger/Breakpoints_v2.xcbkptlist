@@ -155,8 +155,8 @@
             filePath = "Secret0/ViewModel/ContentModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "450"
-            endingLineNumber = "450"
+            startingLineNumber = "454"
+            endingLineNumber = "454"
             landmarkName = "getMatchesNearMeDispatch(radius:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -171,8 +171,8 @@
             filePath = "Secret0/ViewModel/ContentModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "472"
-            endingLineNumber = "472"
+            startingLineNumber = "476"
+            endingLineNumber = "476"
             landmarkName = "getMatchesNearMeDispatch(radius:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -187,8 +187,8 @@
             filePath = "Secret0/ViewModel/ContentModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "473"
-            endingLineNumber = "473"
+            startingLineNumber = "477"
+            endingLineNumber = "477"
             landmarkName = "getMatchesNearMeDispatch(radius:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -203,8 +203,8 @@
             filePath = "Secret0/ViewModel/ContentModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "510"
-            endingLineNumber = "510"
+            startingLineNumber = "514"
+            endingLineNumber = "514"
             landmarkName = "getDocumentsCompletion(snapshot:error:)"
             landmarkType = "9">
          </BreakpointContent>
@@ -219,8 +219,8 @@
             filePath = "Secret0/ViewModel/ChatsViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "142"
-            endingLineNumber = "142"
+            startingLineNumber = "143"
+            endingLineNumber = "143"
             landmarkName = "sendMessageChat(_:in:chatid:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -267,8 +267,8 @@
             filePath = "Secret0/ViewModel/ChatsViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "194"
-            endingLineNumber = "194"
+            startingLineNumber = "195"
+            endingLineNumber = "195"
             landmarkName = "getFilteredConversations(query:)"
             landmarkType = "7">
          </BreakpointContent>

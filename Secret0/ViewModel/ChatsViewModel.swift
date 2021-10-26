@@ -23,6 +23,7 @@ class ChatsViewModel: ObservableObject {
     @Published var chatsRetrieved = false
     
     @Published var profileMatch = Matches()
+    @Published var userChat = User()
     
     private let db = Firestore.firestore()
     private let user = Auth.auth().currentUser
@@ -268,7 +269,7 @@ class ChatsViewModel: ObservableObject {
             }
     }
     
-    func getProfileMatch(username: String) {
+    func getProfileUser(username: String) {
         let user = UserService.shared.user
         let center = CLLocationCoordinate2D(latitude: user.latitude ?? 0, longitude: user.longitude ?? 0)
         
@@ -283,35 +284,35 @@ class ChatsViewModel: ObservableObject {
                 let data = document.data()
                 if let data = data {
                     print("data", data)
-                    self.profileMatch.name = data["name"] as? String ?? ""
+                    self.userChat.name = data["name"] as? String ?? ""
                     
-                    self.profileMatch.latitude = data["latitude"] as? Double ?? 0
-                    self.profileMatch.longitude = data["longitude"] as? Double ?? 0
-                    let coordinates = CLLocation(latitude: self.profileMatch.latitude ?? 0, longitude: self.profileMatch.longitude ?? 0)
+                    self.userChat.latitude = data["latitude"] as? Double ?? 0
+                    self.userChat.longitude = data["longitude"] as? Double ?? 0
+                    let coordinates = CLLocation(latitude: self.userChat.latitude ?? 0, longitude: self.userChat.longitude ?? 0)
                     let centerPoint = CLLocation(latitude: center.latitude, longitude: center.longitude)
                     
-                    self.profileMatch.id = data["id"] as? String ?? ""
-                    self.profileMatch.name = data["name"] as? String ?? ""
+                    self.userChat.id = data["id"] as? String ?? ""
+                    self.userChat.name = data["name"] as? String ?? ""
                     
                     let birthDateTimestamp = data["birthdate"] as? Timestamp ?? nil
-                    self.profileMatch.birthdate = birthDateTimestamp!.dateValue()
-                    self.profileMatch.gender = data["gender"] as? String ?? ""
-                    self.profileMatch.datingPreferences = data["datingPreferences"] as? String ?? ""
-                    self.profileMatch.height = data["height"] as? Int ?? 0
-                    self.profileMatch.city = data["city"] as? String ?? ""
+                    self.userChat.birthdate = birthDateTimestamp!.dateValue()
+                    self.userChat.gender = data["gender"] as? String ?? ""
+                    self.userChat.datingPreferences = data["datingPreferences"] as? String ?? ""
+                    self.userChat.height = data["height"] as? Int ?? 0
+                    self.userChat.city = data["city"] as? String ?? ""
                     
-                    self.profileMatch.imageUrl1 = data["photo1"] as? String ?? ""
-                    self.profileMatch.imageUrl2 = data["photo2"] as? String ?? ""
-                    self.profileMatch.imageUrl3 = data["photo3"] as? String ?? ""
-                    self.profileMatch.imageUrl4 = data["photo4"] as? String ?? ""
-                    self.profileMatch.imageUrl5 = data["photo5"] as? String ?? ""
-                    self.profileMatch.imageUrl6 = data["photo6"] as? String ?? ""
+                    self.userChat.imageUrl1 = data["photo1"] as? String ?? ""
+                    self.userChat.imageUrl2 = data["photo2"] as? String ?? ""
+                    self.userChat.imageUrl3 = data["photo3"] as? String ?? ""
+                    self.userChat.imageUrl4 = data["photo4"] as? String ?? ""
+                    self.userChat.imageUrl5 = data["photo5"] as? String ?? ""
+                    self.userChat.imageUrl6 = data["photo6"] as? String ?? ""
                     
-                    self.profileMatch.Q1day2live = data["Q1day2live"] as? String ?? ""
-                    self.profileMatch.QlotteryWin = data["QlotteryWin"] as? String ?? ""
-                    self.profileMatch.QmoneynotanIssue = data["QmoneynotanIssue"] as? String ?? ""
-                    self.profileMatch.bucketList = data["bucketList"] as? String ?? ""
-                    self.profileMatch.jokes = data["jokes"] as? String ?? ""
+                    self.userChat.Q1day2live = data["Q1day2live"] as? String ?? ""
+                    self.userChat.QlotteryWin = data["QlotteryWin"] as? String ?? ""
+                    self.userChat.QmoneynotanIssue = data["QmoneynotanIssue"] as? String ?? ""
+                    self.userChat.bucketList = data["bucketList"] as? String ?? ""
+                    self.userChat.jokes = data["jokes"] as? String ?? ""
                     
                 }
             }

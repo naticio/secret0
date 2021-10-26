@@ -119,6 +119,9 @@ class ContentModel: ObservableObject{
             let data = snapshot!.data()
             let user = UserService.shared.user
             
+            let birthDateTimestamp = data?["birthdate"] as? Timestamp ?? nil
+            user.birthdate = birthDateTimestamp!.dateValue()
+            
             user.name = data?["name"] as? String ?? ""
             user.birthdate = data?["birthdate"] as? Date ?? Date()
             user.gender = data?["gender"] as? String ?? ""
@@ -127,6 +130,7 @@ class ContentModel: ObservableObject{
             user.longitude = data?["longitude"] as? Double ?? 0.0
             user.datingPreferences = data?["datingPreferences"] as? String ?? ""
             user.sexuality = data?["sexuality"] as? String ?? ""
+            user.city = data?["city"] as? String ?? ""
             
             //did I use photo as prefix when saving in firebase?
             user.imageUrl1 = data?["photo1"] as? String ?? ""

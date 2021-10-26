@@ -16,6 +16,8 @@ struct ChatView: View {
     @EnvironmentObject var chatModel: ChatsViewModel
     
     let chat: Conversation
+    //var userChat: User = User()
+    
     let user = UserService.shared.user
     @State var messagesSnapshot = [Message]()
     
@@ -63,12 +65,12 @@ struct ChatView: View {
                     ScrollView(.vertical) { //to scroll
                         ForEach(chat.messages, id: \.id) { message in
                             if user.name == message.createdBy {
-                                ChatRow(message: message, isMe: false, profilePic: profilePic)
+                                ChatRow(message: message, isMe: false, profilePic: profilePic, chatUser: chatModel.userChat)
                                     //.id(message.id)
                                     .id(chat.messages.firstIndex(of: message))
                                 
                             } else {
-                                ChatRow(message: message, isMe: true, profilePic: profilePic)
+                                ChatRow(message: message, isMe: true, profilePic: profilePic, chatUser: chatModel.userChat)
                                     .id(chat.messages.firstIndex(of: message))
                             }
                             
@@ -128,7 +130,12 @@ struct ChatView: View {
         
                 .onAppear() {
                     //get profile of the person Im chatting with so I can show PROFILE when I lcik pic
-                    chatModel.getProfileMatch(username: chatUser)
+                    if UserService.shared.user.name == chat.users[0] {
+                        chatModel.getProfileUser(username: chat.users[1])
+                    } else {
+                        chatModel.getProfileUser(username: chat.users[0])
+                    }
+                    
                     chatModel.markAsUnread(chat: chat)
                 }
         

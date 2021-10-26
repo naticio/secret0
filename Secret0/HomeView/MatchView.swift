@@ -69,7 +69,6 @@ struct MatchView: View {
                     ScrollViewReader {ProxyReader in
                         ScrollView(.vertical, showsIndicators: false, content: {
                             
-                            
                             VStack {
                                 Group {
                                     
