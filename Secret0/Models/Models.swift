@@ -15,7 +15,6 @@ class User {
     var name: String = ""
     var email: String = ""
     var birthdate: Date = Date()
-    //var birthdateTimestamp: Timestamp?
     var location: CLLocation?
     var latitude: Double?
     var longitude: Double?

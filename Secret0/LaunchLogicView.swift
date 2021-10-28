@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import FirebaseAuth
 
 struct LaunchLogicView: View {
     
@@ -16,7 +17,12 @@ struct LaunchLogicView: View {
     @EnvironmentObject var model: ContentModel //because we depend on content model to know if user is loggedin (loggedin property)
     //let persistenceController = PersistenceController.shared
     
+//    init(){
+//        try! Auth.auth().signOut()
+//    }
+    
     var body: some View {
+        
         
         
         if model.loggedIn == false {
@@ -58,7 +64,7 @@ struct LaunchLogicView: View {
                             }
                         }
                     
-                    ProfileView()
+                    ProfileView(profileUser: UserService.shared.user)
                         .tabItem {
                             VStack {
                                 Image(systemName: "person")

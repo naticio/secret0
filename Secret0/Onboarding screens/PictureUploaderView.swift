@@ -198,7 +198,7 @@ struct PictureUploaderView: View {
                             //model.getMatches()
                             if model.usersLoaded == false {
                                 model.getMatchesNearMeDispatch(radius: 50)
-                                model.getUserData()
+                                //model.getUserData()
                             }
 
                         }),
@@ -290,8 +290,30 @@ struct PictureUploaderView: View {
                             //save into firestore db the url of the images just uploaded
                             FirestoreRef.setData(["photo\(picNumber)": url!.absoluteString], merge: true)
                             
+                         
+                            
                             print("SUCCESS: image original uploaded to firebase")
                             print(url!.absoluteString)
+                            //so I can save images posted into User singleton
+                            
+                            switch picNumber {
+                            case 1:
+                                UserService.shared.user.imageUrl1 = url!.absoluteString
+                            case 2:
+                                UserService.shared.user.imageUrl2 = url!.absoluteString
+                            case 3:
+                                UserService.shared.user.imageUrl3 = url!.absoluteString
+                            case 4:
+                                UserService.shared.user.imageUrl4 = url!.absoluteString
+                            case 5:
+                                UserService.shared.user.imageUrl5 = url!.absoluteString
+                            case 6:
+                                UserService.shared.user.imageUrl6 = url!.absoluteString
+                                
+                            default:
+                                print("No pics")
+                            }
+                            UserService.shared.user.imageUrl1 = url!.absoluteString
                             //if hideIdentity toggle  = true then
                             
                             //SAVE BLURRED IMAGE INTO FIREBASE COLLECTION as url reference

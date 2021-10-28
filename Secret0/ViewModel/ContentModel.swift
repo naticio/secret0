@@ -85,6 +85,7 @@ class ContentModel: ObservableObject{
         } else {
             //try! Auth.auth().signOut()
             loggedIn = true
+            getUserData()
 
         }
         //to check if user is logged in or not every time the app opens
