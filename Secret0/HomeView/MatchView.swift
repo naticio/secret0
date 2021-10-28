@@ -40,7 +40,7 @@ struct MatchView: View {
                 .navigationBarHidden(true)
         } else {
             
-            if model.matches.count == 0 || viewAllMatches ==  true || index == model.matches.count  {
+            if model.matches.count == 0 || viewAllMatches ==  true || index >= model.matches.count  {
                 Text("No available matches")
             } else {
                 //view with matches
@@ -96,6 +96,10 @@ struct MatchView: View {
                                                 Button(action: {
                                                     //open modal to send message
                                                     likeModal.toggle()
+                                                    DispatchQueue.main.async {
+                                                        model.imageForOpener = model.matches[index].imageUrl1!
+                                                    }
+
                                                     
                                                 }, label: {
                                                     Image("corazon")
@@ -103,7 +107,7 @@ struct MatchView: View {
                                                 })
                                                 //MARK: - like button
                                                 .fullScreenCover(isPresented: $likeModal, content: {
-                                                    LikeScreenModalView.init(likeModalShown: $likeModal, indexHere: $index, input: model.matches[index].imageUrl1!, receiver: model.matches[index].name, type: "Image", question: "", receiverImage: model.matches[index].imageUrl1!)
+                                                    LikeScreenModalView.init(likeModalShown: $likeModal, indexHere: $index, input: model.matches[index].imageUrl1!, receiver: model.matches[index].name, type: "Image", question: "", receiverImage: model.matches[index].imageUrl1!, picNumber: 1)
                                                         .environmentObject(ChatsViewModel())
                                                         .environmentObject(ContentModel())
                                                 })
@@ -165,7 +169,7 @@ struct MatchView: View {
                                         })
                                         //MARK: - like button
                                         .fullScreenCover(isPresented: $likeModal, content: {
-                                            LikeScreenModalView.init(likeModalShown: $likeModal, indexHere: $index, input: model.matches[index].Q1day2live, receiver: model.matches[index].name, type: "Text", question: "What would you do if you only have 1 day left to live?", receiverImage: model.matches[index].imageUrl1!)
+                                            LikeScreenModalView.init(likeModalShown: $likeModal, indexHere: $index, input: model.matches[index].Q1day2live, receiver: model.matches[index].name, type: "Text", question: "What would you do if you only have 1 day left to live?", receiverImage: model.matches[index].imageUrl1!, picNumber: 0)
                                                 .environmentObject(ChatsViewModel())
                                                 .environmentObject(ContentModel())
                                         })
@@ -199,6 +203,9 @@ struct MatchView: View {
                                                 Button(action: {
                                                     //open modal to send message
                                                     likeModal.toggle()
+                                                    DispatchQueue.main.async {
+                                                        model.imageForOpener = model.matches[index].imageUrl2!
+                                                    }
                                                     
                                                     
                                                 }, label: {
@@ -207,7 +214,7 @@ struct MatchView: View {
                                                 })
                                                 //MARK: - like button
                                                 .fullScreenCover(isPresented: $likeModal, content: {
-                                                    LikeScreenModalView.init(likeModalShown: $likeModal, indexHere: $index, input: model.matches[index].imageUrl2!, receiver: model.matches[index].name, type: "Text", question: "", receiverImage: model.matches[index].imageUrl1!)
+                                                    LikeScreenModalView.init(likeModalShown: $likeModal, indexHere: $index, input: model.matches[index].imageUrl2!, receiver: model.matches[index].name, type: "Text", question: "", receiverImage: model.matches[index].imageUrl1!, picNumber: 2)
                                                         .environmentObject(ChatsViewModel())
                                                         .environmentObject(ContentModel())
                                                 })
@@ -333,7 +340,7 @@ struct MatchView: View {
                                             })
                                             //MARK: - like button
                                             .fullScreenCover(isPresented: $likeModal, content: {
-                                                LikeScreenModalView.init(likeModalShown: $likeModal, indexHere: $index, input: model.matches[index].QmoneynotanIssue, receiver: model.matches[index].name, type: "Text", question: "What would you do with your time if money was not an issue?", receiverImage: model.matches[index].imageUrl1!)
+                                                LikeScreenModalView.init(likeModalShown: $likeModal, indexHere: $index, input: model.matches[index].QmoneynotanIssue, receiver: model.matches[index].name, type: "Text", question: "What would you do with your time if money was not an issue?", receiverImage: model.matches[index].imageUrl1!, picNumber: 0)
                                                     .environmentObject(ChatsViewModel())
                                                     .environmentObject(ContentModel())
                                             })
@@ -367,6 +374,9 @@ struct MatchView: View {
                                                 Button(action: {
                                                     //open modal to send message
                                                     likeModal.toggle()
+                                                    DispatchQueue.main.async {
+                                                        model.imageForOpener = model.matches[index].imageUrl3!
+                                                    }
                                                     
                                                     
                                                 }, label: {
@@ -375,7 +385,7 @@ struct MatchView: View {
                                                 })
                                                 //MARK: - like button
                                                 .fullScreenCover(isPresented: $likeModal, content: {
-                                                    LikeScreenModalView.init(likeModalShown: $likeModal, indexHere: $index, input: model.matches[index].imageUrl3!, receiver: model.matches[index].name, type: "Text", question: "", receiverImage: model.matches[index].imageUrl1!)
+                                                    LikeScreenModalView.init(likeModalShown: $likeModal, indexHere: $index, input: model.matches[index].imageUrl3!, receiver: model.matches[index].name, type: "Text", question: "", receiverImage: model.matches[index].imageUrl1!, picNumber: 3)
                                                         .environmentObject(ChatsViewModel())
                                                         .environmentObject(ContentModel())
                                                 })
@@ -420,7 +430,7 @@ struct MatchView: View {
                                         })
                                         //MARK: - like button
                                         .fullScreenCover(isPresented: $likeModal, content: {
-                                            LikeScreenModalView.init(likeModalShown: $likeModal, indexHere: $index, input: model.matches[index].QlotteryWin, receiver: model.matches[index].bucketList, type: "Text", question: "What are three things in your bucket list?", receiverImage: model.matches[index].imageUrl1!)
+                                            LikeScreenModalView.init(likeModalShown: $likeModal, indexHere: $index, input: model.matches[index].QlotteryWin, receiver: model.matches[index].bucketList, type: "Text", question: "What are three things in your bucket list?", receiverImage: model.matches[index].imageUrl1!, picNumber: 0)
                                                 .environmentObject(ChatsViewModel())
                                                 .environmentObject(ContentModel())
                                         })
@@ -454,6 +464,9 @@ struct MatchView: View {
                                                 Button(action: {
                                                     //open modal to send message
                                                     likeModal.toggle()
+                                                    DispatchQueue.main.async {
+                                                        model.imageForOpener = model.matches[index].imageUrl4!
+                                                    }
                                                     
                                                     
                                                 }, label: {
@@ -462,7 +475,7 @@ struct MatchView: View {
                                                 })
                                                 //MARK: - like button
                                                 .fullScreenCover(isPresented: $likeModal, content: {
-                                                    LikeScreenModalView.init(likeModalShown: $likeModal, indexHere: $index, input: model.matches[index].imageUrl4!, receiver: model.matches[index].name, type: "Text", question: "", receiverImage: model.matches[index].imageUrl1!)
+                                                    LikeScreenModalView.init(likeModalShown: $likeModal, indexHere: $index, input: model.matches[index].imageUrl4!, receiver: model.matches[index].name, type: "Text", question: "", receiverImage: model.matches[index].imageUrl1!, picNumber: 4)
                                                         .environmentObject(ChatsViewModel())
                                                         .environmentObject(ContentModel())
                                                 })
@@ -508,7 +521,7 @@ struct MatchView: View {
                                         })
                                         //MARK: - like button
                                         .fullScreenCover(isPresented: $likeModal, content: {
-                                            LikeScreenModalView.init(likeModalShown: $likeModal, indexHere: $index, input: model.matches[index].jokes, receiver: model.matches[index].name, type: "Text", question: "Do you know any jokes?", receiverImage: model.matches[index].imageUrl1!)
+                                            LikeScreenModalView.init(likeModalShown: $likeModal, indexHere: $index, input: model.matches[index].jokes, receiver: model.matches[index].name, type: "Text", question: "Do you know any jokes?", receiverImage: model.matches[index].imageUrl1!, picNumber: 0)
                                                 .environmentObject(ChatsViewModel())
                                                 .environmentObject(ContentModel())
                                         })
@@ -679,17 +692,16 @@ struct LikeScreenModalView: View {
     @Binding var indexHere: Int
     
     @State var opener: String = ""
-    var input : String
+    @State public var input : String
     var receiver: String
     var type: String
     var question: String
     var receiverImage: String
-    //var senderImage: String
+    var picNumber: Int
     
     var body: some View {
         VStack {
             //object reference for opener
-            
             if type == "Image" {
                 WebImage(url: URL(string: input))
                     .resizable()
@@ -730,7 +742,11 @@ struct LikeScreenModalView: View {
                 
             } label: {
                 Text("Send Message")
-            }
+            }.padding()
+            
+            Button("I chickened out...") {
+                        presentationMode.wrappedValue.dismiss()
+            }.padding()
             
             
             

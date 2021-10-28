@@ -51,8 +51,7 @@ struct Index: View {
                      //SIGN UP
                      NavigationLink(
                      destination: EmailOnboardingView()
-                     .environmentObject(ContentModel())
-                     .navigationBarHidden(true),
+                     .environmentObject(ContentModel()),
                      label: {
                      Text("Create an Account")
                      })

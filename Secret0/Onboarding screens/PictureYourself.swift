@@ -148,16 +148,9 @@ struct PictureYourself: View {
                 }
             }
             .navigationBarHidden(true)
-            //.navigationBarTitle("Images", displayMode: .inline)
-            //button for user to tap to the gallery
-            //            .toolbar(content: {
-            //                ToolbarItem(placement: .navigationBarLeading) {
-            //                    GalleryButton(showImagePicker: $showImagePicker)
-            //                }
-            //                ToolbarItem(placement: .navigationBarTrailing) {
-            //                    SaveButton()
-            //                }
-            //            })
+
+            
+            //MARK: - the sheet that you can select an image
             .sheet(isPresented: $showImagePicker, content: {
                 //call the helper image picker to select photos (PHPicker)
                 ImagePicker(imageController: imageController, showImagePicker: $showImagePicker)

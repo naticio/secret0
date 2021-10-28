@@ -44,6 +44,8 @@ class ContentModel: ObservableObject{
     @Published var bucketListModel: String = ""
     @Published var jokesModel: String = ""
     
+    @Published var imageForOpener: String = ""
+    
     
     let db = Firestore.firestore()
     

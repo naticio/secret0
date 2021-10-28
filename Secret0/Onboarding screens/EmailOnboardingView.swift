@@ -120,7 +120,7 @@ struct EmailOnboardingView: View {
                 Spacer()
             }
         }
-        .navigationBarHidden(true)
+        //.navigationBarHidden(true)
         .edgesIgnoringSafeArea(.all)
     }
     

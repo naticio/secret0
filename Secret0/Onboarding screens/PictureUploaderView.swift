@@ -244,7 +244,8 @@ struct PictureUploaderView: View {
             
             Spacer()
         }
-
+        
+        //MARK: - SHOW THE picture yourself view
         .sheet(isPresented: $uploadPic, content: {
             PictureYourself(uploadPic: $uploadPic, picNumber: $picNumber)
         })
@@ -313,7 +314,7 @@ struct PictureUploaderView: View {
                             default:
                                 print("No pics")
                             }
-                            UserService.shared.user.imageUrl1 = url!.absoluteString
+                            //UserService.shared.user.imageUrl1 = url!.absoluteString
                             //if hideIdentity toggle  = true then
                             
                             //SAVE BLURRED IMAGE INTO FIREBASE COLLECTION as url reference
