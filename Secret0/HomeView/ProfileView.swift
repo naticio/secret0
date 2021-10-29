@@ -277,7 +277,7 @@ struct ProfileView: View {
                                     }
                             
                                     
-                                    Text("User logged in: \(UserService.shared.user.name)")
+                                    //Text("User logged in: \(UserService.shared.user.name)")
                                 }
 
                             }

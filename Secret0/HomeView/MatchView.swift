@@ -31,7 +31,13 @@ struct MatchView: View {
     @State private var viewAllMatches = false
     @State var openerInput: String = ""
     
+    @State private var sort: Int = 0
+    
     //@State var currentUser = UserService.shared.user
+    //    init() {
+    //            // Use this if NavigationBarTitle is with large font
+    //            UINavigationBar.appearance().largeTitleTextAttributes = [.font : UIFont(name: "Georgia-Bold", size: 20)!]
+    //        }
     
     var body: some View {
         
@@ -46,295 +52,116 @@ struct MatchView: View {
             } else {
                 //view with matches
                 //top bar
-                VStack {
-                    Group {
-                        HStack {
-                            Text(model.matches[index].name)
-                                .frame(alignment: .leading)
-                                .font(.title.bold())
-                            
-                            
-                            Text(model.matches[index].gender)
-                            Text("wants \(model.matches[index].datingPreferences)")
-                            
-                            Button(action: {
-                                //action to block or report user
-                            }, label: {
-                                Image(systemName: "ellxipsis")
-                            })
-                        }
-                    }
-                    
-                    //scroll MAIN view
-                    
-                    ScrollViewReader {ProxyReader in
-                        ScrollView(.vertical, showsIndicators: false, content: {
-                            
-                            VStack {
-                                Group {
-                                    
-                                    //IOS15 AsyncImage(url: URL(string: "https://your_image_url_address"))
-                                    if model.matches[index].imageUrl1 == "" {
-                                        Image("noPic")
-                                            .resizable()
-                                            .frame(height: 410, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
-                                            //.aspectRatio(contentMode: .fit)
-                                            .cornerRadius(10)
-                                            .padding(10)
-                                            .shadow(radius: 5)
+                NavigationView{
+                    VStack {
+                        
+                        //                        Text(model.matches[index].name)
+                        //                            .frame(alignment: .leading)
+                        //                            .font(.title.bold())
+                        //                            .padding()
+                        
+                        
+                        
+                        
+                        //scroll MAIN view
+                        
+                        ScrollViewReader {ProxyReader in
+                            ScrollView(.vertical, showsIndicators: false, content: {
+                                
+                                LazyVStack {
+                                    Group {
                                         
-                                    } else {
-                                        
-                                        WebImage(url: URL(string: model.matches[index].imageUrl1!))
-//                                            .frame(height: 410, alignment: .center)
-//                                            .padding(10)
-                                            .resizable()
-                                            .aspectRatio(contentMode: .fit)
-                                            .cornerRadius(10)
-                                            .padding(10)
+                                        //IOS15 AsyncImage(url: URL(string: "https://your_image_url_address"))
+                                        if model.matches[index].imageUrl1 == "" {
+                                            Image("noPic")
+                                                .resizable()
+                                                .frame(height: 410, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+                                                //.aspectRatio(contentMode: .fit)
+                                                .cornerRadius(10)
+                                                .padding(10)
+                                                .shadow(radius: 5)
                                             
-                                            .overlay(
-                                                Button(action: {
-                                                    openerInput = model.matches[index].imageUrl1!
-                                                    //open modal to send message
-                                                    likeModal.toggle()
-
-
-                                                    
-                                                }, label: {
-                                                    Image("corazon")
-                                                        .foregroundColor(Color(.systemRed))
-                                                })
-                                                //MARK: - like button
-                                                .fullScreenCover(isPresented: $likeModal, content: {
-                                                    LikeScreenModalView.init(likeModalShown: $likeModal, indexHere: $index, input: $openerInput, receiver: model.matches[index].name, type: "Image", question: "", receiverImage: model.matches[index].imageUrl1!, picNumber: 1)
-                                                        .environmentObject(ChatsViewModel())
-                                                        .environmentObject(ContentModel())
-                                                })
+                                        } else {
+                                            
+                                            WebImage(url: URL(string: model.matches[index].imageUrl1!))
+                                                //                                            .frame(height: 410, alignment: .center)
+                                                //                                            .padding(10)
+                                                .resizable()
+                                                .aspectRatio(contentMode: .fit)
+                                                .cornerRadius(10)
+                                                .padding(10)
                                                 
-                                                //fixing at bottom left the floating like !!
-                                                , alignment: .bottomTrailing
-                                            )
-                                        
-                                        //                                            RemoteImage(url: model.matches[index].imageUrl1!)
-                                        //                                                //.aspectRatio(contentMode: .fit)
-                                        //
-                                        //                                                .frame(height: 410, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
-                                        //                                                .cornerRadius(10)
-                                        //                                                .padding(10)
-                                        
-                                        
-                                    }
-                                    
-                                    
-                                }.padding(.horizontal,5)
-                                
-                                
-                                //2nd group with text
-                                Group{
-                                    ZStack {
-                                        Rectangle()
-                                            .foregroundColor(.white)
-                                            .cornerRadius(10)
-                                            .shadow(radius: 5)
-                                            .aspectRatio(CGSize(width: 335, height: 175), contentMode: .fit)
-                                        
-                                        VStack {
-                                            Text("What would you do if you only have 1 day left to live?")
-                                                .font(.title2)
-                                                .bold()
-                                                .padding(.horizontal, 5)
+                                                .overlay(
+                                                    Button(action: {
+                                                        openerInput = model.matches[index].imageUrl1!
+                                                        //open modal to send message
+                                                        likeModal.toggle()
+                                                        
+                                                        
+                                                        
+                                                    }, label: {
+                                                        Image("corazon")
+                                                            .foregroundColor(Color(.systemRed))
+                                                    })
+                                                    //MARK: - like button
+                                                    .fullScreenCover(isPresented: $likeModal, content: {
+                                                        LikeScreenModalView.init(likeModalShown: $likeModal, indexHere: $index, input: $openerInput, receiver: model.matches[index].name, type: "Image", question: "", receiverImage: model.matches[index].imageUrl1!, picNumber: 1)
+                                                            .environmentObject(ChatsViewModel())
+                                                            .environmentObject(ContentModel())
+                                                    })
+                                                    
+                                                    //fixing at bottom left the floating like !!
+                                                    , alignment: .bottomTrailing
+                                                )
                                             
-                                            
-                                            Text(model.matches[index].Q1day2live ?? "")
-                                                //.padding()
-                                                .font(Font.system(size: 14))
-                                                .padding([.top, (.horizontal)])
+                                            //                                            RemoteImage(url: model.matches[index].imageUrl1!)
+                                            //                                                //.aspectRatio(contentMode: .fit)
+                                            //
+                                            //                                                .frame(height: 410, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+                                            //                                                .cornerRadius(10)
+                                            //                                                .padding(10)
                                             
                                             
                                         }
-                                        .cornerRadius(15)
-                                        //.padding(.horizontal, 10)
                                         
-                                    }
-                                    .overlay(
-                                        Button(action: {
-                                            //open modal to send message
-                                            openerInput = model.matches[index].Q1day2live
-                                            likeModal.toggle()
-
-                                            
-                                            
-                                        }, label: {
-                                            Image("corazon")
-                                                .foregroundColor(Color(.systemRed))
-                                        })
-                                        //MARK: - like button
-                                        .fullScreenCover(isPresented: $likeModal, content: {
-                                            LikeScreenModalView.init(likeModalShown: $likeModal, indexHere: $index, input: $openerInput, receiver: model.matches[index].name, type: "Text", question: "What would you do if you only have 1 day left to live?", receiverImage: model.matches[index].imageUrl1!, picNumber: 0)
-                                                .environmentObject(ChatsViewModel())
-                                                .environmentObject(ContentModel())
-                                        })
                                         
-                                        //fixing at bottom left the floating like !!
-                                        , alignment: .bottomTrailing
-                                    )
-                                }.padding(.horizontal,13)
-                                
-                                
-                                ///3RD GROUP IMAGE
-                                Group {
-                                    //CustomImageView(urlString: model.matches[index].imageUrl2 ?? "")
-                                    if model.matches[index].imageUrl2 == "" {
-//                                        Image("noPic")
-//                                            .resizable()
-//                                            .frame(height: 410, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
-//                                            .padding(10)
-//                                            .cornerRadius(10)
-//                                            .shadow(radius: 5)
-                                    } else {
-                                        
-                                        WebImage(url: URL(string: model.matches[index].imageUrl2!))
-//                                            .frame(height: 410, alignment: .center)
-//                                            .padding(10)
-                                            .resizable()
-                                            .aspectRatio(contentMode: .fit)
-                                            .cornerRadius(10)
-                                            .padding(10)
-                                            .overlay(
-                                                Button(action: {
-                                                    openerInput = model.matches[index].imageUrl2!
-                                                    //open modal to send message
-                                                    likeModal.toggle()
-
-                                                    
-                                                    
-                                                }, label: {
-                                                    Image("corazon")
-                                                        .foregroundColor(Color(.systemRed))
-                                                })
-                                                //MARK: - like button
-                                                .fullScreenCover(isPresented: $likeModal, content: {
-                                                    LikeScreenModalView.init(likeModalShown: $likeModal, indexHere: $index, input: $openerInput , receiver: model.matches[index].name, type: "Text", question: "", receiverImage: model.matches[index].imageUrl1!, picNumber: 2)
-                                                        .environmentObject(ChatsViewModel())
-                                                        .environmentObject(ContentModel())
-                                                })
-                                                
-                                                //fixing at bottom left the floating like !!
-                                                , alignment: .bottomTrailing
-                                            )
-                                    }
+                                    }.padding(.horizontal,5)
                                     
                                     
-                                }.padding(.horizontal, 5)
-                                
-                                //4th HSTACK match data
-                                Group {
-                                    ZStack {
-                                        Rectangle()
-                                            .foregroundColor(.white)
-                                            .cornerRadius(10)
-                                            .shadow(radius: 5)
-                                            .aspectRatio(CGSize(width: 335, height: 50), contentMode: .fit)
-                                        
-                                        VStack {
-                                            HStack {
-                                                Group {
-                                                    Image(systemName: "sun.min")
-                                                    //let age = getAge(dateBirth: model.matches[index].birthdate)
-                                                    Text(String(model.matches[index].birthdate.age))
-                                                }.padding(.trailing)
+                                    //2nd group with text
+                                    Group{
+                                        ZStack {
+                                            Rectangle()
+                                                .foregroundColor(.white)
+                                                .cornerRadius(10)
+                                                .shadow(radius: 5)
+                                                .aspectRatio(CGSize(width: 335, height: 175), contentMode: .fit)
+                                            
+                                            VStack {
+                                                Text("What would you do if you only have 1 day left to live?")
+                                                    .font(.title2)
+                                                    .bold()
+                                                    .padding(.horizontal, 5)
                                                 
-                                                Group {
-                                                    Image(systemName: "ruler")
-                                                    Text(getInches(height: model.matches[index].height))
-                                                    //Text(String(model.matches[index].height) ?? "")
-                                                }.padding(.trailing)
                                                 
-                                                Group {
-                                                    Image(systemName: "mappin.and.ellipse")
-                                                    Text(model.matches[index].city!)
-                                                }
+                                                Text(model.matches[index].Q1day2live ?? "")
+                                                    //.padding()
+                                                    .font(Font.system(size: 14))
+                                                    .padding([.top, (.horizontal)])
+                                                
+                                                
                                             }
-                                            .padding()
-                                            //.border(Color.gray)
+                                            .cornerRadius(15)
+                                            //.padding(.horizontal, 10)
                                             
                                         }
-                                    }
-                                    
-                                    
-                                }.padding(.horizontal, 13)
-                                
-                                //text
-                                /*Group {
-                                 ZStack {
-                                 Rectangle()
-                                 .foregroundColor(.white)
-                                 .cornerRadius(10)
-                                 .shadow(radius: 5)
-                                 .aspectRatio(CGSize(width: 335, height: 175), contentMode: .fit)
-                                 
-                                 VStack{
-                                 Text("What would you do if you won 100 million dollars?")
-                                 .font(.title2)
-                                 .bold()
-                                 .padding(.horizontal, 5)
-                                 
-                                 Text(model.matches[index].QlotteryWin ?? "")
-                                 .font(Font.system(size: 14))
-                                 .padding([.top, (.horizontal)])
-                                 }
-                                 .padding()
-                                 .overlay(
-                                 Button(action: {
-                                 //open modal to send message
-                                 likeModal.toggle()
-                                 
-                                 
-                                 }, label: {
-                                 Image("corazon")
-                                 .foregroundColor(Color(.systemRed))
-                                 })
-                                 //MARK: - like button
-                                 .fullScreenCover(isPresented: $likeModal, content: {
-                                 LikeScreenModalView.init(likeModalShown: $likeModal, indexHere: $index, input: model.matches[index].QlotteryWin, receiver: model.matches[index].name, type: "Text", question: "What would you do if you won 100 million dollars")
-                                 .environmentObject(ChatsViewModel())
-                                 .environmentObject(ContentModel())
-                                 })
-                                 
-                                 //fixing at bottom left the floating like !!
-                                 , alignment: .bottomTrailing
-                                 )
-                                 }
-                                 
-                                 }.padding(.horizontal,13)*/
-                                
-                                //QUESTION - money not an issue
-                                Group {
-                                    ZStack {
-                                        Rectangle()
-                                            .foregroundColor(.white)
-                                            .cornerRadius(10)
-                                            .shadow(radius: 5)
-                                            .aspectRatio(CGSize(width: 335, height: 175), contentMode: .fit)
-                                        
-                                        VStack{
-                                            Text("What would you do with your time if money was not an issue?")
-                                                .font(.title2)
-                                                .bold()
-                                                .padding(.horizontal, 5)
-                                            
-                                            Text(model.matches[index].QmoneynotanIssue)
-                                                .font(Font.system(size: 14))
-                                                .padding([.top, (.horizontal)])
-                                        }.padding()
-                                        //.border(Color.gray)
                                         .overlay(
                                             Button(action: {
-                                                openerInput = model.matches[index].QmoneynotanIssue
                                                 //open modal to send message
+                                                openerInput = model.matches[index].Q1day2live
                                                 likeModal.toggle()
-
+                                                
+                                                
                                                 
                                             }, label: {
                                                 Image("corazon")
@@ -342,7 +169,7 @@ struct MatchView: View {
                                             })
                                             //MARK: - like button
                                             .fullScreenCover(isPresented: $likeModal, content: {
-                                                LikeScreenModalView.init(likeModalShown: $likeModal, indexHere: $index, input: $openerInput, receiver: model.matches[index].name, type: "Text", question: "What would you do with your time if money was not an issue?", receiverImage: model.matches[index].imageUrl1!, picNumber: 0)
+                                                LikeScreenModalView.init(likeModalShown: $likeModal, indexHere: $index, input: $openerInput, receiver: model.matches[index].name, type: "Text", question: "What would you do if you only have 1 day left to live?", receiverImage: model.matches[index].imageUrl1!, picNumber: 0)
                                                     .environmentObject(ChatsViewModel())
                                                     .environmentObject(ContentModel())
                                             })
@@ -350,34 +177,161 @@ struct MatchView: View {
                                             //fixing at bottom left the floating like !!
                                             , alignment: .bottomTrailing
                                         )
-                                    }
+                                    }.padding(.horizontal,13)
                                     
-                                }.padding(.horizontal,13)
-                                
-                                //IMAGE - 3
-                                Group {
-                                    if model.matches[index].imageUrl3 == "" {
-//                                        Image("noPic")
-//                                            .resizable()
-//                                            .frame(height: 410, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
-//                                            .padding(10)
-//                                            .cornerRadius(10)
-//                                            .shadow(radius: 5)
-                                    } else {
+                                    
+                                    ///3RD GROUP IMAGE
+                                    Group {
+                                        //CustomImageView(urlString: model.matches[index].imageUrl2 ?? "")
+                                        if model.matches[index].imageUrl2 == "" {
+                                            //                                        Image("noPic")
+                                            //                                            .resizable()
+                                            //                                            .frame(height: 410, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+                                            //                                            .padding(10)
+                                            //                                            .cornerRadius(10)
+                                            //                                            .shadow(radius: 5)
+                                        } else {
+                                            
+                                            WebImage(url: URL(string: model.matches[index].imageUrl2!))
+                                                //                                            .frame(height: 410, alignment: .center)
+                                                //                                            .padding(10)
+                                                .resizable()
+                                                .aspectRatio(contentMode: .fit)
+                                                .cornerRadius(10)
+                                                .padding(10)
+                                                .overlay(
+                                                    Button(action: {
+                                                        openerInput = model.matches[index].imageUrl2!
+                                                        //open modal to send message
+                                                        likeModal.toggle()
+                                                        
+                                                        
+                                                        
+                                                    }, label: {
+                                                        Image("corazon")
+                                                            .foregroundColor(Color(.systemRed))
+                                                    })
+                                                    //MARK: - like button
+                                                    .fullScreenCover(isPresented: $likeModal, content: {
+                                                        LikeScreenModalView.init(likeModalShown: $likeModal, indexHere: $index, input: $openerInput , receiver: model.matches[index].name, type: "Text", question: "", receiverImage: model.matches[index].imageUrl1!, picNumber: 2)
+                                                            .environmentObject(ChatsViewModel())
+                                                            .environmentObject(ContentModel())
+                                                    })
+                                                    
+                                                    //fixing at bottom left the floating like !!
+                                                    , alignment: .bottomTrailing
+                                                )
+                                        }
                                         
-                                        WebImage(url: URL(string: model.matches[index].imageUrl3!))
-//                                            .frame(height: 410, alignment: .center)
-//                                            .padding(10)
-                                            .resizable()
-                                            .aspectRatio(contentMode: .fit)
-                                            .cornerRadius(10)
-                                            .padding(10)
+                                        
+                                    }.padding(.horizontal, 5)
+                                    
+                                    //4th HSTACK match data
+                                    Group {
+                                        ZStack {
+                                            Rectangle()
+                                                .foregroundColor(.white)
+                                                .cornerRadius(10)
+                                                .shadow(radius: 5)
+                                                .aspectRatio(CGSize(width: 335, height: 50), contentMode: .fit)
+                                            
+                                            VStack {
+                                                HStack {
+                                                    Group {
+                                                        Image(systemName: "sun.min")
+                                                        //let age = getAge(dateBirth: model.matches[index].birthdate)
+                                                        Text(String(model.matches[index].birthdate.age))
+                                                    }.padding(.trailing)
+                                                    
+                                                    Group {
+                                                        Image(systemName: "ruler")
+                                                        Text(getInches(height: model.matches[index].height))
+                                                        //Text(String(model.matches[index].height) ?? "")
+                                                    }.padding(.trailing)
+                                                    
+                                                    Group {
+                                                        Image(systemName: "mappin.and.ellipse")
+                                                        Text(model.matches[index].city!)
+                                                    }
+                                                }
+                                                .padding()
+                                                //.border(Color.gray)
+                                                
+                                            }
+                                        }
+                                        
+                                        
+                                    }.padding(.horizontal, 13)
+                                    
+                                    //text
+                                    /*Group {
+                                     ZStack {
+                                     Rectangle()
+                                     .foregroundColor(.white)
+                                     .cornerRadius(10)
+                                     .shadow(radius: 5)
+                                     .aspectRatio(CGSize(width: 335, height: 175), contentMode: .fit)
+                                     
+                                     VStack{
+                                     Text("What would you do if you won 100 million dollars?")
+                                     .font(.title2)
+                                     .bold()
+                                     .padding(.horizontal, 5)
+                                     
+                                     Text(model.matches[index].QlotteryWin ?? "")
+                                     .font(Font.system(size: 14))
+                                     .padding([.top, (.horizontal)])
+                                     }
+                                     .padding()
+                                     .overlay(
+                                     Button(action: {
+                                     //open modal to send message
+                                     likeModal.toggle()
+                                     
+                                     
+                                     }, label: {
+                                     Image("corazon")
+                                     .foregroundColor(Color(.systemRed))
+                                     })
+                                     //MARK: - like button
+                                     .fullScreenCover(isPresented: $likeModal, content: {
+                                     LikeScreenModalView.init(likeModalShown: $likeModal, indexHere: $index, input: model.matches[index].QlotteryWin, receiver: model.matches[index].name, type: "Text", question: "What would you do if you won 100 million dollars")
+                                     .environmentObject(ChatsViewModel())
+                                     .environmentObject(ContentModel())
+                                     })
+                                     
+                                     //fixing at bottom left the floating like !!
+                                     , alignment: .bottomTrailing
+                                     )
+                                     }
+                                     
+                                     }.padding(.horizontal,13)*/
+                                    
+                                    //QUESTION - money not an issue
+                                    Group {
+                                        ZStack {
+                                            Rectangle()
+                                                .foregroundColor(.white)
+                                                .cornerRadius(10)
+                                                .shadow(radius: 5)
+                                                .aspectRatio(CGSize(width: 335, height: 175), contentMode: .fit)
+                                            
+                                            VStack{
+                                                Text("What would you do with your time if money was not an issue?")
+                                                    .font(.title2)
+                                                    .bold()
+                                                    .padding(.horizontal, 5)
+                                                
+                                                Text(model.matches[index].QmoneynotanIssue)
+                                                    .font(Font.system(size: 14))
+                                                    .padding([.top, (.horizontal)])
+                                            }.padding()
+                                            //.border(Color.gray)
                                             .overlay(
                                                 Button(action: {
-                                                    openerInput = model.matches[index].imageUrl3!
+                                                    openerInput = model.matches[index].QmoneynotanIssue
                                                     //open modal to send message
                                                     likeModal.toggle()
-
                                                     
                                                     
                                                 }, label: {
@@ -386,7 +340,7 @@ struct MatchView: View {
                                                 })
                                                 //MARK: - like button
                                                 .fullScreenCover(isPresented: $likeModal, content: {
-                                                    LikeScreenModalView.init(likeModalShown: $likeModal, indexHere: $index, input: $openerInput, receiver: model.matches[index].name, type: "Text", question: "", receiverImage: model.matches[index].imageUrl1!, picNumber: 3)
+                                                    LikeScreenModalView.init(likeModalShown: $likeModal, indexHere: $index, input: $openerInput, receiver: model.matches[index].name, type: "Text", question: "What would you do with your time if money was not an issue?", receiverImage: model.matches[index].imageUrl1!, picNumber: 0)
                                                         .environmentObject(ChatsViewModel())
                                                         .environmentObject(ContentModel())
                                                 })
@@ -394,214 +348,278 @@ struct MatchView: View {
                                                 //fixing at bottom left the floating like !!
                                                 , alignment: .bottomTrailing
                                             )
-                                    }
-                                    
-                                }.padding(.horizontal,5)
-                                
-                                //QUESTION - bucket list
-                                Group {
-                                    ZStack {
-                                        Rectangle()
-                                            .foregroundColor(.white)
-                                            .cornerRadius(10)
-                                            .shadow(radius: 5)
-                                            .aspectRatio(CGSize(width: 335, height: 175), contentMode: .fit)
-                                        
-                                        VStack {
-                                            Text("What are three things in your bucket list?")
-                                                .font(.title2)
-                                                .bold()
-                                                .padding(.horizontal, 5)
-                                            Text(model.matches[index].bucketList)
-                                                .font(Font.system(size: 14))
-                                                .padding([.top, (.horizontal)])
                                         }
-                                        .padding()
                                         
-                                    }
-                                    .overlay(
-                                        Button(action: {
-                                            
-                                            openerInput = model.matches[index].QlotteryWin
-                                            //open modal to send message
-                                            likeModal.toggle()
-                                            
-                                            
-                                        }, label: {
-                                            Image("corazon")
-                                                .foregroundColor(Color(.systemRed))
-                                        })
-                                        //MARK: - like button
-                                        .fullScreenCover(isPresented: $likeModal, content: {
-                                            LikeScreenModalView.init(likeModalShown: $likeModal, indexHere: $index, input: $openerInput, receiver: model.matches[index].bucketList, type: "Text", question: "What are three things in your bucket list?", receiverImage: model.matches[index].imageUrl1!, picNumber: 0)
-                                                .environmentObject(ChatsViewModel())
-                                                .environmentObject(ContentModel())
-                                        })
-                                        
-                                        //fixing at bottom left the floating like !!
-                                        , alignment: .bottomTrailing
-                                    )
+                                    }.padding(.horizontal,13)
                                     
-                                }.padding(.horizontal,13)
-                                
-                                //IMAGE - 4
-                                Group {
-                                    
-                                    if model.matches[index].imageUrl4 == "" {
-                                        //                                        Image("noPic")
-                                        //                                            .resizable()
-                                        //                                            .frame(height: 410, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
-                                        //                                            .cornerRadius(10)
-                                        //                                            .padding(10)
-                                        //                                            .shadow(radius: 5)
-                                    } else {
+                                    //IMAGE - 3
+                                    Group {
+                                        if model.matches[index].imageUrl3 == "" {
+                                            //                                        Image("noPic")
+                                            //                                            .resizable()
+                                            //                                            .frame(height: 410, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+                                            //                                            .padding(10)
+                                            //                                            .cornerRadius(10)
+                                            //                                            .shadow(radius: 5)
+                                        } else {
+                                            
+                                            WebImage(url: URL(string: model.matches[index].imageUrl3!))
+                                                //                                            .frame(height: 410, alignment: .center)
+                                                //                                            .padding(10)
+                                                .resizable()
+                                                .aspectRatio(contentMode: .fit)
+                                                .cornerRadius(10)
+                                                .padding(10)
+                                                .overlay(
+                                                    Button(action: {
+                                                        openerInput = model.matches[index].imageUrl3!
+                                                        //open modal to send message
+                                                        likeModal.toggle()
+                                                        
+                                                        
+                                                        
+                                                    }, label: {
+                                                        Image("corazon")
+                                                            .foregroundColor(Color(.systemRed))
+                                                    })
+                                                    //MARK: - like button
+                                                    .fullScreenCover(isPresented: $likeModal, content: {
+                                                        LikeScreenModalView.init(likeModalShown: $likeModal, indexHere: $index, input: $openerInput, receiver: model.matches[index].name, type: "Text", question: "", receiverImage: model.matches[index].imageUrl1!, picNumber: 3)
+                                                            .environmentObject(ChatsViewModel())
+                                                            .environmentObject(ContentModel())
+                                                    })
+                                                    
+                                                    //fixing at bottom left the floating like !!
+                                                    , alignment: .bottomTrailing
+                                                )
+                                        }
                                         
-                                        WebImage(url: URL(string: model.matches[index].imageUrl4!))
-//                                            .frame(height: 410, alignment: .center)
-//                                            .padding(10)
-                                            .resizable()
-                                            .aspectRatio(contentMode: .fit)
-                                            .cornerRadius(10)
-                                            .padding(10)
-                                            .overlay(
-                                                Button(action: {
-                                                    openerInput = model.matches[index].imageUrl4!
-                                                    //open modal to send message
-                                                    likeModal.toggle()
-
-                                                    
-                                                    
-                                                }, label: {
-                                                    Image("corazon")
-                                                        .foregroundColor(Color(.systemRed))
-                                                })
-                                                //MARK: - like button
-                                                .fullScreenCover(isPresented: $likeModal, content: {
-                                                    LikeScreenModalView.init(likeModalShown: $likeModal, indexHere: $index, input: $openerInput, receiver: model.matches[index].name, type: "Text", question: "", receiverImage: model.matches[index].imageUrl1!, picNumber: 4)
-                                                        .environmentObject(ChatsViewModel())
-                                                        .environmentObject(ContentModel())
-                                                })
+                                    }.padding(.horizontal,5)
+                                    
+                                    //QUESTION - bucket list
+                                    Group {
+                                        ZStack {
+                                            Rectangle()
+                                                .foregroundColor(.white)
+                                                .cornerRadius(10)
+                                                .shadow(radius: 5)
+                                                .aspectRatio(CGSize(width: 335, height: 175), contentMode: .fit)
+                                            
+                                            VStack {
+                                                Text("What are three things in your bucket list?")
+                                                    .font(.title2)
+                                                    .bold()
+                                                    .padding(.horizontal, 5)
+                                                Text(model.matches[index].bucketList)
+                                                    .font(Font.system(size: 14))
+                                                    .padding([.top, (.horizontal)])
+                                            }
+                                            .padding()
+                                            
+                                        }
+                                        .overlay(
+                                            Button(action: {
                                                 
-                                                //fixing at bottom left the floating like !!
-                                                , alignment: .bottomTrailing
-                                            )
-                                    }
-                                    
-                                    
-                                }.padding(.horizontal,5)
-                                
-                                //QUESTION - Jokes
-                                Group{
-                                    ZStack{
-                                        Rectangle()
-                                            .foregroundColor(.white)
-                                            .cornerRadius(10)
-                                            .shadow(radius: 5)
-                                            .aspectRatio(CGSize(width: 335, height: 175), contentMode: .fit)
-                                        
-                                        VStack{
-                                            Text("Do you know any jokes?")
-                                                .font(.title2)
-                                                .bold()
-                                                .padding(.bottom)
-                                            Text(model.matches[index].jokes)
-                                        }
-                                        .padding()
-                                        //.border(Color.gray)
-                                        //.scaledToFit()
-                                        
-                                    }
-                                    .overlay(
-                                        Button(action: {
-                                            openerInput = model.matches[index].jokes
-                                            //open modal to send message
-                                            likeModal.toggle()
-
+                                                openerInput = model.matches[index].QlotteryWin
+                                                //open modal to send message
+                                                likeModal.toggle()
+                                                
+                                                
+                                            }, label: {
+                                                Image("corazon")
+                                                    .foregroundColor(Color(.systemRed))
+                                            })
+                                            //MARK: - like button
+                                            .fullScreenCover(isPresented: $likeModal, content: {
+                                                LikeScreenModalView.init(likeModalShown: $likeModal, indexHere: $index, input: $openerInput, receiver: model.matches[index].bucketList, type: "Text", question: "What are three things in your bucket list?", receiverImage: model.matches[index].imageUrl1!, picNumber: 0)
+                                                    .environmentObject(ChatsViewModel())
+                                                    .environmentObject(ContentModel())
+                                            })
                                             
-                                        }, label: {
-                                            Image("corazon")
-                                                .foregroundColor(Color(.systemRed))
-                                        })
-                                        //MARK: - like button
-                                        .fullScreenCover(isPresented: $likeModal, content: {
-                                            LikeScreenModalView.init(likeModalShown: $likeModal, indexHere: $index, input: $openerInput, receiver: model.matches[index].name, type: "Text", question: "Do you know any jokes?", receiverImage: model.matches[index].imageUrl1!, picNumber: 0)
-                                                .environmentObject(ChatsViewModel())
-                                                .environmentObject(ContentModel())
-                                        })
+                                            //fixing at bottom left the floating like !!
+                                            , alignment: .bottomTrailing
+                                        )
                                         
-                                        //fixing at bottom left the floating like !!
-                                        , alignment: .bottomTrailing
-                                    )
-                                }.padding(.horizontal,13)
-                                
-                            }
-                            .id("SCROLL_TO_TOP")
-                            .background(Color(.systemGroupedBackground))
-                            
-                            
-                            
-                        })//scroll view
-                        //to recreate the veiw from scratch
-                        .id(self.scrollViewID)
-                        
-                        //MARK: - rejection button
-                        .overlay(
-                            Button(action: {
-                                //move to the next match
-                                self.transitionShown.toggle()
-                                self.viewShown.toggle()
-                                
-                                
-                                //scroll to top
-                                withAnimation(.spring()) {
-                                    ProxyReader.scrollTo("SCROLL_TO_TOP", anchor: .top)
+                                    }.padding(.horizontal,13)
                                     
-                                    if self.index == model.matches.count-1 {
-                                        //go back to first match
-                                        self.index = 0
-                                    } else {
-                                        self.index += 1
-                                    }
+                                    //IMAGE - 4
+                                    Group {
+                                        
+                                        if model.matches[index].imageUrl4 == "" {
+                                            //                                        Image("noPic")
+                                            //                                            .resizable()
+                                            //                                            .frame(height: 410, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+                                            //                                            .cornerRadius(10)
+                                            //                                            .padding(10)
+                                            //                                            .shadow(radius: 5)
+                                        } else {
+                                            
+                                            WebImage(url: URL(string: model.matches[index].imageUrl4!))
+                                                //                                            .frame(height: 410, alignment: .center)
+                                                //                                            .padding(10)
+                                                .resizable()
+                                                .aspectRatio(contentMode: .fit)
+                                                .cornerRadius(10)
+                                                .padding(10)
+                                                .overlay(
+                                                    Button(action: {
+                                                        openerInput = model.matches[index].imageUrl4!
+                                                        //open modal to send message
+                                                        likeModal.toggle()
+                                                        
+                                                        
+                                                        
+                                                    }, label: {
+                                                        Image("corazon")
+                                                            .foregroundColor(Color(.systemRed))
+                                                    })
+                                                    //MARK: - like button
+                                                    .fullScreenCover(isPresented: $likeModal, content: {
+                                                        LikeScreenModalView.init(likeModalShown: $likeModal, indexHere: $index, input: $openerInput, receiver: model.matches[index].name, type: "Text", question: "", receiverImage: model.matches[index].imageUrl1!, picNumber: 4)
+                                                            .environmentObject(ChatsViewModel())
+                                                            .environmentObject(ContentModel())
+                                                    })
+                                                    
+                                                    //fixing at bottom left the floating like !!
+                                                    , alignment: .bottomTrailing
+                                                )
+                                        }
+                                        
+                                        
+                                    }.padding(.horizontal,5)
+                                    
+                                    //QUESTION - Jokes
+                                    Group{
+                                        ZStack{
+                                            Rectangle()
+                                                .foregroundColor(.white)
+                                                .cornerRadius(10)
+                                                .shadow(radius: 5)
+                                                .aspectRatio(CGSize(width: 335, height: 175), contentMode: .fit)
+                                            
+                                            VStack{
+                                                Text("Do you know any jokes?")
+                                                    .font(.title2)
+                                                    .bold()
+                                                    .padding(.bottom)
+                                                Text(model.matches[index].jokes)
+                                            }
+                                            .padding()
+                                            //.border(Color.gray)
+                                            //.scaledToFit()
+                                            
+                                        }
+                                        .overlay(
+                                            Button(action: {
+                                                openerInput = model.matches[index].jokes
+                                                //open modal to send message
+                                                likeModal.toggle()
+                                                
+                                                
+                                            }, label: {
+                                                Image("corazon")
+                                                    .foregroundColor(Color(.systemRed))
+                                            })
+                                            //MARK: - like button
+                                            .fullScreenCover(isPresented: $likeModal, content: {
+                                                LikeScreenModalView.init(likeModalShown: $likeModal, indexHere: $index, input: $openerInput, receiver: model.matches[index].name, type: "Text", question: "Do you know any jokes?", receiverImage: model.matches[index].imageUrl1!, picNumber: 0)
+                                                    .environmentObject(ChatsViewModel())
+                                                    .environmentObject(ContentModel())
+                                            })
+                                            
+                                            //fixing at bottom left the floating like !!
+                                            , alignment: .bottomTrailing
+                                        )
+                                    }.padding(.horizontal,13)
+                                    
                                 }
+                                .id("SCROLL_TO_TOP")
+                                .background(Color(.systemGroupedBackground))
                                 
-                                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                                
+                                
+                            })//scroll view
+                            //to recreate the veiw from scratch
+                            .id(self.scrollViewID)
+                            
+                            //MARK: - rejection button
+                            .overlay(
+                                Button(action: {
+                                    //move to the next match
                                     self.transitionShown.toggle()
                                     self.viewShown.toggle()
                                     
-                                }
+                                    
+                                    //scroll to top
+                                    withAnimation(.spring()) {
+                                        ProxyReader.scrollTo("SCROLL_TO_TOP", anchor: .top)
+                                        
+                                        if self.index == model.matches.count-1 {
+                                            //go back to first match
+                                            self.index = 0
+                                        } else {
+                                            self.index += 1
+                                        }
+                                    }
+                                    
+                                    DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                                        self.transitionShown.toggle()
+                                        self.viewShown.toggle()
+                                        
+                                    }
+                                    
+                                    
+                                }, label: {
+                                    Image(systemName: "xmark.circle.fill")
+                                        .font(.system(size:50, weight: .semibold))
+                                        .foregroundColor(.black)
+                                        .padding()
+                                        .background(Color.white)
+                                        .clipShape(Circle())
+                                })
+                                .padding(.trailing)
+                                .padding(.bottom, getSafeArea().bottom == 0 ? 12 : 0) //this is an if statement
+                                //.opacity(-scrollViewOffset > 450 ? 1 : 0)
+                                .animation(.easeInOut)
+                                
+                                //to show rejection transition
+                                .fullScreenCover(isPresented: $transitionShown, content: {
+                                    RejectionModalView.init()
+                                    
+                                })
                                 
                                 
-                            }, label: {
-                                Image(systemName: "xmark.circle.fill")
-                                    .font(.system(size:50, weight: .semibold))
-                                    .foregroundColor(.black)
-                                    .padding()
-                                    .background(Color.white)
-                                    .clipShape(Circle())
-                            })
-                            .padding(.trailing)
-                            .padding(.bottom, getSafeArea().bottom == 0 ? 12 : 0) //this is an if statement
-                            //.opacity(-scrollViewOffset > 450 ? 1 : 0)
-                            .animation(.easeInOut)
-                            
-                            //to show rejection transition
-                            .fullScreenCover(isPresented: $transitionShown, content: {
-                                RejectionModalView.init()
+                                //fixing at bottom left the floating rejection !!
+                                , alignment: .bottomLeading
                                 
-                            })
+                            )
                             
-                            
-                            //fixing at bottom left the floating rejection !!
-                            , alignment: .bottomLeading
-                            
-                        )
-                        
+                        }
                     }
-                } //vStack main matches view
-                .opacity(viewShown ? 0 : 1)
-                .navigationBarHidden(true)
+                    .opacity(viewShown ? 0 : 1)
+                    .navigationBarTitle(Text(model.matches[index].name).font(.subheadline), displayMode: .large)
+                    .toolbar {
+                        ToolbarItem(placement: .navigationBarTrailing) {
+                            Menu(content: {
+                                Text("Menu Item 1")
+                                Text("Menu Item 2")
+                                Text("Menu Item 3")
+                            }, label: {Image(systemName: "ellipsis")})
+                        }
+                    }
+                    //.ignoresSafeArea(.top)
+                    
+                }
+                
             }
         }
+    }
+    
+    func blockUser() {
+        
+    }
+    func reportUser() {
+        
     }
     
     func getInches(height: Int) -> String {
@@ -736,7 +754,7 @@ struct LikeScreenModalView: View {
                         indexHere += 1
                     }
                 }
-
+                
                 
                 likeModalShown.toggle() //flip to false
                 
@@ -748,7 +766,7 @@ struct LikeScreenModalView: View {
             }.padding()
             
             Button("I chickened out...") {
-                        presentationMode.wrappedValue.dismiss()
+                presentationMode.wrappedValue.dismiss()
             }.padding()
             
             
