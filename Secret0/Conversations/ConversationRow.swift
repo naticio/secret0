@@ -92,7 +92,7 @@ struct ConversationRow: View {
                             .padding(.trailing, 40)
                     }
                 }
-                
+                //MARK: - unread message - NEW MESSAGE INDICATOR OR UNREAD MSG
                 Circle()
                     .foregroundColor(chat.hasUnreadMessage && chat.lastSender != UserService.shared.user.name ? .red : .clear)
                     .frame(width: 18, height: 18)

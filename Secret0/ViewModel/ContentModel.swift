@@ -530,7 +530,7 @@ class ContentModel: ObservableObject{
             query.getDocuments(completion: getDocumentsCompletion)
         }
         // [END fs_geo_query_hashes]
-        // This is the completion handler of the dispatch group. When all of the leave()
+        // This is the cRecompletion handler of the dispatch group. When all of the leave()
         // calls equal the number of enter() calls, this notify function is called.
         dispatch.notify(queue: .main) {
             for doc in matchingDocs {
@@ -654,13 +654,19 @@ class ContentModel: ObservableObject{
         task.resume()
     }
     
-    func blockUser(userToBlock: String){
+    func blockUser(userToBlock: String, type: String){
         //set data in firebase to current user
         let db = Firestore.firestore()
         let ref = db.collection("users").document(UserService.shared.user.name)
         
         //add username blocked to blocked list in current user
         ref.updateData(["blocked_users": FieldValue.arrayUnion([userToBlock])])
+        
+        if type == "reported" {
+            let ref = db.collection("users_reported").document(userToBlock)
+            
+            ref.updateData(["reported_by": FieldValue.arrayUnion([userToBlock])])
+        }
         
         //remove from Matches - deappend
         

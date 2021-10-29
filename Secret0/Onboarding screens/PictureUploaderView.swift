@@ -28,7 +28,10 @@ struct PictureUploaderView: View {
         NavigationView{
 
             VStack {
-                Spacer()
+                //Spacer()
+                Text("Upload some photos")
+                    .font(.title)
+                    .bold()
                 //row 1
                 HStack {
                     //image1
@@ -37,23 +40,29 @@ struct PictureUploaderView: View {
                         uploadPic.toggle()
                         
                     }, label: {
-                        
                         if imageController.image1 != nil {
                             Image(uiImage: imageController.image1!.compressed() ?? UIImage())
                                 .resizable()
                                 .frame(height: 200)
+                                .cornerRadius(10)
+                                .shadow(radius: 5)
                                 .padding()
                         } else {
                             ZStack {
                                 Rectangle()
                                     .fill(Color.white)
-                                    .frame(width:200, height: 200)
-                                    .border(Color.gray)
+                                    //.frame(width:200, height: 200)
+                                    //.border(Color.gray)
+                                    .foregroundColor(.white)
+                                    .cornerRadius(10)
+                                    .shadow(radius: 5)
+                                    .aspectRatio(CGSize(width: 200, height:200), contentMode: .fit)
                                 Image(systemName: "plus")
                             }
                         }
                         
                     })
+
                     
                     //image2
                     Button(action: {
@@ -65,13 +74,19 @@ struct PictureUploaderView: View {
                             Image(uiImage: imageController.image2!.compressed() ?? UIImage())
                                 .resizable()
                                 .frame(height: 200)
+                                .cornerRadius(10)
+                                .shadow(radius: 5)
                                 .padding()
                         } else {
                             ZStack {
                                 Rectangle()
                                     .fill(Color.white)
-                                    .frame(width:200, height: 200)
-                                    .border(Color.gray)
+                                    //.frame(width:200, height: 200)
+                                    //.border(Color.gray)
+                                    .foregroundColor(.white)
+                                    .cornerRadius(10)
+                                    .shadow(radius: 5)
+                                    .aspectRatio(CGSize(width: 200, height:200), contentMode: .fit)
                                 Image(systemName: "plus")
                             }
                         }
@@ -93,13 +108,19 @@ struct PictureUploaderView: View {
                             Image(uiImage: imageController.image3!.compressed() ?? UIImage())
                                 .resizable()
                                 .frame(height: 200)
+                                .cornerRadius(10)
+                                .shadow(radius: 5)
                                 .padding()
                         } else {
                             ZStack {
                                 Rectangle()
                                     .fill(Color.white)
-                                    .frame(width:200, height: 200)
-                                    .border(Color.gray)
+                                    //.frame(width:200, height: 200)
+                                    //.border(Color.gray)
+                                    .foregroundColor(.white)
+                                    .cornerRadius(10)
+                                    .shadow(radius: 5)
+                                    .aspectRatio(CGSize(width: 200, height:200), contentMode: .fit)
                                 Image(systemName: "plus")
                             }
                         }
@@ -117,13 +138,19 @@ struct PictureUploaderView: View {
                             Image(uiImage: imageController.image4!.compressed() ?? UIImage())
                                 .resizable()
                                 .frame(height: 200)
+                                .cornerRadius(10)
+                                .shadow(radius: 5)
                                 .padding()
                         } else {
                             ZStack {
                                 Rectangle()
                                     .fill(Color.white)
-                                    .frame(width:200, height: 200)
-                                    .border(Color.gray)
+                                    //.frame(width:200, height: 200)
+                                    //.border(Color.gray)
+                                    .foregroundColor(.white)
+                                    .cornerRadius(10)
+                                    .shadow(radius: 5)
+                                    .aspectRatio(CGSize(width: 200, height:200), contentMode: .fit)
                                 Image(systemName: "plus")
                             }
                         }
@@ -145,13 +172,19 @@ struct PictureUploaderView: View {
                             Image(uiImage: imageController.image5!.compressed() ?? UIImage())
                                 .resizable()
                                 .frame(height: 200)
+                                .cornerRadius(10)
+                                .shadow(radius: 5)
                                 .padding()
                         } else {
                             ZStack {
                                 Rectangle()
                                     .fill(Color.white)
-                                    .frame(width:200, height: 200)
-                                    .border(Color.gray)
+                                    //.frame(width:200, height: 200)
+                                    //.border(Color.gray)
+                                    .foregroundColor(.white)
+                                    .cornerRadius(10)
+                                    .shadow(radius: 5)
+                                    .aspectRatio(CGSize(width: 200, height:200), contentMode: .fit)
                                 Image(systemName: "plus")
                             }
                         }
@@ -168,13 +201,23 @@ struct PictureUploaderView: View {
                             Image(uiImage: imageController.image6!.compressed() ?? UIImage())
                                 .resizable()
                                 .frame(height: 200)
+                                .cornerRadius(10)
+                                .shadow(radius: 5)
                                 .padding()
                         } else {
                             ZStack {
+//                                Rectangle()
+//                                    .fill(Color.white)
+//                                    .frame(width:200, height: 200)
+//                                    .border(Color.gray)
                                 Rectangle()
                                     .fill(Color.white)
-                                    .frame(width:200, height: 200)
-                                    .border(Color.gray)
+                                    //.frame(width:200, height: 200)
+                                    //.border(Color.gray)
+                                    .foregroundColor(.white)
+                                    .cornerRadius(10)
+                                    .shadow(radius: 5)
+                                    .aspectRatio(CGSize(width: 200, height:200), contentMode: .fit)
                                 Image(systemName: "plus")
                             }
                         }
@@ -186,6 +229,7 @@ struct PictureUploaderView: View {
                 
                 if imageController.image1 == nil {
                     Text("Updload one picture at least")
+                        .padding(.top)
                 }
                 
                 //UPLOAD IMAGE TO FIREBASE
@@ -240,7 +284,7 @@ struct PictureUploaderView: View {
                     .padding()
             } //vstack closure
             .navigationBarHidden(true)
-            .navigationTitle("Upload some photos")
+            //.navigationTitle("Upload some photos")
             
             Spacer()
         }

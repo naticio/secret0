@@ -65,12 +65,12 @@ struct ChatView: View {
                     ScrollView(.vertical) { //to scroll
                         ForEach(chat.messages, id: \.id) { message in
                             if user.name == message.createdBy {
-                                ChatRow(message: message, isMe: false, profilePic: profilePic, chatUser: chatModel.userChat)
+                                ChatRow(message: message, isMe: true, profilePic: profilePic, chatUser: chatModel.userChat)
                                     //.id(message.id)
                                     .id(chat.messages.firstIndex(of: message))
                                 
                             } else {
-                                ChatRow(message: message, isMe: true, profilePic: profilePic, chatUser: chatModel.userChat)
+                                ChatRow(message: message, isMe: false, profilePic: profilePic, chatUser: chatModel.userChat)
                                     .id(chat.messages.firstIndex(of: message))
                             }
                             
@@ -78,6 +78,7 @@ struct ChatView: View {
                         //on appear shows the LAST message
                         .onAppear(perform: {
                             scrollView.scrollTo(chat.messages.count-1)
+                            //scrollView.scrollTo(chat.messages.endIndex)
                         })
                         .onChange(of: chat.messages.count, perform: { _ in
                             scrollView.scrollTo(chat.messages.endIndex)
@@ -101,6 +102,7 @@ struct ChatView: View {
                         TextField("New message...", text: $newMessageInput, onCommit: {
                             print("Send Message")
                         })
+                        .disableAutocorrection(true)
                         .padding(30)
                         
                         //send button
@@ -121,12 +123,13 @@ struct ChatView: View {
             }
             .navigationBarBackButtonHidden(true)
             .navigationBarItems(leading: backButton)
+            //.navigationBarHidden(true)
 //            .navigationTitle(chatUser)
 //            .navigationBarTitle(chatUser, displayMode: .inline)
             //.navigationTitle(/*@START_MENU_TOKEN@*//*@PLACEHOLDER=Title@*/Text("Title")/*@END_MENU_TOKEN@*/)
             //.edgesIgnoringSafeArea(.all)
         }
-        .navigationViewStyle(StackNavigationViewStyle())
+        //.navigationViewStyle(StackNavigationViewStyle())
         
                 .onAppear() {
                     //get profile of the person Im chatting with so I can show PROFILE when I lcik pic

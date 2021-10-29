@@ -27,6 +27,8 @@ struct ConversationsView: View {
                             
                             // hidden NavigationLink. This hides the disclosure arrow!
                             NavigationLink(destination: ChatView(chat: chat)
+                                            .navigationBarTitle("")
+                                            .navigationBarHidden(true)
                                             .environmentObject(chatModel)) {}
                             .buttonStyle(PlainButtonStyle())
                             .frame(width:0)
@@ -68,9 +70,9 @@ struct ConversationsView: View {
             .listStyle(PlainListStyle())
             //.searchable(text: $query)
             .navigationTitle("Chats")
-            .navigationBarItems(trailing: Button(action: {}) {
-                Image(systemName: "square.and.pencil")
-            })
+//            .navigationBarItems(trailing: Button(action: {}) {
+//                Image(systemName: "square.and.pencil")
+//            })
         }
         .onAppear() {
             //get conversations

@@ -46,7 +46,7 @@ struct MatchView: View {
     var body: some View {
         
         
-        if model.usersLoaded == nil {
+        if model.usersLoaded == nil || model.usersLoaded == false {
             ProgressView()
                 .navigationBarHidden(true)
         } else {
@@ -66,9 +66,10 @@ struct MatchView: View {
                         
                         Spacer()
                         Menu(content: {
+                            //MARK: - BLOCK USER
                             Button {
                                 //write in current user, user block.append match.name
-                                model.blockUser(userToBlock: model.matches[index].name)
+                                model.blockUser(userToBlock: model.matches[index].name, type: "block")
                                 
                                 self.transitionShown.toggle()
                                 self.viewShown.toggle()
@@ -92,7 +93,27 @@ struct MatchView: View {
                                 Text("Block")
                             }
                             
+                            //MARK: - REPORT USER
                             Button {
+                                model.blockUser(userToBlock: model.matches[index].name, type: "reported")
+                                
+                                self.transitionShown.toggle()
+                                self.viewShown.toggle()
+                                
+                                self.scrollViewID = UUID()
+
+                                    if self.index == model.matches.count-1 {
+                                        //go back to first match
+                                        self.index = 0
+                                    } else {
+                                        self.index += 1
+                                    }
+                                
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                                    self.transitionShown.toggle()
+                                    self.viewShown.toggle()
+                                    
+                                }
                                 
                             } label: {
                                 Text("Report")
@@ -101,6 +122,8 @@ struct MatchView: View {
                             //Text("Like")
                         }, label: {
                             Image(systemName: "ellipsis")
+                                .imageScale(.large) //so  Ican easily click on it
+                                .padding()
                         })
                         .padding(.trailing)
                         .accentColor(.black)
@@ -634,9 +657,9 @@ struct MatchView: View {
                                 
                             }, label: {
                                 Image(systemName: "xmark.circle.fill")
-                                    .font(.system(size:50, weight: .semibold))
+                                    .font(.system(size:65, weight: .semibold))
                                     .foregroundColor(.black)
-                                    .padding()
+                                    //.padding(0)
                                     .background(Color.white)
                                     .clipShape(Circle())
                             })
@@ -677,12 +700,6 @@ struct MatchView: View {
         }
     }
     
-    func blockUser() {
-        
-    }
-    func reportUser() {
-        
-    }
     
     func getInches(height: Int) -> String {
         
