@@ -121,7 +121,7 @@ struct LoginView: View {
         }
         
         Button {
-
+            isPresented = false
             
             Auth.auth().signIn(withEmail: email, password: password) { result, error in
                 //check for errors
@@ -132,12 +132,13 @@ struct LoginView: View {
                     
                     model.checkLogin()
                 } else {
+                    isPresented = true
                     errorMsg = error!.localizedDescription
                     print("error, valiendo verga: \(errorMsg)")
                     return
                 }
                 
-                
+
                 //clear error mesage for future sign ins
                 
                 
