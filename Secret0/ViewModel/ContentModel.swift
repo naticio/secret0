@@ -542,43 +542,48 @@ class ContentModel: ObservableObject{
                     if conversationsWith.contains(user.name) {
                         //do nothing
                     } else {
-                        var m = Matches()
-                        
-                        m.latitude = doc.data()["latitude"] as? Double ?? 0
-                        m.longitude = doc.data()["longitude"] as? Double ?? 0
-                        let coordinates = CLLocation(latitude: m.latitude ?? 0, longitude: m.longitude ?? 0)
-                        let centerPoint = CLLocation(latitude: center.latitude, longitude: center.longitude)
-                        
-                        m.id = doc.data()["id"] as? String ?? ""
-                        m.name = doc.data()["name"] as? String ?? ""
-                        
-                        let birthDateTimestamp = doc.data()["birthdate"] as? Timestamp ?? nil
-                        m.birthdate = birthDateTimestamp!.dateValue()
-                        m.gender = doc.data()["gender"] as? String ?? ""
-                        m.datingPreferences = doc.data()["datingPreferences"] as? String ?? ""
-                        m.height = doc.data()["height"] as? Int ?? 0
-                        m.city = doc.data()["city"] as? String ?? ""
-                        
-                        m.blocked_users = doc.data()["blocked_users"] as? [String] ?? []
-                        
-                        m.imageUrl1 = doc.data()["photo1"] as? String ?? ""
-                        m.imageUrl2 = doc.data()["photo2"] as? String ?? ""
-                        m.imageUrl3 = doc.data()["photo3"] as? String ?? ""
-                        m.imageUrl4 = doc.data()["photo4"] as? String ?? ""
-                        m.imageUrl5 = doc.data()["photo5"] as? String ?? ""
-                        m.imageUrl6 = doc.data()["photo6"] as? String ?? ""
-                        
-                        m.Q1day2live = doc.data()["Q1day2live"] as? String ?? ""
-                        m.QlotteryWin = doc.data()["QlotteryWin"] as? String ?? ""
-                        m.QmoneynotanIssue = doc.data()["QmoneynotanIssue"] as? String ?? ""
-                        m.bucketList = doc.data()["bucketList"] as? String ?? ""
-                        m.jokes = doc.data()["jokes"] as? String ?? ""
-                        
-                        let distance = GFUtils.distance(from: centerPoint, to: coordinates)
-                        print("MatchName: \(m.name), distance: \(distance) \tlat: \(m.latitude), \(m.longitude)")
-                        if distance <= radiusInKilometers {
-                            matchesNear.append(m)
+                        if UserService.shared.user.blocked_users!.contains(doc.data()["name"] as? String ?? "") {
+                            //bloque a este gallo, no lo quiero ver.
+                        } else {
+                            var m = Matches()
+                            
+                            m.latitude = doc.data()["latitude"] as? Double ?? 0
+                            m.longitude = doc.data()["longitude"] as? Double ?? 0
+                            let coordinates = CLLocation(latitude: m.latitude ?? 0, longitude: m.longitude ?? 0)
+                            let centerPoint = CLLocation(latitude: center.latitude, longitude: center.longitude)
+                            
+                            m.id = doc.data()["id"] as? String ?? ""
+                            m.name = doc.data()["name"] as? String ?? ""
+                            
+                            let birthDateTimestamp = doc.data()["birthdate"] as? Timestamp ?? nil
+                            m.birthdate = birthDateTimestamp!.dateValue()
+                            m.gender = doc.data()["gender"] as? String ?? ""
+                            m.datingPreferences = doc.data()["datingPreferences"] as? String ?? ""
+                            m.height = doc.data()["height"] as? Int ?? 0
+                            m.city = doc.data()["city"] as? String ?? ""
+                            
+                            m.blocked_users = doc.data()["blocked_users"] as? [String] ?? []
+                            
+                            m.imageUrl1 = doc.data()["photo1"] as? String ?? ""
+                            m.imageUrl2 = doc.data()["photo2"] as? String ?? ""
+                            m.imageUrl3 = doc.data()["photo3"] as? String ?? ""
+                            m.imageUrl4 = doc.data()["photo4"] as? String ?? ""
+                            m.imageUrl5 = doc.data()["photo5"] as? String ?? ""
+                            m.imageUrl6 = doc.data()["photo6"] as? String ?? ""
+                            
+                            m.Q1day2live = doc.data()["Q1day2live"] as? String ?? ""
+                            m.QlotteryWin = doc.data()["QlotteryWin"] as? String ?? ""
+                            m.QmoneynotanIssue = doc.data()["QmoneynotanIssue"] as? String ?? ""
+                            m.bucketList = doc.data()["bucketList"] as? String ?? ""
+                            m.jokes = doc.data()["jokes"] as? String ?? ""
+                            
+                            let distance = GFUtils.distance(from: centerPoint, to: coordinates)
+                            print("MatchName: \(m.name), distance: \(distance) \tlat: \(m.latitude), \(m.longitude)")
+                            if distance <= radiusInKilometers {
+                                matchesNear.append(m)
+                            }
                         }
+
                     }
                 }
 
@@ -656,6 +661,10 @@ class ContentModel: ObservableObject{
         
         //add username blocked to blocked list in current user
         ref.updateData(["blocked_users": FieldValue.arrayUnion([userToBlock])])
+        
+        //remove from Matches - deappend
+        
+        //change GetMatches to avoid if user.blocked_users.contains = match.name then SKIP
     }
     
     
