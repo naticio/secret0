@@ -30,16 +30,25 @@ struct ProfileView: View {
                     Text(profileUser.name)
                         .frame(alignment: .leading)
                         .font(.title.bold())
+                        .padding(.leading)
                     
-                    
-                    Text(profileUser.gender)
-                    Text("wants \(profileUser.datingPreferences)")
-                    
-                    Button(action: {
-                        //action to block or report user
+                    Spacer()
+                    Menu(content: {
+                        Button {
+                            
+                        } label: {
+                            Text("Block")
+                        }
+                        
+                        Button {
+                            
+                        } label: {
+                            Text("Report")
+                        }
                     }, label: {
-                        Image(systemName: "ellxipsis")
+                        Image(systemName: "ellipsis")
                     })
+                    .padding(.trailing)
                 }
             }
             

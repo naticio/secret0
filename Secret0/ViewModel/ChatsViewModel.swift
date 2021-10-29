@@ -34,9 +34,7 @@ class ChatsViewModel: ObservableObject {
         
         var ref: DocumentReference? = nil
         if (user != nil) {
-            
             ///check if cnversation already exists then skip this step with an if!!!!
-            
             db.collection("conversations").whereField("users", arrayContains: [user!.displayName, receiver])
                 .getDocuments() { (querySnapshot, err) in
                     if let err = err {
@@ -162,9 +160,9 @@ class ChatsViewModel: ObservableObject {
         
         let ref = self.db.collection("conversations").document(chat.id ?? "")
         ref.updateData(["hasUnreadMessage" : false])
-//        if let index = chats.firstIndex(where: { $0.id == chat.id }) {
-//            chats[index].hasUnreadMessage = newValue
-//        }
+        //        if let index = chats.firstIndex(where: { $0.id == chat.id }) {
+        //            chats[index].hasUnreadMessage = newValue
+        //        }
     }
     
     //return an array of chats

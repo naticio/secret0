@@ -135,6 +135,8 @@ class ContentModel: ObservableObject{
             user.sexuality = data?["sexuality"] as? String ?? ""
             user.city = data?["city"] as? String ?? ""
             
+            user.blocked_users = data?["blocked_users"] as? [String] ?? []
+            
             //did I use photo as prefix when saving in firebase?
             user.imageUrl1 = data?["photo1"] as? String ?? ""
             user.imageUrl2 = data?["photo2"] as? String ?? ""
@@ -557,6 +559,8 @@ class ContentModel: ObservableObject{
                         m.height = doc.data()["height"] as? Int ?? 0
                         m.city = doc.data()["city"] as? String ?? ""
                         
+                        m.blocked_users = doc.data()["blocked_users"] as? [String] ?? []
+                        
                         m.imageUrl1 = doc.data()["photo1"] as? String ?? ""
                         m.imageUrl2 = doc.data()["photo2"] as? String ?? ""
                         m.imageUrl3 = doc.data()["photo3"] as? String ?? ""
@@ -645,6 +649,14 @@ class ContentModel: ObservableObject{
         task.resume()
     }
     
+    func blockUser(userToBlock: String){
+        //set data in firebase to current user
+        let db = Firestore.firestore()
+        let ref = db.collection("users").document(UserService.shared.user.name)
+        
+        //add username blocked to blocked list in current user
+        ref.updateData(["blocked_users": FieldValue.arrayUnion([userToBlock])])
+    }
     
     
 }
